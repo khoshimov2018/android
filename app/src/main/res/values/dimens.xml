@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="smallTextSize">10sp</dimen>
+    <dimen name="mediumTextSize">12sp</dimen>
+    <dimen name="normalTextSize">14sp</dimen>
+    <dimen name="largeTextSize">16sp</dimen>
+    <dimen name="xLargeTextSize">18sp</dimen>
+    <dimen name="xxLargeTextSize">22sp</dimen>
+    <dimen name="xxxLargeTextSize">24sp</dimen>
+
+    <dimen name="normalPadding">10dp</dimen>
+    <dimen name="sidePadding">20dp</dimen>
+
+    <dimen name="xSmallMargin">2dp</dimen>
+    <dimen name="smallMargin">5dp</dimen>
+    <dimen name="normalMargin">10dp</dimen>
+    <dimen name="largeMargin">20dp</dimen>
+    <dimen name="registrationMargin">80dp</dimen>
+    <dimen name="registrationHMargin">40dp</dimen>
+
+    <dimen name="elevation">5dp</dimen>
+</resources>

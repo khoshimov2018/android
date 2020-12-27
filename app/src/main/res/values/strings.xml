@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Dating App</string>
+    <string name="registration">Регистрация</string>
+    <string name="login">Войти</string>
+    <string name="privacy_terms">Условия конфиденциальности</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
 </resources>
