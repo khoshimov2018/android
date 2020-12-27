@@ -38,7 +38,9 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="@string/email"
-                        android:padding="@dimen/largePadding" />
+                        android:inputType="textEmailAddress"
+                        android:padding="@dimen/largePadding"
+                        android:singleLine="true" />
 
                     <View
                         android:layout_width="match_parent"
@@ -52,7 +54,10 @@
                         android:layout_marginBottom="@dimen/largeMargin"
                         android:background="@null"
                         android:hint="@string/password"
-                        android:padding="@dimen/largePadding" />
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
+                        android:padding="@dimen/largePadding"
+                        android:singleLine="true" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </FrameLayout>
