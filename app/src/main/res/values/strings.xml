@@ -5,4 +5,8 @@
     <string name="privacy_terms">Условия конфиденциальности</string>
     <string name="email">Email</string>
     <string name="password">Пароль</string>
+    <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="register_now">Зарегистрироваться</string>
 </resources>

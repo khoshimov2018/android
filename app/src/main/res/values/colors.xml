@@ -3,8 +3,9 @@
     <color name="colorPrimary">#6455FF</color>
     <color name="colorPrimaryDark">#BA62FF</color>
     <color name="colorAccent">#FFBB86FC</color>
-    <color name="purpleLight">#3C4FFF</color>
+    <color name="blue">#3C4FFF</color>
     <color name="purpleDark">#BA62FF</color>
     <color name="red">#ED2A1F</color>
     <color name="textColor">#000000</color>
+    <color name="lightGreyColor">#EBEBEC</color>
 </resources>
