@@ -63,14 +63,24 @@
         </FrameLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cardView"
             android:layout_marginHorizontal="@dimen/xLargeMargin"
             android:layout_marginTop="-30dp"
-            android:layout_marginBottom="@dimen/xLargeMargin"
             android:background="@drawable/round_button_background"
             android:text="@string/login"
             android:textColor="@android:color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/largeMargin"
+            android:layout_marginBottom="@dimen/xLargeMargin"
+            android:text="@string/forgot_password"
+            android:textColor="@color/textColor" />
     </RelativeLayout>
 </ScrollView>
