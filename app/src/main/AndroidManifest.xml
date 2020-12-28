@@ -26,6 +26,9 @@
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.ChooseGenderActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

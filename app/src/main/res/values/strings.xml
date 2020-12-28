@@ -10,4 +10,8 @@
     <string name="cancel">Cancel</string>
     <string name="register_now">Зарегистрироваться</string>
     <string name="forgot_password">Забыли пароль?</string>
+    <string name="hello_you">Здравствуйте, вы:</string>
+    <string name="male">Мужчина</string>
+    <string name="female">Женщина</string>
+    <string name="further">Далее</string>
 </resources>

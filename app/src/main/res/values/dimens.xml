@@ -9,6 +9,7 @@
     <dimen name="xxxLargeTextSize">24sp</dimen>
 
     <dimen name="normalPadding">10dp</dimen>
+    <dimen name="mediumPadding">15dp</dimen>
     <dimen name="largePadding">20dp</dimen>
 
     <dimen name="xSmallMargin">2dp</dimen>
@@ -22,5 +23,6 @@
     <dimen name="cardRadius">30dp</dimen>
 
     <dimen name="lineHeight">1dp</dimen>
+    <dimen name="thickLineHeight">2dp</dimen>
     <dimen name="buttonRadius">25dp</dimen>
 </resources>
