@@ -3,7 +3,7 @@
     <solid android:color="@android:color/white" />
 
     <stroke
-        android:width="@dimen/thickLineHeight"
+        android:width="@dimen/lineHeight"
         android:color="@color/colorPrimary" />
 
     <corners android:radius="@dimen/buttonRadius" />

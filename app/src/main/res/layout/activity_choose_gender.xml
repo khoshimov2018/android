@@ -1,109 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".activities.ChooseGenderActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <data>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/mediumPadding"
-            android:src="@drawable/back" />
+        <import type="android.view.View" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/registration"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/largeTextSize" />
-    </RelativeLayout>
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.ChooseGenderViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/lineHeight"
-            android:layout_weight="0.8"
-            android:background="@color/colorPrimary" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="@dimen/lineHeight"
-            android:layout_weight="0.2"
-            android:background="@color/lightGreyColor" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/xLargeMargin"
-            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/mediumPadding"
+                android:onClick="@{viewModel::backPressed}"
+                android:src="@drawable/back" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/largeMargin"
-                android:text="@string/hello_you"
+                android:layout_centerInParent="true"
+                android:text="@string/registration"
                 android:textColor="@color/textColor"
-                android:textSize="@dimen/xxLargeTextSize"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/thickLineHeight"
-                android:background="@color/colorPrimary"
-                android:layout_marginTop="@dimen/smallMargin"/>
-        </LinearLayout>
+                android:textSize="@dimen/largeTextSize" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerInParent="true">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/xLargeMargin"
-                android:layout_marginBottom="@dimen/largeMargin"
-                android:background="@drawable/round_button_selected"
-                android:text="@string/male"
-                android:textColor="@android:color/white" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_weight="0.8"
+                android:background="@color/colorPrimary" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/xLargeMargin"
-                android:background="@drawable/round_button_unselected"
-                android:text="@string/female"
-                android:textColor="@color/textColor" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_weight="0.2"
+                android:background="@color/lightGreyColor" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="@dimen/xLargeMargin"
-            android:layout_marginBottom="@dimen/xLargeMargin"
-            android:background="@drawable/round_button_background"
-            android:text="@string/further"
-            android:textColor="@android:color/white" />
-    </RelativeLayout>
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/xLargeMargin"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:text="@string/hello_you"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/xxLargeTextSize" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/thickLineHeight"
+                    android:layout_marginTop="@dimen/smallMargin"
+                    android:background="@color/colorPrimary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/xLargeMargin"
+                    android:layout_marginBottom="@dimen/largeMargin"
+                    android:background="@drawable/round_button_selected"
+                    android:text="@string/male"
+                    android:textColor="@android:color/white" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/xLargeMargin"
+                    android:background="@drawable/round_button_unselected"
+                    android:text="@string/female"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginHorizontal="@dimen/xLargeMargin"
+                android:layout_marginBottom="@dimen/xLargeMargin"
+                android:background="@drawable/round_button_background"
+                android:text="@string/further"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>
