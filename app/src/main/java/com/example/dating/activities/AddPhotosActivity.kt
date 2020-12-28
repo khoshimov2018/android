@@ -7,45 +7,47 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
+import com.example.dating.databinding.ActivityAddPhotosBinding
 import com.example.dating.databinding.ActivityChooseGenderBinding
+import com.example.dating.viewmodels.AddPhotosViewModel
 import com.example.dating.viewmodels.ChooseGenderViewModel
 
-class ChooseGenderActivity : AppCompatActivity() {
+class AddPhotosActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityChooseGenderBinding
-    private lateinit var chooseGenderViewModel: ChooseGenderViewModel
+    private lateinit var binding: ActivityAddPhotosBinding
+    private lateinit var addPhotosViewModel: AddPhotosViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_gender)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_photos)
         binding.lifecycleOwner = this
         initViewModel()
     }
 
     private fun initViewModel() {
-        chooseGenderViewModel = ViewModelProvider(this).get(ChooseGenderViewModel::class.java)
-        binding.viewModel = chooseGenderViewModel
+        addPhotosViewModel = ViewModelProvider(this).get(AddPhotosViewModel::class.java)
+        binding.viewModel = addPhotosViewModel
 
         initObservers()
     }
 
     private fun initObservers() {
-        chooseGenderViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
+        addPhotosViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
             }
         })
 
-        chooseGenderViewModel.getMoveFurther().observe(this, Observer {
+        addPhotosViewModel.getMoveFurther().observe(this, Observer {
             if (it) {
-                chooseGenderViewModel.setMoveFurther(false)
+                addPhotosViewModel.setMoveFurther(false)
                 moveFurther()
             }
         })
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, EnterNameActivity::class.java)
+        val intent = Intent(this, ChooseLookingForActivity::class.java)
         startActivity(intent)
     }
 }

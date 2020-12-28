@@ -8,44 +8,46 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityChooseGenderBinding
+import com.example.dating.databinding.ActivityEnterNameBinding
 import com.example.dating.viewmodels.ChooseGenderViewModel
+import com.example.dating.viewmodels.EnterNameViewModel
 
-class ChooseGenderActivity : AppCompatActivity() {
+class EnterNameActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityChooseGenderBinding
-    private lateinit var chooseGenderViewModel: ChooseGenderViewModel
+    private lateinit var binding: ActivityEnterNameBinding
+    private lateinit var enterNameViewModel: EnterNameViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_gender)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_enter_name)
         binding.lifecycleOwner = this
         initViewModel()
     }
 
     private fun initViewModel() {
-        chooseGenderViewModel = ViewModelProvider(this).get(ChooseGenderViewModel::class.java)
-        binding.viewModel = chooseGenderViewModel
+        enterNameViewModel = ViewModelProvider(this).get(EnterNameViewModel::class.java)
+        binding.viewModel = enterNameViewModel
 
         initObservers()
     }
 
     private fun initObservers() {
-        chooseGenderViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
+        enterNameViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
             }
         })
 
-        chooseGenderViewModel.getMoveFurther().observe(this, Observer {
+        enterNameViewModel.getMoveFurther().observe(this, Observer {
             if (it) {
-                chooseGenderViewModel.setMoveFurther(false)
+                enterNameViewModel.setMoveFurther(false)
                 moveFurther()
             }
         })
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, EnterNameActivity::class.java)
+        val intent = Intent(this, EnterDobActivity::class.java)
         startActivity(intent)
     }
 }

@@ -25,4 +25,7 @@
     <dimen name="lineHeight">1dp</dimen>
     <dimen name="thickLineHeight">2dp</dimen>
     <dimen name="buttonRadius">25dp</dimen>
+
+    <dimen name="photo">120dp</dimen>
+    <dimen name="photoRadius">20dp</dimen>
 </resources>

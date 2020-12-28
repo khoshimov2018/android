@@ -14,4 +14,13 @@
     <string name="male">Мужчина</string>
     <string name="female">Женщина</string>
     <string name="further">Далее</string>
+    <string name="whats_your_name">Как вас зовут?</string>
+    <string name="name">Имя</string>
+    <string name="your_dob">Дата вашего рождения</string>
+    <string name="date_one">01</string>
+    <string name="january">Январь</string>
+    <string name="year_1990">1990</string>
+    <string name="who_are_you_looking_for">Кого вы ищите?</string>
+    <string name="add_photo">Добавьте фото</string>
+    <string name="choose_from_3_to_6_photo">Выберите от 3 до 6 фотографий</string>
 </resources>

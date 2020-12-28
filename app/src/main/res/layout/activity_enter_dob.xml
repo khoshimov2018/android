@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.EnterDobActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.EnterDobViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{viewModel::backPressed}"
+                android:padding="@dimen/mediumPadding"
+                android:src="@drawable/back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/registration"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_weight="0.8"
+                android:background="@color/colorPrimary" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_weight="0.2"
+                android:background="@color/lightGreyColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/xLargeMargin"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_dob"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/xxLargeTextSize" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/thickLineHeight"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:background="@color/colorPrimary" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/registrationMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        app:cardCornerRadius="@dimen/cardRadius"
+                        app:cardElevation="@dimen/elevation"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="@dimen/normalMargin"
+                                    android:layout_marginTop="30dp"
+                                    android:background="@null"
+                                    android:hint="@string/date_one"
+                                    android:padding="@dimen/largePadding"
+                                    android:singleLine="true" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/lineHeight"
+                                    android:layout_marginHorizontal="@dimen/normalMargin"
+                                    android:background="@color/lightGreyColor" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="@dimen/normalMargin"
+                                    android:layout_marginTop="30dp"
+                                    android:background="@null"
+                                    android:hint="@string/january"
+                                    android:padding="@dimen/largePadding"
+                                    android:singleLine="true" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/lineHeight"
+                                    android:layout_marginHorizontal="@dimen/normalMargin"
+                                    android:background="@color/lightGreyColor" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:orientation="vertical">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="@dimen/normalMargin"
+                                    android:layout_marginTop="30dp"
+                                    android:background="@null"
+                                    android:hint="@string/year_1990"
+                                    android:padding="@dimen/largePadding"
+                                    android:singleLine="true" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/lineHeight"
+                                    android:layout_marginHorizontal="@dimen/normalMargin"
+                                    android:background="@color/lightGreyColor" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardView"
+                    android:layout_marginHorizontal="@dimen/xLargeMargin"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginBottom="@dimen/xLargeMargin"
+                    android:background="@drawable/round_button_background"
+                    android:onClick="@{viewModel::moveFurther}"
+                    android:text="@string/further"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

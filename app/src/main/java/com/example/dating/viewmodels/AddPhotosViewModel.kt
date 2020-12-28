@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ChooseGenderViewModel : ViewModel() {
+class AddPhotosViewModel : ViewModel() {
 
     private val backButtonClicked: MutableLiveData<Boolean> = MutableLiveData()
     private val moveFurther: MutableLiveData<Boolean> = MutableLiveData()

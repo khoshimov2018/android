@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.ChooseGenderActivity">
+    tools:context=".activities.ChooseLookingForActivity">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.ChooseGenderViewModel" />
+            type="com.example.dating.viewmodels.ChooseLookingForViewModel" />
     </data>
 
     <LinearLayout
@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/largeMargin"
-                    android:text="@string/hello_you"
+                    android:text="@string/who_are_you_looking_for"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/xxLargeTextSize" />
 
