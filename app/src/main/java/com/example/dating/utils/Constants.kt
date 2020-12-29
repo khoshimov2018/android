@@ -23,3 +23,9 @@ object LoginFormErrorConstants {
     const val USERNAME_NOT_VALID = 2
     const val PASSWORD_EMPTY = 3
 }
+
+object BottomTabs {
+    const val MY_PROFILE_TAB = 1
+    const val PROFILES_TAB = 2
+    const val MESSENGER_TAB = 3
+}
