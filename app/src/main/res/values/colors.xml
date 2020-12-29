@@ -8,4 +8,6 @@
     <color name="red">#ED2A1F</color>
     <color name="textColor">#000000</color>
     <color name="lightGreyColor">#EBEBEC</color>
+    <color name="errorTextColor">#ED2A1F</color>
+    <color name="loaderBackground">#90000000</color>
 </resources>

@@ -16,6 +16,7 @@
     <dimen name="smallMargin">5dp</dimen>
     <dimen name="normalMargin">10dp</dimen>
     <dimen name="largeMargin">20dp</dimen>
+    <dimen name="sLargeMargin">30dp</dimen>
     <dimen name="xLargeMargin">40dp</dimen>
     <dimen name="registrationMargin">80dp</dimen>
 
@@ -28,4 +29,6 @@
 
     <dimen name="photo">120dp</dimen>
     <dimen name="photoRadius">20dp</dimen>
+
+    <dimen name="errorTextSize">12sp</dimen>
 </resources>

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 open class BaseViewModel: ViewModel() {
 
     private val backButtonClicked: MutableLiveData<Boolean> = MutableLiveData()
+    val loaderVisible: MutableLiveData<Boolean> = MutableLiveData()
     private val moveFurther: MutableLiveData<Boolean> = MutableLiveData()
 
     fun backPressed(view: View) {
@@ -28,5 +29,9 @@ open class BaseViewModel: ViewModel() {
 
     fun setMoveFurther(move: Boolean) {
         moveFurther.value = move
+    }
+
+    fun getLoaderVisible(): LiveData<Boolean> {
+        return loaderVisible
     }
 }

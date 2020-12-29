@@ -11,6 +11,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import com.example.dating.R
+import com.example.dating.models.BaseModel
+import com.example.dating.models.UserModel
+import com.google.gson.Gson
 
 fun hideKeyboard(view: View?) {
     view?.let { v ->
@@ -105,6 +108,16 @@ fun validateInternet(context: Context): Boolean {
     }
 }
 
+fun validateResponse(context: Context, baseResponse: BaseModel): Boolean {
+    return if (baseResponse.status == null) {
+        true
+    } else {
+        val message = if(baseResponse.message == null) Constants.SOMETHING_WENT_WRONG else baseResponse.message!!
+        showInfoAlertDialog(context, message)
+        false
+    }
+}
+
 fun printLog(string: String) {
     Log.d(Constants.LOG_TAG, string)
 }
@@ -112,4 +125,16 @@ fun printLog(string: String) {
 fun dpToPx(context: Context, valueInDp: Float): Float {
     val displayMetrics = context.resources.displayMetrics
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, displayMetrics)
+}
+
+fun saveLoggedInUserToShared(context: Context, userModel: UserModel) {
+    val gson = Gson()
+    val strJson = gson.toJson(userModel)
+    SharedPreferenceHelper.saveStringToShared(context, Constants.LOGGED_IN_USER, strJson)
+}
+
+fun getLoggedInUserFromShared(context: Context): UserModel {
+    val gson = Gson()
+    val strJson = SharedPreferenceHelper.getStringFromShared(context, Constants.LOGGED_IN_USER)
+    return gson.fromJson(strJson, UserModel::class.java)
 }

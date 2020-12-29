@@ -31,13 +31,19 @@ class SplashActivity : AppCompatActivity() {
         splashViewModel.getShouldMoveToHome().observe(this, Observer {
             Handler(Looper.getMainLooper()).postDelayed({
                 if(it) {
-                    // home
+                    moveToHome()
                 } else {
                     moveToRegister()
                 }
             }, Constants.SPLASH_TIME_OUT)
         })
         splashViewModel.checkIfUserLoggedIn()
+    }
+
+    private fun moveToHome() {
+        val homeActivity = Intent(this, HomeActivity::class.java)
+        startActivity(homeActivity)
+        finish()
     }
 
     private fun moveToRegister() {
