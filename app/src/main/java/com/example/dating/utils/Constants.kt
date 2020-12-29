@@ -8,3 +8,8 @@ object Constants {
 
     const val LOG_TAG = "DATING_TAG"
 }
+
+object ApiConstants {
+    const val BASE_URL = "http://37.143.14.155:8080/"
+    const val LOGIN = "auth/signin"
+}
