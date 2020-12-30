@@ -22,12 +22,14 @@
 
     <dimen name="elevation">5dp</dimen>
     <dimen name="cardRadius">30dp</dimen>
+    <dimen name="settingCardRadius">20dp</dimen>
 
     <dimen name="lineHeight">1dp</dimen>
     <dimen name="thickLineHeight">2dp</dimen>
     <dimen name="buttonRadius">25dp</dimen>
 
     <dimen name="photo">120dp</dimen>
+    <dimen name="profilePhoto">150dp</dimen>
     <dimen name="photoRadius">20dp</dimen>
 
     <dimen name="errorTextSize">12sp</dimen>

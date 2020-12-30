@@ -7,7 +7,7 @@
     <string name="password">Пароль</string>
     <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
     <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Отменить</string>
     <string name="register_now">Зарегистрироваться</string>
     <string name="forgot_password">Забыли пароль?</string>
     <string name="hello_you">Здравствуйте, вы:</string>
@@ -27,4 +27,35 @@
     <string name="enter_email">Please enter Email</string>
     <string name="enter_valid_email">Please enter a valid Email</string>
     <string name="enter_password">Please enter Password</string>
+
+    <string name="coins">Монеты</string>
+    <string name="premium">Премиум</string>
+    <string name="belimite_reactions">Белимитные реакции</string>
+    <string name="send_unlimited_reactions">Отправляй безграничное количество реакций</string>
+    <string name="months">месяцев</string>
+    <string name="month">месяц</string>
+    <string name="str_continue">Продолжить</string>
+    <string name="coins_2">Монет</string>
+    <string name="p_per_month">р/мес.</string>
+    <string name="p_per_month_strike"><strike>р/мес.</strike></string>
+    <string name="super_reactions">Супер-реакции</string>
+    <string name="get_reactions_with_opportunity">Получи реакции с возможностью написать первым</string>
+    <string name="the_main">Основные</string>
+    <string name="about_us">О нас</string>
+    <string name="help">Помощь</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="notifications">Уведомления</string>
+    <string name="confidentiality">Конфиденциальность</string>
+    <string name="version">Версия</string>
+    <string name="sign_out">Выйти из аккаунта</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="location">Местоположение</string>
+    <string name="about_myself">О себе</string>
+    <string name="interests">Интересы</string>
+    <string name="growth">Рост</string>
+    <string name="weight">Вес</string>
+    <string name="family_status">Семейное положение</string>
+    <string name="nationality">Национальность</string>
+    <string name="job">Работа</string>
+    <string name="education">Образование</string>
 </resources>
