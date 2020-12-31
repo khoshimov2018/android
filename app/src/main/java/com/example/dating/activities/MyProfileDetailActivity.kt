@@ -1,6 +1,7 @@
 package com.example.dating.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
@@ -28,7 +29,8 @@ class MyProfileDetailActivity : AppCompatActivity() {
 
     private val numberOfImages = 4
     private val listOfCountViews: MutableList<View> = ArrayList()
-    private val listOfImages: MutableList<Int> = mutableListOf(R.color.colorPrimary, R.color.red, R.color.purpleDark, R.color.textColor)
+    private val listOfImages: MutableList<Int> =
+        mutableListOf(R.color.colorPrimary, R.color.red, R.color.purpleDark, R.color.textColor)
 
     private var currentSelectedIndex = 0
 
@@ -43,17 +45,17 @@ class MyProfileDetailActivity : AppCompatActivity() {
 
         imageView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val halfOfScreen = mainLayout.width / 2
-            when (motionEvent.action){
+            when (motionEvent.action) {
                 MotionEvent.ACTION_DOWN -> {
                     val position = motionEvent.x
-                    if(position < halfOfScreen) {
+                    if (position < halfOfScreen) {
                         // go to previous
-                        if(currentSelectedIndex > 0) {
+                        if (currentSelectedIndex > 0) {
                             showIndex(--currentSelectedIndex)
                         }
                     } else {
                         // go to next
-                        if(currentSelectedIndex < listOfImages.size - 1) {
+                        if (currentSelectedIndex < listOfImages.size - 1) {
                             showIndex(++currentSelectedIndex)
                         }
                     }
@@ -71,6 +73,14 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        myProfileDetailViewModel.getMoveToEditProfile()
+            .observe(this, Observer {
+                if(it) {
+                    myProfileDetailViewModel.setMoveToEditProfile(false)
+                    moveToEditProfile()
+                }
+            })
+
         myProfileDetailViewModel.getBackButtonClicked()
             .observe(this, Observer { isPressed: Boolean ->
                 if (isPressed) {
@@ -80,9 +90,10 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        for(index in 0 until numberOfImages) {
+        for (index in 0 until numberOfImages) {
             val view = View(this)
-            val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
+            val layoutParams: LinearLayout.LayoutParams =
+                LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
             layoutParams.setMargins(dpToPx(this, 5F).toInt(), 0, dpToPx(this, 5F).toInt(), 0)
             view.layoutParams = layoutParams
             view.setBackgroundResource(R.color.lightGreyColor)
@@ -101,8 +112,13 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun resetCountViews() {
-        for(view in listOfCountViews) {
+        for (view in listOfCountViews) {
             view.setBackgroundResource(R.color.lightGreyColor)
         }
+    }
+
+    private fun moveToEditProfile() {
+        val intent = Intent(this, EditProfileActivity::class.java)
+        startActivity(intent)
     }
 }

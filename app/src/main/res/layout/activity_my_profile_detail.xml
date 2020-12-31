@@ -52,6 +52,7 @@
                 android:layout_below="@+id/countLinear"
                 android:layout_alignParentEnd="true"
                 android:padding="@dimen/largePadding"
+                android:onClick="@{viewModel::editProfileClicked}"
                 android:src="@drawable/edit" />
         </RelativeLayout>
 

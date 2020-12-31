@@ -58,4 +58,5 @@
     <string name="nationality">Национальность</string>
     <string name="job">Работа</string>
     <string name="education">Образование</string>
+    <string name="edit">Редактировать</string>
 </resources>
