@@ -1,9 +1,12 @@
 package com.example.dating.activities
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -24,7 +27,12 @@ class MyProfileDetailActivity : AppCompatActivity() {
     private lateinit var myProfileDetailViewModel: MyProfileDetailViewModel
 
     private val numberOfImages = 4
+    private val listOfCountViews: MutableList<View> = ArrayList()
+    private val listOfImages: MutableList<Int> = mutableListOf(R.color.colorPrimary, R.color.red, R.color.purpleDark, R.color.textColor)
 
+    private var currentSelectedIndex = 0
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile_detail)
@@ -32,6 +40,27 @@ class MyProfileDetailActivity : AppCompatActivity() {
 
         initViewModel()
         initView()
+
+        imageView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            val halfOfScreen = mainLayout.width / 2
+            when (motionEvent.action){
+                MotionEvent.ACTION_DOWN -> {
+                    val position = motionEvent.x
+                    if(position < halfOfScreen) {
+                        // go to previous
+                        if(currentSelectedIndex > 0) {
+                            showIndex(--currentSelectedIndex)
+                        }
+                    } else {
+                        // go to next
+                        if(currentSelectedIndex < listOfImages.size - 1) {
+                            showIndex(++currentSelectedIndex)
+                        }
+                    }
+                }
+            }
+            return@OnTouchListener true
+        })
     }
 
     private fun initViewModel() {
@@ -59,7 +88,21 @@ class MyProfileDetailActivity : AppCompatActivity() {
             view.setBackgroundResource(R.color.lightGreyColor)
 
             countLinear.addView(view)
+            listOfCountViews.add(view)
         }
-        countLinear.requestLayout()
+
+        showIndex(currentSelectedIndex)
+    }
+
+    private fun showIndex(index: Int) {
+        resetCountViews()
+        imageView.setBackgroundResource(listOfImages[index])
+        listOfCountViews[index].setBackgroundResource(R.color.red)
+    }
+
+    private fun resetCountViews() {
+        for(view in listOfCountViews) {
+            view.setBackgroundResource(R.color.lightGreyColor)
+        }
     }
 }
