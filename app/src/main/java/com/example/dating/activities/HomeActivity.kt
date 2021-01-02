@@ -1,7 +1,10 @@
 package com.example.dating.activities
 
+import android.content.res.ColorStateList
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -54,20 +57,40 @@ class HomeActivity : AppCompatActivity() {
             when (it) {
                 BottomTabs.MY_PROFILE_TAB -> {
                     bottomNavigationView.setBackgroundResource(R.drawable.bottom_tabs_background)
+                    changeIconTintColor(false)
                     showMyProfileTab()
                 }
                 BottomTabs.PROFILES_TAB -> {
-                    bottomNavigationView.setBackgroundResource(android.R.color.white)
+                    bottomNavigationView.setBackgroundResource(R.drawable.bottom_tabs_profiles_background)
+                    changeIconTintColor(true)
                     showProfilesTab()
                 }
                 BottomTabs.MESSENGER_TAB -> {
                     bottomNavigationView.setBackgroundResource(R.drawable.bottom_tabs_background)
+                    changeIconTintColor(false)
                     showMessengerTab()
                 }
             }
         })
         bottomNavigationView.selectedItemId = R.id.action_profiles
         showProfilesTab()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun changeIconTintColor(isWhite: Boolean) {
+        if(isWhite) {
+            if(Build.VERSION.SDK_INT >= 23){
+                bottomNavigationView.itemIconTintList = resources.getColorStateList(R.color.bottom_navigation_color_white, null)
+            } else {
+                bottomNavigationView.itemIconTintList = resources.getColorStateList(R.color.bottom_navigation_color_white)
+            }
+        } else {
+            if(Build.VERSION.SDK_INT >= 23){
+                bottomNavigationView.itemIconTintList = resources.getColorStateList(R.color.bottom_navigation_color, null)
+            } else {
+                bottomNavigationView.itemIconTintList = resources.getColorStateList(R.color.bottom_navigation_color)
+            }
+        }
     }
 
     private fun showMyProfileTab() {
