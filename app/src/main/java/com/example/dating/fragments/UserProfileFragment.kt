@@ -1,31 +1,30 @@
-package com.example.dating.activities
+package com.example.dating.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.FrameLayout
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
-import com.example.dating.databinding.ActivityMyProfileDetailBinding
+import com.example.dating.databinding.UserProfileFragmentBinding
 import com.example.dating.utils.dpToPx
-import com.example.dating.utils.printLog
-import com.example.dating.viewmodels.MyProfileDetailViewModel
-import kotlinx.android.synthetic.main.activity_my_profile_detail.*
+import com.example.dating.viewmodels.UserProfileViewModel
+import kotlinx.android.synthetic.main.user_profile_fragment.*
 
-class MyProfileDetailActivity : AppCompatActivity() {
+class UserProfileFragment : Fragment() {
 
-    private lateinit var binding: ActivityMyProfileDetailBinding
-    private lateinit var myProfileDetailViewModel: MyProfileDetailViewModel
+    companion object {
+        fun newInstance() = UserProfileFragment()
+    }
+
+    private lateinit var viewModel: UserProfileViewModel
+    private lateinit var binding: UserProfileFragmentBinding
 
     private val numberOfImages = 4
     private val listOfCountViews: MutableList<View> = ArrayList()
@@ -33,19 +32,30 @@ class MyProfileDetailActivity : AppCompatActivity() {
         mutableListOf(R.color.color1, R.color.color2, R.color.color3, R.color.color4)
     private var currentSelectedIndex = 0
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_profile_detail)
-        binding.lifecycleOwner = this
+        viewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.user_profile_fragment, container, false)
+        val view: View = binding.root
         initViewModel()
-        initView()
+
+        return view
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         imageView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val halfOfScreen = mainLayout.width / 2
             when (motionEvent.action) {
-                MotionEvent.ACTION_DOWN -> {
+                MotionEvent.ACTION_UP -> {
                     val position = motionEvent.x
                     if (position < halfOfScreen) {
                         // go to previous
@@ -62,42 +72,29 @@ class MyProfileDetailActivity : AppCompatActivity() {
             }
             return@OnTouchListener true
         })
+        initView()
     }
 
     private fun initViewModel() {
-        myProfileDetailViewModel = ViewModelProvider(this).get(MyProfileDetailViewModel::class.java)
-        binding.viewModel = myProfileDetailViewModel
-
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         initObservers()
     }
 
     private fun initObservers() {
-        myProfileDetailViewModel.getMoveToEditProfile()
-            .observe(this, Observer {
-                if(it) {
-                    myProfileDetailViewModel.setMoveToEditProfile(false)
-                    moveToEditProfile()
-                }
-            })
 
-        myProfileDetailViewModel.getBackButtonClicked()
-            .observe(this, Observer { isPressed: Boolean ->
-                if (isPressed) {
-                    this.onBackPressed()
-                }
-            })
     }
 
     private fun initView() {
         for (index in 0 until numberOfImages) {
-            val view = View(this)
+            val view = View(requireActivity())
             val layoutParams: LinearLayout.LayoutParams =
-                LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
-            layoutParams.setMargins(dpToPx(this, 5F).toInt(), 0, dpToPx(this, 5F).toInt(), 0)
+                LinearLayout.LayoutParams(0, dpToPx(requireActivity(), 2F).toInt(), 1F)
+            layoutParams.setMargins(dpToPx(requireActivity(), 5F).toInt(), 0, dpToPx(requireActivity(), 5F).toInt(), 0)
             view.layoutParams = layoutParams
             view.setBackgroundResource(R.color.lightGreyColor)
 
-            countLinear.addView(view)
+            countLinear?.addView(view)
             listOfCountViews.add(view)
         }
 
@@ -114,10 +111,5 @@ class MyProfileDetailActivity : AppCompatActivity() {
         for (view in listOfCountViews) {
             view.setBackgroundResource(R.color.lightGreyColor)
         }
-    }
-
-    private fun moveToEditProfile() {
-        val intent = Intent(this, EditProfileActivity::class.java)
-        startActivity(intent)
     }
 }

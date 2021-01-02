@@ -53,12 +53,15 @@ class HomeActivity : AppCompatActivity() {
         homeViewModel.getTabChanged().observe(this, Observer {
             when (it) {
                 BottomTabs.MY_PROFILE_TAB -> {
+                    bottomNavigationView.setBackgroundResource(R.drawable.bottom_tabs_background)
                     showMyProfileTab()
                 }
                 BottomTabs.PROFILES_TAB -> {
+                    bottomNavigationView.setBackgroundResource(android.R.color.white)
                     showProfilesTab()
                 }
                 BottomTabs.MESSENGER_TAB -> {
+                    bottomNavigationView.setBackgroundResource(R.drawable.bottom_tabs_background)
                     showMessengerTab()
                 }
             }

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.UserProfileFragment">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.UserProfileViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:id="@+id/countLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/normalMargin"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_marginBottom="@dimen/smallMargin"
+                android:orientation="horizontal" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottom_tabs_background"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="60dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/largeMargin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/normalPadding"
+                    android:paddingTop="@dimen/normalPadding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="Москва"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/about_myself"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="Praesent eu dolor euismod, semper neque maximus, sollicitudin elit. Nullam est ex, convallis a lacus nec, sagittis scelerisque leo. Aenean sed purus vitae sem egestas suscipit a id tellus. Vivamus cursus ut nisl ac interdum."
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/interests"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="Interests"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/growth"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="170 см"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/weight"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="51 кг"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/family_status"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="В активном поиске"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/nationality"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="Татарка"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/job"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="Директор, TARAM"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/education"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginBottom="@dimen/largeMargin"
+                        android:text="НИИУ, Специальность, 2009 год выпуска"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

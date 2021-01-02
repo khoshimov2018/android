@@ -13,4 +13,9 @@
     <color name="loaderBackground">#90000000</color>
     <color name="selectedTabColor">#BA62FF</color>
     <color name="premiumBackground">#90FCFCFD</color>
+
+    <color name="color1">#8a4803</color>
+    <color name="color2">#7a7a05</color>
+    <color name="color3">#027075</color>
+    <color name="color4">#11630b</color>
 </resources>

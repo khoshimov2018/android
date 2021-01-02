@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.dating.R
-import com.example.dating.databinding.LoginFragmentBinding
 import com.example.dating.databinding.ProfilesFragmentBinding
 import com.example.dating.viewmodels.ProfilesViewModel
+
+private const val NUM_PAGES = 5
 
 class ProfilesFragment : Fragment() {
 
@@ -20,6 +24,8 @@ class ProfilesFragment : Fragment() {
 
     private lateinit var viewModel: ProfilesViewModel
     private lateinit var binding: ProfilesFragmentBinding
+
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +40,12 @@ class ProfilesFragment : Fragment() {
         val view: View = binding.root
         initViewModel()
 
+        viewPager = view.findViewById(R.id.pager)
+
+        // The pager adapter, which provides the pages to the view pager widget.
+        val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
+        viewPager.adapter = pagerAdapter
+
         return view
     }
 
@@ -45,5 +57,11 @@ class ProfilesFragment : Fragment() {
 
     private fun initObservers() {
 
+    }
+
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = NUM_PAGES
+
+        override fun createFragment(position: Int): Fragment = UserProfileFragment()
     }
 }

@@ -11,14 +11,8 @@
             type="com.example.dating.viewmodels.ProfilesViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Profiles" />
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </layout>
