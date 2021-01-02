@@ -59,4 +59,8 @@
     <string name="job">Работа</string>
     <string name="education">Образование</string>
     <string name="edit">Редактировать</string>
+    <string name="settings">Настройки</string>
+    <string name="posts">Сообщения</string>
+    <string name="reactions">Реакции</string>
+    <string name="no_messages_yet">У вас еще нет диалогов</string>
 </resources>

@@ -28,6 +28,7 @@
     <dimen name="thickLineHeight">2dp</dimen>
     <dimen name="buttonRadius">25dp</dimen>
 
+    <dimen name="reactionPhoto">60dp</dimen>
     <dimen name="photo">120dp</dimen>
     <dimen name="profilePhoto">150dp</dimen>
     <dimen name="photoRadius">20dp</dimen>

@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.example.dating.R
+import com.example.dating.databinding.MessengerFragmentBinding
 import com.example.dating.viewmodels.MessengerViewModel
 
 class MessengerFragment : Fragment() {
@@ -16,18 +18,31 @@ class MessengerFragment : Fragment() {
     }
 
     private lateinit var viewModel: MessengerViewModel
+    private lateinit var binding: MessengerFragmentBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MessengerViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.messenger_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.messenger_fragment, container, false)
+        val view: View = binding.root
+        initViewModel()
+
+        return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MessengerViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun initViewModel() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        initObservers()
     }
 
+    private fun initObservers() {
+
+    }
 }

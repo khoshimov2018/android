@@ -1,13 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".fragments.MessengerFragment">
 
-    <TextView
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.MessengerViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Messenger" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/normalPadding"
+            android:text="@string/posts"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/largeTextSize" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lineHeight"
+            android:background="@color/lightGreyColor" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:text="@string/reactions"
+            android:textColor="@color/textColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalPadding"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/reactionPhoto"
+                android:layout_height="@dimen/reactionPhoto"
+                android:src="@color/colorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/reactionPhoto"
+                android:layout_height="@dimen/reactionPhoto"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:src="@color/colorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/reactionPhoto"
+                android:layout_height="@dimen/reactionPhoto"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:src="@color/colorPrimary" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/heart"
+                android:layout_centerInParent="true"
+                android:text="@string/no_messages_yet"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
