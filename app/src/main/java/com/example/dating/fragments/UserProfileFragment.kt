@@ -61,7 +61,7 @@ class UserProfileFragment : Fragment() {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
 
         var downYValue = 0.0F
-        val threshold = 100F
+        val threshold = 50F
 
         imageView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val halfOfScreen = mainLayout.width / 2

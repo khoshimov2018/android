@@ -66,4 +66,8 @@
     <string name="photo">Фото</string>
     <string name="about_me">Обо мне</string>
     <string name="sp">СП</string>
+    <string name="pol">Пол</string>
+    <string name="actively_looking">В активном поиске</string>
+    <string name="its_complicated">Всё сложно</string>
+    <string name="married">Женат(а)</string>
 </resources>
