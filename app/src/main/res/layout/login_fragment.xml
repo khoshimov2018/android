@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.LoginFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.LoginViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/registrationMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        app:cardCornerRadius="@dimen/cardRadius"
+                        app:cardElevation="@dimen/elevation"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/email"
+                                android:inputType="textEmailAddress"
+                                android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
+                                android:padding="@dimen/largePadding"
+                                android:singleLine="true" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/lineHeight"
+                                android:layout_marginHorizontal="@dimen/normalMargin"
+                                android:background="@color/lightGreyColor" />
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="@string/password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword"
+                                android:onTextChanged="@{(text, start, before, count) -> viewModel.onPasswordTextChanged(text)}"
+                                android:paddingHorizontal="@dimen/largePadding"
+                                android:paddingTop="@dimen/largePadding"
+                                android:paddingBottom="@dimen/normalPadding"
+                                android:singleLine="true" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/largeMargin"
+                                android:layout_marginBottom="@dimen/sLargeMargin"
+                                android:gravity="center"
+                                android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                                android:textAppearance="@style/ErrorTextAppearance"
+                                android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardView"
+                    android:layout_marginHorizontal="@dimen/xLargeMargin"
+                    android:layout_marginTop="-30dp"
+                    android:background="@drawable/round_button_background"
+                    android:onClick="@{viewModel::loginClicked}"
+                    android:text="@string/login"
+                    android:textColor="@android:color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/loginButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:layout_marginBottom="@dimen/xLargeMargin"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/textColor" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <include
+            layout="@layout/common_loader"
+            app:isVisible="@{viewModel.loaderVisible}" />
+    </RelativeLayout>
+</layout>

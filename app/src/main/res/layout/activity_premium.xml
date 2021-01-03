@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.PremiumActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.PremiumViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:onClick="@{viewModel::backPressed}"
+                android:padding="@dimen/largePadding"
+                android:src="@drawable/back"
+                app:tint="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:text="@string/premium"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/largeTextSize"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:text="@string/belimite_reactions"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/largeTextSize"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/xLargeMargin"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:gravity="center"
+                android:text="@string/send_unlimited_reactions"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/normalTextSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/xLargeMargin"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/largePadding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/months"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month_strike"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/premium_background"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/largePadding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/months"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month_strike"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingVertical="@dimen/largePadding">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/month"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month_strike"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/xLargeMargin"
+                android:layout_marginTop="@dimen/xLargeMargin"
+                android:background="@drawable/round_button_unselected"
+                android:text="@string/str_continue"
+                android:textColor="@color/textColor" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/xLargeMargin"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_marginBottom="@dimen/largeMargin"
+                android:background="@null"
+                android:text="@string/str_continue"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+</layout>
