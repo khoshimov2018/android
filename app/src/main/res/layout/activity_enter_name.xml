@@ -115,6 +115,7 @@
                                 android:layout_marginTop="30dp"
                                 android:background="@null"
                                 android:hint="@string/name"
+                                android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameTextChanged(text)}"
                                 android:padding="@dimen/largePadding"
                                 android:singleLine="true" />
 
@@ -123,6 +124,17 @@
                                 android:layout_height="@dimen/lineHeight"
                                 android:layout_marginHorizontal="@dimen/normalMargin"
                                 android:background="@color/lightGreyColor" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/largeMargin"
+                                android:layout_marginTop="@dimen/smallMargin"
+                                android:layout_marginBottom="@dimen/sLargeMargin"
+                                android:gravity="center"
+                                android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                                android:textAppearance="@style/ErrorTextAppearance"
+                                android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </FrameLayout>

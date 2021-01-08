@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityAddPhotosBinding
 import com.example.dating.databinding.ActivityChooseGenderBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
 import com.example.dating.viewmodels.AddPhotosViewModel
 import com.example.dating.viewmodels.ChooseGenderViewModel
 
@@ -27,6 +29,11 @@ class AddPhotosActivity : AppCompatActivity() {
     private fun initViewModel() {
         addPhotosViewModel = ViewModelProvider(this).get(AddPhotosViewModel::class.java)
         binding.viewModel = addPhotosViewModel
+
+        val loggedInUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
+        loggedInUser?.let {
+            addPhotosViewModel.setCurrentUser(it)
+        }
 
         initObservers()
     }
@@ -48,6 +55,7 @@ class AddPhotosActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, ChooseLookingForActivity::class.java)
+        intent.putExtra(Constants.LOGGED_IN_USER, addPhotosViewModel.getCurrentUser())
         startActivity(intent)
     }
 }

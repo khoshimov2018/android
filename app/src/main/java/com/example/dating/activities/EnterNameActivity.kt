@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityChooseGenderBinding
 import com.example.dating.databinding.ActivityEnterNameBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
 import com.example.dating.viewmodels.ChooseGenderViewModel
 import com.example.dating.viewmodels.EnterNameViewModel
 
@@ -27,6 +29,11 @@ class EnterNameActivity : AppCompatActivity() {
     private fun initViewModel() {
         enterNameViewModel = ViewModelProvider(this).get(EnterNameViewModel::class.java)
         binding.viewModel = enterNameViewModel
+
+        val loggedInUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
+        loggedInUser?.let {
+            enterNameViewModel.setCurrentUser(it)
+        }
 
         initObservers()
     }
@@ -48,6 +55,7 @@ class EnterNameActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, EnterDobActivity::class.java)
+        intent.putExtra(Constants.LOGGED_IN_USER, enterNameViewModel.getCurrentUser())
         startActivity(intent)
     }
 }

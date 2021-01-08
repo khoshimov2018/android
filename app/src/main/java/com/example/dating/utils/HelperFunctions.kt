@@ -14,6 +14,8 @@ import com.example.dating.R
 import com.example.dating.models.BaseModel
 import com.example.dating.models.UserModel
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun hideKeyboard(view: View?) {
     view?.let { v ->
@@ -137,4 +139,28 @@ fun getLoggedInUserFromShared(context: Context): UserModel {
     val gson = Gson()
     val strJson = SharedPreferenceHelper.getStringFromShared(context, Constants.LOGGED_IN_USER)
     return gson.fromJson(strJson, UserModel::class.java)
+}
+
+fun formatDobForAPI(calendar: Calendar): String {
+    val format = SimpleDateFormat(Constants.DOB_DATE_FORMAT, Locale.US)
+    return format.format(calendar.time)
+}
+
+fun getRussianLocale(): Locale {
+    return Locale("ru", "RU")
+}
+
+fun getDisplayableDate(calendar: Calendar): String {
+    val format = SimpleDateFormat(Constants.DOB_ONLY_DATE_FORMAT, getRussianLocale())
+    return format.format(calendar.time)
+}
+
+fun getDisplayableMonth(calendar: Calendar): String {
+    val format = SimpleDateFormat(Constants.DOB_ONLY_MONTH_FORMAT, getRussianLocale())
+    return format.format(calendar.time)
+}
+
+fun getDisplayableYear(calendar: Calendar): String {
+    val format = SimpleDateFormat(Constants.DOB_ONLY_YEAR_FORMAT, getRussianLocale())
+    return format.format(calendar.time)
 }

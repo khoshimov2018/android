@@ -8,6 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityChooseGenderBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
 import com.example.dating.viewmodels.ChooseGenderViewModel
 
 class ChooseGenderActivity : AppCompatActivity() {
@@ -25,6 +27,11 @@ class ChooseGenderActivity : AppCompatActivity() {
     private fun initViewModel() {
         chooseGenderViewModel = ViewModelProvider(this).get(ChooseGenderViewModel::class.java)
         binding.viewModel = chooseGenderViewModel
+
+        val loggedInUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
+        loggedInUser?.let {
+            chooseGenderViewModel.setCurrentUser(it)
+        }
 
         initObservers()
     }
@@ -46,6 +53,7 @@ class ChooseGenderActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, EnterNameActivity::class.java)
+        intent.putExtra(Constants.LOGGED_IN_USER, chooseGenderViewModel.getCurrentUser())
         startActivity(intent)
     }
 }

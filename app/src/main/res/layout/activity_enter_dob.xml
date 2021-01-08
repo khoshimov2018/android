@@ -104,81 +104,110 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:orientation="vertical">
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatEditText
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingHorizontal="@dimen/normalMargin"
-                                    android:layout_marginTop="30dp"
-                                    android:background="@null"
-                                    android:hint="@string/date_one"
-                                    android:padding="@dimen/largePadding"
-                                    android:singleLine="true" />
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:orientation="vertical">
 
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/lineHeight"
-                                    android:layout_marginHorizontal="@dimen/normalMargin"
-                                    android:background="@color/lightGreyColor" />
-                            </LinearLayout>
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="30dp"
+                                        android:background="@null"
+                                        android:focusable="false"
+                                        android:gravity="center_horizontal"
+                                        android:hint="@string/date_one"
+                                        android:onClick="@{viewModel::onDobClicked}"
+                                        android:padding="@dimen/largePadding"
+                                        android:paddingHorizontal="@dimen/normalMargin"
+                                        android:singleLine="true"
+                                        android:text="@{viewModel.userModelLiveData.getDate()}" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:orientation="vertical">
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/lineHeight"
+                                        android:layout_marginHorizontal="@dimen/normalMargin"
+                                        android:background="@color/lightGreyColor" />
+                                </LinearLayout>
 
-                                <androidx.appcompat.widget.AppCompatEditText
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingHorizontal="@dimen/normalMargin"
-                                    android:layout_marginTop="30dp"
-                                    android:background="@null"
-                                    android:hint="@string/january"
-                                    android:padding="@dimen/largePadding"
-                                    android:singleLine="true" />
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:orientation="vertical">
 
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/lineHeight"
-                                    android:layout_marginHorizontal="@dimen/normalMargin"
-                                    android:background="@color/lightGreyColor" />
-                            </LinearLayout>
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="30dp"
+                                        android:background="@null"
+                                        android:focusable="false"
+                                        android:gravity="center_horizontal"
+                                        android:hint="@string/january"
+                                        android:onClick="@{viewModel::onDobClicked}"
+                                        android:padding="@dimen/largePadding"
+                                        android:paddingHorizontal="@dimen/normalMargin"
+                                        android:singleLine="true"
+                                        android:text="@{viewModel.userModelLiveData.getMonth()}" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:orientation="vertical">
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/lineHeight"
+                                        android:layout_marginHorizontal="@dimen/normalMargin"
+                                        android:background="@color/lightGreyColor" />
+                                </LinearLayout>
 
-                                <androidx.appcompat.widget.AppCompatEditText
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingHorizontal="@dimen/normalMargin"
-                                    android:layout_marginTop="30dp"
-                                    android:background="@null"
-                                    android:hint="@string/year_1990"
-                                    android:padding="@dimen/largePadding"
-                                    android:singleLine="true" />
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:orientation="vertical">
 
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/lineHeight"
-                                    android:layout_marginHorizontal="@dimen/normalMargin"
-                                    android:background="@color/lightGreyColor" />
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="30dp"
+                                        android:background="@null"
+                                        android:focusable="false"
+                                        android:gravity="center_horizontal"
+                                        android:hint="@string/year_1990"
+                                        android:onClick="@{viewModel::onDobClicked}"
+                                        android:padding="@dimen/largePadding"
+                                        android:paddingHorizontal="@dimen/normalMargin"
+                                        android:singleLine="true"
+                                        android:text="@{viewModel.userModelLiveData.getYear()}" />
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/lineHeight"
+                                        android:layout_marginHorizontal="@dimen/normalMargin"
+                                        android:background="@color/lightGreyColor" />
+                                </LinearLayout>
                             </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/largeMargin"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:layout_marginBottom="@dimen/sLargeMargin"
+                                android:gravity="center"
+                                android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                                android:textAppearance="@style/ErrorTextAppearance"
+                                android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </FrameLayout>

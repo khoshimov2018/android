@@ -5,6 +5,11 @@ object Constants {
     const val SHARED_PREF_NAME = "com.example.dating.shared"
     const val IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN"
     const val LOGGED_IN_USER = "LOGGED_IN_USER"
+    const val DOB_DATE_FORMAT = "yyyy-MM-dd"
+    const val DOB_ONLY_DATE_FORMAT = "dd"
+    const val DOB_ONLY_MONTH_FORMAT = "MMM"
+    const val DOB_ONLY_YEAR_FORMAT = "yyyy"
+    const val MINIMUM_AGE = 18
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -28,4 +33,14 @@ object BottomTabs {
     const val MY_PROFILE_TAB = 1
     const val PROFILES_TAB = 2
     const val MESSENGER_TAB = 3
+}
+
+object Gender {
+    const val MALE = "MALE"
+    const val FEMALE = "FEMALE"
+}
+
+object DobErrorConstants {
+    const val DOB_EMPTY = 1
+    const val AGE_LESS = 2
 }
