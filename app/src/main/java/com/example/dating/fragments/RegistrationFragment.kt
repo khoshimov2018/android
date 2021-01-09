@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.example.dating.R
 import com.example.dating.activities.ChooseGenderActivity
+import com.example.dating.databinding.RegistrationFragmentBinding
 import com.example.dating.utils.Constants
 import com.example.dating.viewmodels.RegistrationViewModel
 import kotlinx.android.synthetic.main.registration_fragment.*
@@ -20,25 +22,42 @@ class RegistrationFragment : Fragment() {
     }
 
     private lateinit var viewModel: RegistrationViewModel
+    private lateinit var binding: RegistrationFragmentBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.registration_fragment, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.registration_fragment, container, false)
+        val view: View = binding.root
+        initViewModel()
+
+        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        registerButton.setOnClickListener {
-            val intent = Intent(requireActivity(), ChooseGenderActivity::class.java)
-            intent.putExtra(Constants.LOGGED_IN_USER, viewModel.getCurrentUser())
-            startActivity(intent)
-        }
+    private fun initViewModel() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        initObservers()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+    private fun initObservers() {
+        viewModel.getMoveFurther().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setMoveFurther(false)
+                moveFurther()
+            }
+        })
+    }
+
+    private fun moveFurther() {
+        val intent = Intent(requireActivity(), ChooseGenderActivity::class.java)
+        intent.putExtra(Constants.LOGGED_IN_USER, viewModel.getCurrentUser())
+        startActivity(intent)
     }
 }

@@ -34,6 +34,15 @@ data class UserModel(
         }
     }
 
+    fun validateRegistrationData(): Int {
+        return when {
+            isEmailEmpty() -> LoginFormErrorConstants.USERNAME_EMPTY
+            !isEmailValid() -> LoginFormErrorConstants.USERNAME_NOT_VALID
+            isPasswordEmpty() -> LoginFormErrorConstants.PASSWORD_EMPTY
+            else -> 0
+        }
+    }
+
     fun isMale(): Boolean {
         return gender == Gender.MALE
     }
@@ -85,6 +94,14 @@ data class UserModel(
 
     private fun isUsernameValid(): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(username.toString()).matches()
+    }
+
+    private fun isEmailEmpty(): Boolean {
+        return email.isNullOrEmpty()
+    }
+
+    private fun isEmailValid(): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()
     }
 
     private fun isPasswordEmpty(): Boolean {

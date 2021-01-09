@@ -8,6 +8,7 @@ import android.os.Looper
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
+import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.viewmodels.SplashViewModel
 
@@ -37,6 +38,14 @@ class SplashActivity : AppCompatActivity() {
                 }
             }, Constants.SPLASH_TIME_OUT)
         })
+
+        splashViewModel.getShouldMoveToRegistrationFlow().observe(this, Observer {
+            Handler(Looper.getMainLooper()).postDelayed({
+                if(it) {
+                    moveToChooseGender()
+                }
+            }, Constants.SPLASH_TIME_OUT)
+        })
         splashViewModel.checkIfUserLoggedIn()
     }
 
@@ -49,6 +58,14 @@ class SplashActivity : AppCompatActivity() {
     private fun moveToRegister() {
         val registerActivity = Intent(this, RegisterActivity::class.java)
         startActivity(registerActivity)
+        finish()
+    }
+
+    private fun moveToChooseGender() {
+        val userModel = UserModel()
+        val intent = Intent(this, ChooseGenderActivity::class.java)
+        intent.putExtra(Constants.LOGGED_IN_USER, userModel)
+        startActivity(intent)
         finish()
     }
 }

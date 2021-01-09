@@ -3,12 +3,12 @@ package com.example.dating.viewmodels
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.dating.R
 import com.example.dating.models.UserModel
-import com.example.dating.utils.DobErrorConstants
-import com.example.dating.utils.formatDobForAPI
-import com.example.dating.utils.printLog
+import com.example.dating.repositories.UserRepository
+import com.example.dating.utils.*
 import java.util.*
 
 class EnterDobViewModel : BaseViewModel() {
@@ -16,6 +16,11 @@ class EnterDobViewModel : BaseViewModel() {
     private val userModelLiveData = MutableLiveData<UserModel>()
     private val showDatePicker: MutableLiveData<Boolean> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
+
+    private lateinit var loggedInUser: UserModel
+
+    private lateinit var apiResponse: LiveData<UserModel>
+    private lateinit var observeResponse: Observer<UserModel>
 
     override fun moveFurther(view: View) {
         userModelLiveData.value?.let {
@@ -27,9 +32,30 @@ class EnterDobViewModel : BaseViewModel() {
                     errorResId.value = R.string.at_least_18
                 }
                 else -> {
-                    moveFurther.value = true
+                    if(validateInternet(view.context)) {
+                        hideKeyboard(view)
+                        loaderVisible.value = true // show loader
+                        observeResponse = Observer<UserModel> {
+                            loaderVisible.value = false
+                            if (validateResponse(view.context, it)) {
+                                moveFurther.value = true
+                            }
+                        }
+                        // token
+                        val strToken = "${loggedInUser.tokenType} ${loggedInUser.jwt}"
+
+                        apiResponse = UserRepository.changeInfo(userModelLiveData.value!!, strToken)
+                        apiResponse.observeForever(observeResponse)
+                    }
                 }
             }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (this::apiResponse.isInitialized) {
+            apiResponse.removeObserver(observeResponse)
         }
     }
 
@@ -71,5 +97,9 @@ class EnterDobViewModel : BaseViewModel() {
 
     fun setShowDatePicker(show: Boolean) {
         showDatePicker.value = show
+    }
+
+    fun setLoggedInUser(user: UserModel) {
+        loggedInUser = user
     }
 }

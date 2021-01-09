@@ -15,6 +15,7 @@ import com.example.dating.databinding.ActivityEnterDobBinding
 import com.example.dating.databinding.ActivityEnterNameBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
+import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.utils.printLog
 import com.example.dating.viewmodels.EnterDobViewModel
 import com.example.dating.viewmodels.EnterNameViewModel
@@ -36,8 +37,11 @@ class EnterDobActivity : AppCompatActivity() {
         enterDobViewModel = ViewModelProvider(this).get(EnterDobViewModel::class.java)
         binding.viewModel = enterDobViewModel
 
-        val loggedInUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
-        loggedInUser?.let {
+        val loggedInUser = getLoggedInUserFromShared(this)
+        enterDobViewModel.setLoggedInUser(loggedInUser)
+
+        val receivedUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
+        receivedUser?.let {
             enterDobViewModel.setCurrentUser(it)
         }
 
