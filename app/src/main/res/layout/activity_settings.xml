@@ -144,6 +144,7 @@
                     android:layout_marginBottom="@dimen/smallMargin"
                     app:cardCornerRadius="@dimen/settingCardRadius"
                     app:cardElevation="@dimen/elevation"
+                    android:onClick="@{viewModel::onAboutUsClicked}"
                     app:cardPreventCornerOverlap="false">
 
                     <RelativeLayout
@@ -176,6 +177,7 @@
                     android:layout_marginHorizontal="@dimen/largeMargin"
                     android:layout_marginTop="@dimen/largeMargin"
                     android:layout_marginBottom="@dimen/smallMargin"
+                    android:onClick="@{viewModel::onHelpClicked}"
                     app:cardCornerRadius="@dimen/settingCardRadius"
                     app:cardElevation="@dimen/elevation"
                     app:cardPreventCornerOverlap="false">
@@ -210,6 +212,7 @@
                     android:layout_marginHorizontal="@dimen/largeMargin"
                     android:layout_marginTop="@dimen/largeMargin"
                     android:layout_marginBottom="@dimen/smallMargin"
+                    android:onClick="@{viewModel::onFeedbackClicked}"
                     app:cardCornerRadius="@dimen/settingCardRadius"
                     app:cardElevation="@dimen/elevation"
                     app:cardPreventCornerOverlap="false">
@@ -317,7 +320,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/normalMargin"
-                    android:text="@string/version"
+                    android:text="@{@string/version(viewModel.versionName)}"
                     android:textColor="@color/textColor"
                     android:textStyle="bold" />
 

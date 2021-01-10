@@ -12,6 +12,10 @@ class SettingsViewModel: BaseViewModel() {
 
     private val moveToCoins: MutableLiveData<Boolean> = MutableLiveData()
     private val moveToPremium: MutableLiveData<Boolean> = MutableLiveData()
+    private val versionName: MutableLiveData<String> = MutableLiveData()
+    private val aboutUsClicked: MutableLiveData<Boolean> = MutableLiveData()
+    private val helpClicked: MutableLiveData<Boolean> = MutableLiveData()
+    private val feedbackClicked: MutableLiveData<Boolean> = MutableLiveData()
 
     fun coinsClicked(view: View) {
         moveToCoins.value = true
@@ -21,8 +25,16 @@ class SettingsViewModel: BaseViewModel() {
         moveToPremium.value = true
     }
 
-    fun getMoveToCoins(): LiveData<Boolean> {
-        return moveToCoins
+    fun onAboutUsClicked(view: View) {
+        aboutUsClicked.value = true
+    }
+
+    fun onHelpClicked(view: View) {
+        helpClicked.value = true
+    }
+
+    fun onFeedbackClicked(view: View) {
+        feedbackClicked.value = true
     }
 
     fun onLogoutClicked(view: View){
@@ -40,6 +52,10 @@ class SettingsViewModel: BaseViewModel() {
         )
     }
 
+    fun getMoveToCoins(): LiveData<Boolean> {
+        return moveToCoins
+    }
+
     fun setMoveToCoins(move: Boolean) {
         moveToCoins.value = move
     }
@@ -50,5 +66,37 @@ class SettingsViewModel: BaseViewModel() {
 
     fun setMoveToPremium(move: Boolean) {
         moveToPremium.value = move
+    }
+
+    fun getVersionName(): LiveData<String> {
+        return versionName
+    }
+
+    fun setVersionName(versionName: String) {
+        this.versionName.value = versionName
+    }
+
+    fun getAboutUsClicked(): LiveData<Boolean> {
+        return aboutUsClicked
+    }
+
+    fun setAboutUsClicked(clicked: Boolean) {
+        aboutUsClicked.value = clicked
+    }
+
+    fun getHelpClicked(): LiveData<Boolean> {
+        return helpClicked
+    }
+
+    fun setHelpClicked(clicked: Boolean) {
+        helpClicked.value = clicked
+    }
+
+    fun getFeedbackClicked(): LiveData<Boolean> {
+        return feedbackClicked
+    }
+
+    fun setFeedbackClicked(clicked: Boolean) {
+        feedbackClicked.value = clicked
     }
 }

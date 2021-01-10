@@ -6,9 +6,12 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.dating.BuildConfig
 import com.example.dating.R
 import com.example.dating.databinding.ActivityAddPhotosBinding
 import com.example.dating.databinding.ActivitySettingsBinding
+import com.example.dating.utils.Constants
+import com.example.dating.utils.openUrlInBrowser
 import com.example.dating.viewmodels.AddPhotosViewModel
 import com.example.dating.viewmodels.CoinsViewModel
 import com.example.dating.viewmodels.SettingsViewModel
@@ -28,6 +31,8 @@ class SettingsActivity : AppCompatActivity() {
     private fun initViewModel() {
         settingsViewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         binding.viewModel = settingsViewModel
+
+        settingsViewModel.setVersionName(BuildConfig.VERSION_NAME)
 
         initObservers()
     }
@@ -52,6 +57,18 @@ class SettingsActivity : AppCompatActivity() {
                 moveToPremium()
             }
         })
+
+        settingsViewModel.getAboutUsClicked().observe(this, {
+            openAboutUs()
+        })
+
+        settingsViewModel.getHelpClicked().observe(this, {
+            openHelp()
+        })
+
+        settingsViewModel.getFeedbackClicked().observe(this, {
+            openFeedback()
+        })
     }
 
     private fun moveToCoins() {
@@ -62,5 +79,17 @@ class SettingsActivity : AppCompatActivity() {
     private fun moveToPremium() {
         val intent = Intent(this, PremiumActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun openAboutUs() {
+        openUrlInBrowser(this, Constants.ABOUT_US_URL)
+    }
+
+    private fun openHelp() {
+        openUrlInBrowser(this, Constants.HELP_URL)
+    }
+
+    private fun openFeedback() {
+        openUrlInBrowser(this, Constants.FEEDBACk_URL)
     }
 }

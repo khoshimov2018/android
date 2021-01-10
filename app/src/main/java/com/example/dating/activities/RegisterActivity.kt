@@ -10,6 +10,7 @@ import com.example.dating.R
 import com.example.dating.adapters.RegistrationTabsAdapter
 import com.example.dating.utils.Constants
 import com.example.dating.utils.dpToPx
+import com.example.dating.utils.openUrlInBrowser
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_register.*
@@ -65,7 +66,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun openPrivacyTerms() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PRIVACY_URL))
-        startActivity(intent)
+        openUrlInBrowser(this, Constants.PRIVACY_URL)
     }
 }

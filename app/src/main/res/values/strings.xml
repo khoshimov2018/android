@@ -53,7 +53,7 @@
     <string name="feedback">Обратная связь</string>
     <string name="notifications">Уведомления</string>
     <string name="confidentiality">Конфиденциальность</string>
-    <string name="version">Версия</string>
+    <string name="version">Версия %s</string>
     <string name="sign_out">Выйти из аккаунта</string>
     <string name="delete_account">Удалить аккаунт</string>
     <string name="location">Местоположение</string>

@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.util.TypedValue
@@ -172,4 +173,9 @@ fun logoutAndMoveToHome(context: Context) {
     val loginScreen = Intent(context, RegisterActivity::class.java)
     loginScreen.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     context.startActivity(loginScreen)
+}
+
+fun openUrlInBrowser(context: Context, url: String) {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(intent)
 }

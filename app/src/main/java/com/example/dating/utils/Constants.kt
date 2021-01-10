@@ -19,6 +19,9 @@ object Constants {
     const val COULD_NOT_CONNECT_TO_SERVER = "Could not connect to server, please try again later."
 
     const val PRIVACY_URL = "https://www.google.com"
+    const val ABOUT_US_URL = "https://www.google.com"
+    const val HELP_URL = "https://www.google.com"
+    const val FEEDBACk_URL = "https://www.google.com"
 
     const val LOG_TAG = "DATING_TAG"
 }
