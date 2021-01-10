@@ -30,6 +30,7 @@
     <string name="choose_gender">Please choose Gender</string>
     <string name="enter_name">Please enter your name</string>
     <string name="choose_dob">Please choose your Date of Birth</string>
+    <string name="choose_looking_for">Please choose Looking For</string>
 
     <string name="coins">Монеты</string>
     <string name="premium">Премиум</string>

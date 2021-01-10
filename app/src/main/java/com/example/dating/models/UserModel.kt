@@ -23,6 +23,7 @@ data class UserModel(
     var weight: Int? = null,
     var workInfo: WorkInfoModel? = null,
     var selectedDOB: Calendar? = null,
+    var lookingFor: String? = null,
     // roles - not parsing as only user will login to the app
 ) : Parcelable, BaseModel() {
     fun validateLoginData(): Int {
@@ -77,6 +78,18 @@ data class UserModel(
             isAgeLess() -> DobErrorConstants.AGE_LESS
             else -> 0
         }
+    }
+
+    fun isLookingForMale(): Boolean {
+        return lookingFor == Gender.MALE
+    }
+
+    fun isLookingForFemale(): Boolean {
+        return lookingFor == Gender.FEMALE
+    }
+
+    fun isLookingForSelected(): Boolean {
+        return lookingFor != null
     }
 
     private fun isDobEmpty(): Boolean {

@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityChooseGenderBinding
 import com.example.dating.databinding.ActivityChooseLookingForBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
+import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.viewmodels.ChooseGenderViewModel
 import com.example.dating.viewmodels.ChooseLookingForViewModel
 
@@ -27,6 +30,14 @@ class ChooseLookingForActivity : AppCompatActivity() {
     private fun initViewModel() {
         chooseLookingForViewModel = ViewModelProvider(this).get(ChooseLookingForViewModel::class.java)
         binding.viewModel = chooseLookingForViewModel
+
+        val loggedInUser = getLoggedInUserFromShared(this)
+        chooseLookingForViewModel.setLoggedInUser(loggedInUser)
+
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
+            chooseLookingForViewModel.setCurrentUser(it)
+        }
 
         initObservers()
     }

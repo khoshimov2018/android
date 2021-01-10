@@ -19,8 +19,6 @@ class AddPhotosViewModel : BaseViewModel() {
     private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
     private val showLessImagesError: MutableLiveData<Boolean> = MutableLiveData()
 
-    private lateinit var loggedInUser: UserModel
-
     private var currentImageForPosition = -1
     private var numberOfImagesUploaded = 0
     private lateinit var view: View
@@ -50,7 +48,7 @@ class AddPhotosViewModel : BaseViewModel() {
             }
 
             // token
-            val strToken = "${loggedInUser.tokenType} ${loggedInUser.jwt}"
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
 
             val inputStream = view.context.contentResolver.openInputStream(uri)!!
             apiResponse = UserRepository.uploadImage(inputStream, strToken)
@@ -88,10 +86,6 @@ class AddPhotosViewModel : BaseViewModel() {
 
     fun getCurrentImageForPosition(): Int {
         return currentImageForPosition
-    }
-
-    fun setLoggedInUser(user: UserModel) {
-        loggedInUser = user
     }
 
     fun getShowLessImagesError(): LiveData<Boolean> {

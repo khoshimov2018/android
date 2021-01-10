@@ -17,8 +17,6 @@ class EnterDobViewModel : BaseViewModel() {
     private val showDatePicker: MutableLiveData<Boolean> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
-    private lateinit var loggedInUser: UserModel
-
     private lateinit var apiResponse: LiveData<UserModel>
     private lateinit var observeResponse: Observer<UserModel>
 
@@ -43,7 +41,7 @@ class EnterDobViewModel : BaseViewModel() {
                             }
                         }
                         // token
-                        val strToken = "${loggedInUser.tokenType} ${loggedInUser.jwt}"
+                        val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
 
                         apiResponse = UserRepository.changeInfo(userModelLiveData.value!!, strToken)
                         apiResponse.observeForever(observeResponse)
@@ -98,9 +96,5 @@ class EnterDobViewModel : BaseViewModel() {
 
     fun setShowDatePicker(show: Boolean) {
         showDatePicker.value = show
-    }
-
-    fun setLoggedInUser(user: UserModel) {
-        loggedInUser = user
     }
 }

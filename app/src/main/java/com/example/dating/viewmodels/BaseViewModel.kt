@@ -4,12 +4,15 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.dating.models.UserModel
 
-open class BaseViewModel: ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     private val backButtonClicked: MutableLiveData<Boolean> = MutableLiveData()
     val loaderVisible: MutableLiveData<Boolean> = MutableLiveData()
     val moveFurther: MutableLiveData<Boolean> = MutableLiveData()
+
+    private lateinit var loggedInUser: UserModel
 
     fun backPressed(view: View) {
         backButtonClicked.value = true
@@ -33,5 +36,15 @@ open class BaseViewModel: ViewModel() {
 
     fun getLoaderVisible(): LiveData<Boolean> {
         return loaderVisible
+    }
+
+    open fun setLoggedInUser(user: UserModel) {
+        loggedInUser = user
+    }
+
+    fun getLoggedInUser(): UserModel? {
+        return if (this::loggedInUser.isInitialized)
+            loggedInUser
+        else null
     }
 }
