@@ -58,7 +58,8 @@ class ChooseLookingForActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        /*val intent = Intent(this, EnterNameActivity::class.java)
-        startActivity(intent)*/
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 }

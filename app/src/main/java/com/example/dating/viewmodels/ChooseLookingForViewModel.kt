@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.dating.R
 import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
 import com.example.dating.utils.Gender
+import com.example.dating.utils.SharedPreferenceHelper
 import com.example.dating.utils.saveLoggedInUserToShared
 
 class ChooseLookingForViewModel : BaseViewModel() {
@@ -18,6 +20,11 @@ class ChooseLookingForViewModel : BaseViewModel() {
     override fun moveFurther(view: View) {
         loggedInUserLiveData.value?.let {
             if(it.isLookingForSelected()) {
+                SharedPreferenceHelper.saveBooleanToShared(
+                    view.context,
+                    Constants.IS_USER_LOGGED_IN,
+                    true
+                )
                 moveFurther.value = true
             } else {
                 errorResId.value = R.string.choose_looking_for

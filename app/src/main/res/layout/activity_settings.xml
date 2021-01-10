@@ -131,7 +131,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/normalMargin"
-                            android:src="@drawable/back" />
+                            android:src="@drawable/forward_arrow" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -165,7 +165,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/normalMargin"
-                            android:src="@drawable/back" />
+                            android:src="@drawable/forward_arrow" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -199,7 +199,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/normalMargin"
-                            android:src="@drawable/back" />
+                            android:src="@drawable/forward_arrow" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -233,7 +233,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/normalMargin"
-                            android:src="@drawable/back" />
+                            android:src="@drawable/forward_arrow" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -267,7 +267,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/normalMargin"
-                            android:src="@drawable/back" />
+                            android:src="@drawable/forward_arrow" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -301,16 +301,16 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/normalMargin"
-                            android:src="@drawable/back" />
+                            android:src="@drawable/forward_arrow" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/xLargeMargin"
-                    android:src="@color/colorPrimary" />
+                    android:src="@drawable/heart" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
