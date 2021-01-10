@@ -40,8 +40,8 @@ class EnterDobActivity : AppCompatActivity() {
         val loggedInUser = getLoggedInUserFromShared(this)
         enterDobViewModel.setLoggedInUser(loggedInUser)
 
-        val receivedUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
-        receivedUser?.let {
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
             enterDobViewModel.setCurrentUser(it)
         }
 
@@ -72,7 +72,7 @@ class EnterDobActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, AddPhotosActivity::class.java)
-        intent.putExtra(Constants.LOGGED_IN_USER, enterDobViewModel.getCurrentUser())
+        intent.putExtra(Constants.PROFILE_USER, enterDobViewModel.getCurrentUser())
         startActivity(intent)
     }
 

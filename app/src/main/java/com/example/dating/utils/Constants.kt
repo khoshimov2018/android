@@ -6,11 +6,13 @@ object Constants {
     const val IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN"
     const val IS_REGISTRATION_DONE = "IS_REGISTRATION_DONE"
     const val LOGGED_IN_USER = "LOGGED_IN_USER"
+    const val PROFILE_USER = "PROFILE_USER"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
     const val DOB_ONLY_YEAR_FORMAT = "yyyy"
     const val MINIMUM_AGE = 18
+    const val MINIMUM_PHOTOS = 3
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -26,6 +28,7 @@ object ApiConstants {
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
     const val CHANGE_INFO = "change/info"
+    const val UPLOAD_IMAGE = "upload-image"
 }
 
 object LoginFormErrorConstants {

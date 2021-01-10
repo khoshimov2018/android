@@ -30,8 +30,8 @@ class EnterNameActivity : AppCompatActivity() {
         enterNameViewModel = ViewModelProvider(this).get(EnterNameViewModel::class.java)
         binding.viewModel = enterNameViewModel
 
-        val loggedInUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
-        loggedInUser?.let {
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
             enterNameViewModel.setCurrentUser(it)
         }
 
@@ -55,7 +55,7 @@ class EnterNameActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, EnterDobActivity::class.java)
-        intent.putExtra(Constants.LOGGED_IN_USER, enterNameViewModel.getCurrentUser())
+        intent.putExtra(Constants.PROFILE_USER, enterNameViewModel.getCurrentUser())
         startActivity(intent)
     }
 }

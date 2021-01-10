@@ -28,8 +28,8 @@ class ChooseGenderActivity : AppCompatActivity() {
         chooseGenderViewModel = ViewModelProvider(this).get(ChooseGenderViewModel::class.java)
         binding.viewModel = chooseGenderViewModel
 
-        val loggedInUser = intent.getParcelableExtra<UserModel>(Constants.LOGGED_IN_USER)
-        loggedInUser?.let {
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
             chooseGenderViewModel.setCurrentUser(it)
         }
 
@@ -53,7 +53,7 @@ class ChooseGenderActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, EnterNameActivity::class.java)
-        intent.putExtra(Constants.LOGGED_IN_USER, chooseGenderViewModel.getCurrentUser())
+        intent.putExtra(Constants.PROFILE_USER, chooseGenderViewModel.getCurrentUser())
         startActivity(intent)
     }
 }

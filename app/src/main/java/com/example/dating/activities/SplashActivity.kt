@@ -64,7 +64,7 @@ class SplashActivity : AppCompatActivity() {
     private fun moveToChooseGender() {
         val userModel = UserModel()
         val intent = Intent(this, ChooseGenderActivity::class.java)
-        intent.putExtra(Constants.LOGGED_IN_USER, userModel)
+        intent.putExtra(Constants.PROFILE_USER, userModel)
         startActivity(intent)
         finish()
     }

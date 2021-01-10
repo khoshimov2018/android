@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.dating.R
 import com.example.dating.activities.ChooseGenderActivity
 import com.example.dating.databinding.RegistrationFragmentBinding
+import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.viewmodels.RegistrationViewModel
 import kotlinx.android.synthetic.main.registration_fragment.*
@@ -56,8 +57,9 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun moveFurther() {
+        val userModel = UserModel()
         val intent = Intent(requireActivity(), ChooseGenderActivity::class.java)
-        intent.putExtra(Constants.LOGGED_IN_USER, viewModel.getCurrentUser())
+        intent.putExtra(Constants.PROFILE_USER, userModel)
         startActivity(intent)
     }
 }
