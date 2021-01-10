@@ -31,6 +31,9 @@
     <string name="enter_name">Please enter your name</string>
     <string name="choose_dob">Please choose your Date of Birth</string>
     <string name="choose_looking_for">Please choose Looking For</string>
+    <string name="sure_logout">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="coins">Монеты</string>
     <string name="premium">Премиум</string>

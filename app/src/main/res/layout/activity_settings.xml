@@ -326,6 +326,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/largeMargin"
+                    android:onClick="@{viewModel::onLogoutClicked}"
                     android:text="@string/sign_out"
                     android:textColor="@color/textColor"
                     android:textStyle="bold" />

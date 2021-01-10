@@ -2,6 +2,7 @@ package com.example.dating.utils
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import com.example.dating.R
+import com.example.dating.activities.RegisterActivity
 import com.example.dating.models.BaseModel
 import com.example.dating.models.UserModel
 import com.google.gson.Gson
@@ -163,4 +165,11 @@ fun getDisplayableMonth(calendar: Calendar): String {
 fun getDisplayableYear(calendar: Calendar): String {
     val format = SimpleDateFormat(Constants.DOB_ONLY_YEAR_FORMAT, getRussianLocale())
     return format.format(calendar.time)
+}
+
+fun logoutAndMoveToHome(context: Context) {
+    SharedPreferenceHelper.clearShared(context)
+    val loginScreen = Intent(context, RegisterActivity::class.java)
+    loginScreen.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    context.startActivity(loginScreen)
 }
