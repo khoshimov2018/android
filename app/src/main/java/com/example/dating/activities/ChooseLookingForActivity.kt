@@ -56,7 +56,7 @@ class ChooseLookingForActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, IntroSliderActivity::class.java)
         startActivity(intent)
         finishAffinity()
     }

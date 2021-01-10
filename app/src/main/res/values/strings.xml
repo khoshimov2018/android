@@ -98,4 +98,17 @@
     <string name="error_failed_to_compress_image">Failed to compress image</string>
     <string name="error_task_cancelled">Task Cancelled</string>
     <string name="error_camera_app_not_found">Camera app not found</string>
+    <!--Image Picker Ends-->
+
+    <!--Intro Slider-->
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="get_started">Get Started</string>
+    <string name="text_intro1">Title One</string>
+    <string name="text_intro2">Title Two</string>
+    <string name="text_intro3">Title Three</string>
+    <string name="desc_intro1">Here goes some long description of the feature that we are showing.</string>
+    <string name="desc_intro2">Here goes some long description of the feature that we are showing.</string>
+    <string name="desc_intro3">Here goes some long description of the feature that we are showing.</string>
+    <!--Intro Slider Ends-->
 </resources>
