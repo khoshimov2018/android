@@ -1,16 +1,25 @@
 package com.example.dating.activities
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityEnterDobBinding
 import com.example.dating.databinding.ActivityEnterNameBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
+import com.example.dating.utils.getLoggedInUserFromShared
+import com.example.dating.utils.printLog
 import com.example.dating.viewmodels.EnterDobViewModel
 import com.example.dating.viewmodels.EnterNameViewModel
+import java.util.*
 
 class EnterDobActivity : AppCompatActivity() {
 
@@ -28,6 +37,14 @@ class EnterDobActivity : AppCompatActivity() {
         enterDobViewModel = ViewModelProvider(this).get(EnterDobViewModel::class.java)
         binding.viewModel = enterDobViewModel
 
+        val loggedInUser = getLoggedInUserFromShared(this)
+        enterDobViewModel.setLoggedInUser(loggedInUser)
+
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
+            enterDobViewModel.setCurrentUser(it)
+        }
+
         initObservers()
     }
 
@@ -35,6 +52,13 @@ class EnterDobActivity : AppCompatActivity() {
         enterDobViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
+            }
+        })
+
+        enterDobViewModel.getShowDatePicker().observe(this, Observer {
+            if (it) {
+                enterDobViewModel.setShowDatePicker(false)
+                showDatePicker()
             }
         })
 
@@ -48,6 +72,25 @@ class EnterDobActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, AddPhotosActivity::class.java)
+        intent.putExtra(Constants.PROFILE_USER, enterDobViewModel.getCurrentUser())
         startActivity(intent)
+    }
+
+    private fun showDatePicker() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val picker = DatePickerDialog(
+            this,
+            { _, selectedYear, selectedMonth, selectedDay ->
+                run {
+                    enterDobViewModel.setDateOfBirth(selectedYear, selectedMonth, selectedDay)
+                }
+            }, year, month, day
+        )
+        picker.datePicker.maxDate = c.timeInMillis
+        picker.show()
     }
 }

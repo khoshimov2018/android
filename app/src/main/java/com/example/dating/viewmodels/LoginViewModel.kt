@@ -54,6 +54,13 @@ class LoginViewModel : BaseViewModel() {
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        if (this::apiResponse.isInitialized) {
+            apiResponse.removeObserver(observeResponse)
+        }
+    }
+
     fun onUsernameTextChanged(charSequence: CharSequence) {
         user.username = charSequence.toString()
         errorResId.value = null

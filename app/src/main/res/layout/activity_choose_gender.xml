@@ -25,8 +25,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/mediumPadding"
                 android:onClick="@{viewModel::backPressed}"
+                android:padding="@dimen/mediumPadding"
                 android:src="@drawable/back" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -94,17 +94,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/xLargeMargin"
                     android:layout_marginBottom="@dimen/largeMargin"
-                    android:background="@drawable/round_button_selected"
+                    android:background="@{viewModel.userModelLiveData.isMale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                    android:onClick="@{viewModel::onMaleClicked}"
                     android:text="@string/male"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@{viewModel.userModelLiveData.isMale() ? @android:color/white : @color/textColor}" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/xLargeMargin"
-                    android:background="@drawable/round_button_unselected"
+                    android:layout_marginBottom="@dimen/normalMargin"
+                    android:background="@{viewModel.userModelLiveData.isFemale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                    android:onClick="@{viewModel::onFemaleClicked}"
                     android:text="@string/female"
-                    android:textColor="@color/textColor" />
+                    android:textColor="@{viewModel.userModelLiveData.isFemale() ? @android:color/white : @color/textColor}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:layout_marginBottom="@dimen/normalMargin"
+                    android:gravity="center"
+                    android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                    android:textAppearance="@style/ErrorTextAppearance"
+                    android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton

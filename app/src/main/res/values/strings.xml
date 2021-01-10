@@ -5,7 +5,6 @@
     <string name="privacy_terms">Условия конфиденциальности</string>
     <string name="email">Email</string>
     <string name="password">Пароль</string>
-    <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
     <string name="ok">OK</string>
     <string name="cancel">Отменить</string>
     <string name="register_now">Зарегистрироваться</string>
@@ -24,9 +23,14 @@
     <string name="add_photo">Добавьте фото</string>
     <string name="choose_from_3_to_6_photo">Выберите от 3 до 6 фотографий</string>
 
+    <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
     <string name="enter_email">Please enter Email</string>
     <string name="enter_valid_email">Please enter a valid Email</string>
     <string name="enter_password">Please enter Password</string>
+    <string name="choose_gender">Please choose Gender</string>
+    <string name="enter_name">Please enter your name</string>
+    <string name="choose_dob">Please choose your Date of Birth</string>
+    <string name="choose_looking_for">Please choose Looking For</string>
 
     <string name="coins">Монеты</string>
     <string name="premium">Премиум</string>
@@ -70,4 +74,25 @@
     <string name="actively_looking">В активном поиске</string>
     <string name="its_complicated">Всё сложно</string>
     <string name="married">Женат(а)</string>
+    <string name="at_least_18">Вам должно быть больше 18-ти лет</string>
+
+    <!-- Image Picker -->
+    <string name="title_choose_image_provider">выберите</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="title_gallery">Галерея</string>
+    <string name="title_camera">Камера</string>
+    <string name="message_gallery_permission_denied">Read External Storage permission is needed to select Image. Please turn on the requested permission from Settings > Permissions.</string>
+    <string name="message_camera_permission_denied">Camera and External Storage permissions are needed to capture the image. Turning off any permission won\'t allow the application to run smoothly. Please turn on all requested permissions from Settings > Permissions.</string>
+    <string name="permission_gallery_denied">
+        <![CDATA[Storage permission is needed to pick gallery image. Please allow storage permission from Settings > Permissions.]]></string>
+    <string name="permission_camera_extended_denied">
+        <![CDATA[Camera and Storage permissions are needed to take a picture. Please allow both the requested permissions from Settings > Permissions.]]></string>
+    <string name="permission_camera_denied">
+        <![CDATA[Storage permission is needed to take a picture. Please allow storage permission from Settings > Permissions.]]></string>
+    <string name="error_failed_to_create_camera_image_file">Failed to create Camera image file</string>
+    <string name="error_failed_pick_gallery_image">Failed to pick Gallery image</string>
+    <string name="error_failed_to_crop_image">Failed to crop image</string>
+    <string name="error_failed_to_compress_image">Failed to compress image</string>
+    <string name="error_task_cancelled">Task Cancelled</string>
+    <string name="error_camera_app_not_found">Camera app not found</string>
 </resources>

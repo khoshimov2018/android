@@ -1,11 +1,14 @@
 package com.example.dating.activities
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dating.R
 import com.example.dating.adapters.RegistrationTabsAdapter
+import com.example.dating.utils.Constants
 import com.example.dating.utils.dpToPx
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -18,6 +21,10 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+
+        privacyTerms.setOnClickListener {
+            openPrivacyTerms()
+        }
 
         initViews()
     }
@@ -55,5 +62,10 @@ class RegisterActivity : AppCompatActivity() {
                 privacyTerms.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun openPrivacyTerms() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.PRIVACY_URL))
+        startActivity(intent)
     }
 }
