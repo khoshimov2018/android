@@ -21,4 +21,7 @@ interface RetrofitInterface {
     @Multipart
     @POST(ApiConstants.UPLOAD_IMAGE)
     fun uploadImage(@Part filePart: MultipartBody.Part, @Header("Authorization") token: String): Call<UserModel>
+
+    @GET(ApiConstants.GET_INFO)
+    fun getInfo(@Header("Authorization") token: String): Call<UserModel>
 }

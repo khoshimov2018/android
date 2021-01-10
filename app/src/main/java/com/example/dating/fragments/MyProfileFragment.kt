@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.dating.R
 import com.example.dating.activities.*
 import com.example.dating.databinding.MyProfileFragmentBinding
+import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.viewmodels.LoginViewModel
 import com.example.dating.viewmodels.MyProfileViewModel
 
@@ -43,6 +44,9 @@ class MyProfileFragment : Fragment() {
     private fun initViewModel() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        viewModel.setLoggedInUser(getLoggedInUserFromShared(requireActivity()))
+
         initObservers()
     }
 
@@ -74,6 +78,11 @@ class MyProfileFragment : Fragment() {
                 moveToPremium()
             }
         })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getUserProfile()
     }
 
     private fun moveToSettings() {

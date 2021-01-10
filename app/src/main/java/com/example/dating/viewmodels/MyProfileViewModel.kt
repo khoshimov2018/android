@@ -1,16 +1,51 @@
 package com.example.dating.viewmodels
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.dating.models.UserModel
+import com.example.dating.repositories.UserRepository
+import com.example.dating.utils.isInternetAvailable
 
-class MyProfileViewModel : ViewModel() {
+class MyProfileViewModel(application: Application) : BaseAndroidViewModel(application) {
 
     private val moveToSettings: MutableLiveData<Boolean> = MutableLiveData()
     private val moveToProfile: MutableLiveData<Boolean> = MutableLiveData()
     private val moveToCoins: MutableLiveData<Boolean> = MutableLiveData()
     private val moveToPremium: MutableLiveData<Boolean> = MutableLiveData()
+
+    private lateinit var apiResponse: LiveData<UserModel>
+    private lateinit var observeResponse: Observer<UserModel>
+
+    private val baseResponse: MutableLiveData<UserModel> = MutableLiveData()
+
+    fun getUserProfile() {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
+
+            observeResponse = Observer<UserModel> {
+                loaderVisible.value = false
+
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            apiResponse = UserRepository.getInfo(strToken)
+            apiResponse.observeForever(observeResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (this::apiResponse.isInitialized) {
+            apiResponse.removeObserver(observeResponse)
+        }
+    }
 
     fun settingsClicked(view: View) {
         moveToSettings.value = true
