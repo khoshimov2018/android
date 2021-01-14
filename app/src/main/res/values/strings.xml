@@ -73,6 +73,8 @@
     <string name="year_of_issue">Год выпуска</string>
     <string name="position">Должность</string>
     <string name="company">Компания</string>
+    <string name="height_weight">Рост, вес</string>
+    <string name="tell_us_about_yourself">Расскажите о себе</string>
 
     <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
     <string name="enter_email">Please enter Email</string>
