@@ -70,6 +70,27 @@
         <activity
             android:name=".activities.IntroSliderActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AboutMeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HeightWeightActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FamilyStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.JobActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EducationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NationalitiesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyInterestsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

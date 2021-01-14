@@ -24,4 +24,10 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.GET_INFO)
     fun getInfo(@Header("Authorization") token: String): Call<UserModel>
+
+    @GET(ApiConstants.GET_INTERESTS)
+    fun getInterests(@Header("Authorization") token: String): Call<UserModel>
+
+    @GET(ApiConstants.GET_NATIONALITIES)
+    fun getNationalities(@Header("Authorization") token: String): Call<UserModel>
 }

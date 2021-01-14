@@ -12,6 +12,7 @@ open class BaseAndroidViewModel(application: Application): AndroidViewModel(appl
     val context = application.applicationContext
     private lateinit var loggedInUser: UserModel
     val showNoInternet: MutableLiveData<Boolean> = MutableLiveData()
+    val moveFurther: MutableLiveData<Boolean> = MutableLiveData()
 //    private val baseResponse: MutableLiveData<BaseResponse?> = MutableLiveData()
 
     private val backButtonClicked: MutableLiveData<Boolean> = MutableLiveData()
@@ -45,6 +46,18 @@ open class BaseAndroidViewModel(application: Application): AndroidViewModel(appl
 
     fun setShowNoInternet(showNoInternet: Boolean) {
         this.showNoInternet.value = showNoInternet
+    }
+
+    open fun moveFurther(view: View) {
+        moveFurther.value = true
+    }
+
+    fun getMoveFurther(): LiveData<Boolean> {
+        return moveFurther
+    }
+
+    fun setMoveFurther(move: Boolean) {
+        moveFurther.value = move
     }
 
     /*fun getBaseResponse(): LiveData<BaseResponse?> {

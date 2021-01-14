@@ -7,57 +7,60 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
-import com.example.dating.databinding.ActivityChooseLookingForBinding
+import com.example.dating.databinding.ActivityEducationBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
-import com.example.dating.viewmodels.ChooseLookingForViewModel
+import com.example.dating.viewmodels.EducationViewModel
+import com.example.dating.viewmodels.NationalitiesViewModel
 
-class ChooseLookingForActivity : AppCompatActivity() {
+class EducationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityChooseLookingForBinding
-    private lateinit var chooseLookingForViewModel: ChooseLookingForViewModel
+    private lateinit var binding: ActivityEducationBinding
+    private lateinit var educationViewModel: EducationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_choose_looking_for)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_education)
         binding.lifecycleOwner = this
         initViewModel()
     }
 
     private fun initViewModel() {
-        chooseLookingForViewModel = ViewModelProvider(this).get(ChooseLookingForViewModel::class.java)
-        binding.viewModel = chooseLookingForViewModel
+        educationViewModel = ViewModelProvider(this).get(EducationViewModel::class.java)
+        binding.viewModel = educationViewModel
 
         val loggedInUser = getLoggedInUserFromShared(this)
-        chooseLookingForViewModel.setLoggedInUser(loggedInUser)
+        educationViewModel.setLoggedInUser(loggedInUser)
 
         val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
         profileUser?.let {
-            chooseLookingForViewModel.setCurrentUser(it)
+            educationViewModel.setCurrentUser(it)
         }
+
+//        educationViewModel.getNationalities()
 
         initObservers()
     }
 
     private fun initObservers() {
-        chooseLookingForViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
+        educationViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
             }
         })
 
-        chooseLookingForViewModel.getMoveFurther().observe(this, Observer {
+        educationViewModel.getMoveFurther().observe(this, Observer {
             if (it) {
-                chooseLookingForViewModel.setMoveFurther(false)
+                educationViewModel.setMoveFurther(false)
                 moveFurther()
             }
         })
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, MyInterestsActivity::class.java)
+        val intent = Intent(this, JobActivity::class.java)
+        intent.putExtra(Constants.PROFILE_USER, educationViewModel.getCurrentUser())
         startActivity(intent)
-        finishAffinity()
     }
 }

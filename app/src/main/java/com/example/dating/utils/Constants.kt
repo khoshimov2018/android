@@ -33,6 +33,8 @@ object ApiConstants {
     const val CHANGE_INFO = "change/info"
     const val GET_INFO = "get/info"
     const val UPLOAD_IMAGE = "upload-image"
+    const val GET_INTERESTS = "common/interests"
+    const val GET_NATIONALITIES = "common/nationalities"
 }
 
 object LoginFormErrorConstants {
