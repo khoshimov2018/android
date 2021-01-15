@@ -114,10 +114,18 @@ fun validateInternet(context: Context): Boolean {
 }
 
 fun validateResponse(context: Context, baseResponse: BaseModel): Boolean {
-    return if (baseResponse.status == null) {
+    return if (baseResponse.status == null && (baseResponse.code == null || baseResponse.code == 0)) {
         true
     } else {
-        val message = if(baseResponse.message == null) Constants.SOMETHING_WENT_WRONG else baseResponse.message!!
+        val message = if(baseResponse.message == null) {
+            if(baseResponse.data == null) {
+                Constants.SOMETHING_WENT_WRONG
+            } else {
+                baseResponse.data!!
+            }
+        } else {
+            baseResponse.message!!
+        }
         showInfoAlertDialog(context, message)
         false
     }

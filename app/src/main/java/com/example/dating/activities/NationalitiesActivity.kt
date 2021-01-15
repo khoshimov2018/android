@@ -7,10 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
+import com.example.dating.adapters.InterestsAdapter
+import com.example.dating.adapters.NationalitiesAdapter
 import com.example.dating.databinding.ActivityNationalitiesBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
+import com.example.dating.utils.showInfoAlertDialog
 import com.example.dating.viewmodels.MyInterestsViewModel
 import com.example.dating.viewmodels.NationalitiesViewModel
 
@@ -18,6 +21,8 @@ class NationalitiesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNationalitiesBinding
     private lateinit var nationalitiesViewModel: NationalitiesViewModel
+
+    private var nationalitiesAdapter: NationalitiesAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +49,20 @@ class NationalitiesActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        nationalitiesViewModel.getNationalitiesList().observe(this, {
+            if(it != null) {
+                if(it.isEmpty()) {
+                    showInfoAlertDialog(this, getString(R.string.no_nationalities))
+                } else {
+                    nationalitiesAdapter = NationalitiesAdapter(it, nationalitiesViewModel)
+                    binding.adapter = nationalitiesAdapter
+                    nationalitiesAdapter?.notifyDataSetChanged()
+                }
+            } else {
+                nationalitiesAdapter = null
+            }
+        })
+
         nationalitiesViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()

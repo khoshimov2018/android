@@ -7,10 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
+import com.example.dating.adapters.InterestsAdapter
 import com.example.dating.databinding.ActivityMyInterestsBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
+import com.example.dating.utils.showInfoAlertDialog
 import com.example.dating.viewmodels.EnterDobViewModel
 import com.example.dating.viewmodels.MyInterestsViewModel
 
@@ -18,6 +20,8 @@ class MyInterestsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyInterestsBinding
     private lateinit var myInterestsViewModel: MyInterestsViewModel
+
+    private var interestsAdapter: InterestsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,20 @@ class MyInterestsActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        myInterestsViewModel.getInterestsList().observe(this, {
+            if(it != null) {
+                if(it.isEmpty()) {
+                    showInfoAlertDialog(this, getString(R.string.no_interests))
+                } else {
+                    interestsAdapter = InterestsAdapter(it, myInterestsViewModel)
+                    binding.adapter = interestsAdapter
+                    interestsAdapter?.notifyDataSetChanged()
+                }
+            } else {
+                interestsAdapter = null
+            }
+        })
+
         myInterestsViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()

@@ -87,6 +87,8 @@
     <string name="sure_logout">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="no_interests">No interests available</string>
+    <string name="no_nationalities">No nationalities available</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

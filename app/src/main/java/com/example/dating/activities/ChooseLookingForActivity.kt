@@ -57,6 +57,7 @@ class ChooseLookingForActivity : AppCompatActivity() {
 
     private fun moveFurther() {
         val intent = Intent(this, MyInterestsActivity::class.java)
+        intent.putExtra(Constants.PROFILE_USER, chooseLookingForViewModel.getCurrentUser())
         startActivity(intent)
         finishAffinity()
     }

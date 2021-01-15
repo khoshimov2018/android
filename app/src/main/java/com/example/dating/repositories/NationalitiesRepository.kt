@@ -13,13 +13,13 @@ import retrofit2.Response
 object NationalitiesRepository {
     private val retrofitService = RetrofitService.getService()
 
-    fun getNationalities(strToken: String): LiveData<UserModel> {
-        val data = MutableLiveData<UserModel>()
+    fun getNationalities(strToken: String): LiveData<Any> {
+        val data = MutableLiveData<Any>()
         retrofitService.getNationalities(strToken)
-            .enqueue(object : Callback<UserModel> {
+            .enqueue(object : Callback<Any> {
                 override fun onResponse(
-                    call: Call<UserModel>,
-                    response: Response<UserModel>
+                    call: Call<Any>,
+                    response: Response<Any>
                 ) {
                     if (response.isSuccessful) {
                         data.value = response.body()
@@ -43,7 +43,7 @@ object NationalitiesRepository {
                     }
                 }
 
-                override fun onFailure(call: Call<UserModel>, t: Throwable) {
+                override fun onFailure(call: Call<Any>, t: Throwable) {
                     val baseResponse = UserModel()
                     baseResponse.status = 401
                     baseResponse.error = Constants.ERROR

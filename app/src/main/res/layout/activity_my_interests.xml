@@ -10,6 +10,10 @@
         <variable
             name="viewModel"
             type="com.example.dating.viewmodels.MyInterestsViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.dating.adapters.InterestsAdapter" />
     </data>
 
     <RelativeLayout
@@ -87,7 +91,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/button"
-                    android:layout_marginTop="@dimen/normalMargin"
+                    android:adapter="@{adapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <androidx.appcompat.widget.AppCompatButton

@@ -6,4 +6,6 @@ abstract class BaseModel {
     var status: Int? = null
     var error: String? = null
     var message: String? = null
+    var code: Int? = null
+    var data: String? = null
 }

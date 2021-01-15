@@ -5,11 +5,16 @@
     tools:context=".activities.NationalitiesActivity">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.example.dating.viewmodels.NationalitiesViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.dating.adapters.NationalitiesAdapter" />
     </data>
 
     <RelativeLayout
@@ -78,18 +83,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/button"
-                    android:layout_marginTop="@dimen/normalMargin"
+                    android:adapter="@{adapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginHorizontal="@dimen/xLargeMargin"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:layout_marginBottom="@dimen/normalMargin"
                     android:background="@drawable/round_button_background"
-                    android:layout_alignParentBottom="true"
                     android:onClick="@{viewModel::moveFurther}"
                     android:text="@string/further"
                     android:textColor="@android:color/white" />
