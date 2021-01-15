@@ -78,6 +78,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -87,7 +89,7 @@
                         android:layout_marginTop="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/position"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onPositionTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />
@@ -99,7 +101,7 @@
                         android:layout_marginTop="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/company"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onCompanyTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />
@@ -108,11 +110,11 @@
                         android:id="@+id/button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/largeMargin"
                         android:layout_marginBottom="@dimen/largeMargin"
                         android:background="@drawable/round_button_background"
-                        android:layout_alignParentBottom="true"
                         android:onClick="@{viewModel::moveFurther}"
                         android:text="@string/further"
                         android:textColor="@android:color/white" />

@@ -1,8 +1,10 @@
 package com.example.dating.viewmodels
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.dating.models.EducationInfoModel
 import com.example.dating.models.UserModel
 
 class EducationViewModel: BaseViewModel() {
@@ -11,9 +13,29 @@ class EducationViewModel: BaseViewModel() {
     private lateinit var apiResponse: LiveData<UserModel>
     private lateinit var observeResponse: Observer<UserModel>
 
-    fun onUsernameTextChanged(charSequence: CharSequence) {
-//        user.username = charSequence.toString()
-//        errorResId.value = null
+    private val educationInfoModel = EducationInfoModel()
+
+    override fun moveFurther(view: View) {
+        userModelLiveData.value?.let {
+            it.educationInfo = educationInfoModel
+        }
+        moveFurther.value = true
+    }
+
+    fun onInstitutionNameTextChanged(charSequence: CharSequence) {
+        educationInfoModel.institutionName = charSequence.toString()
+    }
+
+    fun onLevelTextChanged(charSequence: CharSequence) {
+        educationInfoModel.level = charSequence.toString()
+    }
+
+    fun onGraduationYearTextChanged(charSequence: CharSequence) {
+        try {
+            educationInfoModel.graduationYear = charSequence.toString().toInt()
+        } catch (e: Exception) {
+            educationInfoModel.graduationYear = 0
+        }
     }
 
     fun setCurrentUser(userModel: UserModel) {

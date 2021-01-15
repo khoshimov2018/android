@@ -77,6 +77,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -86,7 +88,7 @@
                         android:layout_marginTop="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/where_did_you_study"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onInstitutionNameTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />
@@ -98,7 +100,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/power"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onLevelTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />
@@ -110,7 +112,9 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/year_of_issue"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onUsernameTextChanged(text)}"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onGraduationYearTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />

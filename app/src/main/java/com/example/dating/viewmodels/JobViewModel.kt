@@ -1,9 +1,11 @@
 package com.example.dating.viewmodels
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.dating.models.UserModel
+import com.example.dating.models.WorkInfoModel
 
 class JobViewModel: BaseViewModel() {
 
@@ -11,9 +13,21 @@ class JobViewModel: BaseViewModel() {
     private lateinit var apiResponse: LiveData<UserModel>
     private lateinit var observeResponse: Observer<UserModel>
 
-    fun onUsernameTextChanged(charSequence: CharSequence) {
-//        user.username = charSequence.toString()
-//        errorResId.value = null
+    private val workInfoModel = WorkInfoModel()
+
+    override fun moveFurther(view: View) {
+        userModelLiveData.value?.let {
+            it.workInfo = workInfoModel
+        }
+        moveFurther.value = true
+    }
+
+    fun onPositionTextChanged(charSequence: CharSequence) {
+        workInfoModel.position = charSequence.toString()
+    }
+
+    fun onCompanyTextChanged(charSequence: CharSequence) {
+        workInfoModel.companyName = charSequence.toString()
     }
 
     fun setCurrentUser(userModel: UserModel) {

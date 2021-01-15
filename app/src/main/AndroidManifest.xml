@@ -81,9 +81,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.JobActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EducationActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.NationalitiesActivity"

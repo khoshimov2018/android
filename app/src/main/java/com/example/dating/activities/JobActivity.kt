@@ -38,8 +38,6 @@ class JobActivity : AppCompatActivity() {
             jobViewModel.setCurrentUser(it)
         }
 
-//        educationViewModel.getNationalities()
-
         initObservers()
     }
 
