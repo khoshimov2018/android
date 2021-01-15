@@ -5,12 +5,11 @@
     tools:context=".activities.AboutMeActivity">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.HeightWeightViewModel" />
+            type="com.example.dating.viewmodels.AboutMeViewModel" />
     </data>
 
     <RelativeLayout
@@ -55,6 +54,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -77,10 +78,11 @@
                 android:layout_marginHorizontal="@dimen/largeMargin"
                 android:layout_marginTop="@dimen/largeMargin"
                 android:background="@drawable/round_button_unselected"
+                android:gravity="top"
                 android:hint="@string/tell_us_about_yourself"
                 android:maxLines="10"
                 android:minLines="8"
-                android:gravity="top"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onAboutMeTextChanged(text)}"
                 android:padding="@dimen/normalPadding"
                 android:paddingStart="@dimen/largeMargin"
                 android:textColor="@color/textColor" />

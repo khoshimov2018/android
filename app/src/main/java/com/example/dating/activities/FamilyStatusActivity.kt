@@ -38,8 +38,6 @@ class FamilyStatusActivity : AppCompatActivity() {
             familyStatusViewModel.setCurrentUser(it)
         }
 
-//        educationViewModel.getNationalities()
-
         initObservers()
     }
 

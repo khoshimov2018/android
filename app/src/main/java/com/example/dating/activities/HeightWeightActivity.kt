@@ -38,8 +38,6 @@ class HeightWeightActivity : AppCompatActivity() {
             heightWeightViewModel.setCurrentUser(it)
         }
 
-//        educationViewModel.getNationalities()
-
         initObservers()
     }
 

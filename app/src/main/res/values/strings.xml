@@ -47,7 +47,9 @@
     <string name="about_myself">О себе</string>
     <string name="interests">Интересы</string>
     <string name="growth">Рост</string>
+    <string name="growth_value">%d, Рост</string>
     <string name="weight">Вес</string>
+    <string name="weight_value">%d, Вес</string>
     <string name="family_status">Семейное положение</string>
     <string name="nationality">Национальность</string>
     <string name="job">Работа</string>

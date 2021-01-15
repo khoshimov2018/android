@@ -5,7 +5,6 @@
     tools:context=".activities.JobActivity">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable

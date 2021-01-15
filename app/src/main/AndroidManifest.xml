@@ -72,6 +72,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.AboutMeActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HeightWeightActivity"
