@@ -131,6 +131,10 @@ fun validateResponse(context: Context, baseResponse: BaseModel): Boolean {
     }
 }
 
+fun validateResponseWithoutPopup(baseResponse: BaseModel): Boolean {
+    return baseResponse.status == null && (baseResponse.code == null || baseResponse.code == 0)
+}
+
 fun printLog(string: String) {
     Log.d(Constants.LOG_TAG, string)
 }

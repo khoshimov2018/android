@@ -13,6 +13,8 @@ import com.example.dating.R
 import com.example.dating.activities.*
 import com.example.dating.databinding.MyProfileFragmentBinding
 import com.example.dating.utils.getLoggedInUserFromShared
+import com.example.dating.utils.showInfoAlertDialog
+import com.example.dating.utils.validateResponse
 import com.example.dating.viewmodels.LoginViewModel
 import com.example.dating.viewmodels.MyProfileViewModel
 
@@ -51,6 +53,20 @@ class MyProfileFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setShowNoInternet(false)
+                showInfoAlertDialog(requireActivity(), getString(R.string.no_internet))
+            }
+        })
+
+        viewModel.getBaseResponse().observe(viewLifecycleOwner, {
+            it?.let {
+                viewModel.setBaseResponse(null)
+                validateResponse(requireActivity(), it)
+            }
+        })
+
         viewModel.getMoveToSettings().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setMoveToSettings(false)

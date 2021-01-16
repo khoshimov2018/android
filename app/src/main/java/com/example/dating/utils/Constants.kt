@@ -31,7 +31,7 @@ object ApiConstants {
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
     const val CHANGE_INFO = "info"
-    const val GET_INFO = "zinfo"
+    const val GET_INFO = "info"
     const val UPLOAD_IMAGE = "upload-image"
     const val GET_INTERESTS = "common/interests"
     const val GET_NATIONALITIES = "common/nationalities"

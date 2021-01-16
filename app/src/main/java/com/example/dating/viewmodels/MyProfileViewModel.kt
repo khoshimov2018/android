@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
 import com.example.dating.utils.isInternetAvailable
+import com.example.dating.utils.validateResponse
+import com.example.dating.utils.validateResponseWithoutPopup
 
 class MyProfileViewModel(application: Application) : BaseAndroidViewModel(application) {
 
@@ -29,7 +31,11 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
 
             observeResponse = Observer<UserModel> {
                 loaderVisible.value = false
+                if(validateResponseWithoutPopup(it)) {
 
+                } else {
+                    baseResponse.value = it
+                }
             }
 
             val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
@@ -93,5 +99,13 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
 
     fun setMoveToPremium(move: Boolean) {
         moveToPremium.value = move
+    }
+
+    fun getBaseResponse(): LiveData<UserModel?> {
+        return baseResponse
+    }
+
+    fun setBaseResponse(baseResponse: UserModel?) {
+        this.baseResponse.value = baseResponse
     }
 }
