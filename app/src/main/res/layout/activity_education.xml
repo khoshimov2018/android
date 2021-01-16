@@ -96,9 +96,17 @@
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:entries="@array/education_level"
+                        android:onItemSelected="@{viewModel::onItemSelected}"
+                        android:padding="@dimen/normalPadding" />
+
+                    <!--<androidx.appcompat.widget.AppCompatEditText
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
@@ -107,7 +115,7 @@
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onLevelTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
-                        android:singleLine="true" />
+                        android:singleLine="true" />-->
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"

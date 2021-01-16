@@ -20,11 +20,11 @@ class ChooseLookingForViewModel : BaseViewModel() {
     override fun moveFurther(view: View) {
         loggedInUserLiveData.value?.let {
             if(it.isLookingForSelected()) {
-                /*SharedPreferenceHelper.saveBooleanToShared(
+                SharedPreferenceHelper.saveBooleanToShared(
                     view.context,
                     Constants.IS_USER_LOGGED_IN,
                     true
-                )*/
+                )
                 moveFurther.value = true
             } else {
                 errorResId.value = R.string.choose_looking_for

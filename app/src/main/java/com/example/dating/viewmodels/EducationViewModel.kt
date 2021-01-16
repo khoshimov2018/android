@@ -1,6 +1,7 @@
 package com.example.dating.viewmodels
 
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -45,15 +46,32 @@ class EducationViewModel: BaseViewModel() {
         moveFurther.value = true
     }
 
+    fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val array = view?.context?.resources?.getStringArray(R.array.education_level)
+        when (position) {
+            0 -> {
+                educationInfoModel.level = null
+            }
+            1 -> {
+                educationInfoModel.level = array?.get(1)
+            }
+            else -> {
+                educationInfoModel.level = array?.get(2)
+            }
+        }
+
+        errorResId.value = null
+    }
+
     fun onInstitutionNameTextChanged(charSequence: CharSequence) {
         educationInfoModel.institutionName = charSequence.toString()
         errorResId.value = null
     }
 
-    fun onLevelTextChanged(charSequence: CharSequence) {
+    /*fun onLevelTextChanged(charSequence: CharSequence) {
         educationInfoModel.level = charSequence.toString()
         errorResId.value = null
-    }
+    }*/
 
     fun onGraduationYearTextChanged(charSequence: CharSequence) {
         try {
