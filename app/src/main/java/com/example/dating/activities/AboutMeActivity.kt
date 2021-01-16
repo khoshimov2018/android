@@ -59,5 +59,6 @@ class AboutMeActivity : AppCompatActivity() {
     private fun moveFurther() {
         val intent = Intent(this, IntroSliderActivity::class.java)
         startActivity(intent)
+        finishAffinity()
     }
 }

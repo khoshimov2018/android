@@ -23,6 +23,7 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var apiResponse: LiveData<Any>
     private lateinit var observeResponse: Observer<Any>
     private val interestsList: MutableLiveData<MutableList<InterestModel>> = MutableLiveData()
+    private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
     fun getInterests() {
         if (isInternetAvailable(context)) {
@@ -61,9 +62,16 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
     fun interestItemClicked(view: View, interestItem: InterestModel) {
         interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
         interestsList.value = interestsList.value
+        errorResId.value = null
     }
 
     override fun moveFurther(view: View) {
+        if(userModelLiveData.value?.interestLabels == null) {
+            userModelLiveData.value?.interestLabels = ArrayList<String>()
+        } else {
+            userModelLiveData.value?.interestLabels?.clear()
+        }
+
         interestsList.value?.let {
             for(interest in it) {
                 if(interest.isSelected != null && interest.isSelected!!) {
@@ -71,6 +79,15 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
                 }
             }
         }
+
+        if(userModelLiveData.value?.interestLabels != null && userModelLiveData.value?.interestLabels?.size!! > 0) {
+            moveFurther.value = true
+        } else {
+            errorResId.value = R.string.choose_interests
+        }
+    }
+
+    fun onSkipClicked(view: View) {
         moveFurther.value = true
     }
 
@@ -95,5 +112,9 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getInterestsList(): LiveData<MutableList<InterestModel>> {
         return interestsList
+    }
+
+    fun getErrorResId(): LiveData<Int> {
+        return errorResId
     }
 }

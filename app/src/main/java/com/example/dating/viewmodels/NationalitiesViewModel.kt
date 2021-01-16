@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.dating.R
 import com.example.dating.models.InterestModel
 import com.example.dating.models.NationalityModel
 import com.example.dating.models.UserModel
@@ -21,6 +22,7 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
     private lateinit var apiResponse: LiveData<Any>
     private lateinit var observeResponse: Observer<Any>
     private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
+    private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
     fun getNationalities() {
         if (isInternetAvailable(context)) {
@@ -64,6 +66,7 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         }
         nationalityItem.isSelected = true
         nationalitiesList.value = nationalitiesList.value
+        errorResId.value = null
     }
 
     override fun moveFurther(view: View) {
@@ -75,6 +78,14 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
                 }
             }
         }
+        if(userModelLiveData.value?.nationality == null) {
+            errorResId.value = R.string.choose_nationality
+        } else {
+            moveFurther.value = true
+        }
+    }
+
+    fun onSkipClicked(view: View) {
         moveFurther.value = true
     }
 
@@ -99,5 +110,9 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
 
     fun getNationalitiesList(): LiveData<MutableList<NationalityModel>> {
         return nationalitiesList
+    }
+
+    fun getErrorResId(): LiveData<Int> {
+        return errorResId
     }
 }

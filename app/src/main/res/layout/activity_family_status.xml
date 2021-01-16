@@ -46,6 +46,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/smallMargin"
+                    android:onClick="@{viewModel::moveFurther}"
                     android:text="@string/skip"
                     android:textColor="@color/lightTextColor"
                     android:textSize="@dimen/smallTextSize" />

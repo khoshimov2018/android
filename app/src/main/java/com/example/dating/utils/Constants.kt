@@ -58,3 +58,15 @@ object DobErrorConstants {
     const val DOB_EMPTY = 1
     const val AGE_LESS = 2
 }
+
+object EducationFormErrorConstants {
+    const val INSTITUTE_NAME_EMPTY = 1
+    const val LEVEL_EMPTY = 2
+    const val YEAR_EMPTY = 3
+    const val YEAR_INVALID = 4
+}
+
+object WorkInfoFormErrorConstants {
+    const val COMPANY_NAME_EMPTY = 1
+    const val POSITION_EMPTY = 2
+}

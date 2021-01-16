@@ -90,7 +90,18 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_interests">No interests available</string>
+    <string name="choose_interests">Please choose your interests</string>
     <string name="no_nationalities">No nationalities available</string>
+    <string name="choose_nationality">Please choose your nationality</string>
+    <string name="enter_institute_name">Please enter institute name</string>
+    <string name="enter_level">Please enter level</string>
+    <string name="enter_graduation_year">Please enter graduation year</string>
+    <string name="invalid_graduation_year">Please enter a valid year</string>
+    <string name="enter_position">Please enter your position</string>
+    <string name="enter_company_name">Please enter company name</string>
+    <string name="enter_growth">Please enter your growth</string>
+    <string name="enter_weight">Please enter your weight</string>
+    <string name="enter_about_me">Please enter About you</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

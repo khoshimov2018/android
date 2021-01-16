@@ -46,6 +46,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/smallMargin"
+                    android:onClick="@{viewModel::onSkipClicked}"
                     android:text="@string/skip"
                     android:textColor="@color/lightTextColor"
                     android:textSize="@dimen/smallTextSize" />
@@ -118,6 +119,16 @@
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
                         android:singleLine="true" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:gravity="center"
+                        android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                        android:textAppearance="@style/ErrorTextAppearance"
+                        android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button"

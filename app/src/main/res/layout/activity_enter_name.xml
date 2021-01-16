@@ -115,6 +115,7 @@
                                 android:layout_marginTop="30dp"
                                 android:background="@null"
                                 android:hint="@string/name"
+                                android:inputType="textCapWords"
                                 android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameTextChanged(text)}"
                                 android:padding="@dimen/largePadding"
                                 android:singleLine="true" />
