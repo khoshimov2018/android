@@ -5,6 +5,7 @@
     tools:context=".activities.EducationActivity">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -45,8 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/smallMargin"
                     android:onClick="@{viewModel::onSkipClicked}"
+                    android:padding="@dimen/smallMargin"
                     android:text="@string/skip"
                     android:textColor="@color/lightTextColor"
                     android:textSize="@dimen/smallTextSize" />
@@ -89,6 +90,7 @@
                         android:layout_marginTop="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/where_did_you_study"
+                        android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onInstitutionNameTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
@@ -101,6 +103,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/power"
+                        android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onLevelTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
@@ -134,11 +137,11 @@
                         android:id="@+id/button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/largeMargin"
                         android:layout_marginBottom="@dimen/largeMargin"
                         android:background="@drawable/round_button_background"
-                        android:layout_alignParentBottom="true"
                         android:onClick="@{viewModel::moveFurther}"
                         android:text="@string/further"
                         android:textColor="@android:color/white" />

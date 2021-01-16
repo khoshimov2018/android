@@ -6,6 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.dating.R
 import com.example.dating.models.UserModel
+import com.example.dating.repositories.UserRepository
+import com.example.dating.utils.hideKeyboard
+import com.example.dating.utils.validateInternet
+import com.example.dating.utils.validateResponse
 
 class AboutMeViewModel : BaseViewModel() {
 
@@ -19,13 +23,31 @@ class AboutMeViewModel : BaseViewModel() {
             if(it.description.isNullOrEmpty()) {
                 errorResId.value = R.string.enter_about_me
             } else {
-                moveFurther.value = true
+                submitData(view)
             }
         }
     }
 
     fun onSkipClicked(view: View) {
-        moveFurther.value = true
+        submitData(view)
+    }
+
+    private fun submitData(view: View) {
+        if(validateInternet(view.context)) {
+            hideKeyboard(view)
+            loaderVisible.value = true // show loader
+            observeResponse = Observer<UserModel> { response ->
+                loaderVisible.value = false
+                if (validateResponse(view.context, response)) {
+                    moveFurther.value = true
+                }
+            }
+            // token
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+
+            apiResponse = UserRepository.changeInfo(userModelLiveData.value!!, strToken)
+            apiResponse.observeForever(observeResponse)
+        }
     }
 
     fun onAboutMeTextChanged(charSequence: CharSequence) {

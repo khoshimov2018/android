@@ -5,6 +5,7 @@
     tools:context=".activities.JobActivity">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -45,8 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="@dimen/smallMargin"
                     android:onClick="@{viewModel::onSkipClicked}"
+                    android:padding="@dimen/smallMargin"
                     android:text="@string/skip"
                     android:textColor="@color/lightTextColor"
                     android:textSize="@dimen/smallTextSize" />
@@ -89,6 +90,7 @@
                         android:layout_marginTop="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/position"
+                        android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onPositionTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
@@ -101,6 +103,7 @@
                         android:layout_marginTop="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/company"
+                        android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onCompanyTextChanged(text)}"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:paddingVertical="@dimen/normalPadding"
