@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.MyProfileFragment">
 
     <data>
@@ -37,7 +38,12 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:onClick="@{viewModel::profileClicked}"
-                    android:src="@color/colorPrimary" />
+
+                     />
+
+                <!--app:error="@{@drawable/logo}"
+                app:placeholder="@{@drawable/logo}"-->
+                <!--app:roundImageUrl=""-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -47,7 +53,7 @@
                     android:layout_marginTop="@dimen/largeMargin"
                     android:gravity="center"
                     android:onClick="@{viewModel::profileClicked}"
-                    android:text="Name, age"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.name.concat(", ").concat(viewModel.userProfileLiveData.getAge()) : ""}'
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/xLargeTextSize" />
 
@@ -59,14 +65,15 @@
                     android:layout_marginTop="@dimen/largeMargin"
                     android:gravity="center"
                     android:onClick="@{viewModel::profileClicked}"
-                    android:text="Some long description goes here Some long description goes here Some long description goes here"
+                    android:text="@{viewModel.userProfileLiveData.getShortDescription()}"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/normalTextSize" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/xLargeMargin"
+                    android:layout_marginTop="@dimen/xLargeMargin"
+                    android:layout_marginBottom="@dimen/registrationMargin"
                     android:orientation="horizontal">
 
                     <LinearLayout

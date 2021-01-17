@@ -14,9 +14,10 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import com.example.dating.R
 import com.example.dating.activities.RegisterActivity
-import com.example.dating.models.BaseModel
 import com.example.dating.models.UserModel
+import com.example.dating.responses.BaseResponse
 import com.google.gson.Gson
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -113,26 +114,48 @@ fun validateInternet(context: Context): Boolean {
     }
 }
 
-fun validateResponse(context: Context, baseResponse: BaseModel): Boolean {
-    return if (baseResponse.status == null && (baseResponse.code == null || baseResponse.code == 0)) {
+fun validateResponse(context: Context, baseResponse: BaseResponse): Boolean {
+    return if (validateResponseWithoutPopup(baseResponse)) {
         true
     } else {
-        val message = if(baseResponse.message == null) {
-            if(baseResponse.data == null) {
-                Constants.SOMETHING_WENT_WRONG
-            } else {
-                baseResponse.data!!
-            }
+        val message: String = if (baseResponse.data == null || baseResponse.data !is String) {
+            Constants.SOMETHING_WENT_WRONG
         } else {
-            baseResponse.message!!
+            baseResponse.data!! as String
         }
         showInfoAlertDialog(context, message)
         false
     }
 }
 
-fun validateResponseWithoutPopup(baseResponse: BaseModel): Boolean {
-    return baseResponse.status == null && (baseResponse.code == null || baseResponse.code == 0)
+fun validateResponseWithoutPopup(baseResponse: BaseResponse): Boolean {
+    return baseResponse.code == null || baseResponse.code == 0
+}
+
+fun getApiElseBaseResponse(response: Response<BaseResponse>): BaseResponse {
+    val baseResponse = BaseResponse()
+    baseResponse.code = 2
+    baseResponse.data = Constants.SOMETHING_WENT_WRONG
+    response.errorBody()?.let {
+        try {
+            val gson = Gson()
+            val user = gson.fromJson(response.errorBody()!!.string(), BaseResponse::class.java)
+            baseResponse.data = user.data
+        } catch (e: Exception) {
+            // ignore
+        }
+    }
+    return baseResponse
+}
+
+fun getFailureBaseResponse(t: Throwable): BaseResponse {
+    val baseResponse = BaseResponse()
+    baseResponse.code = 2
+    baseResponse.data = Constants.COULD_NOT_CONNECT_TO_SERVER
+    t.message?.let {
+        baseResponse.data = it
+    }
+    return baseResponse
 }
 
 fun printLog(string: String) {
@@ -180,6 +203,30 @@ fun getDisplayableYear(calendar: Calendar): String {
     return format.format(calendar.time)
 }
 
+fun getCalendarFromDob(dob: String): Calendar? {
+    val format = SimpleDateFormat(Constants.DOB_DATE_FORMAT, getRussianLocale())
+    val calendar = Calendar.getInstance()
+    val date: Date? = format.parse(dob)
+    return if (date == null) {
+        null
+    } else {
+        calendar.time = date
+        calendar
+    }
+}
+
+fun getDifferenceInYears(first: Calendar, second: Calendar): Int {
+    var diff = second.get(Calendar.YEAR) - first.get(Calendar.YEAR)
+    if (first.get(Calendar.MONTH) > second.get(Calendar.MONTH) ||
+        (first.get(Calendar.MONTH) == second.get(Calendar.MONTH) && first.get(Calendar.DATE) > second.get(
+            Calendar.DATE
+        ))
+    ) {
+        --diff
+    }
+    return diff
+}
+
 fun logoutAndMoveToHome(context: Context) {
     SharedPreferenceHelper.clearShared(context)
     val loginScreen = Intent(context, RegisterActivity::class.java)
@@ -190,4 +237,11 @@ fun logoutAndMoveToHome(context: Context) {
 fun openUrlInBrowser(context: Context, url: String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
     context.startActivity(intent)
+}
+
+fun trimText(text: String, length: Int = Constants.TRIM_TEXT_LENGTH): String {
+    if (text.length < length) {
+        return text
+    }
+    return (text.substring(0, length) + "…")
 }

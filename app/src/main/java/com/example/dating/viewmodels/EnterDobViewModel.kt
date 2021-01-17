@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.example.dating.R
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
+import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.*
 import java.util.*
 
@@ -17,8 +18,8 @@ class EnterDobViewModel : BaseViewModel() {
     private val showDatePicker: MutableLiveData<Boolean> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
-    private lateinit var apiResponse: LiveData<UserModel>
-    private lateinit var observeResponse: Observer<UserModel>
+    private lateinit var apiResponse: LiveData<BaseResponse>
+    private lateinit var observeResponse: Observer<BaseResponse>
 
     override fun moveFurther(view: View) {
         userModelLiveData.value?.let {
@@ -34,7 +35,7 @@ class EnterDobViewModel : BaseViewModel() {
                         userModelLiveData.value?.selectedDOB = null
                         hideKeyboard(view)
                         loaderVisible.value = true // show loader
-                        observeResponse = Observer<UserModel> { response ->
+                        observeResponse = Observer<BaseResponse> { response ->
                             loaderVisible.value = false
                             if (validateResponse(view.context, response)) {
                                 moveFurther.value = true

@@ -14,6 +14,7 @@ import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.utils.showInfoAlertDialog
+import com.example.dating.utils.validateResponse
 import com.example.dating.viewmodels.MyInterestsViewModel
 import com.example.dating.viewmodels.NationalitiesViewModel
 
@@ -60,6 +61,20 @@ class NationalitiesActivity : AppCompatActivity() {
                 }
             } else {
                 nationalitiesAdapter = null
+            }
+        })
+
+        nationalitiesViewModel.getShowNoInternet().observe(this, {
+            if(it) {
+                nationalitiesViewModel.setShowNoInternet(false)
+                showInfoAlertDialog(this, getString(R.string.no_internet))
+            }
+        })
+
+        nationalitiesViewModel.getBaseResponse().observe(this, {
+            it?.let {
+                nationalitiesViewModel.setBaseResponse(null)
+                validateResponse(this, it)
             }
         })
 

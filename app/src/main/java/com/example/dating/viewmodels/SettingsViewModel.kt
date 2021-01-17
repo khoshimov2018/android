@@ -10,20 +10,10 @@ import com.example.dating.utils.showAlertDialog
 
 class SettingsViewModel: BaseViewModel() {
 
-    private val moveToCoins: MutableLiveData<Boolean> = MutableLiveData()
-    private val moveToPremium: MutableLiveData<Boolean> = MutableLiveData()
     private val versionName: MutableLiveData<String> = MutableLiveData()
     private val aboutUsClicked: MutableLiveData<Boolean> = MutableLiveData()
     private val helpClicked: MutableLiveData<Boolean> = MutableLiveData()
     private val feedbackClicked: MutableLiveData<Boolean> = MutableLiveData()
-
-    fun coinsClicked(view: View) {
-        moveToCoins.value = true
-    }
-
-    fun premiumClicked(view: View) {
-        moveToPremium.value = true
-    }
 
     fun onAboutUsClicked(view: View) {
         aboutUsClicked.value = true
@@ -50,22 +40,6 @@ class SettingsViewModel: BaseViewModel() {
             context.getString(R.string.no),
             null
         )
-    }
-
-    fun getMoveToCoins(): LiveData<Boolean> {
-        return moveToCoins
-    }
-
-    fun setMoveToCoins(move: Boolean) {
-        moveToCoins.value = move
-    }
-
-    fun getMoveToPremium(): LiveData<Boolean> {
-        return moveToPremium
-    }
-
-    fun setMoveToPremium(move: Boolean) {
-        moveToPremium.value = move
     }
 
     fun getVersionName(): LiveData<String> {

@@ -8,6 +8,8 @@ import java.util.*
 
 @Parcelize
 data class UserModel(
+    var jwt: String? = null,
+    var tokenType: String? = null,
     var username: String? = null,
     var password: String? = null,
     var id: Int? = null,
@@ -24,8 +26,8 @@ data class UserModel(
     var workInfo: WorkInfoModel? = null,
     var selectedDOB: Calendar? = null,
     var lookingFor: String? = null,
-    // roles - not parsing as only user will login to the app
-) : Parcelable, BaseModel() {
+    var roles: MutableList<String>? = null,
+) : Parcelable {
     fun validateLoginData(): Int {
         return when {
             isUsernameEmpty() -> LoginFormErrorConstants.USERNAME_EMPTY
@@ -92,13 +94,27 @@ data class UserModel(
         return lookingFor != null
     }
 
+    fun getAge(): String {
+        if(dateOfBirth.isNullOrEmpty()) {
+            return ""
+        } else {
+            val current = Calendar.getInstance()
+            val dob = getCalendarFromDob(dateOfBirth!!) ?: return ""
+            return "${getDifferenceInYears(dob, current)}"
+        }
+    }
+
+    fun getShortDescription(): String {
+        return description?.let { trimText(it, Constants.SHORT_DESCRIPTION_TRIM_LENGTH) } ?: ""
+    }
+
     private fun isDobEmpty(): Boolean {
         return selectedDOB == null
     }
 
     private fun isAgeLess(): Boolean {
         val current = Calendar.getInstance()
-        return current.get(Calendar.YEAR) - selectedDOB!!.get(Calendar.YEAR) < Constants.MINIMUM_AGE
+        return getDifferenceInYears(selectedDOB!!, current) < Constants.MINIMUM_AGE
     }
 
     private fun isUsernameEmpty(): Boolean {

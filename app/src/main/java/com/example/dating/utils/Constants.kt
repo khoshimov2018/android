@@ -13,6 +13,8 @@ object Constants {
     const val DOB_ONLY_YEAR_FORMAT = "yyyy"
     const val MINIMUM_AGE = 18
     const val MINIMUM_PHOTOS = 3
+    const val TRIM_TEXT_LENGTH = 15
+    const val SHORT_DESCRIPTION_TRIM_LENGTH = 40
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -32,9 +34,10 @@ object ApiConstants {
     const val REGISTRATION = "registration"
     const val CHANGE_INFO = "info"
     const val GET_INFO = "info"
-    const val UPLOAD_IMAGE = "upload-image"
+    const val UPLOAD_IMAGE = "images/upload"
     const val GET_INTERESTS = "common/interests"
     const val GET_NATIONALITIES = "common/nationalities"
+    const val GET_CURRENT_USER_IMAGES = "images/get-current-user-images"
 }
 
 object LoginFormErrorConstants {

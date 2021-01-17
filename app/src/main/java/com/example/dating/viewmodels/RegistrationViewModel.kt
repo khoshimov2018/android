@@ -7,7 +7,10 @@ import androidx.lifecycle.Observer
 import com.example.dating.R
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
+import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class RegistrationViewModel : BaseViewModel() {
 
@@ -15,8 +18,8 @@ class RegistrationViewModel : BaseViewModel() {
 
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
-    private lateinit var apiResponse: LiveData<UserModel>
-    private lateinit var observeResponse: Observer<UserModel>
+    private lateinit var apiResponse: LiveData<BaseResponse>
+    private lateinit var observeResponse: Observer<BaseResponse>
 
     fun registerClicked(view: View) {
         when (userModel.validateRegistrationData()) {
@@ -33,16 +36,21 @@ class RegistrationViewModel : BaseViewModel() {
                 if(validateInternet(view.context)) {
                     hideKeyboard(view)
                     loaderVisible.value = true // show loader
-                    observeResponse = Observer<UserModel> {
+                    observeResponse = Observer<BaseResponse> {
                         loaderVisible.value = false
                         if (validateResponse(view.context, it)) {
+                            val gson = Gson()
+                            val strResponse = gson.toJson(it.data)
+                            val myType = object : TypeToken<UserModel>() {}.type
+                            val responseUser: UserModel = gson.fromJson<UserModel>(strResponse, myType)
+
                             // Complete the profile first
                             SharedPreferenceHelper.saveBooleanToShared(
                                 view.context,
                                 Constants.IS_REGISTRATION_DONE,
                                 true
                             )
-                            saveLoggedInUserToShared(view.context, it)
+                            saveLoggedInUserToShared(view.context, responseUser)
                             moveFurther.value = true
                         }
                     }

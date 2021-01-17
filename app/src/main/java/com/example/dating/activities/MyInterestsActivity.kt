@@ -13,6 +13,7 @@ import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.utils.showInfoAlertDialog
+import com.example.dating.utils.validateResponse
 import com.example.dating.viewmodels.EnterDobViewModel
 import com.example.dating.viewmodels.MyInterestsViewModel
 
@@ -59,6 +60,20 @@ class MyInterestsActivity : AppCompatActivity() {
                 }
             } else {
                 interestsAdapter = null
+            }
+        })
+
+        myInterestsViewModel.getShowNoInternet().observe(this, {
+            if(it) {
+                myInterestsViewModel.setShowNoInternet(false)
+                showInfoAlertDialog(this, getString(R.string.no_internet))
+            }
+        })
+
+        myInterestsViewModel.getBaseResponse().observe(this, {
+            it?.let {
+                myInterestsViewModel.setBaseResponse(null)
+                validateResponse(this, it)
             }
         })
 

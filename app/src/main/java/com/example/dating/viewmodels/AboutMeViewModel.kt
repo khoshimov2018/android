@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.example.dating.R
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
+import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.hideKeyboard
 import com.example.dating.utils.validateInternet
 import com.example.dating.utils.validateResponse
@@ -14,8 +15,8 @@ import com.example.dating.utils.validateResponse
 class AboutMeViewModel : BaseViewModel() {
 
     private val userModelLiveData = MutableLiveData<UserModel>()
-    private lateinit var apiResponse: LiveData<UserModel>
-    private lateinit var observeResponse: Observer<UserModel>
+    private lateinit var apiResponse: LiveData<BaseResponse>
+    private lateinit var observeResponse: Observer<BaseResponse>
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
     override fun moveFurther(view: View) {
@@ -36,7 +37,7 @@ class AboutMeViewModel : BaseViewModel() {
         if(validateInternet(view.context)) {
             hideKeyboard(view)
             loaderVisible.value = true // show loader
-            observeResponse = Observer<UserModel> { response ->
+            observeResponse = Observer<BaseResponse> { response ->
                 loaderVisible.value = false
                 if (validateResponse(view.context, response)) {
                     moveFurther.value = true

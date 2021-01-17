@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.example.dating.R
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
-import com.example.dating.utils.isInternetAvailable
-import com.example.dating.utils.validateResponse
-import com.example.dating.utils.validateResponseWithoutPopup
+import com.example.dating.responses.BaseResponse
+import com.example.dating.utils.*
 
 class MyProfileViewModel(application: Application) : BaseAndroidViewModel(application) {
 
@@ -19,19 +19,49 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
     private val moveToCoins: MutableLiveData<Boolean> = MutableLiveData()
     private val moveToPremium: MutableLiveData<Boolean> = MutableLiveData()
 
-    private lateinit var apiResponse: LiveData<UserModel>
-    private lateinit var observeResponse: Observer<UserModel>
+    private lateinit var apiResponse: LiveData<BaseResponse>
+    private lateinit var observeResponse: Observer<BaseResponse>
 
-    private val baseResponse: MutableLiveData<UserModel> = MutableLiveData()
+    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
+    private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
 
     fun getUserProfile() {
         if (isInternetAvailable(context)) {
             showNoInternet.value = false
             loaderVisible.value = true // show loader
 
-            observeResponse = Observer<UserModel> {
+            observeResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
-                if(validateResponseWithoutPopup(it)) {
+                if (validateResponseWithoutPopup(it)) {
+                    if (it.data is UserModel) {
+                        userProfileLiveData.value = it.data as UserModel
+                    } else {
+                        // should never happen
+                        printLog("******** handle this")
+                    }
+                } else {
+                    baseResponse.value = it
+                }
+
+                getCurrentUserImages()
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            apiResponse = UserRepository.getInfo(strToken)
+            apiResponse.observeForever(observeResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
+    private fun getCurrentUserImages() {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
+
+            observeResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+                if (validateResponseWithoutPopup(it)) {
 
                 } else {
                     baseResponse.value = it
@@ -39,7 +69,7 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
             }
 
             val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-            apiResponse = UserRepository.getInfo(strToken)
+            apiResponse = UserRepository.getCurrentUserImages(strToken)
             apiResponse.observeForever(observeResponse)
         } else {
             showNoInternet.value = true
@@ -101,11 +131,15 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
         moveToPremium.value = move
     }
 
-    fun getBaseResponse(): LiveData<UserModel?> {
+    fun getBaseResponse(): LiveData<BaseResponse?> {
         return baseResponse
     }
 
-    fun setBaseResponse(baseResponse: UserModel?) {
+    fun setBaseResponse(baseResponse: BaseResponse?) {
         this.baseResponse.value = baseResponse
+    }
+
+    fun getUserProfileLiveData(): LiveData<UserModel> {
+        return userProfileLiveData
     }
 }
