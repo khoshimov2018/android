@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.example.dating.viewmodels.MyInterestsViewModel" />
+            name="iInterestClick"
+            type="com.example.dating.interfaces.IInterestClick" />
 
         <variable
             name="item"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/normalMargin"
             android:background="@{item.isSelected ? @drawable/round_button_selected : @drawable/round_button_unselected}"
-            android:onClick="@{(view) -> viewModel.interestItemClicked(view, item)}"
+            android:onClick="@{(view) -> iInterestClick.interestItemClicked(view, item)}"
             android:padding="@{@dimen/normalPadding}"
             android:text="@{item.label}"
             android:textColor="@{item.isSelected ? @android:color/white : @color/textColor}"

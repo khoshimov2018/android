@@ -11,6 +11,8 @@ import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
 import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class MyProfileViewModel(application: Application) : BaseAndroidViewModel(application) {
 
@@ -33,12 +35,12 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
             observeResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
                 if (validateResponseWithoutPopup(it)) {
-                    if (it.data is UserModel) {
-                        userProfileLiveData.value = it.data as UserModel
-                    } else {
-                        // should never happen
-                        printLog("******** handle this")
-                    }
+                    val gson = Gson()
+                    val strResponse = gson.toJson(it.data)
+                    val myType = object : TypeToken<UserModel>() {}.type
+                    val responseUser: UserModel = gson.fromJson<UserModel>(strResponse, myType)
+
+                    userProfileLiveData.value = responseUser
                 } else {
                     baseResponse.value = it
                 }
@@ -141,5 +143,9 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
 
     fun getUserProfileLiveData(): LiveData<UserModel> {
         return userProfileLiveData
+    }
+
+    fun getCurrentUser(): UserModel? {
+        return userProfileLiveData.value
     }
 }

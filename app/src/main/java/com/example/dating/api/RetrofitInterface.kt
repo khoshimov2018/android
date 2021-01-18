@@ -32,6 +32,6 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_NATIONALITIES)
     fun getNationalities(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @POST(ApiConstants.GET_CURRENT_USER_IMAGES)
+    @GET(ApiConstants.GET_CURRENT_USER_IMAGES)
     fun getCurrentUserImages(@Header("Authorization") token: String): Call<BaseResponse>
 }

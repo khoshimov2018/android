@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.dating.R
+import com.example.dating.interfaces.IInterestClick
 import com.example.dating.models.InterestModel
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.InterestsRepository
@@ -15,7 +16,7 @@ import com.example.dating.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(application) {
+class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(application), IInterestClick {
 
     private val userModelLiveData = MutableLiveData<UserModel>()
     private lateinit var apiResponse: LiveData<BaseResponse>
@@ -61,7 +62,7 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
         }
     }
 
-    fun interestItemClicked(view: View, interestItem: InterestModel) {
+    override fun interestItemClicked(view: View, interestItem: InterestModel) {
         interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
         interestsList.value = interestsList.value
         errorResId.value = null

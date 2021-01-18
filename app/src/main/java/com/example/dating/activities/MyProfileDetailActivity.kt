@@ -17,6 +17,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.databinding.ActivityMyProfileDetailBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
 import com.example.dating.utils.dpToPx
 import com.example.dating.utils.printLog
 import com.example.dating.viewmodels.MyProfileDetailViewModel
@@ -68,6 +70,11 @@ class MyProfileDetailActivity : AppCompatActivity() {
         myProfileDetailViewModel = ViewModelProvider(this).get(MyProfileDetailViewModel::class.java)
         binding.viewModel = myProfileDetailViewModel
 
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
+            myProfileDetailViewModel.setCurrentUser(it)
+        }
+
         initObservers()
     }
 
@@ -118,6 +125,7 @@ class MyProfileDetailActivity : AppCompatActivity() {
 
     private fun moveToEditProfile() {
         val intent = Intent(this, EditProfileActivity::class.java)
+        intent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
         startActivity(intent)
     }
 }

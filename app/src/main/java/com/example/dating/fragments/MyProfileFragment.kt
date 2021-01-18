@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.dating.R
 import com.example.dating.activities.*
 import com.example.dating.databinding.MyProfileFragmentBinding
+import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.utils.showInfoAlertDialog
 import com.example.dating.utils.validateResponse
@@ -108,6 +109,7 @@ class MyProfileFragment : Fragment() {
 
     private fun moveToProfile() {
         val intent = Intent(requireActivity(), MyProfileDetailActivity::class.java)
+        intent.putExtra(Constants.PROFILE_USER, viewModel.getCurrentUser())
         startActivity(intent)
     }
 

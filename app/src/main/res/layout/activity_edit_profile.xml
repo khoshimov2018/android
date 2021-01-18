@@ -11,6 +11,10 @@
         <variable
             name="viewModel"
             type="com.example.dating.viewmodels.EditProfileViewModel" />
+
+        <variable
+            name="interestsAdapter"
+            type="com.example.dating.adapters.InterestsAdapter" />
     </data>
 
     <LinearLayout
@@ -57,8 +61,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/normalPadding"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/normalPadding">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -170,9 +174,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/largeMargin"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:layout_marginHorizontal="@dimen/largeMargin"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -359,6 +363,8 @@
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.isMale() : false}"
+                        android:onClick="@{viewModel::onMaleClicked}"
                         android:text="@string/male"
                         android:textColor="@color/textColor" />
 
@@ -366,6 +372,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/xLargeMargin"
+                        android:checked="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.isFemale() : false}"
+                        android:onClick="@{viewModel::onFemaleClicked}"
                         android:text="@string/female"
                         android:textColor="@color/textColor" />
                 </RadioGroup>
@@ -376,10 +384,12 @@
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
                     android:hint="@string/name"
+                    android:inputType="textCapWords"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameTextChanged(text)}"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
-                    android:text="Анастасия"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.name : ""}'
                     android:textColor="@color/textColor" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -387,11 +397,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
+                    android:focusable="false"
                     android:hint="@string/your_dob"
+                    android:onClick="@{viewModel::onDobClicked}"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
-                    android:text="20.12.1998"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.dateOfBirth : ""}'
                     android:textColor="@color/textColor" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -401,7 +413,7 @@
                     android:background="@drawable/round_button_unselected"
                     android:hint="@string/location"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
                     android:text="Москва"
                     android:textColor="@color/textColor" />
@@ -421,6 +433,15 @@
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/largeTextSize"
                     android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adapter="@{interestsAdapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
+                    app:spanCount="2"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
                 <View
                     android:layout_width="match_parent"
@@ -443,12 +464,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
+                    android:gravity="top"
                     android:hint="@string/location"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:minLines="8"
                     android:maxLines="10"
-                    android:text="Но дальнейшее развитие различных форм дятельности предоставляет широкие дальнейшее развитие различных форм деятельности предоставляет широкиедальнейшее развитие различных форм деятельности предоставляет широкие..."
+                    android:minLines="8"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onAboutMeTextChanged(text)}"
+                    android:padding="@dimen/normalPadding"
+                    android:paddingHorizontal="@dimen/largeMargin"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.description : ""}'
                     android:textColor="@color/textColor" />
 
                 <View
@@ -467,12 +490,22 @@
                     android:textSize="@dimen/largeTextSize"
                     android:textStyle="bold" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:text='@{viewModel.userProfileLiveData != null ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize" />
+
                 <androidx.appcompat.widget.AppCompatSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
-                    android:max="100"
-                    android:progress="20"/>
+                    android:max="250"
+                    android:onProgressChanged="@{viewModel::onGrowthChanged}"
+                    android:progress="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.growth : 0}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -490,12 +523,22 @@
                     android:textSize="@dimen/largeTextSize"
                     android:textStyle="bold" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:text='@{viewModel.userProfileLiveData != null ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize" />
+
                 <androidx.appcompat.widget.AppCompatSeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
-                    android:max="100"
-                    android:progress="20"/>
+                    android:max="250"
+                    android:onProgressChanged="@{viewModel::onWeightChanged}"
+                    android:progress="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.weight : 0}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -576,11 +619,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
+                    android:inputType="textCapWords"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onPositionTextChanged(text)}"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
-                    android:text="Директор"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getPosition() : ""}'
                     android:textColor="@color/textColor" />
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -588,11 +632,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
+                    android:inputType="textCapWords"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onCompanyTextChanged(text)}"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
-                    android:text="Taram"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getCompanyName() : ""}'
                     android:textColor="@color/textColor" />
 
                 <View
@@ -616,24 +661,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
+                    android:inputType="textCapWords"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onInstitutionNameTextChanged(text)}"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
-                    android:text="Москва, МГУ"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getInstituteName() : ""}'
                     android:textColor="@color/textColor" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/normalMargin"
                     android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Бакалавр"
-                    android:textColor="@color/textColor" />
+                    android:entries="@array/education_level"
+                    android:onItemSelected="@{viewModel::onItemSelected}"
+                    android:selection="@{viewModel.selectedLevelPosition}"
+                    android:paddingVertical="@dimen/normalPadding" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:layout_width="match_parent"
@@ -641,11 +685,13 @@
                     android:layout_marginTop="@dimen/normalMargin"
                     android:layout_marginBottom="@dimen/largeMargin"
                     android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onGraduationYearTextChanged(text)}"
                     android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
+                    android:paddingHorizontal="@dimen/largeMargin"
                     android:singleLine="true"
-                    android:text="2020"
+                    android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getGraduationYear() : ""}'
                     android:textColor="@color/textColor" />
             </LinearLayout>
         </ScrollView>

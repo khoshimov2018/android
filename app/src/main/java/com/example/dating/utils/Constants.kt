@@ -37,7 +37,7 @@ object ApiConstants {
     const val UPLOAD_IMAGE = "images/upload"
     const val GET_INTERESTS = "common/interests"
     const val GET_NATIONALITIES = "common/nationalities"
-    const val GET_CURRENT_USER_IMAGES = "images/get-current-user-images"
+    const val GET_CURRENT_USER_IMAGES = "images?version=original"
 }
 
 object LoginFormErrorConstants {
@@ -72,4 +72,22 @@ object EducationFormErrorConstants {
 object WorkInfoFormErrorConstants {
     const val COMPANY_NAME_EMPTY = 1
     const val POSITION_EMPTY = 2
+}
+
+object ImageVersions {
+    const val ORIGINAL = "original"
+    const val USUAL = "usual"
+    const val MINI = "mini"
+}
+
+object EducationLevels {
+    const val POWER = "Степень"
+    const val GENERAL = "GENERAL"
+    const val HIGH = "HIGH"
+}
+
+object EditProfileErrorConstants {
+    const val NAME_EMPTY = 1
+    const val DOB_EMPTY = 2
+    const val AGE_LESS = 3
 }

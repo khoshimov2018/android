@@ -46,6 +46,15 @@ data class UserModel(
         }
     }
 
+    fun validateEditProfile(): Int {
+        return when {
+            isNameEmpty() -> EditProfileErrorConstants.NAME_EMPTY
+            isDobEmpty() -> EditProfileErrorConstants.DOB_EMPTY
+            isAgeLess() -> EditProfileErrorConstants.AGE_LESS
+            else -> 0
+        }
+    }
+
     fun isMale(): Boolean {
         return gender == Gender.MALE
     }
@@ -58,8 +67,8 @@ data class UserModel(
         return gender != null
     }
 
-    fun isNameEntered(): Boolean {
-        return !name.isNullOrEmpty()
+    fun isNameEmpty(): Boolean {
+        return name.isNullOrEmpty()
     }
 
     fun getDate(): String {
@@ -106,6 +115,34 @@ data class UserModel(
 
     fun getShortDescription(): String {
         return description?.let { trimText(it, Constants.SHORT_DESCRIPTION_TRIM_LENGTH) } ?: ""
+    }
+
+    fun getPosition(): String {
+        return workInfo?.position!!
+    }
+
+    fun getCompanyName(): String {
+        return workInfo?.companyName!!
+    }
+
+    fun getWorkInfo(): String {
+        return "${workInfo?.position}, ${workInfo?.companyName}"
+    }
+
+    fun getInstituteName(): String {
+        return "${educationInfo?.institutionName}"
+    }
+
+    fun getGraduationYear(): String {
+        return "${educationInfo?.graduationYear}"
+    }
+
+    fun getLevel(): String {
+        return "${educationInfo?.level}"
+    }
+
+    fun getEducationInfo(): String {
+        return "${educationInfo?.institutionName}, ${educationInfo?.graduationYear}, ${educationInfo?.level}"
     }
 
     private fun isDobEmpty(): Boolean {

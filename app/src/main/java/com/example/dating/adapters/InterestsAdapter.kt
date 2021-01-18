@@ -7,12 +7,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dating.databinding.AdapterInterestItemBinding
+import com.example.dating.interfaces.IInterestClick
 import com.example.dating.models.InterestModel
 import com.example.dating.viewmodels.MyInterestsViewModel
 
 class InterestsAdapter(
     private val interestsList: MutableList<InterestModel>,
-    private val myInterestsViewModel: MyInterestsViewModel
+    private val iInterestClick: IInterestClick
 ) :
     RecyclerView.Adapter<InterestsAdapter.InterestViewHolder>() {
 
@@ -27,7 +28,7 @@ class InterestsAdapter(
     override fun onBindViewHolder(holder: InterestViewHolder, position: Int) {
         val currentInterest = interestsList[position]
         holder.binding.item = currentInterest
-        holder.binding.viewModel = myInterestsViewModel
+        holder.binding.iInterestClick = iInterestClick
         holder.binding.executePendingBindings()
     }
 
