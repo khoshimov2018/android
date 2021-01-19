@@ -51,6 +51,17 @@ data class UserModel(
             isNameEmpty() -> EditProfileErrorConstants.NAME_EMPTY
             isDobEmpty() -> EditProfileErrorConstants.DOB_EMPTY
             isAgeLess() -> EditProfileErrorConstants.AGE_LESS
+            isInterestEmpty() -> EditProfileErrorConstants.INTEREST_EMPTY
+            isDescriptionEmpty() -> EditProfileErrorConstants.ABOUT_ME_EMPTY
+            isGrowthEmpty() -> EditProfileErrorConstants.GROWTH_EMPTY
+            isWeightEmpty() -> EditProfileErrorConstants.WEIGHT_EMPTY
+            isNationalityEmpty() -> EditProfileErrorConstants.NATIONALITY_EMPTY
+            isPositionEmpty() -> EditProfileErrorConstants.POSITION_EMPTY
+            isCompanyNameEmpty() -> EditProfileErrorConstants.COMPANY_NAME_EMPTY
+            isInstitutionNameEmpty() -> EditProfileErrorConstants.INSTITUTE_NAME_EMPTY
+            isLevelEmpty() -> EditProfileErrorConstants.LEVEL_EMPTY
+            isGraduationYearEmpty() -> EditProfileErrorConstants.YEAR_EMPTY
+            isGraduationYearInvalid() -> EditProfileErrorConstants.YEAR_INVALID
             else -> 0
         }
     }
@@ -172,5 +183,49 @@ data class UserModel(
 
     private fun isPasswordEmpty(): Boolean {
         return password.isNullOrEmpty()
+    }
+
+    private fun isInterestEmpty(): Boolean {
+        return interestLabels == null || interestLabels!!.size == 0
+    }
+
+    private fun isDescriptionEmpty(): Boolean {
+        return description.isNullOrEmpty()
+    }
+
+    private fun isGrowthEmpty(): Boolean {
+        return growth == null || growth == 0
+    }
+
+    private fun isWeightEmpty(): Boolean {
+        return weight == null || weight == 0
+    }
+
+    private fun isNationalityEmpty(): Boolean {
+        return nationality.isNullOrEmpty()
+    }
+
+    private fun isCompanyNameEmpty(): Boolean {
+        return workInfo?.companyName.isNullOrEmpty()
+    }
+
+    private fun isPositionEmpty(): Boolean {
+        return workInfo?.position.isNullOrEmpty()
+    }
+
+    private fun isInstitutionNameEmpty(): Boolean {
+        return educationInfo?.institutionName.isNullOrEmpty()
+    }
+
+    private fun isLevelEmpty(): Boolean {
+        return educationInfo?.level.isNullOrEmpty()
+    }
+
+    private fun isGraduationYearEmpty(): Boolean {
+        return (educationInfo?.graduationYear == null || educationInfo?.graduationYear == 0)
+    }
+
+    private fun isGraduationYearInvalid(): Boolean {
+        return (educationInfo?.graduationYear!! < 1900 || educationInfo?.graduationYear!! > 2050)
     }
 }

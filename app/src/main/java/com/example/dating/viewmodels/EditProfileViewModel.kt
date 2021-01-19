@@ -38,10 +38,65 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
+    private val errorResId: MutableLiveData<Int> = MutableLiveData()
+
     fun updateProfile(): Boolean {
         return if(userProfileLiveData.value != null) {
             when(userProfileLiveData.value!!.validateEditProfile()) {
-                1 -> {
+                EditProfileErrorConstants.NAME_EMPTY -> {
+                    errorResId.value = R.string.enter_name
+                    false
+                }
+                EditProfileErrorConstants.DOB_EMPTY -> {
+                    errorResId.value = R.string.choose_dob
+                    false
+                }
+                EditProfileErrorConstants.AGE_LESS -> {
+                    errorResId.value = R.string.at_least_18
+                    false
+                }
+                EditProfileErrorConstants.INTEREST_EMPTY -> {
+                    errorResId.value = R.string.choose_interests
+                    false
+                }
+                EditProfileErrorConstants.ABOUT_ME_EMPTY -> {
+                    errorResId.value = R.string.enter_about_me
+                    false
+                }
+                EditProfileErrorConstants.GROWTH_EMPTY -> {
+                    errorResId.value = R.string.enter_growth
+                    false
+                }
+                EditProfileErrorConstants.WEIGHT_EMPTY -> {
+                    errorResId.value = R.string.enter_weight
+                    false
+                }
+                EditProfileErrorConstants.NATIONALITY_EMPTY -> {
+                    errorResId.value = R.string.choose_nationality
+                    false
+                }
+                EditProfileErrorConstants.POSITION_EMPTY -> {
+                    errorResId.value = R.string.enter_position
+                    false
+                }
+                EditProfileErrorConstants.COMPANY_NAME_EMPTY -> {
+                    errorResId.value = R.string.enter_company_name
+                    false
+                }
+                EditProfileErrorConstants.INSTITUTE_NAME_EMPTY -> {
+                    errorResId.value = R.string.enter_institute_name
+                    false
+                }
+                EditProfileErrorConstants.LEVEL_EMPTY -> {
+                    errorResId.value = R.string.enter_level
+                    false
+                }
+                EditProfileErrorConstants.YEAR_EMPTY -> {
+                    errorResId.value = R.string.enter_graduation_year
+                    false
+                }
+                EditProfileErrorConstants.YEAR_INVALID -> {
+                    errorResId.value = R.string.invalid_graduation_year
                     false
                 }
                 else -> {
@@ -316,5 +371,13 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getNationalitiesList(): LiveData<MutableList<NationalityModel>> {
         return nationalitiesList
+    }
+
+    fun getErrorResId(): LiveData<Int> {
+        return errorResId
+    }
+
+    fun setErrorResId(error: Int?) {
+        errorResId.value = error
     }
 }

@@ -51,6 +51,13 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        editProfileViewModel.getErrorResId().observe(this, {
+            if(it != null) {
+                editProfileViewModel.setErrorResId(null)
+                showInfoAlertDialog(this, getString(it))
+            }
+        })
+
         editProfileViewModel.getShowDatePicker().observe(this, Observer {
             if (it) {
                 editProfileViewModel.setShowDatePicker(false)

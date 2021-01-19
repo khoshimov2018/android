@@ -90,4 +90,15 @@ object EditProfileErrorConstants {
     const val NAME_EMPTY = 1
     const val DOB_EMPTY = 2
     const val AGE_LESS = 3
+    const val INTEREST_EMPTY = 4
+    const val ABOUT_ME_EMPTY = 5
+    const val GROWTH_EMPTY = 6
+    const val WEIGHT_EMPTY = 7
+    const val NATIONALITY_EMPTY = 8
+    const val COMPANY_NAME_EMPTY = 9
+    const val POSITION_EMPTY = 10
+    const val INSTITUTE_NAME_EMPTY = 11
+    const val LEVEL_EMPTY = 12
+    const val YEAR_EMPTY = 13
+    const val YEAR_INVALID = 14
 }
