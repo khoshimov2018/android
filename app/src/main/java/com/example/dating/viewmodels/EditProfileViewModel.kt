@@ -18,8 +18,11 @@ import com.google.gson.reflect.TypeToken
 import java.util.*
 import androidx.lifecycle.Observer
 import com.example.dating.interfaces.IInterestClick
+import com.example.dating.interfaces.INationalityClick
+import com.example.dating.models.NationalityModel
+import com.example.dating.repositories.NationalitiesRepository
 
-class EditProfileViewModel(application: Application) : BaseAndroidViewModel(application), IInterestClick {
+class EditProfileViewModel(application: Application) : BaseAndroidViewModel(application), IInterestClick, INationalityClick {
 
     private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
     private val showDatePicker: MutableLiveData<Boolean> = MutableLiveData()
@@ -28,6 +31,10 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private val interestsList: MutableLiveData<MutableList<InterestModel>> = MutableLiveData()
     private lateinit var interestsApiResponse: LiveData<BaseResponse>
     private lateinit var interestsObserveResponse: Observer<BaseResponse>
+
+    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
+    private lateinit var nationalitiesApiResponse: LiveData<BaseResponse>
+    private lateinit var nationalitiesObserveResponse: Observer<BaseResponse>
 
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
@@ -101,14 +108,88 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
     }
 
-    override fun interestItemClicked(view: View, interestItem: InterestModel) {
+    fun getNationalities() {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
 
+            nationalitiesObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+
+                if (validateResponseWithoutPopup(it)) {
+                    if (it.data is MutableList<*>) {
+                        val gson = Gson()
+                        val strResponse = gson.toJson(it.data)
+                        val myType = object : TypeToken<MutableList<String>>() {}.type
+                        val nationalitiesStringList: MutableList<String> = gson.fromJson<MutableList<String>>(strResponse, myType)
+
+                        val tempNationalitiesList = ArrayList<NationalityModel>()
+
+                        for(nationality in nationalitiesStringList) {
+                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.nationality != null) {
+                                if(userProfileLiveData.value!!.nationality!!.equals(nationality, ignoreCase = true)) {
+                                    tempNationalitiesList.add(NationalityModel(nationality, true))
+                                } else {
+                                    tempNationalitiesList.add(NationalityModel(nationality, false))
+                                }
+                            } else {
+                                tempNationalitiesList.add(NationalityModel(nationality, false))
+                            }
+                        }
+
+                        nationalitiesList.value = tempNationalitiesList
+                    }
+                } else {
+                    baseResponse.value = it
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            nationalitiesApiResponse = NationalitiesRepository.getNationalities(strToken)
+            nationalitiesApiResponse.observeForever(nationalitiesObserveResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
+    override fun interestItemClicked(view: View, interestItem: InterestModel) {
+        interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
+        interestsList.value = interestsList.value
+        if(userProfileLiveData.value != null) {
+            if(userProfileLiveData.value!!.interestLabels == null) {
+                userProfileLiveData.value?.interestLabels = ArrayList()
+            } else {
+                userProfileLiveData.value?.interestLabels?.clear()
+            }
+            if(interestsList.value != null) {
+                for(interest in interestsList.value!!) {
+                    if(interest.isSelected!!) {
+                        userProfileLiveData.value?.interestLabels?.add(interest.label!!)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun nationalityItemClicked(view: View, nationalityItem: NationalityModel) {
+        nationalitiesList.value?.let {
+            for(nationality in it) {
+                nationality.isSelected = false
+            }
+        }
+        nationalityItem.isSelected = true
+        userProfileLiveData.value?.nationality = nationalityItem.label
+        nationalitiesList.value = nationalitiesList.value
+        userProfileLiveData.value = userProfileLiveData.value
     }
 
     override fun onCleared() {
         super.onCleared()
         if (this::interestsApiResponse.isInitialized) {
             interestsApiResponse.removeObserver(interestsObserveResponse)
+        }
+        if (this::nationalitiesApiResponse.isInitialized) {
+            nationalitiesApiResponse.removeObserver(nationalitiesObserveResponse)
         }
     }
 
@@ -231,5 +312,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getInterestsList(): LiveData<MutableList<InterestModel>> {
         return interestsList
+    }
+
+    fun getNationalitiesList(): LiveData<MutableList<NationalityModel>> {
+        return nationalitiesList
     }
 }

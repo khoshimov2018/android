@@ -15,6 +15,10 @@
         <variable
             name="interestsAdapter"
             type="com.example.dating.adapters.InterestsAdapter" />
+
+        <variable
+            name="nationalitiesAdapter"
+            type="com.example.dating.adapters.NationalitiesAdapter" />
     </data>
 
     <LinearLayout
@@ -597,6 +601,14 @@
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/largeTextSize"
                     android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adapter="@{nationalitiesAdapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <View
                     android:layout_width="match_parent"

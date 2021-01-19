@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
 import com.example.dating.adapters.InterestsAdapter
+import com.example.dating.adapters.NationalitiesAdapter
 import com.example.dating.databinding.ActivityEditProfileBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
@@ -23,6 +24,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editProfileViewModel: EditProfileViewModel
 
     private var interestsAdapter: InterestsAdapter? = null
+    private var nationalitiesAdapter: NationalitiesAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         editProfileViewModel.getInterests()
+        editProfileViewModel.getNationalities()
 
         initObservers()
     }
@@ -66,6 +69,20 @@ class EditProfileActivity : AppCompatActivity() {
                 }
             } else {
                 interestsAdapter = null
+            }
+        })
+
+        editProfileViewModel.getNationalitiesList().observe(this, {
+            if(it != null) {
+                if(it.isEmpty()) {
+                    showInfoAlertDialog(this, getString(R.string.no_nationalities))
+                } else {
+                    nationalitiesAdapter = NationalitiesAdapter(it, editProfileViewModel)
+                    binding.nationalitiesAdapter = nationalitiesAdapter
+                    nationalitiesAdapter?.notifyDataSetChanged()
+                }
+            } else {
+                nationalitiesAdapter = null
             }
         })
 

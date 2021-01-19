@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.dating.R
+import com.example.dating.interfaces.INationalityClick
 import com.example.dating.models.InterestModel
 import com.example.dating.models.NationalityModel
 import com.example.dating.models.UserModel
@@ -18,7 +19,7 @@ import com.example.dating.utils.validateResponseWithoutPopup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class NationalitiesViewModel(application: Application): BaseAndroidViewModel(application) {
+class NationalitiesViewModel(application: Application): BaseAndroidViewModel(application), INationalityClick {
 
     private val userModelLiveData = MutableLiveData<UserModel>()
     private lateinit var apiResponse: LiveData<BaseResponse>
@@ -63,7 +64,7 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         }
     }
 
-    fun nationalityItemClicked(view: View, nationalityItem: NationalityModel) {
+    override fun nationalityItemClicked(view: View, nationalityItem: NationalityModel) {
         nationalitiesList.value?.let {
             for(nationality in it) {
                 nationality.isSelected = false

@@ -7,12 +7,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dating.databinding.AdapterNationalityItemBinding
+import com.example.dating.interfaces.INationalityClick
 import com.example.dating.models.NationalityModel
 import com.example.dating.viewmodels.NationalitiesViewModel
 
 class NationalitiesAdapter(
     private val nationalitiesList: MutableList<NationalityModel>,
-    private val nationalitiesViewModel: NationalitiesViewModel
+    private val iNotificationClick: INationalityClick
 ) :
     RecyclerView.Adapter<NationalitiesAdapter.NationalityViewHolder>() {
 
@@ -27,7 +28,7 @@ class NationalitiesAdapter(
     override fun onBindViewHolder(holder: NationalityViewHolder, position: Int) {
         val currentNationality = nationalitiesList[position]
         holder.binding.item = currentNationality
-        holder.binding.viewModel = nationalitiesViewModel
+        holder.binding.iNotificationClick = iNotificationClick
         holder.binding.executePendingBindings()
     }
 
