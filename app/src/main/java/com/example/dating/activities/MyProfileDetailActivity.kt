@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
+import com.example.dating.adapters.InterestsAdapter
 import com.example.dating.databinding.ActivityMyProfileDetailBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
@@ -34,6 +35,12 @@ class MyProfileDetailActivity : AppCompatActivity() {
     private val listOfImages: MutableList<Int> =
         mutableListOf(R.color.color1, R.color.color2, R.color.color3, R.color.color4)
     private var currentSelectedIndex = 0
+
+    private var interestsAdapter: InterestsAdapter? = null
+
+    companion object {
+        const val EDIT_PROFILE_ACTIVITY = 101
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +80,7 @@ class MyProfileDetailActivity : AppCompatActivity() {
         val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
         profileUser?.let {
             myProfileDetailViewModel.setCurrentUser(it)
+            setInterests()
         }
 
         initObservers()
@@ -81,7 +89,7 @@ class MyProfileDetailActivity : AppCompatActivity() {
     private fun initObservers() {
         myProfileDetailViewModel.getMoveToEditProfile()
             .observe(this, Observer {
-                if(it) {
+                if (it) {
                     myProfileDetailViewModel.setMoveToEditProfile(false)
                     moveToEditProfile()
                 }
@@ -126,6 +134,25 @@ class MyProfileDetailActivity : AppCompatActivity() {
     private fun moveToEditProfile() {
         val intent = Intent(this, EditProfileActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
-        startActivity(intent)
+        startActivityForResult(intent, EDIT_PROFILE_ACTIVITY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDIT_PROFILE_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                val currentUser = data?.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+                currentUser?.let {
+                    myProfileDetailViewModel.setCurrentUser(it)
+                    setInterests()
+                }
+            }
+        }
+    }
+
+    private fun  setInterests() {
+        interestsAdapter = InterestsAdapter(myProfileDetailViewModel.getInterestsList(), myProfileDetailViewModel)
+        binding.interestsAdapter = interestsAdapter
+        interestsAdapter?.notifyDataSetChanged()
     }
 }

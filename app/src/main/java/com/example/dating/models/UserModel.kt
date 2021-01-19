@@ -49,8 +49,8 @@ data class UserModel(
     fun validateEditProfile(): Int {
         return when {
             isNameEmpty() -> EditProfileErrorConstants.NAME_EMPTY
-            isDobEmpty() -> EditProfileErrorConstants.DOB_EMPTY
-            isAgeLess() -> EditProfileErrorConstants.AGE_LESS
+//            isDobEmpty() -> EditProfileErrorConstants.DOB_EMPTY
+            isAgeLessEditProfile() -> EditProfileErrorConstants.AGE_LESS
             isInterestEmpty() -> EditProfileErrorConstants.INTEREST_EMPTY
             isDescriptionEmpty() -> EditProfileErrorConstants.ABOUT_ME_EMPTY
             isGrowthEmpty() -> EditProfileErrorConstants.GROWTH_EMPTY
@@ -163,6 +163,15 @@ data class UserModel(
     private fun isAgeLess(): Boolean {
         val current = Calendar.getInstance()
         return getDifferenceInYears(selectedDOB!!, current) < Constants.MINIMUM_AGE
+    }
+
+    private fun isAgeLessEditProfile(): Boolean {
+        return if(selectedDOB == null) {
+            false
+        } else {
+            val current = Calendar.getInstance()
+            getDifferenceInYears(selectedDOB!!, current) < Constants.MINIMUM_AGE
+        }
     }
 
     private fun isUsernameEmpty(): Boolean {

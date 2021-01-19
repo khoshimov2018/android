@@ -37,8 +37,11 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var nationalitiesObserveResponse: Observer<BaseResponse>
 
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
-
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
+
+    private lateinit var editProfileApiResponse: LiveData<BaseResponse>
+    private lateinit var editProfileObserveResponse: Observer<BaseResponse>
+    private val allowToGoBack: MutableLiveData<Boolean> = MutableLiveData()
 
     fun updateProfile(): Boolean {
         return if(userProfileLiveData.value != null) {
@@ -100,10 +103,21 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     false
                 }
                 else -> {
+                    loaderVisible.value = true // show loader
+                    editProfileObserveResponse = Observer<BaseResponse> { response ->
+                        loaderVisible.value = false
+                        if(validateResponseWithoutPopup(response)) {
+                            allowToGoBack.value = true
+                        } else {
+                            baseResponse.value = response
+                        }
+                    }
+
                     // token
                     val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-                    UserRepository.changeInfo(userProfileLiveData.value!!, strToken)
-                    true
+                    editProfileApiResponse = UserRepository.changeInfo(userProfileLiveData.value!!, strToken)
+                    editProfileApiResponse.observeForever(editProfileObserveResponse)
+                    false
                 }
             }
         } else {
@@ -379,5 +393,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun setErrorResId(error: Int?) {
         errorResId.value = error
+    }
+
+    fun getAllowToGoBack(): LiveData<Boolean> {
+        return allowToGoBack
     }
 }

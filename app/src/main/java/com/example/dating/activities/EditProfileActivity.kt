@@ -1,6 +1,7 @@
 package com.example.dating.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -93,6 +94,12 @@ class EditProfileActivity : AppCompatActivity() {
             }
         })
 
+        editProfileViewModel.getAllowToGoBack().observe(this, {
+            if(it) {
+                moveUserBack()
+            }
+        })
+
         editProfileViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
@@ -121,10 +128,17 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (isInternetAvailable(this)) {
             if(editProfileViewModel.updateProfile()) {
-                super.onBackPressed()
+                moveUserBack()
             }
         } else {
-            super.onBackPressed()
+            moveUserBack()
         }
+    }
+
+    private fun moveUserBack() {
+        val returnIntent = Intent()
+        returnIntent.putExtra(Constants.PROFILE_USER, editProfileViewModel.getCurrentUser())
+        setResult(RESULT_OK, returnIntent)
+        super.onBackPressed()
     }
 }
