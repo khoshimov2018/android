@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -90,6 +91,11 @@ object UserRepository {
     fun uploadImage(inputStream: InputStream, strToken: String): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
 
+        val extension: RequestBody? = "png".toRequestBody(MultipartBody.FORM)
+
+        val map: MutableMap<String, RequestBody?> = HashMap()
+        map["extension"] = extension
+
         val filePart = MultipartBody.Part.createFormData(
             "file", "photo.png", RequestBody.create(
                 "image/*".toMediaTypeOrNull(),
@@ -97,7 +103,7 @@ object UserRepository {
             )
         )
 
-        retrofitService.uploadImage(filePart, strToken)
+        retrofitService.uploadImage(filePart, map, strToken)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,
