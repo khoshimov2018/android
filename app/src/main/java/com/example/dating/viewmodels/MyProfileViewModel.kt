@@ -26,6 +26,7 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
 
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
     private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
+    private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
     fun getUserProfile() {
         if (isInternetAvailable(context)) {
@@ -64,7 +65,20 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
             observeResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
                 if (validateResponseWithoutPopup(it)) {
+                    if (it.data is MutableList<*>) {
+                        val gson = Gson()
+                        val strResponse = gson.toJson(it.data)
+                        val myType = object : TypeToken<MutableList<String>>() {}.type
+                        val receivedImagesList: MutableList<String> =
+                            gson.fromJson<MutableList<String>>(strResponse, myType)
 
+                        val imagesList = ArrayList<String>()
+                        for(image in receivedImagesList) {
+                            val imageUrl = "${ApiConstants.BASE_URL}$image"
+                            imagesList.add(imageUrl)
+                        }
+                        imagesListLiveData.value = imagesList
+                    }
                 } else {
                     baseResponse.value = it
                 }
@@ -147,5 +161,13 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
 
     fun getCurrentUser(): UserModel? {
         return userProfileLiveData.value
+    }
+
+    fun getImagesListLiveData(): LiveData<MutableList<String>> {
+        return imagesListLiveData
+    }
+
+    fun getImages(): MutableList<String>? {
+        return imagesListLiveData.value
     }
 }

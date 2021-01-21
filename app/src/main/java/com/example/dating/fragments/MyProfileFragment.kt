@@ -110,6 +110,13 @@ class MyProfileFragment : Fragment() {
     private fun moveToProfile() {
         val intent = Intent(requireActivity(), MyProfileDetailActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, viewModel.getCurrentUser())
+
+        var arrayList: ArrayList<String>? = null
+        if(viewModel.getImages() != null) {
+            arrayList = ArrayList(viewModel.getImages()!!)
+        }
+
+        intent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
         startActivity(intent)
     }
 

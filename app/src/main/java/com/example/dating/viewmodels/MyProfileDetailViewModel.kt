@@ -11,6 +11,7 @@ class MyProfileDetailViewModel: BaseViewModel(), IInterestClick {
 
     private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
     private val moveToEditProfile: MutableLiveData<Boolean> = MutableLiveData()
+    private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
     fun getInterestsList(): MutableList<InterestModel> {
         val list = ArrayList<InterestModel>()
@@ -48,5 +49,13 @@ class MyProfileDetailViewModel: BaseViewModel(), IInterestClick {
 
     fun getCurrentUser(): UserModel? {
         return userProfileLiveData.value
+    }
+
+    fun setImagesListLiveData(imagesList: MutableList<String>) {
+        imagesListLiveData.value = imagesList
+    }
+
+    fun getImages(): MutableList<String>? {
+        return imagesListLiveData.value
     }
 }

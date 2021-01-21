@@ -7,6 +7,7 @@ object Constants {
     const val IS_REGISTRATION_DONE = "IS_REGISTRATION_DONE"
     const val LOGGED_IN_USER = "LOGGED_IN_USER"
     const val PROFILE_USER = "PROFILE_USER"
+    const val USER_IMAGES = "USER_IMAGES"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
