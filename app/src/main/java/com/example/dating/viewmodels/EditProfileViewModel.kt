@@ -43,6 +43,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var editProfileObserveResponse: Observer<BaseResponse>
     private val allowToGoBack: MutableLiveData<Boolean> = MutableLiveData()
 
+    private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
+
     fun updateProfile(): Boolean {
         return if(userProfileLiveData.value != null) {
             when(userProfileLiveData.value!!.validateEditProfile()) {
@@ -397,5 +399,17 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getAllowToGoBack(): LiveData<Boolean> {
         return allowToGoBack
+    }
+
+    fun setImagesListLiveData(imagesList: MutableList<String>) {
+        imagesListLiveData.value = imagesList
+    }
+
+    fun getImagesListLiveData(): LiveData<MutableList<String>> {
+        return imagesListLiveData
+    }
+
+    fun getImages(): MutableList<String>? {
+        return imagesListLiveData.value
     }
 }

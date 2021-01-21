@@ -44,6 +44,10 @@ class EditProfileActivity : AppCompatActivity() {
         profileUser?.let {
             editProfileViewModel.setCurrentUser(it)
         }
+        val imagesList = intent.getStringArrayListExtra(Constants.USER_IMAGES)
+        imagesList?.let {
+            editProfileViewModel.setImagesListLiveData(it)
+        }
 
         editProfileViewModel.getInterests()
         editProfileViewModel.getNationalities()

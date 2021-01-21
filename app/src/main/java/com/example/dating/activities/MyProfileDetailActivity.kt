@@ -145,6 +145,14 @@ class MyProfileDetailActivity : AppCompatActivity() {
     private fun moveToEditProfile() {
         val intent = Intent(this, EditProfileActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
+
+        var arrayList: ArrayList<String>? = null
+        if(myProfileDetailViewModel.getImages() != null) {
+            arrayList = ArrayList(myProfileDetailViewModel.getImages()!!)
+        }
+
+        intent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
+
         startActivityForResult(intent, EDIT_PROFILE_ACTIVITY)
     }
 

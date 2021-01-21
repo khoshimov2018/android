@@ -217,10 +217,14 @@
                                 android:layout_height="match_parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/plus" />
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -238,10 +242,14 @@
                                 android:layout_height="match_parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/plus" />
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 2) ? viewModel.imagesListLiveData.get(1) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -259,10 +267,14 @@
                                 android:layout_height="match_parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/plus" />
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 3) ? viewModel.imagesListLiveData.get(2) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -288,10 +300,14 @@
                                 android:layout_height="match_parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/plus" />
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 4) ? viewModel.imagesListLiveData.get(3) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -309,10 +325,14 @@
                                 android:layout_height="match_parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerInside"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/plus" />
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 5) ? viewModel.imagesListLiveData.get(4) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -330,10 +350,14 @@
                                 android:layout_height="match_parent">
 
                                 <androidx.appcompat.widget.AppCompatImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="centerInside"
                                     android:layout_centerInParent="true"
-                                    android:src="@drawable/plus" />
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 6) ? viewModel.imagesListLiveData.get(5) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
                             </RelativeLayout>
 
                         </androidx.cardview.widget.CardView>
