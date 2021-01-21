@@ -327,8 +327,8 @@
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:scaleType="centerInside"
                                     android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
                                     android:src="@drawable/plus"
                                     app:error="@{@drawable/plus}"
                                     app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 5) ? viewModel.imagesListLiveData.get(4) : ""}'
@@ -352,8 +352,8 @@
                                 <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:scaleType="centerInside"
                                     android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
                                     android:src="@drawable/plus"
                                     app:error="@{@drawable/plus}"
                                     app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 6) ? viewModel.imagesListLiveData.get(5) : ""}'
@@ -527,7 +527,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{viewModel.userProfileLiveData != null ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
+                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.growth != null) ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -537,7 +537,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onGrowthChanged}"
-                        android:progress="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.growth : 0}" />
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.growth != null) ? viewModel.userProfileLiveData.growth : 0}" />
 
                     <View
                         android:layout_width="match_parent"
@@ -560,7 +560,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{viewModel.userProfileLiveData != null ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
+                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.weight != null) ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -570,7 +570,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onWeightChanged}"
-                        android:progress="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.weight : 0}" />
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.weight != null) ? viewModel.userProfileLiveData.weight : 0}" />
 
                     <View
                         android:layout_width="match_parent"
@@ -659,6 +659,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
+                        android:hint="@string/position"
                         android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onPositionTextChanged(text)}"
                         android:padding="@dimen/normalPadding"
@@ -672,6 +673,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
+                        android:hint="@string/company"
                         android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onCompanyTextChanged(text)}"
                         android:padding="@dimen/normalPadding"
@@ -701,6 +703,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_unselected"
+                        android:hint="@string/where_did_you_study"
                         android:inputType="textCapWords"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onInstitutionNameTextChanged(text)}"
                         android:padding="@dimen/normalPadding"
@@ -725,6 +728,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:layout_marginBottom="@dimen/largeMargin"
                         android:background="@drawable/round_button_unselected"
+                        android:hint="@string/year_of_issue"
                         android:inputType="number"
                         android:maxLength="4"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onGraduationYearTextChanged(text)}"

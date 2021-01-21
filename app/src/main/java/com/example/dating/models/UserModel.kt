@@ -115,7 +115,7 @@ data class UserModel(
     }
 
     fun getAge(): String {
-        if(dateOfBirth.isNullOrEmpty()) {
+        if (dateOfBirth.isNullOrEmpty()) {
             return ""
         } else {
             val current = Calendar.getInstance()
@@ -129,23 +129,28 @@ data class UserModel(
     }
 
     fun getPosition(): String {
-        return workInfo?.position!!
+        return if (workInfo == null || workInfo!!.position == null) ""
+        else workInfo!!.position!!
     }
 
     fun getCompanyName(): String {
-        return workInfo?.companyName!!
+        return if (workInfo == null || workInfo!!.companyName == null) ""
+        else workInfo!!.companyName!!
     }
 
     fun getWorkInfo(): String {
-        return "${workInfo?.position}, ${workInfo?.companyName}"
+        return if (workInfo == null || workInfo!!.position == null) ""
+        else "${workInfo?.position}, ${workInfo?.companyName}"
     }
 
     fun getInstituteName(): String {
-        return "${educationInfo?.institutionName}"
+        return if (educationInfo == null || educationInfo!!.institutionName == null) ""
+        else "${educationInfo?.institutionName}"
     }
 
     fun getGraduationYear(): String {
-        return "${educationInfo?.graduationYear}"
+        return if (educationInfo == null || educationInfo!!.graduationYear == null) ""
+        else "${educationInfo?.graduationYear}"
     }
 
     fun getLevel(): String {
@@ -153,7 +158,8 @@ data class UserModel(
     }
 
     fun getEducationInfo(): String {
-        return "${educationInfo?.institutionName}, ${educationInfo?.graduationYear}, ${educationInfo?.level}"
+        return if (educationInfo == null || educationInfo!!.institutionName == null) ""
+        else "${educationInfo?.institutionName}, ${educationInfo?.graduationYear}, ${educationInfo?.level}"
     }
 
     private fun isDobEmpty(): Boolean {
@@ -166,7 +172,7 @@ data class UserModel(
     }
 
     private fun isAgeLessEditProfile(): Boolean {
-        return if(selectedDOB == null) {
+        return if (selectedDOB == null) {
             false
         } else {
             val current = Calendar.getInstance()

@@ -32,7 +32,7 @@ class EnterDobViewModel : BaseViewModel() {
                 }
                 else -> {
                     if(validateInternet(view.context)) {
-                        userModelLiveData.value?.selectedDOB = null
+//                        userModelLiveData.value?.selectedDOB = null
                         hideKeyboard(view)
                         loaderVisible.value = true // show loader
                         observeResponse = Observer<BaseResponse> { response ->
