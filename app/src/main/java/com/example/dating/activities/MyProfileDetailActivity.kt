@@ -108,9 +108,8 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val images = myProfileDetailViewModel.getImages()
-        if (images != null) {
-            for (index in 0 until images.size) {
+        if (this::listOfImages.isInitialized) {
+            for (index in 0 until listOfImages.size) {
                 val view = View(this)
                 val layoutParams: LinearLayout.LayoutParams =
                     LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
@@ -147,7 +146,7 @@ class MyProfileDetailActivity : AppCompatActivity() {
         intent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
 
         var arrayList: ArrayList<String>? = null
-        if(myProfileDetailViewModel.getImages() != null) {
+        if (myProfileDetailViewModel.getImages() != null) {
             arrayList = ArrayList(myProfileDetailViewModel.getImages()!!)
         }
 

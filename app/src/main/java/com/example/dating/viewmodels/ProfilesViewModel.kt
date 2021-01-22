@@ -83,6 +83,17 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                         val usersList: MutableList<UserModel> =
                             gson.fromJson<MutableList<UserModel>>(strResponse, myType)
 
+                        for(user in usersList) {
+                            val imagesList = ArrayList<String>()
+                            user.images?.let {images ->
+                                for(image in images) {
+                                    val imageUrl = "${ApiConstants.BASE_URL}$image"
+                                    imagesList.add(imageUrl)
+                                }
+                            }
+                            user.images = imagesList
+                        }
+
                         usersListLiveData.value = usersList
                     }
                 } else {
