@@ -175,4 +175,11 @@ class MyProfileDetailActivity : AppCompatActivity() {
         binding.interestsAdapter = interestsAdapter
         interestsAdapter?.notifyDataSetChanged()
     }
+
+    override fun onBackPressed() {
+        val returnIntent = Intent()
+        returnIntent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
+        setResult(RESULT_OK, returnIntent)
+        super.onBackPressed()
+    }
 }

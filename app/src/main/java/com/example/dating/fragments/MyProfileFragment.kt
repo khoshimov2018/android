@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.dating.R
 import com.example.dating.activities.*
 import com.example.dating.databinding.MyProfileFragmentBinding
+import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.utils.showInfoAlertDialog
@@ -23,6 +25,7 @@ class MyProfileFragment : Fragment() {
 
     companion object {
         fun newInstance() = MyProfileFragment()
+        const val MY_PROFILE_DETAIL = 101
     }
 
     private lateinit var viewModel: MyProfileViewModel
@@ -97,8 +100,8 @@ class MyProfileFragment : Fragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.getUserProfile()
     }
 
@@ -117,7 +120,7 @@ class MyProfileFragment : Fragment() {
         }
 
         intent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
-        startActivity(intent)
+        startActivityForResult(intent, MY_PROFILE_DETAIL)
     }
 
     private fun moveToCoins() {
@@ -128,5 +131,17 @@ class MyProfileFragment : Fragment() {
     private fun moveToPremium() {
         val intent = Intent(requireActivity(), PremiumActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MyProfileDetailActivity.EDIT_PROFILE_ACTIVITY) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                val currentUser = data?.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+                currentUser?.let {
+                    viewModel.setCurrentUser(it)
+                }
+            }
+        }
     }
 }

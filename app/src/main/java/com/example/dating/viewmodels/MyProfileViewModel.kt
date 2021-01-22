@@ -170,4 +170,8 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
     fun getImages(): MutableList<String>? {
         return imagesListLiveData.value
     }
+
+    fun setCurrentUser(userModel: UserModel) {
+        userProfileLiveData.value = userModel
+    }
 }
