@@ -62,6 +62,12 @@ class ProfilesFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.getFilterModelLiveData().observe(viewLifecycleOwner, {
+            if(it != null) {
+                viewModel.getUsers()
+            }
+        })
+
         viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setShowNoInternet(false)

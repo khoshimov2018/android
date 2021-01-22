@@ -9,6 +9,7 @@ import com.example.dating.models.NationalityModel
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.FiltersRepository
 import com.example.dating.repositories.NationalitiesRepository
+import com.example.dating.repositories.UserRepository
 import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.*
 import com.google.gson.Gson
@@ -16,15 +17,18 @@ import com.google.gson.reflect.TypeToken
 
 class ProfilesViewModel(application: Application) : BaseAndroidViewModel(application) {
 
-    private var filterModel: FilterModel? = null
+    private var filterModelLiveData: MutableLiveData<FilterModel> = MutableLiveData()
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
 
+    private lateinit var usersApiResponse: LiveData<BaseResponse>
+    private lateinit var usersObserveResponse: Observer<BaseResponse>
+
     fun getFilters() {
-        filterModel = getFiltersFromShared(context)
-        if (filterModel == null) {
+        filterModelLiveData.value = getFiltersFromShared(context)
+        if (filterModelLiveData.value == null) {
             fetchFilters()
         }
     }
@@ -44,11 +48,10 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                     val responseFilter: FilterModel =
                         gson.fromJson<FilterModel>(strResponse, myType)
 
-                    filterModel = responseFilter
-                    filterModel?.let { filter ->
+                    filterModelLiveData.value = responseFilter
+                    filterModelLiveData.value?.let { filter ->
                         saveFiltersToShared(context, filter)
                     }
-                    printLog("rec $filterModel")
                 } else {
                     baseResponse.value = it
                 }
@@ -62,10 +65,38 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    fun getUsers() {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
+
+            usersObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+
+                if (validateResponseWithoutPopup(it)) {
+
+                } else {
+                    baseResponse.value = it
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            filterModelLiveData.value?.let {
+                usersApiResponse = UserRepository.getUsers(strToken, it)
+            }
+            usersApiResponse.observeForever(usersObserveResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
+        }
+        if (this::usersApiResponse.isInitialized) {
+            usersApiResponse.removeObserver(usersObserveResponse)
         }
     }
 
@@ -75,5 +106,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     fun setBaseResponse(baseResponse: BaseResponse?) {
         this.baseResponse.value = baseResponse
+    }
+
+    fun getFilterModelLiveData(): LiveData<FilterModel> {
+        return filterModelLiveData
     }
 }

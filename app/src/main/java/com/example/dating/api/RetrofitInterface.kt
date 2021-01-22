@@ -42,4 +42,7 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.GET_FILTERS)
     fun getFilters(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_USERS)
+    fun getUsers(@Header("Authorization") token: String): Call<BaseResponse>
 }

@@ -42,6 +42,7 @@ object ApiConstants {
     const val GET_CURRENT_USER_IMAGES = "images?version=original"
     const val SAVE_FILTERS = "filters"
     const val GET_FILTERS = "filters"
+    const val GET_USERS = "users?page=0&size=10&gender=MALE"
 }
 
 object LoginFormErrorConstants {
