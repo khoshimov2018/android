@@ -5,11 +5,16 @@
     tools:context=".fragments.UserProfileFragment">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.example.dating.viewmodels.UserProfileViewModel" />
+
+        <variable
+            name="interestsAdapter"
+            type="com.example.dating.adapters.InterestsAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,7 +24,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -36,6 +41,35 @@
                 android:layout_marginTop="@dimen/normalMargin"
                 android:layout_marginBottom="@dimen/smallMargin"
                 android:orientation="horizontal" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/registrationMargin"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:gravity="center_horizontal"
+                    android:text='@{viewModel.userProfileLiveData.name != null ? viewModel.userProfileLiveData.getNameAndAge() : ""}'
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xLargeTextSize" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:layout_marginTop="@dimen/smallMargin"
+                    android:gravity="center_horizontal"
+                    android:text='@{viewModel.userProfileLiveData.description != null ? viewModel.userProfileLiveData.getShortDescription() : ""}'
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/largeTextSize" />
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -88,7 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="Praesent eu dolor euismod, semper neque maximus, sollicitudin elit. Nullam est ex, convallis a lacus nec, sagittis scelerisque leo. Aenean sed purus vitae sem egestas suscipit a id tellus. Vivamus cursus ut nisl ac interdum."
+                        android:text='@{viewModel.userProfileLiveData.description != null ? viewModel.userProfileLiveData.description : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -101,13 +135,14 @@
                         android:textSize="@dimen/largeTextSize"
                         android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
-                        android:text="Interests"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/largeTextSize" />
+                        android:adapter="@{interestsAdapter}"
+                        android:clipToPadding="false"
+                        android:paddingTop="@dimen/normalPadding"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -122,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="170 см"
+                        android:text='@{viewModel.userProfileLiveData.growth != null ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -139,7 +174,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="51 кг"
+                        android:text='@{viewModel.userProfileLiveData.weight != null ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -173,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="Татарка"
+                        android:text='@{viewModel.userProfileLiveData.nationality != null ? viewModel.userProfileLiveData.nationality : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -190,7 +225,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="Директор, TARAM"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getWorkInfo() : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -208,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:layout_marginBottom="@dimen/registrationMargin"
-                        android:text="НИИУ, Специальность, 2009 год выпуска"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getEducationInfo() : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
                 </LinearLayout>

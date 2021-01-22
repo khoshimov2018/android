@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.dating.R
+import com.example.dating.adapters.InterestsAdapter
 import com.example.dating.databinding.UserProfileFragmentBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.dpToPx
@@ -49,6 +50,8 @@ class UserProfileFragment : Fragment() {
     private var currentSelectedIndex = 0
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+
+    private var interestsAdapter: InterestsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,10 +123,17 @@ class UserProfileFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         initObservers()
+        setInterests()
     }
 
     private fun initObservers() {
 
+    }
+
+    private fun setInterests() {
+        interestsAdapter = InterestsAdapter(viewModel.getInterestsList(), viewModel)
+        binding.interestsAdapter = interestsAdapter
+        interestsAdapter?.notifyDataSetChanged()
     }
 
     private fun initView() {

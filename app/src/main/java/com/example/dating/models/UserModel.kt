@@ -115,6 +115,17 @@ data class UserModel(
         }
     }
 
+    fun getNameAndAge(): String {
+        var str = ""
+        if(name != null) {
+            str = "$name"
+        }
+        if(age != null) {
+            str += ", ${age.toString()}"
+        }
+        return str
+    }
+
     fun getShortDescription(): String {
         return description?.let { trimText(it, Constants.SHORT_DESCRIPTION_TRIM_LENGTH) } ?: ""
     }
