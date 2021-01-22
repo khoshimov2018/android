@@ -8,6 +8,7 @@ object Constants {
     const val LOGGED_IN_USER = "LOGGED_IN_USER"
     const val PROFILE_USER = "PROFILE_USER"
     const val USER_IMAGES = "USER_IMAGES"
+    const val USER_FILTERS = "USER_FILTERS"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
@@ -39,6 +40,7 @@ object ApiConstants {
     const val GET_INTERESTS = "common/interests"
     const val GET_NATIONALITIES = "common/nationalities"
     const val GET_CURRENT_USER_IMAGES = "images?version=original"
+    const val FILTERS = "filters"
 }
 
 object LoginFormErrorConstants {

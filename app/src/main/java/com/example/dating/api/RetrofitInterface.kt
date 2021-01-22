@@ -1,5 +1,6 @@
 package com.example.dating.api
 
+import com.example.dating.models.FilterModel
 import com.example.dating.models.UserModel
 import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.ApiConstants
@@ -35,4 +36,7 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.GET_CURRENT_USER_IMAGES)
     fun getCurrentUserImages(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @POST(ApiConstants.FILTERS)
+    fun saveFilters(@Body filterModel: FilterModel, @Header("Authorization") token: String): Call<BaseResponse>
 }

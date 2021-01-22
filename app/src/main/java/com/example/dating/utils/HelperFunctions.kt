@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import com.example.dating.R
 import com.example.dating.activities.RegisterActivity
+import com.example.dating.models.FilterModel
 import com.example.dating.models.UserModel
 import com.example.dating.responses.BaseResponse
 import com.google.gson.Gson
@@ -177,6 +178,18 @@ fun getLoggedInUserFromShared(context: Context): UserModel {
     val gson = Gson()
     val strJson = SharedPreferenceHelper.getStringFromShared(context, Constants.LOGGED_IN_USER)
     return gson.fromJson(strJson, UserModel::class.java)
+}
+
+fun saveFiltersToShared(context: Context, filterModel: FilterModel) {
+    val gson = Gson()
+    val strJson = gson.toJson(filterModel)
+    SharedPreferenceHelper.saveStringToShared(context, Constants.USER_FILTERS, strJson)
+}
+
+fun getFiltersFromShared(context: Context): FilterModel {
+    val gson = Gson()
+    val strJson = SharedPreferenceHelper.getStringFromShared(context, Constants.USER_FILTERS)
+    return gson.fromJson(strJson, FilterModel::class.java)
 }
 
 fun formatDobForAPI(calendar: Calendar): String {
