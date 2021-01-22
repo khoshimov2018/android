@@ -40,7 +40,8 @@ object ApiConstants {
     const val GET_INTERESTS = "common/interests"
     const val GET_NATIONALITIES = "common/nationalities"
     const val GET_CURRENT_USER_IMAGES = "images?version=original"
-    const val FILTERS = "filters"
+    const val SAVE_FILTERS = "filters"
+    const val GET_FILTERS = "filters"
 }
 
 object LoginFormErrorConstants {

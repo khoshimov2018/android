@@ -186,10 +186,13 @@ fun saveFiltersToShared(context: Context, filterModel: FilterModel) {
     SharedPreferenceHelper.saveStringToShared(context, Constants.USER_FILTERS, strJson)
 }
 
-fun getFiltersFromShared(context: Context): FilterModel {
+fun getFiltersFromShared(context: Context): FilterModel? {
     val gson = Gson()
-    val strJson = SharedPreferenceHelper.getStringFromShared(context, Constants.USER_FILTERS)
-    return gson.fromJson(strJson, FilterModel::class.java)
+    val strJson: String? = SharedPreferenceHelper.getStringFromShared(context, Constants.USER_FILTERS)
+    strJson?.let {
+        return gson.fromJson(strJson, FilterModel::class.java)
+    }
+    return null
 }
 
 fun formatDobForAPI(calendar: Calendar): String {

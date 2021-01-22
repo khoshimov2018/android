@@ -37,6 +37,9 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_CURRENT_USER_IMAGES)
     fun getCurrentUserImages(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @POST(ApiConstants.FILTERS)
+    @POST(ApiConstants.SAVE_FILTERS)
     fun saveFilters(@Body filterModel: FilterModel, @Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_FILTERS)
+    fun getFilters(@Header("Authorization") token: String): Call<BaseResponse>
 }

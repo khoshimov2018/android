@@ -12,6 +12,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dating.R
 import com.example.dating.databinding.ProfilesFragmentBinding
+import com.example.dating.utils.getLoggedInUserFromShared
+import com.example.dating.utils.showInfoAlertDialog
+import com.example.dating.utils.validateResponse
 import com.example.dating.viewmodels.ProfilesViewModel
 
 private const val NUM_PAGES = 5
@@ -53,10 +56,25 @@ class ProfilesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         initObservers()
+
+        viewModel.setLoggedInUser(getLoggedInUserFromShared(requireActivity()))
+        viewModel.getFilters()
     }
 
     private fun initObservers() {
+        viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setShowNoInternet(false)
+                showInfoAlertDialog(requireActivity(), getString(R.string.no_internet))
+            }
+        })
 
+        viewModel.getBaseResponse().observe(viewLifecycleOwner, {
+            it?.let {
+                viewModel.setBaseResponse(null)
+                validateResponse(requireActivity(), it)
+            }
+        })
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
