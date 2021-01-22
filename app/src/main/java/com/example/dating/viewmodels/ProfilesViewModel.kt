@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.dating.models.FilterModel
+import com.example.dating.models.InterestModel
 import com.example.dating.models.NationalityModel
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.FiltersRepository
@@ -23,6 +24,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
 
+    private val usersListLiveData: MutableLiveData<MutableList<UserModel>> = MutableLiveData()
     private lateinit var usersApiResponse: LiveData<BaseResponse>
     private lateinit var usersObserveResponse: Observer<BaseResponse>
 
@@ -74,7 +76,15 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                 loaderVisible.value = false
 
                 if (validateResponseWithoutPopup(it)) {
+                    if (it.data is MutableList<*>) {
+                        val gson = Gson()
+                        val strResponse = gson.toJson(it.data)
+                        val myType = object : TypeToken<MutableList<UserModel>>() {}.type
+                        val usersList: MutableList<UserModel> =
+                            gson.fromJson<MutableList<UserModel>>(strResponse, myType)
 
+                        usersListLiveData.value = usersList
+                    }
                 } else {
                     baseResponse.value = it
                 }
@@ -110,5 +120,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     fun getFilterModelLiveData(): LiveData<FilterModel> {
         return filterModelLiveData
+    }
+
+    fun getUsersListLiveData(): LiveData<MutableList<UserModel>> {
+        return usersListLiveData
     }
 }

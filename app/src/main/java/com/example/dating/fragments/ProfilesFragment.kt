@@ -12,6 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dating.R
 import com.example.dating.databinding.ProfilesFragmentBinding
+import com.example.dating.models.UserModel
 import com.example.dating.utils.getLoggedInUserFromShared
 import com.example.dating.utils.showInfoAlertDialog
 import com.example.dating.utils.validateResponse
@@ -41,13 +42,9 @@ class ProfilesFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.profiles_fragment, container, false)
         val view: View = binding.root
-        initViewModel()
-
         viewPager = view.findViewById(R.id.pager)
 
-        // The pager adapter, which provides the pages to the view pager widget.
-        val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
-        viewPager.adapter = pagerAdapter
+        initViewModel()
 
         return view
     }
@@ -68,6 +65,13 @@ class ProfilesFragment : Fragment() {
             }
         })
 
+        viewModel.getUsersListLiveData().observe(viewLifecycleOwner, {
+            if(it != null) {
+                val pagerAdapter = ScreenSlidePagerAdapter(requireActivity(), it)
+                viewPager.adapter = pagerAdapter
+            }
+        })
+
         viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setShowNoInternet(false)
@@ -83,9 +87,11 @@ class ProfilesFragment : Fragment() {
         })
     }
 
-    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = NUM_PAGES
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity, val usersList: MutableList<UserModel>) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = usersList.size
 
-        override fun createFragment(position: Int): Fragment = UserProfileFragment()
+        override fun createFragment(position: Int): Fragment {
+            return UserProfileFragment.newInstance(usersList.get(position))
+        }
     }
 }

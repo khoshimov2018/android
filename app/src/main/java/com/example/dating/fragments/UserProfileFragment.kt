@@ -14,16 +14,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.example.dating.R
 import com.example.dating.databinding.UserProfileFragmentBinding
+import com.example.dating.models.UserModel
 import com.example.dating.utils.dpToPx
 import com.example.dating.utils.printLog
 import com.example.dating.viewmodels.UserProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.user_profile_fragment.*
 
+private const val CURRENT_USER = "CURRENT_USER"
+
 class UserProfileFragment : Fragment() {
 
     companion object {
-        fun newInstance() = UserProfileFragment()
+        @JvmStatic
+        fun newInstance(userModel: UserModel) =
+            UserProfileFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(CURRENT_USER, userModel)
+                }
+            }
     }
 
     private lateinit var viewModel: UserProfileViewModel
@@ -40,12 +49,15 @@ class UserProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+        arguments?.let {
+            val currentUser = it.getParcelable<UserModel>(CURRENT_USER)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.user_profile_fragment, container, false)
         val view: View = binding.root

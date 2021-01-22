@@ -26,6 +26,10 @@ data class UserModel(
     var workInfo: WorkInfoModel? = null,
     var selectedDOB: Calendar? = null,
     var roles: MutableList<String>? = null,
+    var age: Int? = null,
+    var interests: MutableList<String>? = null,
+    var images: MutableList<String> ? = null,
+    var distanceTo: String? = null,
 ) : Parcelable {
     fun validateLoginData(): Int {
         return when {
