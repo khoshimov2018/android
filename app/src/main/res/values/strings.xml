@@ -108,6 +108,8 @@
     <string name="enter_growth">Please enter your growth</string>
     <string name="enter_weight">Please enter your weight</string>
     <string name="enter_about_me">Please enter About you</string>
+    <string name="need_location_permission">This app needs to access your Location. Please allow location permission from the Settings.</string>
+    <string name="could_not_get_location">Could not get your location. Please check your GPS settings and try again.</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>
