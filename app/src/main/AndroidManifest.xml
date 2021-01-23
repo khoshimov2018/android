@@ -5,17 +5,18 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DatingApp"
         android:usesCleartextTraffic="true"
-        android:largeHeap="true"
         tools:targetApi="m">
 
         <activity
@@ -67,5 +68,33 @@
             android:name=".activities.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.IntroSliderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AboutMeActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HeightWeightActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.FamilyStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.JobActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EducationActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NationalitiesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyInterestsActivity"
+            android:screenOrientation="portrait" />
     </application>
+
 </manifest>

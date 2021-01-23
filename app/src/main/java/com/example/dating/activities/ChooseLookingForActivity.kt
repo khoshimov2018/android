@@ -7,12 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.dating.R
-import com.example.dating.databinding.ActivityChooseGenderBinding
 import com.example.dating.databinding.ActivityChooseLookingForBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.Constants
 import com.example.dating.utils.getLoggedInUserFromShared
-import com.example.dating.viewmodels.ChooseGenderViewModel
 import com.example.dating.viewmodels.ChooseLookingForViewModel
 
 class ChooseLookingForActivity : AppCompatActivity() {
@@ -58,7 +56,8 @@ class ChooseLookingForActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, MyInterestsActivity::class.java)
+        intent.putExtra(Constants.PROFILE_USER, chooseLookingForViewModel.getCurrentUser())
         startActivity(intent)
         finishAffinity()
     }

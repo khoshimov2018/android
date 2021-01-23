@@ -7,11 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.dating.R
 import com.example.dating.activities.*
 import com.example.dating.databinding.MyProfileFragmentBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
+import com.example.dating.utils.getLoggedInUserFromShared
+import com.example.dating.utils.showInfoAlertDialog
+import com.example.dating.utils.validateResponse
 import com.example.dating.viewmodels.LoginViewModel
 import com.example.dating.viewmodels.MyProfileViewModel
 
@@ -19,6 +25,7 @@ class MyProfileFragment : Fragment() {
 
     companion object {
         fun newInstance() = MyProfileFragment()
+        const val MY_PROFILE_DETAIL = 101
     }
 
     private lateinit var viewModel: MyProfileViewModel
@@ -43,10 +50,27 @@ class MyProfileFragment : Fragment() {
     private fun initViewModel() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        viewModel.setLoggedInUser(getLoggedInUserFromShared(requireActivity()))
+
         initObservers()
     }
 
     private fun initObservers() {
+        viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setShowNoInternet(false)
+                showInfoAlertDialog(requireActivity(), getString(R.string.no_internet))
+            }
+        })
+
+        viewModel.getBaseResponse().observe(viewLifecycleOwner, {
+            it?.let {
+                viewModel.setBaseResponse(null)
+                validateResponse(requireActivity(), it)
+            }
+        })
+
         viewModel.getMoveToSettings().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setMoveToSettings(false)
@@ -76,6 +100,11 @@ class MyProfileFragment : Fragment() {
         })
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getUserProfile()
+    }
+
     private fun moveToSettings() {
         val intent = Intent(requireActivity(), SettingsActivity::class.java)
         startActivity(intent)
@@ -83,7 +112,15 @@ class MyProfileFragment : Fragment() {
 
     private fun moveToProfile() {
         val intent = Intent(requireActivity(), MyProfileDetailActivity::class.java)
-        startActivity(intent)
+        intent.putExtra(Constants.PROFILE_USER, viewModel.getCurrentUser())
+
+        var arrayList: ArrayList<String>? = null
+        if(viewModel.getImages() != null) {
+            arrayList = ArrayList(viewModel.getImages()!!)
+        }
+
+        intent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
+        startActivityForResult(intent, MY_PROFILE_DETAIL)
     }
 
     private fun moveToCoins() {
@@ -94,5 +131,17 @@ class MyProfileFragment : Fragment() {
     private fun moveToPremium() {
         val intent = Intent(requireActivity(), PremiumActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MyProfileDetailActivity.EDIT_PROFILE_ACTIVITY) {
+            if (resultCode == AppCompatActivity.RESULT_OK) {
+                val currentUser = data?.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+                currentUser?.let {
+                    viewModel.setCurrentUser(it)
+                }
+            }
+        }
     }
 }

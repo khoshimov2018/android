@@ -3,10 +3,29 @@ package com.example.dating.viewmodels
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.dating.interfaces.IInterestClick
+import com.example.dating.models.InterestModel
+import com.example.dating.models.UserModel
 
-class MyProfileDetailViewModel: BaseViewModel() {
+class MyProfileDetailViewModel: BaseViewModel(), IInterestClick {
 
+    private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
     private val moveToEditProfile: MutableLiveData<Boolean> = MutableLiveData()
+    private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
+
+    fun getInterestsList(): MutableList<InterestModel> {
+        val list = ArrayList<InterestModel>()
+        if(userProfileLiveData.value != null && userProfileLiveData.value?.interestLabels != null) {
+            for(interestLabel in userProfileLiveData.value!!.interestLabels!!) {
+                list.add(InterestModel(interestLabel, true))
+            }
+        }
+        return list
+    }
+
+    override fun interestItemClicked(view: View, interestItem: InterestModel) {
+        // Do nothing
+    }
 
     fun editProfileClicked(view: View) {
         moveToEditProfile.value = true
@@ -18,5 +37,25 @@ class MyProfileDetailViewModel: BaseViewModel() {
 
     fun setMoveToEditProfile(move: Boolean) {
         moveToEditProfile.value = move
+    }
+
+    fun getUserProfileLiveData(): LiveData<UserModel> {
+        return userProfileLiveData
+    }
+
+    fun setCurrentUser(userModel: UserModel) {
+        userProfileLiveData.value = userModel
+    }
+
+    fun getCurrentUser(): UserModel? {
+        return userProfileLiveData.value
+    }
+
+    fun setImagesListLiveData(imagesList: MutableList<String>) {
+        imagesListLiveData.value = imagesList
+    }
+
+    fun getImages(): MutableList<String>? {
+        return imagesListLiveData.value
     }
 }

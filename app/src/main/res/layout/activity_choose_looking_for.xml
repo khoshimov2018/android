@@ -13,124 +13,132 @@
             type="com.example.dating.viewmodels.ChooseLookingForViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{viewModel::backPressed}"
-                android:padding="@dimen/mediumPadding"
-                android:src="@drawable/back" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/registration"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/largeTextSize" />
-        </RelativeLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/lineHeight"
-                android:layout_weight="0.8"
-                android:background="@color/colorPrimary" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/lineHeight"
-                android:layout_weight="0.2"
-                android:background="@color/lightGreyColor" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/xLargeMargin"
-                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{viewModel::backPressed}"
+                    android:padding="@dimen/mediumPadding"
+                    android:src="@drawable/back" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/largeMargin"
-                    android:text="@string/who_are_you_looking_for"
+                    android:layout_centerInParent="true"
+                    android:text="@string/registration"
                     android:textColor="@color/textColor"
-                    android:textSize="@dimen/xxLargeTextSize" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/thickLineHeight"
-                    android:layout_marginTop="@dimen/smallMargin"
-                    android:background="@color/colorPrimary" />
-            </LinearLayout>
+                    android:textSize="@dimen/largeTextSize" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/xLargeMargin"
-                    android:layout_marginBottom="@dimen/largeMargin"
-                    android:background="@{viewModel.loggedInUserLiveData.isLookingForMale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
-                    android:onClick="@{viewModel::onMaleClicked}"
-                    android:text="@string/male"
-                    android:textColor="@{viewModel.loggedInUserLiveData.isLookingForMale() ? @android:color/white : @color/textColor}" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/lineHeight"
+                    android:layout_weight="0.8"
+                    android:background="@color/colorPrimary" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/xLargeMargin"
-                    android:layout_marginBottom="@dimen/normalMargin"
-                    android:background="@{viewModel.loggedInUserLiveData.isLookingForFemale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
-                    android:onClick="@{viewModel::onFemaleClicked}"
-                    android:text="@string/female"
-                    android:textColor="@{viewModel.loggedInUserLiveData.isLookingForFemale() ? @android:color/white : @color/textColor}" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/largeMargin"
-                    android:layout_marginBottom="@dimen/normalMargin"
-                    android:gravity="center"
-                    android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
-                    android:textAppearance="@style/ErrorTextAppearance"
-                    android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/lineHeight"
+                    android:layout_weight="0.2"
+                    android:background="@color/lightGreyColor" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginHorizontal="@dimen/xLargeMargin"
-                android:layout_marginBottom="@dimen/xLargeMargin"
-                android:background="@drawable/round_button_background"
-                android:onClick="@{viewModel::moveFurther}"
-                android:text="@string/further"
-                android:textColor="@android:color/white" />
-        </RelativeLayout>
+                android:layout_height="match_parent">
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/xLargeMargin"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:text="@string/who_are_you_looking_for"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/thickLineHeight"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:background="@color/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/xLargeMargin"
+                        android:layout_marginBottom="@dimen/largeMargin"
+                        android:background="@{viewModel.filterModelLiveData.isLookingForMale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                        android:onClick="@{viewModel::onMaleClicked}"
+                        android:text="@string/male"
+                        android:textColor="@{viewModel.filterModelLiveData.isLookingForMale() ? @android:color/white : @color/textColor}" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/xLargeMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:background="@{viewModel.filterModelLiveData.isLookingForFemale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                        android:onClick="@{viewModel::onFemaleClicked}"
+                        android:text="@string/female"
+                        android:textColor="@{viewModel.filterModelLiveData.isLookingForFemale() ? @android:color/white : @color/textColor}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:gravity="center"
+                        android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                        android:textAppearance="@style/ErrorTextAppearance"
+                        android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginHorizontal="@dimen/xLargeMargin"
+                    android:layout_marginBottom="@dimen/xLargeMargin"
+                    android:background="@drawable/round_button_background"
+                    android:onClick="@{viewModel::moveFurther}"
+                    android:text="@string/further"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <include
+            layout="@layout/common_loader"
+            app:isVisible="@{viewModel.loaderVisible}" />
+    </RelativeLayout>
 </layout>

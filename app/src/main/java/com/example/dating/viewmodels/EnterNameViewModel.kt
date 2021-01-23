@@ -14,10 +14,10 @@ class EnterNameViewModel : BaseViewModel() {
 
     override fun moveFurther(view: View) {
         userModelLiveData.value?.let {
-            if(it.isNameEntered()) {
-                moveFurther.value = true
-            } else {
+            if(it.isNameEmpty()) {
                 errorResId.value = R.string.enter_name
+            } else {
+                moveFurther.value = true
             }
         }
     }

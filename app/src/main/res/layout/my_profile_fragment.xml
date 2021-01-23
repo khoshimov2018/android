@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.MyProfileFragment">
 
@@ -10,103 +11,120 @@
             type="com.example.dating.viewmodels.MyProfileViewModel" />
     </data>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:onClick="@{viewModel::settingsClicked}"
-                android:padding="@dimen/largePadding"
-                android:src="@drawable/settings" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/profilePhoto"
-                android:layout_height="@dimen/profilePhoto"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:onClick="@{viewModel::profileClicked}"
-                android:src="@color/colorPrimary" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/largeMargin"
-                android:layout_marginTop="@dimen/largeMargin"
-                android:gravity="center"
-                android:onClick="@{viewModel::profileClicked}"
-                android:text="Name, age"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/xLargeTextSize" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/largeMargin"
-                android:layout_marginTop="@dimen/largeMargin"
-                android:gravity="center"
-                android:onClick="@{viewModel::profileClicked}"
-                android:text="Some long description goes here Some long description goes here Some long description goes here"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/normalTextSize" />
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/xLargeMargin"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:onClick="@{viewModel::settingsClicked}"
+                    android:padding="@dimen/largePadding"
+                    android:src="@drawable/settings" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="@{viewModel::coinsClicked}"
+                    android:onClick="@{viewModel::profileClicked}"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@color/colorPrimary" />
+                        android:layout_width="@dimen/profilePhoto"
+                        android:layout_height="@dimen/profilePhoto"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        app:error="@{@drawable/logo}"
+                        app:placeholder="@{@drawable/logo}"
+                        app:roundImageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : "" }' />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/coins"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:gravity="center"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.name.concat(", ").concat(viewModel.userProfileLiveData.getAge()) : ""}'
+                        android:textColor="@color/textColor"
                         android:textSize="@dimen/xLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:gravity="center"
+                        android:text="@{viewModel.userProfileLiveData.getShortDescription()}"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/normalTextSize" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="@{viewModel::premiumClicked}"
-                    android:orientation="vertical">
+                    android:layout_marginTop="@dimen/xLargeMargin"
+                    android:layout_marginBottom="@dimen/registrationMargin"
+                    android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@color/colorPrimary" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/premium"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/xLargeTextSize" />
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{viewModel::coinsClicked}"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@color/colorPrimary" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/coins"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/xLargeTextSize" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{viewModel::premiumClicked}"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@color/colorPrimary" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/premium"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/xLargeTextSize" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <include
+            layout="@layout/common_loader"
+            app:isVisible="@{viewModel.loaderVisible}" />
+    </RelativeLayout>
 </layout>

@@ -22,16 +22,6 @@
     <string name="who_are_you_looking_for">Кого вы ищите?</string>
     <string name="add_photo">Добавьте фото</string>
     <string name="choose_from_3_to_6_photo">Выберите от 3 до 6 фотографий</string>
-
-    <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
-    <string name="enter_email">Please enter Email</string>
-    <string name="enter_valid_email">Please enter a valid Email</string>
-    <string name="enter_password">Please enter Password</string>
-    <string name="choose_gender">Please choose Gender</string>
-    <string name="enter_name">Please enter your name</string>
-    <string name="choose_dob">Please choose your Date of Birth</string>
-    <string name="choose_looking_for">Please choose Looking For</string>
-
     <string name="coins">Монеты</string>
     <string name="premium">Премиум</string>
     <string name="belimite_reactions">Белимитные реакции</string>
@@ -50,14 +40,16 @@
     <string name="feedback">Обратная связь</string>
     <string name="notifications">Уведомления</string>
     <string name="confidentiality">Конфиденциальность</string>
-    <string name="version">Версия</string>
+    <string name="version">Версия %s</string>
     <string name="sign_out">Выйти из аккаунта</string>
     <string name="delete_account">Удалить аккаунт</string>
     <string name="location">Местоположение</string>
     <string name="about_myself">О себе</string>
     <string name="interests">Интересы</string>
     <string name="growth">Рост</string>
+    <string name="growth_value">%d, см</string>
     <string name="weight">Вес</string>
+    <string name="weight_value">%d, кг</string>
     <string name="family_status">Семейное положение</string>
     <string name="nationality">Национальность</string>
     <string name="job">Работа</string>
@@ -75,6 +67,49 @@
     <string name="its_complicated">Всё сложно</string>
     <string name="married">Женат(а)</string>
     <string name="at_least_18">Вам должно быть больше 18-ти лет</string>
+    <string name="my_interests">Мои интересы</string>
+    <string name="skip">Пропустить</string>
+    <string name="choose_from_1_to_9_items">Выберите от 1 до 9 пунктов</string>
+    <string name="where_did_you_study">Где вы учились?</string>
+    <string name="power">Степень</string>
+    <string name="year_of_issue">Год выпуска</string>
+    <string name="position">Должность</string>
+    <string name="company">Компания</string>
+    <string name="height_weight">Рост, вес</string>
+    <string name="tell_us_about_yourself">Расскажите о себе</string>
+    <string-array name="education_level">
+        <item>Степень</item>
+        <item>GENERAL</item>
+        <item>HIGH</item>
+    </string-array>
+
+    <string name="could_not_parse">Oh, could not parse response. Please try again later.</string>
+    <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
+    <string name="enter_email">Please enter Email</string>
+    <string name="enter_valid_email">Please enter a valid Email</string>
+    <string name="enter_password">Please enter Password</string>
+    <string name="choose_gender">Please choose Gender</string>
+    <string name="enter_name">Please enter your name</string>
+    <string name="choose_dob">Please choose your Date of Birth</string>
+    <string name="choose_looking_for">Please choose Looking For</string>
+    <string name="sure_logout">Are you sure you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_interests">No interests available</string>
+    <string name="choose_interests">Please choose your interests</string>
+    <string name="no_nationalities">No nationalities available</string>
+    <string name="choose_nationality">Please choose your nationality</string>
+    <string name="enter_institute_name">Please enter institute name</string>
+    <string name="enter_level">Please enter level</string>
+    <string name="enter_graduation_year">Please enter graduation year</string>
+    <string name="invalid_graduation_year">Please enter a valid year</string>
+    <string name="enter_position">Please enter your position</string>
+    <string name="enter_company_name">Please enter company name</string>
+    <string name="enter_growth">Please enter your growth</string>
+    <string name="enter_weight">Please enter your weight</string>
+    <string name="enter_about_me">Please enter About you</string>
+    <string name="need_location_permission">This app needs to access your Location. Please allow location permission from the Settings.</string>
+    <string name="could_not_get_location">Could not get your location. Please check your GPS settings and try again.</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>
@@ -95,4 +130,16 @@
     <string name="error_failed_to_compress_image">Failed to compress image</string>
     <string name="error_task_cancelled">Task Cancelled</string>
     <string name="error_camera_app_not_found">Camera app not found</string>
+    <!--Image Picker Ends-->
+
+    <!--Intro Slider-->
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+    <string name="text_intro1">Title One</string>
+    <string name="text_intro2">Title Two</string>
+    <string name="text_intro3">Title Three</string>
+    <string name="desc_intro1">Here goes some long description of the feature that we are showing.</string>
+    <string name="desc_intro2">Here goes some long description of the feature that we are showing.</string>
+    <string name="desc_intro3">Here goes some long description of the feature that we are showing.</string>
+    <!--Intro Slider Ends-->
 </resources>

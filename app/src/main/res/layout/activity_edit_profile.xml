@@ -11,643 +11,738 @@
         <variable
             name="viewModel"
             type="com.example.dating.viewmodels.EditProfileViewModel" />
+
+        <variable
+            name="interestsAdapter"
+            type="com.example.dating.adapters.InterestsAdapter" />
+
+        <variable
+            name="nationalitiesAdapter"
+            type="com.example.dating.adapters.NationalitiesAdapter" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{viewModel::backPressed}"
-                android:padding="@dimen/mediumPadding"
-                android:src="@drawable/back" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/edit"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/largeTextSize" />
-        </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{viewModel::backPressed}"
+                    android:padding="@dimen/mediumPadding"
+                    android:src="@drawable/back" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lineHeight"
-            android:background="@color/lightGreyColor" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/edit"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize" />
+            </RelativeLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/normalMargin"
-            app:cardElevation="@dimen/elevation">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHeight"
+                android:background="@color/lightGreyColor" />
 
-            <HorizontalScrollView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbarThumbHorizontal="@null">
+                android:layout_marginBottom="@dimen/normalMargin"
+                app:cardElevation="@dimen/elevation">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/normalPadding"
-                    android:orientation="horizontal">
+                    android:scrollbarThumbHorizontal="@null">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/edit_profile_selected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/photo"
-                        android:textColor="@android:color/white" />
+                        android:orientation="horizontal"
+                        android:padding="@dimen/normalPadding">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/the_main"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_profile_selected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/photo"
+                            android:textColor="@android:color/white" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/interests"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/the_main"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/about_me"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/interests"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/growth"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/about_me"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/weight"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/growth"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/sp"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/weight"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/nationality"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/sp"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/job"
-                        android:textColor="@color/lightTextColor" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/nationality"
+                            android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:layout_marginEnd="@dimen/largeMargin"
-                        android:background="@drawable/edit_profile_unselected_background"
-                        android:paddingHorizontal="@dimen/normalPadding"
-                        android:paddingVertical="@dimen/xSmallMargin"
-                        android:text="@string/education"
-                        android:textColor="@color/lightTextColor" />
-                </LinearLayout>
-            </HorizontalScrollView>
-        </androidx.cardview.widget.CardView>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/job"
+                            android:textColor="@color/lightTextColor" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:layout_marginEnd="@dimen/largeMargin"
+                            android:background="@drawable/edit_profile_unselected_background"
+                            android:paddingHorizontal="@dimen/normalPadding"
+                            android:paddingVertical="@dimen/xSmallMargin"
+                            android:text="@string/education"
+                            android:textColor="@color/lightTextColor" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_marginHorizontal="@dimen/largeMargin"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/photo"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/smallPhoto"
-                        android:layout_height="@dimen/smallPhoto"
-                        android:layout_margin="@dimen/normalMargin"
-                        app:cardCornerRadius="@dimen/photoRadius"
-                        app:cardElevation="@dimen/elevation"
-                        app:cardPreventCornerOverlap="false">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/smallPhoto"
-                        android:layout_height="@dimen/smallPhoto"
-                        android:layout_margin="@dimen/normalMargin"
-                        app:cardCornerRadius="@dimen/photoRadius"
-                        app:cardElevation="@dimen/elevation"
-                        app:cardPreventCornerOverlap="false">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/smallPhoto"
-                        android:layout_height="@dimen/smallPhoto"
-                        android:layout_margin="@dimen/normalMargin"
-                        app:cardCornerRadius="@dimen/photoRadius"
-                        app:cardElevation="@dimen/elevation"
-                        app:cardPreventCornerOverlap="false">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/smallPhoto"
-                        android:layout_height="@dimen/smallPhoto"
-                        android:layout_margin="@dimen/normalMargin"
-                        app:cardCornerRadius="@dimen/photoRadius"
-                        app:cardElevation="@dimen/elevation"
-                        app:cardPreventCornerOverlap="false">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/smallPhoto"
-                        android:layout_height="@dimen/smallPhoto"
-                        android:layout_margin="@dimen/normalMargin"
-                        app:cardCornerRadius="@dimen/photoRadius"
-                        app:cardElevation="@dimen/elevation"
-                        app:cardPreventCornerOverlap="false">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/smallPhoto"
-                        android:layout_height="@dimen/smallPhoto"
-                        android:layout_margin="@dimen/normalMargin"
-                        app:cardCornerRadius="@dimen/photoRadius"
-                        app:cardElevation="@dimen/elevation"
-                        app:cardPreventCornerOverlap="false">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/plus" />
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/the_main"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:text="@string/pol"
-                    android:textColor="@color/lightTextColor" />
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/male"
-                        android:textColor="@color/textColor" />
-
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/xLargeMargin"
-                        android:text="@string/female"
-                        android:textColor="@color/textColor" />
-                </RadioGroup>
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/name"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Анастасия"
-                    android:textColor="@color/textColor" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="20.12.1998"
-                    android:textColor="@color/textColor" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/location"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Москва"
-                    android:textColor="@color/textColor" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/interests"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/about_me"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/location"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:minLines="8"
-                    android:maxLines="10"
-                    android:text="Но дальнейшее развитие различных форм дятельности предоставляет широкие дальнейшее развитие различных форм деятельности предоставляет широкиедальнейшее развитие различных форм деятельности предоставляет широкие..."
-                    android:textColor="@color/textColor" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/growth"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatSeekBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:max="100"
-                    android:progress="20"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/weight"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatSeekBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:max="100"
-                    android:progress="20"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/family_status"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/actively_looking"
-                        android:textColor="@color/textColor" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/photo"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/smallPhoto"
+                            android:layout_height="@dimen/smallPhoto"
+                            android:layout_margin="@dimen/normalMargin"
+                            app:cardCornerRadius="@dimen/photoRadius"
+                            app:cardElevation="@dimen/elevation"
+                            app:cardPreventCornerOverlap="false">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/smallPhoto"
+                            android:layout_height="@dimen/smallPhoto"
+                            android:layout_margin="@dimen/normalMargin"
+                            app:cardCornerRadius="@dimen/photoRadius"
+                            app:cardElevation="@dimen/elevation"
+                            app:cardPreventCornerOverlap="false">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 2) ? viewModel.imagesListLiveData.get(1) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/smallPhoto"
+                            android:layout_height="@dimen/smallPhoto"
+                            android:layout_margin="@dimen/normalMargin"
+                            app:cardCornerRadius="@dimen/photoRadius"
+                            app:cardElevation="@dimen/elevation"
+                            app:cardPreventCornerOverlap="false">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 3) ? viewModel.imagesListLiveData.get(2) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/smallPhoto"
+                            android:layout_height="@dimen/smallPhoto"
+                            android:layout_margin="@dimen/normalMargin"
+                            app:cardCornerRadius="@dimen/photoRadius"
+                            app:cardElevation="@dimen/elevation"
+                            app:cardPreventCornerOverlap="false">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 4) ? viewModel.imagesListLiveData.get(3) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/smallPhoto"
+                            android:layout_height="@dimen/smallPhoto"
+                            android:layout_margin="@dimen/normalMargin"
+                            app:cardCornerRadius="@dimen/photoRadius"
+                            app:cardElevation="@dimen/elevation"
+                            app:cardPreventCornerOverlap="false">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 5) ? viewModel.imagesListLiveData.get(4) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="@dimen/smallPhoto"
+                            android:layout_height="@dimen/smallPhoto"
+                            android:layout_margin="@dimen/normalMargin"
+                            app:cardCornerRadius="@dimen/photoRadius"
+                            app:cardElevation="@dimen/elevation"
+                            app:cardPreventCornerOverlap="false">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerInParent="true"
+                                    android:scaleType="centerInside"
+                                    android:src="@drawable/plus"
+                                    app:error="@{@drawable/plus}"
+                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 6) ? viewModel.imagesListLiveData.get(5) : ""}'
+                                    app:placeholder="@{@drawable/plus}" />
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/the_main"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="@string/its_complicated"
-                        android:textColor="@color/textColor" />
+                        android:text="@string/pol"
+                        android:textColor="@color/lightTextColor" />
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
-                        android:layout_width="wrap_content"
+                    <RadioGroup
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="@string/married"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.isMale() : false}"
+                            android:onClick="@{viewModel::onMaleClicked}"
+                            android:text="@string/male"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/xLargeMargin"
+                            android:checked="@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.isFemale() : false}"
+                            android:onClick="@{viewModel::onFemaleClicked}"
+                            android:text="@string/female"
+                            android:textColor="@color/textColor" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:hint="@string/name"
+                        android:inputType="textCapWords"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onNameTextChanged(text)}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.name : ""}'
                         android:textColor="@color/textColor" />
-                </RadioGroup>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:focusable="false"
+                        android:hint="@string/your_dob"
+                        android:onClick="@{viewModel::onDobClicked}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.dateOfBirth : ""}'
+                        android:textColor="@color/textColor" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/nationality"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:hint="@string/location"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text="Москва"
+                        android:textColor="@color/textColor" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/job"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/interests"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Директор"
-                    android:textColor="@color/textColor" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adapter="@{interestsAdapter}"
+                        android:clipToPadding="false"
+                        android:paddingTop="@dimen/normalPadding"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Taram"
-                    android:textColor="@color/textColor" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_marginVertical="@dimen/largeMargin"
-                    android:background="@color/lightGreyColor" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/about_me"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/education"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:gravity="top"
+                        android:hint="@string/location"
+                        android:maxLines="10"
+                        android:minLines="8"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onAboutMeTextChanged(text)}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.description : ""}'
+                        android:textColor="@color/textColor" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Москва, МГУ"
-                    android:textColor="@color/textColor" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="Бакалавр"
-                    android:textColor="@color/textColor" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/growth"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:layout_marginBottom="@dimen/largeMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:hint="@string/your_dob"
-                    android:padding="@dimen/normalPadding"
-                    android:paddingStart="@dimen/largeMargin"
-                    android:singleLine="true"
-                    android:text="2020"
-                    android:textColor="@color/textColor" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.growth != null) ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:max="250"
+                        android:onProgressChanged="@{viewModel::onGrowthChanged}"
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.growth != null) ? viewModel.userProfileLiveData.growth : 0}" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/weight"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.weight != null) ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatSeekBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:max="250"
+                        android:onProgressChanged="@{viewModel::onWeightChanged}"
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.weight != null) ? viewModel.userProfileLiveData.weight : 0}" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/family_status"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/actively_looking"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="@string/its_complicated"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="@string/married"
+                            android:textColor="@color/textColor" />
+                    </RadioGroup>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/nationality"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adapter="@{nationalitiesAdapter}"
+                        android:clipToPadding="false"
+                        android:paddingTop="@dimen/normalPadding"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/job"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:hint="@string/position"
+                        android:inputType="textCapWords"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onPositionTextChanged(text)}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getPosition() : ""}'
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:hint="@string/company"
+                        android:inputType="textCapWords"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onCompanyTextChanged(text)}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getCompanyName() : ""}'
+                        android:textColor="@color/textColor" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_marginVertical="@dimen/largeMargin"
+                        android:background="@color/lightGreyColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/education"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:hint="@string/where_did_you_study"
+                        android:inputType="textCapWords"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onInstitutionNameTextChanged(text)}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getInstituteName() : ""}'
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:entries="@array/education_level"
+                        android:onItemSelected="@{viewModel::onItemSelected}"
+                        android:paddingVertical="@dimen/normalPadding"
+                        android:selection="@{viewModel.selectedLevelPosition}" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginBottom="@dimen/largeMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:hint="@string/year_of_issue"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onGraduationYearTextChanged(text)}"
+                        android:padding="@dimen/normalPadding"
+                        android:paddingHorizontal="@dimen/largeMargin"
+                        android:singleLine="true"
+                        android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getGraduationYear() : ""}'
+                        android:textColor="@color/textColor" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <include
+            layout="@layout/common_loader"
+            app:isVisible="@{viewModel.loaderVisible}" />
+    </RelativeLayout>
 </layout>

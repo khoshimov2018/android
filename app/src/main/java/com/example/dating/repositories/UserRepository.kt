@@ -3,12 +3,17 @@ package com.example.dating.repositories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.dating.api.RetrofitService
+import com.example.dating.models.FilterModel
 import com.example.dating.models.UserModel
+import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.Constants
+import com.example.dating.utils.getApiElseBaseResponse
+import com.example.dating.utils.getFailureBaseResponse
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,140 +23,79 @@ object UserRepository {
 
     private val retrofitService = RetrofitService.getService()
 
-    fun login(userModel: UserModel): LiveData<UserModel> {
-        val data = MutableLiveData<UserModel>()
+    fun login(userModel: UserModel): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
         retrofitService.userLogin(userModel)
-            .enqueue(object : Callback<UserModel> {
+            .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
-                    call: Call<UserModel>,
-                    response: Response<UserModel>
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
                 ) {
                     if (response.isSuccessful) {
                         data.value = response.body()
                     } else {
-                        val baseResponse = UserModel()
-                        baseResponse.status = 401
-                        baseResponse.error = Constants.ERROR
-                        baseResponse.message = Constants.SOMETHING_WENT_WRONG
-                        response.errorBody()?.let {
-                            try {
-                                val gson = Gson()
-                                val user = gson.fromJson(response.errorBody()!!.string(), UserModel::class.java)
-                                baseResponse.status = user.status
-                                baseResponse.error = user.error
-                                baseResponse.message = user.message
-                            } catch (e: Exception) {
-                                // ignore
-                            }
-                        }
-                        data.value = baseResponse
+                        data.value = getApiElseBaseResponse(response)
                     }
                 }
 
-                override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                    val baseResponse = UserModel()
-                    baseResponse.status = 401
-                    baseResponse.error = Constants.ERROR
-                    baseResponse.message = Constants.COULD_NOT_CONNECT_TO_SERVER
-                    t.message?.let {
-                        baseResponse.message = it
-                    }
-                    data.value = baseResponse
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
                 }
             })
         return data
     }
 
-    fun register(userModel: UserModel): LiveData<UserModel> {
-        val data = MutableLiveData<UserModel>()
+    fun register(userModel: UserModel): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
         retrofitService.userRegistration(userModel)
-            .enqueue(object : Callback<UserModel> {
+            .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
-                    call: Call<UserModel>,
-                    response: Response<UserModel>
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
                 ) {
                     if (response.isSuccessful) {
                         data.value = response.body()
                     } else {
-                        val baseResponse = UserModel()
-                        baseResponse.status = 401
-                        baseResponse.error = Constants.ERROR
-                        baseResponse.message = Constants.SOMETHING_WENT_WRONG
-                        response.errorBody()?.let {
-                            try {
-                                val gson = Gson()
-                                val user = gson.fromJson(response.errorBody()!!.string(), UserModel::class.java)
-                                baseResponse.status = user.status
-                                baseResponse.error = user.error
-                                baseResponse.message = user.message
-                            } catch (e: Exception) {
-                                // ignore
-                            }
-                        }
-                        data.value = baseResponse
+                        data.value = getApiElseBaseResponse(response)
                     }
                 }
 
-                override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                    val baseResponse = UserModel()
-                    baseResponse.status = 401
-                    baseResponse.error = Constants.ERROR
-                    baseResponse.message = Constants.COULD_NOT_CONNECT_TO_SERVER
-                    t.message?.let {
-                        baseResponse.message = it
-                    }
-                    data.value = baseResponse
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
                 }
             })
         return data
     }
 
-    fun changeInfo(userModel: UserModel, strToken: String): LiveData<UserModel> {
-        val data = MutableLiveData<UserModel>()
+    fun changeInfo(userModel: UserModel, strToken: String): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
         retrofitService.userChangeInfo(userModel, strToken)
-            .enqueue(object : Callback<UserModel> {
+            .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
-                    call: Call<UserModel>,
-                    response: Response<UserModel>
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
                 ) {
                     if (response.isSuccessful) {
                         data.value = response.body()
                     } else {
-                        val baseResponse = UserModel()
-                        baseResponse.status = 401
-                        baseResponse.error = Constants.ERROR
-                        baseResponse.message = Constants.SOMETHING_WENT_WRONG
-                        response.errorBody()?.let {
-                            try {
-                                val gson = Gson()
-                                val user = gson.fromJson(response.errorBody()!!.string(), UserModel::class.java)
-                                baseResponse.status = user.status
-                                baseResponse.error = user.error
-                                baseResponse.message = user.message
-                            } catch (e: Exception) {
-                                // ignore
-                            }
-                        }
-                        data.value = baseResponse
+                        data.value = getApiElseBaseResponse(response)
                     }
                 }
 
-                override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                    val baseResponse = UserModel()
-                    baseResponse.status = 401
-                    baseResponse.error = Constants.ERROR
-                    baseResponse.message = Constants.COULD_NOT_CONNECT_TO_SERVER
-                    t.message?.let {
-                        baseResponse.message = it
-                    }
-                    data.value = baseResponse
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
                 }
             })
         return data
     }
 
-    fun uploadImage(inputStream: InputStream, strToken: String): LiveData<UserModel> {
-        val data = MutableLiveData<UserModel>()
+    fun uploadImage(inputStream: InputStream, strToken: String): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+
+        val extension: RequestBody? = "png".toRequestBody(MultipartBody.FORM)
+
+        val map: MutableMap<String, RequestBody?> = HashMap()
+        map["extension"] = extension
 
         val filePart = MultipartBody.Part.createFormData(
             "file", "photo.png", RequestBody.create(
@@ -160,43 +104,87 @@ object UserRepository {
             )
         )
 
-        retrofitService.uploadImage(filePart, strToken)
-            .enqueue(object : Callback<UserModel> {
+        retrofitService.uploadImage(filePart, map, strToken)
+            .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
-                    call: Call<UserModel>,
-                    response: Response<UserModel>
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
                 ) {
                     if (response.isSuccessful) {
                         data.value = response.body()
                     } else {
-                        val baseResponse = UserModel()
-                        baseResponse.status = 401
-                        baseResponse.error = Constants.ERROR
-                        baseResponse.message = Constants.SOMETHING_WENT_WRONG
-                        response.errorBody()?.let {
-                            try {
-                                val gson = Gson()
-                                val user = gson.fromJson(response.errorBody()!!.string(), UserModel::class.java)
-                                baseResponse.status = user.status
-                                baseResponse.error = user.error
-                                baseResponse.message = user.message
-                            } catch (e: Exception) {
-                                // ignore
-                            }
-                        }
-                        data.value = baseResponse
+                        data.value = getApiElseBaseResponse(response)
                     }
                 }
 
-                override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                    val baseResponse = UserModel()
-                    baseResponse.status = 401
-                    baseResponse.error = Constants.ERROR
-                    baseResponse.message = Constants.COULD_NOT_CONNECT_TO_SERVER
-                    t.message?.let {
-                        baseResponse.message = it
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
+    fun getInfo(strToken: String): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.getInfo(strToken)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
                     }
-                    data.value = baseResponse
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
+    fun getCurrentUserImages(strToken: String): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.getCurrentUserImages(strToken)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
+    fun getUsers(strToken: String, filterModel: FilterModel): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.getUsers(strToken)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
                 }
             })
         return data

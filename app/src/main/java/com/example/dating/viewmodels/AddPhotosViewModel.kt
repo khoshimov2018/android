@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.dating.models.UserModel
 import com.example.dating.repositories.UserRepository
+import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.Constants
 import com.example.dating.utils.hideKeyboard
 import com.example.dating.utils.validateInternet
@@ -23,8 +24,8 @@ class AddPhotosViewModel : BaseViewModel() {
     private var numberOfImagesUploaded = 0
     private lateinit var view: View
 
-    private lateinit var apiResponse: LiveData<UserModel>
-    private lateinit var observeResponse: Observer<UserModel>
+    private lateinit var apiResponse: LiveData<BaseResponse>
+    private lateinit var observeResponse: Observer<BaseResponse>
 
     fun choosePhotoClicked(view: View, position: Int) {
         this.view = view
@@ -40,7 +41,7 @@ class AddPhotosViewModel : BaseViewModel() {
         if(validateInternet(view.context)) {
             hideKeyboard(view)
             loaderVisible.value = true // show loader
-            observeResponse = Observer<UserModel> {
+            observeResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
                 if(validateResponse(view.context, it)){
                     ++numberOfImagesUploaded

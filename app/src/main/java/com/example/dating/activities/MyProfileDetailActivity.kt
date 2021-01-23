@@ -15,8 +15,12 @@ import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.dating.R
+import com.example.dating.adapters.InterestsAdapter
 import com.example.dating.databinding.ActivityMyProfileDetailBinding
+import com.example.dating.models.UserModel
+import com.example.dating.utils.Constants
 import com.example.dating.utils.dpToPx
 import com.example.dating.utils.printLog
 import com.example.dating.viewmodels.MyProfileDetailViewModel
@@ -27,11 +31,15 @@ class MyProfileDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyProfileDetailBinding
     private lateinit var myProfileDetailViewModel: MyProfileDetailViewModel
 
-    private val numberOfImages = 4
     private val listOfCountViews: MutableList<View> = ArrayList()
-    private val listOfImages: MutableList<Int> =
-        mutableListOf(R.color.color1, R.color.color2, R.color.color3, R.color.color4)
+    private lateinit var listOfImages: MutableList<String>
     private var currentSelectedIndex = 0
+
+    private var interestsAdapter: InterestsAdapter? = null
+
+    companion object {
+        const val EDIT_PROFILE_ACTIVITY = 101
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +48,6 @@ class MyProfileDetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         initViewModel()
-        initView()
 
         imageView.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
             val halfOfScreen = mainLayout.width / 2
@@ -68,13 +75,25 @@ class MyProfileDetailActivity : AppCompatActivity() {
         myProfileDetailViewModel = ViewModelProvider(this).get(MyProfileDetailViewModel::class.java)
         binding.viewModel = myProfileDetailViewModel
 
+        val profileUser = intent.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+        profileUser?.let {
+            myProfileDetailViewModel.setCurrentUser(it)
+            setInterests()
+        }
+        val imagesList = intent.getStringArrayListExtra(Constants.USER_IMAGES)
+        imagesList?.let {
+            myProfileDetailViewModel.setImagesListLiveData(it)
+            listOfImages = it
+            initView()
+        }
+
         initObservers()
     }
 
     private fun initObservers() {
         myProfileDetailViewModel.getMoveToEditProfile()
             .observe(this, Observer {
-                if(it) {
+                if (it) {
                     myProfileDetailViewModel.setMoveToEditProfile(false)
                     moveToEditProfile()
                 }
@@ -89,24 +108,30 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        for (index in 0 until numberOfImages) {
-            val view = View(this)
-            val layoutParams: LinearLayout.LayoutParams =
-                LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
-            layoutParams.setMargins(dpToPx(this, 5F).toInt(), 0, dpToPx(this, 5F).toInt(), 0)
-            view.layoutParams = layoutParams
-            view.setBackgroundResource(R.color.lightGreyColor)
+        if (this::listOfImages.isInitialized) {
+            for (index in 0 until listOfImages.size) {
+                val view = View(this)
+                val layoutParams: LinearLayout.LayoutParams =
+                    LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
+                layoutParams.setMargins(dpToPx(this, 5F).toInt(), 0, dpToPx(this, 5F).toInt(), 0)
+                view.layoutParams = layoutParams
+                view.setBackgroundResource(R.color.lightGreyColor)
 
-            countLinear.addView(view)
-            listOfCountViews.add(view)
+                countLinear.addView(view)
+                listOfCountViews.add(view)
+            }
+
+            showIndex(currentSelectedIndex)
         }
-
-        showIndex(currentSelectedIndex)
     }
 
     private fun showIndex(index: Int) {
         resetCountViews()
-        imageView.setBackgroundResource(listOfImages[index])
+//        imageView.setBackgroundResource(listOfImages[index])
+        Glide.with(this)
+            .load(listOfImages[index])
+            .placeholder(R.drawable.logo)
+            .into(imageView);
         listOfCountViews[index].setBackgroundResource(R.color.red)
     }
 
@@ -118,6 +143,42 @@ class MyProfileDetailActivity : AppCompatActivity() {
 
     private fun moveToEditProfile() {
         val intent = Intent(this, EditProfileActivity::class.java)
-        startActivity(intent)
+        intent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
+
+        var arrayList: ArrayList<String>? = null
+        if (myProfileDetailViewModel.getImages() != null) {
+            arrayList = ArrayList(myProfileDetailViewModel.getImages()!!)
+        }
+
+        intent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
+
+        startActivityForResult(intent, EDIT_PROFILE_ACTIVITY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDIT_PROFILE_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                val currentUser = data?.getParcelableExtra<UserModel>(Constants.PROFILE_USER)
+                currentUser?.let {
+                    myProfileDetailViewModel.setCurrentUser(it)
+                    setInterests()
+                }
+            }
+        }
+    }
+
+    private fun setInterests() {
+        interestsAdapter =
+            InterestsAdapter(myProfileDetailViewModel.getInterestsList(), myProfileDetailViewModel)
+        binding.interestsAdapter = interestsAdapter
+        interestsAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onBackPressed() {
+        val returnIntent = Intent()
+        returnIntent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
+        setResult(RESULT_OK, returnIntent)
+        super.onBackPressed()
     }
 }

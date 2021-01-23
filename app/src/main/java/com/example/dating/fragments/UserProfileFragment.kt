@@ -12,40 +12,65 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
 import com.example.dating.R
+import com.example.dating.adapters.InterestsAdapter
 import com.example.dating.databinding.UserProfileFragmentBinding
+import com.example.dating.models.UserModel
 import com.example.dating.utils.dpToPx
 import com.example.dating.utils.printLog
 import com.example.dating.viewmodels.UserProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_my_profile_detail.*
 import kotlinx.android.synthetic.main.user_profile_fragment.*
+import kotlinx.android.synthetic.main.user_profile_fragment.bottomSheet
+import kotlinx.android.synthetic.main.user_profile_fragment.countLinear
+import kotlinx.android.synthetic.main.user_profile_fragment.imageView
+import kotlinx.android.synthetic.main.user_profile_fragment.mainLayout
+
+private const val CURRENT_USER = "CURRENT_USER"
 
 class UserProfileFragment : Fragment() {
 
     companion object {
-        fun newInstance() = UserProfileFragment()
+        @JvmStatic
+        fun newInstance(userModel: UserModel) =
+            UserProfileFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(CURRENT_USER, userModel)
+                }
+            }
     }
 
     private lateinit var viewModel: UserProfileViewModel
     private lateinit var binding: UserProfileFragmentBinding
 
-    private val numberOfImages = 4
     private val listOfCountViews: MutableList<View> = ArrayList()
-    private val listOfImages: MutableList<Int> =
-        mutableListOf(R.color.color1, R.color.color2, R.color.color3, R.color.color4)
+    private lateinit var listOfImages: MutableList<String>
     private var currentSelectedIndex = 0
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
+    private var interestsAdapter: InterestsAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+        arguments?.let {
+            val currentUser = it.getParcelable<UserModel>(CURRENT_USER)
+            currentUser?.let { user ->
+                viewModel.setCurrentUser(user)
+                user.images?.let { images ->
+                    listOfImages = images
+                }
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.user_profile_fragment, container, false)
         val view: View = binding.root
@@ -98,36 +123,49 @@ class UserProfileFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         initObservers()
+        setInterests()
     }
 
     private fun initObservers() {
 
     }
 
+    private fun setInterests() {
+        interestsAdapter = InterestsAdapter(viewModel.getInterestsList(), viewModel)
+        binding.interestsAdapter = interestsAdapter
+        interestsAdapter?.notifyDataSetChanged()
+    }
+
     private fun initView() {
-        for (index in 0 until numberOfImages) {
-            val view = View(requireActivity())
-            val layoutParams: LinearLayout.LayoutParams =
-                LinearLayout.LayoutParams(0, dpToPx(requireActivity(), 2F).toInt(), 1F)
-            layoutParams.setMargins(
-                dpToPx(requireActivity(), 5F).toInt(),
-                0,
-                dpToPx(requireActivity(), 5F).toInt(),
-                0
-            )
-            view.layoutParams = layoutParams
-            view.setBackgroundResource(R.color.lightGreyColor)
+        if(this::listOfImages.isInitialized) {
+            for (index in 0 until listOfImages.size) {
+                val view = View(requireActivity())
+                val layoutParams: LinearLayout.LayoutParams =
+                    LinearLayout.LayoutParams(0, dpToPx(requireActivity(), 2F).toInt(), 1F)
+                layoutParams.setMargins(
+                    dpToPx(requireActivity(), 5F).toInt(),
+                    0,
+                    dpToPx(requireActivity(), 5F).toInt(),
+                    0
+                )
+                view.layoutParams = layoutParams
+                view.setBackgroundResource(R.color.lightGreyColor)
 
-            countLinear?.addView(view)
-            listOfCountViews.add(view)
+                countLinear?.addView(view)
+                listOfCountViews.add(view)
+            }
+
+            showIndex(currentSelectedIndex)
         }
-
-        showIndex(currentSelectedIndex)
     }
 
     private fun showIndex(index: Int) {
         resetCountViews()
-        imageView.setBackgroundResource(listOfImages[index])
+//        imageView.setBackgroundResource(listOfImages[index])
+        Glide.with(this)
+            .load(listOfImages[index])
+            .placeholder(R.drawable.logo)
+            .into(imageView);
         listOfCountViews[index].setBackgroundResource(R.color.red)
     }
 
