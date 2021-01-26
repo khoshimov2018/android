@@ -57,7 +57,7 @@ class JobActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, FamilyStatusActivity::class.java)
+        val intent = Intent(this, HeightWeightActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, jobViewModel.getCurrentUser())
         startActivity(intent)
     }

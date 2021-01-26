@@ -117,8 +117,8 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     fun setLatLong(lat: Double, lon: Double) {
         val locationModel = LocationModel()
-        locationModel.geometry.coordinates.add(lat)
         locationModel.geometry.coordinates.add(lon)
+        locationModel.geometry.coordinates.add(lat)
 
         if (isInternetAvailable(context)) {
             showNoInternet.value = false

@@ -51,8 +51,9 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normalMargin"
+            android:layout_marginEnd="@dimen/smallMargin"
             android:layout_weight="1"
-            android:layout_marginHorizontal="@dimen/smallMargin"
             android:background="@drawable/round_button_unselected"
             android:text="@string/male"
             android:textColor="@color/textColor" />
@@ -60,19 +61,11 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/smallMargin"
+            android:layout_marginEnd="@dimen/normalMargin"
             android:layout_weight="1"
-            android:layout_marginHorizontal="@dimen/smallMargin"
             android:background="@drawable/round_button_unselected"
             android:text="@string/female"
-            android:textColor="@color/textColor" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="@dimen/smallMargin"
-            android:background="@drawable/round_button_unselected"
-            android:text="@string/of_all"
             android:textColor="@color/textColor" />
     </LinearLayout>
 
