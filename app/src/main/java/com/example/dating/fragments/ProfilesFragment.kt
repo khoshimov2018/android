@@ -7,6 +7,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
@@ -305,6 +307,7 @@ class ProfilesFragment : Fragment() {
             savedInstanceState: Bundle?
         ): View? {
             dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val view = inflater.inflate(R.layout.dialog_fragment_filters, container, false)
             val close = view.findViewById<ImageView>(R.id.close)
             close.setOnClickListener {
