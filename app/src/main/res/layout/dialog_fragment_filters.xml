@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normalPadding"
+            android:src="@drawable/cross" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:text="@string/filters"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/largeTextSize" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lineHeight"
+        android:layout_marginTop="@dimen/smallMargin"
+        android:background="@color/lightGreyColor" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normalMargin"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:text="@string/i_am_looking_for"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/largeTextSize"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normalMargin"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/smallMargin"
+            android:background="@drawable/round_button_unselected"
+            android:text="@string/male"
+            android:textColor="@color/textColor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/smallMargin"
+            android:background="@drawable/round_button_unselected"
+            android:text="@string/female"
+            android:textColor="@color/textColor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/smallMargin"
+            android:background="@drawable/round_button_unselected"
+            android:text="@string/of_all"
+            android:textColor="@color/textColor" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normalMargin"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:text="@string/age"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/largeTextSize"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normalMargin"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:text="@string/distance_from_me"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/largeTextSize"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normalMargin"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:text="@string/interests"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/largeTextSize"
+        android:textStyle="bold" />
+</LinearLayout>

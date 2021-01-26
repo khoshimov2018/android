@@ -17,11 +17,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -175,7 +178,7 @@ class ProfilesFragment : Fragment() {
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     locationResult ?: return
-                    for (location in locationResult.locations){
+                    for (location in locationResult.locations) {
                         printLog("Location $location")
 
                         viewModel.setLoaderVisible(false)
@@ -186,7 +189,11 @@ class ProfilesFragment : Fragment() {
                 }
             }
 
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
         }
 
         task.addOnFailureListener { exception ->
@@ -195,7 +202,15 @@ class ProfilesFragment : Fragment() {
             if (exception is ResolvableApiException) {
                 try {
                     val resolvable: ResolvableApiException = exception
-                    startIntentSenderForResult(resolvable.resolution.intentSender, LocationRequest.PRIORITY_HIGH_ACCURACY, null, 0, 0, 0, null);
+                    startIntentSenderForResult(
+                        resolvable.resolution.intentSender,
+                        LocationRequest.PRIORITY_HIGH_ACCURACY,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null
+                    );
                 } catch (e: IntentSender.SendIntentException) {
                     couldNotGetLocationPopup()
                 }
@@ -246,6 +261,16 @@ class ProfilesFragment : Fragment() {
             }
         })
 
+        viewModel.getShowFiltersLiveData().observe(viewLifecycleOwner, {
+            if (it) {
+                viewModel.setShowFiltersLiveData(false)
+
+                val fragmentManager = childFragmentManager
+                val filtersDialogFragment = FiltersDialogFragment()
+                filtersDialogFragment.show(fragmentManager, null)
+            }
+        })
+
         viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
             if (it) {
                 viewModel.setShowNoInternet(false)
@@ -269,6 +294,34 @@ class ProfilesFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             return UserProfileFragment.newInstance(usersList.get(position))
+        }
+    }
+
+    class FiltersDialogFragment : DialogFragment() {
+
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            val view = inflater.inflate(R.layout.dialog_fragment_filters, container, false)
+            val close = view.findViewById<ImageView>(R.id.close)
+            close.setOnClickListener {
+                dialog?.dismiss()
+            }
+            return view
+        }
+
+        override fun onStart() {
+            super.onStart()
+            val matchParent = ViewGroup.LayoutParams.MATCH_PARENT
+            dialog?.window?.setLayout(matchParent, matchParent)
+        }
+
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            dialog?.window?.attributes?.windowAnimations = R.style.FilterDialogAnimation
         }
     }
 }

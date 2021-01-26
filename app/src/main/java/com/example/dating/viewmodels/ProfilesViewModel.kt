@@ -1,6 +1,7 @@
 package com.example.dating.viewmodels
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -28,6 +29,8 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     private lateinit var locationApiResponse: LiveData<BaseResponse>
     private lateinit var locationObserveResponse: Observer<BaseResponse>
+
+    private val showFiltersLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
     private fun getFilters() {
         filterModelLiveData.value = getFiltersFromShared(context)
@@ -139,6 +142,10 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    fun onFilterClick(view: View) {
+        showFiltersLiveData.value = true
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (this::apiResponse.isInitialized) {
@@ -166,5 +173,13 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     fun getUsersListLiveData(): LiveData<MutableList<UserModel>> {
         return usersListLiveData
+    }
+
+    fun setShowFiltersLiveData(show: Boolean) {
+        showFiltersLiveData.value = show
+    }
+
+    fun getShowFiltersLiveData(): LiveData<Boolean> {
+        return showFiltersLiveData
     }
 }
