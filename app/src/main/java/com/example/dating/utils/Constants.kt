@@ -17,6 +17,7 @@ object Constants {
     const val MINIMUM_PHOTOS = 3
     const val TRIM_TEXT_LENGTH = 15
     const val SHORT_DESCRIPTION_TRIM_LENGTH = 40
+    const val PAGE_SIZE = 10
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -42,7 +43,7 @@ object ApiConstants {
     const val GET_CURRENT_USER_IMAGES = "images?version=original"
     const val SAVE_FILTERS = "filters"
     const val GET_FILTERS = "filters"
-    const val GET_USERS = "users?page=0&size=10&gender=MALE"
+    const val GET_USERS = "users"
     const val UPDATE_LOCATION = "location/update"
 }
 

@@ -47,7 +47,7 @@ class UserProfileFragment : Fragment() {
 
     private val listOfCountViews: MutableList<View> = ArrayList()
     private lateinit var listOfImages: MutableList<String>
-    private var currentSelectedIndex = 0
+    private var currentSelectedIndex = -1
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
@@ -155,7 +155,10 @@ class UserProfileFragment : Fragment() {
                 listOfCountViews.add(view)
             }
 
-            showIndex(currentSelectedIndex)
+            if(listOfImages.size > 0) {
+                currentSelectedIndex = 0
+                showIndex(currentSelectedIndex)
+            }
         }
     }
 

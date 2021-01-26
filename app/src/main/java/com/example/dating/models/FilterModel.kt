@@ -1,5 +1,6 @@
 package com.example.dating.models
 
+import com.example.dating.utils.Constants
 import com.example.dating.utils.Gender
 
 data class FilterModel(
@@ -12,7 +13,9 @@ data class FilterModel(
     var maxDistance: Int? = null,
     var nationalities: MutableList<String>? = null,
     var weightFrom: Int? = null,
-    var weightTo: Int? = null
+    var weightTo: Int? = null,
+    var pageNumber: Int = 1,
+    var pageSize: Int = Constants.PAGE_SIZE
 ) {
     fun isLookingForMale(): Boolean {
         return gender == Gender.MALE
