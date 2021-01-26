@@ -43,6 +43,7 @@ object ApiConstants {
     const val SAVE_FILTERS = "filters"
     const val GET_FILTERS = "filters"
     const val GET_USERS = "users?page=0&size=10&gender=MALE"
+    const val UPDATE_LOCATION = "location/update"
 }
 
 object LoginFormErrorConstants {

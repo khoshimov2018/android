@@ -4,11 +4,9 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.dating.models.FilterModel
-import com.example.dating.models.InterestModel
-import com.example.dating.models.NationalityModel
-import com.example.dating.models.UserModel
+import com.example.dating.models.*
 import com.example.dating.repositories.FiltersRepository
+import com.example.dating.repositories.LocationRepository
 import com.example.dating.repositories.NationalitiesRepository
 import com.example.dating.repositories.UserRepository
 import com.example.dating.responses.BaseResponse
@@ -28,7 +26,10 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     private lateinit var usersApiResponse: LiveData<BaseResponse>
     private lateinit var usersObserveResponse: Observer<BaseResponse>
 
-    fun getFilters() {
+    private lateinit var locationApiResponse: LiveData<BaseResponse>
+    private lateinit var locationObserveResponse: Observer<BaseResponse>
+
+    private fun getFilters() {
         filterModelLiveData.value = getFiltersFromShared(context)
         if (filterModelLiveData.value == null) {
             fetchFilters()
@@ -111,6 +112,33 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    fun setLatLong(lat: Double, lon: Double) {
+        val locationModel = LocationModel()
+        locationModel.geometry.coordinates.add(lat)
+        locationModel.geometry.coordinates.add(lon)
+
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
+
+            locationObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+
+                if (validateResponseWithoutPopup(it)) {
+                    getFilters()
+                } else {
+                    baseResponse.value = it
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            locationApiResponse = LocationRepository.updateLocation(locationModel, strToken)
+            locationApiResponse.observeForever(locationObserveResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (this::apiResponse.isInitialized) {
@@ -118,6 +146,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
         if (this::usersApiResponse.isInitialized) {
             usersApiResponse.removeObserver(usersObserveResponse)
+        }
+        if (this::locationApiResponse.isInitialized) {
+            locationApiResponse.removeObserver(locationObserveResponse)
         }
     }
 

@@ -156,6 +156,8 @@ class ProfilesFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun fetchLocation() {
+        viewModel.setLoaderVisible(true)
+
         val locationRequest = LocationRequest.create()?.apply {
             interval = 10000
             fastestInterval = 5000
@@ -174,19 +176,22 @@ class ProfilesFragment : Fragment() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     locationResult ?: return
                     for (location in locationResult.locations){
-                        viewModel.getFilters()
+                        printLog("Location $location")
+
+                        viewModel.setLoaderVisible(false)
+                        viewModel.setLatLong(location.latitude, location.longitude)
                         fusedLocationClient.removeLocationUpdates(locationCallback)
                         break
                     }
                 }
             }
 
-            fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper())
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
         }
 
         task.addOnFailureListener { exception ->
+            viewModel.setLoaderVisible(false)
+
             if (exception is ResolvableApiException) {
                 try {
                     val resolvable: ResolvableApiException = exception
