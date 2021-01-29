@@ -30,6 +30,7 @@ data class UserModel(
     var interests: MutableList<String>? = null,
     var images: MutableList<String> ? = null,
     var distanceTo: String? = null,
+    var reactions: MutableList<ReactionModel>? = null,
 ) : Parcelable {
     fun validateLoginData(): Int {
         return when {

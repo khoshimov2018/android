@@ -15,6 +15,10 @@
         <variable
             name="interestsAdapter"
             type="com.example.dating.adapters.InterestsAdapter" />
+
+        <variable
+            name="reactionsAdapter"
+            type="com.example.dating.adapters.ReactionsAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -43,11 +47,11 @@
                 android:orientation="horizontal" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/registrationMargin"
+                android:layout_marginBottom="@dimen/xxLargeMargin"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -69,6 +73,15 @@
                     android:text='@{viewModel.userProfileLiveData.description != null ? viewModel.userProfileLiveData.getShortDescription() : ""}'
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/largeTextSize" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adapter="@{reactionsAdapter}"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingVertical="@dimen/normalPadding"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
         </RelativeLayout>
 

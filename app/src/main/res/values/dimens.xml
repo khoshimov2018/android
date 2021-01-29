@@ -18,6 +18,7 @@
     <dimen name="largeMargin">20dp</dimen>
     <dimen name="sLargeMargin">30dp</dimen>
     <dimen name="xLargeMargin">40dp</dimen>
+    <dimen name="xxLargeMargin">60dp</dimen>
     <dimen name="registrationMargin">80dp</dimen>
 
     <dimen name="elevation">5dp</dimen>
