@@ -31,7 +31,7 @@ class FiltersDialogFragment(private val profilesViewModel: ProfilesViewModel) : 
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -93,5 +93,10 @@ class FiltersDialogFragment(private val profilesViewModel: ProfilesViewModel) : 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialog?.window?.attributes?.windowAnimations = R.style.FilterDialogAnimation
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        profilesViewModel.saveFilters()
     }
 }

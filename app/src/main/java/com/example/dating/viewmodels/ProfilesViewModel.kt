@@ -15,13 +15,17 @@ import com.example.dating.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class ProfilesViewModel(application: Application) : BaseAndroidViewModel(application), IInterestClick {
+class ProfilesViewModel(application: Application) : BaseAndroidViewModel(application),
+    IInterestClick {
 
     private var filterModelLiveData: MutableLiveData<FilterModel> = MutableLiveData()
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
+
+    private lateinit var saveFilterApiResponse: LiveData<BaseResponse>
+    private lateinit var saveFilterObserveResponse: Observer<BaseResponse>
 
     private val usersListLiveData: MutableLiveData<MutableList<UserModel>> = MutableLiveData()
     private lateinit var usersApiResponse: LiveData<BaseResponse>
@@ -41,7 +45,30 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         if (filterModelLiveData.value == null) {
             fetchFilters()
         } else {
+            setDistanceLevel()
             getUsers()
+        }
+    }
+
+    private fun setDistanceLevel() {
+        if (filterModelLiveData.value != null) {
+            when (filterModelLiveData.value!!.maxDistance) {
+                10 -> {
+                    selectedDistancePosition.value = 0
+                }
+                30 -> {
+                    selectedDistancePosition.value = 1
+                }
+                80 -> {
+                    selectedDistancePosition.value = 2
+                }
+                150 -> {
+                    selectedDistancePosition.value = 3
+                }
+                else -> {
+                    selectedDistancePosition.value = 4
+                }
+            }
         }
     }
 
@@ -64,6 +91,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                     filterModelLiveData.value?.let { filter ->
                         saveFiltersToShared(context, filter)
                     }
+                    setDistanceLevel()
                     getUsers()
                 } else {
                     baseResponse.value = it
@@ -78,7 +106,26 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
-    fun getUsers() {
+    fun saveFilters() {
+        if(validateInternet(context)) {
+            loaderVisible.value = true // show loader
+            saveFilterObserveResponse = Observer<BaseResponse> { response ->
+                loaderVisible.value = false
+                if (validateResponse(context, response)) {
+                    getUsers()
+                }
+            }
+            // token
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+
+            filterModelLiveData.value?.let {
+                saveFilterApiResponse = FiltersRepository.saveFilters(it, strToken)
+            }
+            saveFilterApiResponse.observeForever(saveFilterObserveResponse)
+        }
+    }
+
+    private fun getUsers() {
         if (isInternetAvailable(context)) {
             showNoInternet.value = false
             loaderVisible.value = true // show loader
@@ -94,10 +141,10 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                         val usersList: MutableList<UserModel> =
                             gson.fromJson<MutableList<UserModel>>(strResponse, myType)
 
-                        for(user in usersList) {
+                        for (user in usersList) {
                             val imagesList = ArrayList<String>()
-                            user.images?.let {images ->
-                                for(image in images) {
+                            user.images?.let { images ->
+                                for (image in images) {
                                     val imageUrl = "${ApiConstants.BASE_URL}$image"
                                     imagesList.add(imageUrl)
                                 }
@@ -168,15 +215,15 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                         val tempInterestsList = java.util.ArrayList<InterestModel>()
 
                         for (interest in interestStringList) {
-                            if(filterModelLiveData.value != null && filterModelLiveData.value!!.interest != null) {
+                            if (filterModelLiveData.value != null && filterModelLiveData.value!!.interest != null) {
                                 var isSaved = false
-                                for(savedInterest in filterModelLiveData.value!!.interest!!) {
-                                    if(interest.equals(savedInterest, ignoreCase = true)) {
+                                for (savedInterest in filterModelLiveData.value!!.interest!!) {
+                                    if (interest.equals(savedInterest, ignoreCase = true)) {
                                         isSaved = true
                                         break
                                     }
                                 }
-                                if(isSaved) {
+                                if (isSaved) {
                                     tempInterestsList.add(InterestModel(interest, true))
                                 } else {
                                     tempInterestsList.add(InterestModel(interest, false))
@@ -202,7 +249,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     }
 
     fun onFilterClick(view: View) {
-        if(interestsList.value == null || interestsList.value!!.isEmpty()) {
+        if (interestsList.value == null || interestsList.value!!.isEmpty()) {
             getInterests()
             showFiltersLiveData.value = true
         } else {
@@ -261,15 +308,15 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     override fun interestItemClicked(view: View, interestItem: InterestModel) {
         interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
         interestsList.value = interestsList.value
-        if(filterModelLiveData.value != null) {
-            if(filterModelLiveData.value!!.interest == null) {
+        if (filterModelLiveData.value != null) {
+            if (filterModelLiveData.value!!.interest == null) {
                 filterModelLiveData.value?.interest = ArrayList()
             } else {
                 filterModelLiveData.value?.interest?.clear()
             }
-            if(interestsList.value != null) {
-                for(interest in interestsList.value!!) {
-                    if(interest.isSelected!!) {
+            if (interestsList.value != null) {
+                for (interest in interestsList.value!!) {
+                    if (interest.isSelected!!) {
                         filterModelLiveData.value?.interest?.add(interest.label!!)
                     }
                 }
@@ -290,6 +337,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
         if (this::interestsApiResponse.isInitialized) {
             interestsApiResponse.removeObserver(interestsObserveResponse)
+        }
+        if (this::saveFilterApiResponse.isInitialized) {
+            saveFilterApiResponse.removeObserver(saveFilterObserveResponse)
         }
     }
 
