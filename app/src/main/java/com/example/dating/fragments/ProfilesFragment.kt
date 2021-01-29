@@ -38,6 +38,7 @@ import com.example.dating.viewmodels.ProfilesViewModel
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import it.sephiroth.android.library.rangeseekbar.RangeSeekBar
 
 class ProfilesFragment : Fragment() {
 
@@ -181,8 +182,6 @@ class ProfilesFragment : Fragment() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     locationResult ?: return
                     for (location in locationResult.locations) {
-                        printLog("Location $location")
-
                         viewModel.setLoaderVisible(false)
                         viewModel.setLatLong(location.latitude, location.longitude)
                         fusedLocationClient.removeLocationUpdates(locationCallback)
@@ -252,7 +251,7 @@ class ProfilesFragment : Fragment() {
     private fun initObservers() {
         viewModel.getFilterModelLiveData().observe(viewLifecycleOwner, {
             if (it != null) {
-                viewModel.getUsers()
+//                viewModel.getUsers()
             }
         })
 
@@ -268,7 +267,7 @@ class ProfilesFragment : Fragment() {
                 viewModel.setShowFiltersLiveData(false)
 
                 val fragmentManager = childFragmentManager
-                val filtersDialogFragment = FiltersDialogFragment()
+                val filtersDialogFragment = FiltersDialogFragment(viewModel)
                 filtersDialogFragment.show(fragmentManager, null)
             }
         })
@@ -296,35 +295,6 @@ class ProfilesFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             return UserProfileFragment.newInstance(usersList.get(position))
-        }
-    }
-
-    class FiltersDialogFragment : DialogFragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val view = inflater.inflate(R.layout.dialog_fragment_filters, container, false)
-            val close = view.findViewById<ImageView>(R.id.close)
-            close.setOnClickListener {
-                dialog?.dismiss()
-            }
-            return view
-        }
-
-        override fun onStart() {
-            super.onStart()
-            val matchParent = ViewGroup.LayoutParams.MATCH_PARENT
-            dialog?.window?.setLayout(matchParent, matchParent)
-        }
-
-        override fun onActivityCreated(savedInstanceState: Bundle?) {
-            super.onActivityCreated(savedInstanceState)
-            dialog?.window?.attributes?.windowAnimations = R.style.FilterDialogAnimation
         }
     }
 }

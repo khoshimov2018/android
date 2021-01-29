@@ -18,6 +18,7 @@ object Constants {
     const val TRIM_TEXT_LENGTH = 15
     const val SHORT_DESCRIPTION_TRIM_LENGTH = 40
     const val PAGE_SIZE = 10
+    const val MIN_AGE_FOR_CAL = 18
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."

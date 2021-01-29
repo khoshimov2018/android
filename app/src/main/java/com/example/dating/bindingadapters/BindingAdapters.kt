@@ -1,10 +1,13 @@
 package com.example.dating.bindingadapters
 
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import it.sephiroth.android.library.rangeseekbar.RangeSeekBar
 
 class BindingAdapters {
 
@@ -39,6 +42,18 @@ class BindingAdapters {
                 .placeholder(placeholder)
                 .error(error)
                 .into(view)
+        }
+
+        @BindingAdapter("setMaxProgress")
+        @JvmStatic
+        fun setMaxProgress(rangeSeekBar: RangeSeekBar, max: Int) {
+            rangeSeekBar.setProgress(rangeSeekBar.progressStart, max)
+        }
+
+        @BindingAdapter("setMinProgress")
+        @JvmStatic
+        fun setMinProgress(rangeSeekBar: RangeSeekBar, min: Int) {
+            rangeSeekBar.setProgress(min, rangeSeekBar.progressEnd)
         }
     }
 }

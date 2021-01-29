@@ -88,6 +88,14 @@
         <item>HIGH</item>
     </string-array>
 
+    <string-array name="distance_level">
+        <item>Within 10 км</item>
+        <item>Within 30 км</item>
+        <item>Within 80 км</item>
+        <item>Within 150 км</item>
+        <item>More than 150 км</item>
+    </string-array>
+
     <string name="could_not_parse">Oh, could not parse response. Please try again later.</string>
     <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
     <string name="enter_email">Please enter Email</string>

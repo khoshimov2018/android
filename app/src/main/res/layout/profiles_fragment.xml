@@ -5,7 +5,6 @@
     tools:context=".fragments.ProfilesFragment">
 
     <data>
-
         <import type="android.view.View" />
 
         <variable

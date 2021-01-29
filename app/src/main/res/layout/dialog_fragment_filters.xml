@@ -1,102 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/round_dialog_background"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.dating.viewmodels.ProfilesViewModel" />
+
+        <variable
+            name="interestsAdapter"
+            type="com.example.dating.adapters.InterestsAdapter" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:background="@drawable/round_dialog_background"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/normalPadding"
-            android:src="@drawable/cross" />
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal"
-            android:text="@string/filters"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/largeTextSize" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/normalPadding"
+                android:src="@drawable/cross" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:text="@string/filters"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lineHeight"
+            android:layout_marginTop="@dimen/smallMargin"
+            android:background="@color/lightGreyColor" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:text="@string/i_am_looking_for"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/normalMargin"
+                        android:layout_marginEnd="@dimen/smallMargin"
+                        android:layout_weight="1"
+                        android:background="@{viewModel.filterModelLiveData.isLookingForMale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                        android:onClick="@{viewModel::onMaleClicked}"
+                        android:text="@string/male"
+                        android:textColor="@{viewModel.filterModelLiveData.isLookingForMale() ? @android:color/white : @color/textColor}" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/smallMargin"
+                        android:layout_marginEnd="@dimen/normalMargin"
+                        android:layout_weight="1"
+                        android:background="@{viewModel.filterModelLiveData.isLookingForFemale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                        android:onClick="@{viewModel::onFemaleClicked}"
+                        android:text="@string/female"
+                        android:textColor="@{viewModel.filterModelLiveData.isLookingForFemale() ? @android:color/white : @color/textColor}" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:text="@string/age"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/smallMargin"
+                    android:text="@{viewModel.filterModelLiveData.getFromToAge()}"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize" />
+
+                <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
+                    android:id="@+id/ageSeekBar"
+                    style="@style/Base.Sephiroth.Widget.RangeSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:max="82"
+                    app:setMinProgress="@{viewModel.filterModelLiveData.getAgeFrom()}"
+                    app:setMaxProgress="@{viewModel.filterModelLiveData.getAgeTo()}"
+                    app:range_progress_startEnd_minDiff="1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:text="@string/distance_from_me"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:background="@drawable/round_button_unselected"
+                    android:entries="@array/distance_level"
+                    android:onItemSelected="@{viewModel::onItemSelected}"
+                    android:padding="@dimen/normalPadding"
+                    android:selection="@{viewModel.selectedDistancePosition}"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:text="@string/interests"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adapter="@{interestsAdapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/lineHeight"
-        android:layout_marginTop="@dimen/smallMargin"
-        android:background="@color/lightGreyColor" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normalMargin"
-        android:layout_marginTop="@dimen/largeMargin"
-        android:text="@string/i_am_looking_for"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/largeTextSize"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/normalMargin"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/normalMargin"
-            android:layout_marginEnd="@dimen/smallMargin"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_unselected"
-            android:text="@string/male"
-            android:textColor="@color/textColor" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/smallMargin"
-            android:layout_marginEnd="@dimen/normalMargin"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_unselected"
-            android:text="@string/female"
-            android:textColor="@color/textColor" />
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normalMargin"
-        android:layout_marginTop="@dimen/largeMargin"
-        android:text="@string/age"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/largeTextSize"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normalMargin"
-        android:layout_marginTop="@dimen/largeMargin"
-        android:text="@string/distance_from_me"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/largeTextSize"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normalMargin"
-        android:layout_marginTop="@dimen/largeMargin"
-        android:text="@string/interests"
-        android:textColor="@color/textColor"
-        android:textSize="@dimen/largeTextSize"
-        android:textStyle="bold" />
-</LinearLayout>
+</layout>

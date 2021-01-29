@@ -2,20 +2,20 @@ package com.example.dating.viewmodels
 
 import android.app.Application
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.dating.R
+import com.example.dating.interfaces.IInterestClick
 import com.example.dating.models.*
-import com.example.dating.repositories.FiltersRepository
-import com.example.dating.repositories.LocationRepository
-import com.example.dating.repositories.NationalitiesRepository
-import com.example.dating.repositories.UserRepository
+import com.example.dating.repositories.*
 import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class ProfilesViewModel(application: Application) : BaseAndroidViewModel(application) {
+class ProfilesViewModel(application: Application) : BaseAndroidViewModel(application), IInterestClick {
 
     private var filterModelLiveData: MutableLiveData<FilterModel> = MutableLiveData()
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
@@ -31,11 +31,17 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     private lateinit var locationObserveResponse: Observer<BaseResponse>
 
     private val showFiltersLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    private val interestsList: MutableLiveData<MutableList<InterestModel>> = MutableLiveData()
+    private lateinit var interestsApiResponse: LiveData<BaseResponse>
+    private lateinit var interestsObserveResponse: Observer<BaseResponse>
+    private var selectedDistancePosition: MutableLiveData<Int> = MutableLiveData(0)
 
     private fun getFilters() {
         filterModelLiveData.value = getFiltersFromShared(context)
         if (filterModelLiveData.value == null) {
             fetchFilters()
+        } else {
+            getUsers()
         }
     }
 
@@ -58,6 +64,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                     filterModelLiveData.value?.let { filter ->
                         saveFiltersToShared(context, filter)
                     }
+                    getUsers()
                 } else {
                     baseResponse.value = it
                 }
@@ -142,8 +149,132 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    private fun getInterests() {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
+
+            interestsObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+
+                if (validateResponseWithoutPopup(it)) {
+                    if (it.data is MutableList<*>) {
+                        val gson = Gson()
+                        val strResponse = gson.toJson(it.data)
+                        val myType = object : TypeToken<MutableList<String>>() {}.type
+                        val interestStringList: MutableList<String> =
+                            gson.fromJson<MutableList<String>>(strResponse, myType)
+
+                        val tempInterestsList = java.util.ArrayList<InterestModel>()
+
+                        for (interest in interestStringList) {
+                            if(filterModelLiveData.value != null && filterModelLiveData.value!!.interest != null) {
+                                var isSaved = false
+                                for(savedInterest in filterModelLiveData.value!!.interest!!) {
+                                    if(interest.equals(savedInterest, ignoreCase = true)) {
+                                        isSaved = true
+                                        break
+                                    }
+                                }
+                                if(isSaved) {
+                                    tempInterestsList.add(InterestModel(interest, true))
+                                } else {
+                                    tempInterestsList.add(InterestModel(interest, false))
+                                }
+                            } else {
+                                tempInterestsList.add(InterestModel(interest, false))
+                            }
+                        }
+
+                        interestsList.value = tempInterestsList
+                    }
+                } else {
+                    baseResponse.value = it
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            interestsApiResponse = InterestsRepository.getInterests(strToken)
+            interestsApiResponse.observeForever(interestsObserveResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
     fun onFilterClick(view: View) {
-        showFiltersLiveData.value = true
+        if(interestsList.value == null || interestsList.value!!.isEmpty()) {
+            getInterests()
+            showFiltersLiveData.value = true
+        } else {
+            showFiltersLiveData.value = true
+        }
+    }
+
+    fun onMaleClicked(view: View) {
+        filterModelLiveData.value?.gender = Gender.MALE
+        filterModelLiveData.value = filterModelLiveData.value
+        filterModelLiveData.value?.let {
+            saveFiltersToShared(view.context, it)
+        }
+    }
+
+    fun onFemaleClicked(view: View) {
+        filterModelLiveData.value?.gender = Gender.FEMALE
+        filterModelLiveData.value = filterModelLiveData.value
+        filterModelLiveData.value?.let {
+            saveFiltersToShared(view.context, it)
+        }
+    }
+
+    fun updateAgeFromAndTo(ageFrom: Int, ageTo: Int) {
+        filterModelLiveData.value?.ageFrom = ageFrom
+        filterModelLiveData.value?.ageTo = ageTo
+
+        filterModelLiveData.value?.let {
+            saveFiltersToShared(context, it)
+        }
+        filterModelLiveData.value = filterModelLiveData.value
+    }
+
+    fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val array = view?.context?.resources?.getStringArray(R.array.distance_level)
+        when (position) {
+            0 -> {
+                filterModelLiveData.value?.maxDistance = 10
+            }
+            1 -> {
+                filterModelLiveData.value?.maxDistance = 30
+            }
+            2 -> {
+                filterModelLiveData.value?.maxDistance = 80
+            }
+            3 -> {
+                filterModelLiveData.value?.maxDistance = 150
+            }
+            else -> {
+                filterModelLiveData.value?.maxDistance = null
+            }
+        }
+        selectedDistancePosition.value = position
+    }
+
+    override fun interestItemClicked(view: View, interestItem: InterestModel) {
+        interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
+        interestsList.value = interestsList.value
+        if(filterModelLiveData.value != null) {
+            if(filterModelLiveData.value!!.interest == null) {
+                filterModelLiveData.value?.interest = ArrayList()
+            } else {
+                filterModelLiveData.value?.interest?.clear()
+            }
+            if(interestsList.value != null) {
+                for(interest in interestsList.value!!) {
+                    if(interest.isSelected!!) {
+                        filterModelLiveData.value?.interest?.add(interest.label!!)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCleared() {
@@ -156,6 +287,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
         if (this::locationApiResponse.isInitialized) {
             locationApiResponse.removeObserver(locationObserveResponse)
+        }
+        if (this::interestsApiResponse.isInitialized) {
+            interestsApiResponse.removeObserver(interestsObserveResponse)
         }
     }
 
@@ -181,5 +315,13 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     fun getShowFiltersLiveData(): LiveData<Boolean> {
         return showFiltersLiveData
+    }
+
+    fun getInterestsList(): LiveData<MutableList<InterestModel>> {
+        return interestsList
+    }
+
+    fun getSelectedDistancePosition(): LiveData<Int> {
+        return selectedDistancePosition
     }
 }

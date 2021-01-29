@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.dating"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -84,6 +84,8 @@ dependencies {
 
     // Location
     implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+    implementation 'it.sephiroth.android.library.rangeseekbar:rangeseekbar:1.1.0'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
