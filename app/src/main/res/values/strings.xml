@@ -81,6 +81,8 @@
     <string name="i_am_looking_for">Я ищу</string>
     <string name="age">Возраст</string>
     <string name="distance_from_me">Растояние от меня, км</string>
+    <string name="password_recovery">Восстановление пароля</string>
+    <string name="confirm">Подтвердить</string>
 
     <string-array name="education_level">
         <item>Степень</item>
