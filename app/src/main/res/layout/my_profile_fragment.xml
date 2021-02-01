@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.MyProfileViewModel" />
+            type="ru.behetem.viewmodels.MyProfileViewModel" />
     </data>
 
     <RelativeLayout

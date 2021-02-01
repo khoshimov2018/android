@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.HomeViewModel" />
+            type="ru.behetem.viewmodels.HomeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -33,7 +33,7 @@
             app:itemIconTint="@color/bottom_navigation_color_white"
             app:itemTextColor="@color/bottom_navigation_color_white"
             app:labelVisibilityMode="unlabeled"
-            app:layout_behavior=".utils.HideBottomViewOnScrollBehavior"
+            app:layout_behavior="ru.behetem.utils.HideBottomViewOnScrollBehavior"
             app:menu="@menu/bottom_navigation_items"
             app:onNavigationItemSelected="@{viewModel::onNavigationItemSelected}" />
 

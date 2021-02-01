@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.HeightWeightViewModel" />
+            type="ru.behetem.viewmodels.HeightWeightViewModel" />
     </data>
 
     <RelativeLayout

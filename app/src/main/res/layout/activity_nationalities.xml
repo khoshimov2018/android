@@ -10,11 +10,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.NationalitiesViewModel" />
+            type="ru.behetem.viewmodels.NationalitiesViewModel" />
 
         <variable
             name="adapter"
-            type="com.example.dating.adapters.NationalitiesAdapter" />
+            type="ru.behetem.adapters.NationalitiesAdapter" />
     </data>
 
     <RelativeLayout

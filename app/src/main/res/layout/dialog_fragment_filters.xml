@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.ProfilesViewModel" />
+            type="ru.behetem.viewmodels.ProfilesViewModel" />
 
         <variable
             name="interestsAdapter"
-            type="com.example.dating.adapters.InterestsAdapter" />
+            type="ru.behetem.adapters.InterestsAdapter" />
     </data>
 
     <LinearLayout

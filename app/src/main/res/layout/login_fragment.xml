@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.LoginViewModel" />
+            type="ru.behetem.viewmodels.LoginViewModel" />
     </data>
 
     <RelativeLayout

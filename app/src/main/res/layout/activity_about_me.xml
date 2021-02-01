@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.AboutMeActivity">
+    tools:context="ru.behetem.activities.AboutMeActivity">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.AboutMeViewModel" />
+            type="ru.behetem.viewmodels.AboutMeViewModel" />
     </data>
 
     <RelativeLayout
@@ -83,7 +83,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"
