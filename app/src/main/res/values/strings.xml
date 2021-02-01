@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dating App</string>
+    <string name="app_name">Behetem</string>
     <string name="registration">Регистрация</string>
     <string name="login">Войти</string>
     <string name="privacy_terms">Условия конфиденциальности</string>
@@ -83,6 +83,8 @@
     <string name="distance_from_me">Растояние от меня, км</string>
     <string name="password_recovery">Восстановление пароля</string>
     <string name="confirm">Подтвердить</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
 
     <string-array name="education_level">
         <item>Степень</item>

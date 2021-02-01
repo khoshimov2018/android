@@ -109,6 +109,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/largeMargin"
                     android:layout_marginBottom="@dimen/xLargeMargin"
+                    android:onClick="@{viewModel::forgotPasswordClicked}"
                     android:text="@string/forgot_password"
                     android:textColor="@color/textColor" />
             </RelativeLayout>

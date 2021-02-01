@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.example.dating.R
+import com.example.dating.activities.ForgotPasswordActivity
 import com.example.dating.activities.HomeActivity
 import com.example.dating.databinding.LoginFragmentBinding
 import com.example.dating.viewmodels.LoginViewModel
@@ -47,9 +48,16 @@ class LoginFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.getMoveToHome().observe(viewLifecycleOwner, {
-            if(it) {
+            if (it) {
                 viewModel.setMoveToHome(false)
                 moveToHome()
+            }
+        })
+
+        viewModel.getMoveToForgotPassword().observe(viewLifecycleOwner, {
+            if (it) {
+                viewModel.setMoveToForgotPassword(false)
+                moveToForgotPassword()
             }
         })
     }
@@ -58,5 +66,10 @@ class LoginFragment : Fragment() {
         val intent = Intent(requireActivity(), HomeActivity::class.java)
         startActivity(intent)
         ActivityCompat.finishAffinity(requireActivity())
+    }
+
+    private fun moveToForgotPassword() {
+        val intent = Intent(requireActivity(), ForgotPasswordActivity::class.java)
+        startActivity(intent)
     }
 }
