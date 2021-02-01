@@ -30,6 +30,7 @@ data class UserModel(
     var interests: MutableList<String>? = null,
     var images: MutableList<String> ? = null,
     var distanceTo: String? = null,
+    var reactions: MutableList<ReactionModel>? = null,
 ) : Parcelable {
     fun validateLoginData(): Int {
         return when {
@@ -54,17 +55,17 @@ data class UserModel(
             isNameEmpty() -> EditProfileErrorConstants.NAME_EMPTY
 //            isDobEmpty() -> EditProfileErrorConstants.DOB_EMPTY
             isAgeLessEditProfile() -> EditProfileErrorConstants.AGE_LESS
-            isInterestEmpty() -> EditProfileErrorConstants.INTEREST_EMPTY
-            isDescriptionEmpty() -> EditProfileErrorConstants.ABOUT_ME_EMPTY
-            isGrowthEmpty() -> EditProfileErrorConstants.GROWTH_EMPTY
-            isWeightEmpty() -> EditProfileErrorConstants.WEIGHT_EMPTY
-            isNationalityEmpty() -> EditProfileErrorConstants.NATIONALITY_EMPTY
-            isPositionEmpty() -> EditProfileErrorConstants.POSITION_EMPTY
-            isCompanyNameEmpty() -> EditProfileErrorConstants.COMPANY_NAME_EMPTY
-            isInstitutionNameEmpty() -> EditProfileErrorConstants.INSTITUTE_NAME_EMPTY
-            isLevelEmpty() -> EditProfileErrorConstants.LEVEL_EMPTY
-            isGraduationYearEmpty() -> EditProfileErrorConstants.YEAR_EMPTY
-            isGraduationYearInvalid() -> EditProfileErrorConstants.YEAR_INVALID
+//            isInterestEmpty() -> EditProfileErrorConstants.INTEREST_EMPTY
+//            isDescriptionEmpty() -> EditProfileErrorConstants.ABOUT_ME_EMPTY
+//            isGrowthEmpty() -> EditProfileErrorConstants.GROWTH_EMPTY
+//            isWeightEmpty() -> EditProfileErrorConstants.WEIGHT_EMPTY
+//            isNationalityEmpty() -> EditProfileErrorConstants.NATIONALITY_EMPTY
+//            isPositionEmpty() -> EditProfileErrorConstants.POSITION_EMPTY
+//            isCompanyNameEmpty() -> EditProfileErrorConstants.COMPANY_NAME_EMPTY
+//            isInstitutionNameEmpty() -> EditProfileErrorConstants.INSTITUTE_NAME_EMPTY
+//            isLevelEmpty() -> EditProfileErrorConstants.LEVEL_EMPTY
+//            isGraduationYearEmpty() -> EditProfileErrorConstants.YEAR_EMPTY
+//            isGraduationYearInvalid() -> EditProfileErrorConstants.YEAR_INVALID
             else -> 0
         }
     }

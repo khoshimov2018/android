@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dating App</string>
+    <string name="app_name">Behetem</string>
     <string name="registration">Регистрация</string>
     <string name="login">Войти</string>
     <string name="privacy_terms">Условия конфиденциальности</string>
@@ -77,10 +77,27 @@
     <string name="company">Компания</string>
     <string name="height_weight">Рост, вес</string>
     <string name="tell_us_about_yourself">Расскажите о себе</string>
+    <string name="filters">Фильтры</string>
+    <string name="i_am_looking_for">Я ищу</string>
+    <string name="age">Возраст</string>
+    <string name="distance_from_me">Растояние от меня, км</string>
+    <string name="password_recovery">Восстановление пароля</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+
     <string-array name="education_level">
         <item>Степень</item>
         <item>GENERAL</item>
         <item>HIGH</item>
+    </string-array>
+
+    <string-array name="distance_level">
+        <item>Within 10 км</item>
+        <item>Within 30 км</item>
+        <item>Within 80 км</item>
+        <item>Within 150 км</item>
+        <item>More than 150 км</item>
     </string-array>
 
     <string name="could_not_parse">Oh, could not parse response. Please try again later.</string>

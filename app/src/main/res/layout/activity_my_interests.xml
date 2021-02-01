@@ -60,18 +60,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="11">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="@dimen/lineHeight"
-                    android:layout_weight="0.8"
+                    android:layout_weight="6"
                     android:background="@color/colorPrimary" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="@dimen/lineHeight"
-                    android:layout_weight="0.2"
+                    android:layout_weight="5"
                     android:background="@color/lightGreyColor" />
             </LinearLayout>
 

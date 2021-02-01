@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.example.dating.R
 import com.example.dating.adapters.InterestsAdapter
+import com.example.dating.adapters.ReactionsAdapter
 import com.example.dating.databinding.UserProfileFragmentBinding
 import com.example.dating.models.UserModel
 import com.example.dating.utils.dpToPx
@@ -47,7 +48,7 @@ class UserProfileFragment : Fragment() {
 
     private val listOfCountViews: MutableList<View> = ArrayList()
     private lateinit var listOfImages: MutableList<String>
-    private var currentSelectedIndex = 0
+    private var currentSelectedIndex = -1
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
@@ -124,6 +125,7 @@ class UserProfileFragment : Fragment() {
         binding.viewModel = viewModel
         initObservers()
         setInterests()
+        setReactions()
     }
 
     private fun initObservers() {
@@ -134,6 +136,15 @@ class UserProfileFragment : Fragment() {
         interestsAdapter = InterestsAdapter(viewModel.getInterestsList(), viewModel)
         binding.interestsAdapter = interestsAdapter
         interestsAdapter?.notifyDataSetChanged()
+    }
+
+    private fun setReactions(){
+        val reactionsList = viewModel.getReactionsList()
+        reactionsList?.let {
+            val reactionsAdapter = ReactionsAdapter(it)
+            binding.reactionsAdapter = reactionsAdapter
+            reactionsAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun initView() {
@@ -155,7 +166,10 @@ class UserProfileFragment : Fragment() {
                 listOfCountViews.add(view)
             }
 
-            showIndex(currentSelectedIndex)
+            if(listOfImages.size > 0) {
+                currentSelectedIndex = 0
+                showIndex(currentSelectedIndex)
+            }
         }
     }
 

@@ -7,6 +7,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
@@ -17,11 +19,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -33,6 +38,7 @@ import com.example.dating.viewmodels.ProfilesViewModel
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import it.sephiroth.android.library.rangeseekbar.RangeSeekBar
 
 class ProfilesFragment : Fragment() {
 
@@ -156,6 +162,8 @@ class ProfilesFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun fetchLocation() {
+        viewModel.setLoaderVisible(true)
+
         val locationRequest = LocationRequest.create()?.apply {
             interval = 10000
             fastestInterval = 5000
@@ -173,24 +181,37 @@ class ProfilesFragment : Fragment() {
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult?) {
                     locationResult ?: return
-                    for (location in locationResult.locations){
-                        viewModel.getFilters()
+                    for (location in locationResult.locations) {
+                        viewModel.setLoaderVisible(false)
+                        viewModel.setLatLong(location.latitude, location.longitude)
                         fusedLocationClient.removeLocationUpdates(locationCallback)
                         break
                     }
                 }
             }
 
-            fusedLocationClient.requestLocationUpdates(locationRequest,
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
                 locationCallback,
-                Looper.getMainLooper())
+                Looper.getMainLooper()
+            )
         }
 
         task.addOnFailureListener { exception ->
+            viewModel.setLoaderVisible(false)
+
             if (exception is ResolvableApiException) {
                 try {
                     val resolvable: ResolvableApiException = exception
-                    startIntentSenderForResult(resolvable.resolution.intentSender, LocationRequest.PRIORITY_HIGH_ACCURACY, null, 0, 0, 0, null);
+                    startIntentSenderForResult(
+                        resolvable.resolution.intentSender,
+                        LocationRequest.PRIORITY_HIGH_ACCURACY,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null
+                    );
                 } catch (e: IntentSender.SendIntentException) {
                     couldNotGetLocationPopup()
                 }
@@ -230,7 +251,7 @@ class ProfilesFragment : Fragment() {
     private fun initObservers() {
         viewModel.getFilterModelLiveData().observe(viewLifecycleOwner, {
             if (it != null) {
-                viewModel.getUsers()
+//                viewModel.getUsers()
             }
         })
 
@@ -238,6 +259,16 @@ class ProfilesFragment : Fragment() {
             if (it != null) {
                 val pagerAdapter = ScreenSlidePagerAdapter(requireActivity(), it)
                 viewPager.adapter = pagerAdapter
+            }
+        })
+
+        viewModel.getShowFiltersLiveData().observe(viewLifecycleOwner, {
+            if (it) {
+                viewModel.setShowFiltersLiveData(false)
+
+                val fragmentManager = childFragmentManager
+                val filtersDialogFragment = FiltersDialogFragment(viewModel)
+                filtersDialogFragment.show(fragmentManager, null)
             }
         })
 

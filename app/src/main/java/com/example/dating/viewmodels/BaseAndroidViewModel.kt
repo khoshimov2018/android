@@ -30,6 +30,10 @@ open class BaseAndroidViewModel(application: Application): AndroidViewModel(appl
         return loaderVisible
     }
 
+    fun setLoaderVisible(visible: Boolean) {
+        loaderVisible.value = visible
+    }
+
     open fun setLoggedInUser(user: UserModel) {
         loggedInUser = user
     }

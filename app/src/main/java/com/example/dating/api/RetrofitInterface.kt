@@ -1,6 +1,7 @@
 package com.example.dating.api
 
 import com.example.dating.models.FilterModel
+import com.example.dating.models.LocationModel
 import com.example.dating.models.UserModel
 import com.example.dating.responses.BaseResponse
 import com.example.dating.utils.ApiConstants
@@ -43,6 +44,9 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_FILTERS)
     fun getFilters(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_USERS)
-    fun getUsers(@Header("Authorization") token: String): Call<BaseResponse>
+    @POST(ApiConstants.GET_USERS)
+    fun getUsers(@Body filterModel: FilterModel, @Header("Authorization") token: String): Call<BaseResponse>
+
+    @PUT(ApiConstants.UPDATE_LOCATION)
+    fun updateLocation(@Body locationModel: LocationModel, @Header("Authorization") token: String): Call<BaseResponse>
 }

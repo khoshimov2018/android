@@ -170,7 +170,7 @@ object UserRepository {
 
     fun getUsers(strToken: String, filterModel: FilterModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
-        retrofitService.getUsers(strToken)
+        retrofitService.getUsers(filterModel, strToken)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,

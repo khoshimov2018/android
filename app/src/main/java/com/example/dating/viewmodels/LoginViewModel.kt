@@ -18,6 +18,7 @@ class LoginViewModel : BaseViewModel() {
 
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
     private val moveToHome: MutableLiveData<Boolean> = MutableLiveData()
+    private val moveToForgotPassword: MutableLiveData<Boolean> = MutableLiveData()
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
@@ -34,7 +35,7 @@ class LoginViewModel : BaseViewModel() {
                 errorResId.value = R.string.enter_password
             }
             else -> {
-                if(validateInternet(view.context)) {
+                if (validateInternet(view.context)) {
                     hideKeyboard(view)
                     loaderVisible.value = true // show loader
                     observeResponse = Observer<BaseResponse> {
@@ -43,7 +44,8 @@ class LoginViewModel : BaseViewModel() {
                             val gson = Gson()
                             val strResponse = gson.toJson(it.data)
                             val myType = object : TypeToken<UserModel>() {}.type
-                            val responseUser: UserModel = gson.fromJson<UserModel>(strResponse, myType)
+                            val responseUser: UserModel =
+                                gson.fromJson<UserModel>(strResponse, myType)
 
                             // save to shared
                             SharedPreferenceHelper.saveBooleanToShared(
@@ -60,6 +62,10 @@ class LoginViewModel : BaseViewModel() {
                 }
             }
         }
+    }
+
+    fun forgotPasswordClicked(view: View) {
+        moveToForgotPassword.value = true
     }
 
     override fun onCleared() {
@@ -89,5 +95,13 @@ class LoginViewModel : BaseViewModel() {
 
     fun setMoveToHome(move: Boolean) {
         moveToHome.value = move
+    }
+
+    fun getMoveToForgotPassword(): LiveData<Boolean> {
+        return moveToForgotPassword
+    }
+
+    fun setMoveToForgotPassword(move: Boolean) {
+        moveToForgotPassword.value = move
     }
 }

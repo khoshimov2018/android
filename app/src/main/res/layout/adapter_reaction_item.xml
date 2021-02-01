@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.example.dating.models.ReactionModel" />
+    </data>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/smallMargin"
+        android:background="@drawable/reaction_bg"
+        android:padding="@{@dimen/normalPadding}"
+        android:text="@{item.emoji}"
+        android:textSize="@dimen/xxLargeTextSize"
+        android:gravity="center"/>
+</layout>

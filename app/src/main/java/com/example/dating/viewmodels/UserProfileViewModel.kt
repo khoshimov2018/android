@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.dating.interfaces.IInterestClick
 import com.example.dating.models.InterestModel
+import com.example.dating.models.ReactionModel
 import com.example.dating.models.UserModel
 
 class UserProfileViewModel : BaseViewModel(), IInterestClick {
@@ -23,6 +24,10 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
 
     override fun interestItemClicked(view: View, interestItem: InterestModel) {
         // Do nothing
+    }
+
+    fun getReactionsList(): MutableList<ReactionModel>? {
+        return userProfileLiveData.value?.reactions
     }
 
     fun getUserProfileLiveData(): LiveData<UserModel> {
