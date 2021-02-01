@@ -10,15 +10,15 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.EditProfileViewModel" />
+            type="ru.behetem.viewmodels.EditProfileViewModel" />
 
         <variable
             name="interestsAdapter"
-            type="com.example.dating.adapters.InterestsAdapter" />
+            type="ru.behetem.adapters.InterestsAdapter" />
 
         <variable
             name="nationalitiesAdapter"
-            type="com.example.dating.adapters.NationalitiesAdapter" />
+            type="ru.behetem.adapters.NationalitiesAdapter" />
     </data>
 
     <RelativeLayout

@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.example.dating.models.ReactionModel" />
+            type="ru.behetem.models.ReactionModel" />
     </data>
 
     <androidx.appcompat.widget.AppCompatTextView

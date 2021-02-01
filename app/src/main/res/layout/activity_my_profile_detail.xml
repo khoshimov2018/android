@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.MyProfileDetailViewModel" />
+            type="ru.behetem.viewmodels.MyProfileDetailViewModel" />
 
         <variable
             name="interestsAdapter"
-            type="com.example.dating.adapters.InterestsAdapter" />
+            type="ru.behetem.adapters.InterestsAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

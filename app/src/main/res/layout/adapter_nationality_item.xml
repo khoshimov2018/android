@@ -6,11 +6,11 @@
 
         <variable
             name="iNotificationClick"
-            type="com.example.dating.interfaces.INationalityClick" />
+            type="ru.behetem.interfaces.INationalityClick" />
 
         <variable
             name="item"
-            type="com.example.dating.models.NationalityModel" />
+            type="ru.behetem.models.NationalityModel" />
     </data>
 
     <LinearLayout

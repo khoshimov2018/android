@@ -6,11 +6,11 @@
 
         <variable
             name="iInterestClick"
-            type="com.example.dating.interfaces.IInterestClick" />
+            type="ru.behetem.interfaces.IInterestClick" />
 
         <variable
             name="item"
-            type="com.example.dating.models.InterestModel" />
+            type="ru.behetem.models.InterestModel" />
     </data>
 
     <LinearLayout

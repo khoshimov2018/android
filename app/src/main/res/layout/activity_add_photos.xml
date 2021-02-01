@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.AddPhotosViewModel" />
+            type="ru.behetem.viewmodels.AddPhotosViewModel" />
     </data>
 
     <RelativeLayout

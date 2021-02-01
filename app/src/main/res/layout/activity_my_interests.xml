@@ -9,11 +9,11 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.MyInterestsViewModel" />
+            type="ru.behetem.viewmodels.MyInterestsViewModel" />
 
         <variable
             name="adapter"
-            type="com.example.dating.adapters.InterestsAdapter" />
+            type="ru.behetem.adapters.InterestsAdapter" />
     </data>
 
     <RelativeLayout

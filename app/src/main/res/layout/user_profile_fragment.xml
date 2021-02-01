@@ -10,15 +10,15 @@
 
         <variable
             name="viewModel"
-            type="com.example.dating.viewmodels.UserProfileViewModel" />
+            type="ru.behetem.viewmodels.UserProfileViewModel" />
 
         <variable
             name="interestsAdapter"
-            type="com.example.dating.adapters.InterestsAdapter" />
+            type="ru.behetem.adapters.InterestsAdapter" />
 
         <variable
             name="reactionsAdapter"
-            type="com.example.dating.adapters.ReactionsAdapter" />
+            type="ru.behetem.adapters.ReactionsAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
