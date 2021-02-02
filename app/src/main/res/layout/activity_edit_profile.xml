@@ -204,80 +204,136 @@
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/smallPhoto"
-                            android:layout_height="@dimen/smallPhoto"
-                            android:layout_margin="@dimen/normalMargin"
-                            app:cardCornerRadius="@dimen/photoRadius"
-                            app:cardElevation="@dimen/elevation"
-                            app:cardPreventCornerOverlap="false">
+                        <RelativeLayout
+                            android:layout_width="@dimen/crossSize"
+                            android:layout_height="@dimen/crossSize">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/smallPhoto"
+                                android:layout_height="@dimen/smallPhoto"
+                                android:layout_margin="@dimen/normalMargin"
+                                android:onClick="@{(view) -> viewModel.onImageClick(view, 0)}"
+                                app:cardCornerRadius="@dimen/photoRadius"
+                                app:cardElevation="@dimen/elevation"
+                                app:cardPreventCornerOverlap="false">
 
-                                <androidx.appcompat.widget.AppCompatImageView
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/plus"
-                                    app:error="@{@drawable/plus}"
-                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : ""}'
-                                    app:placeholder="@{@drawable/plus}" />
-                            </RelativeLayout>
+                                    android:layout_height="wrap_content">
 
-                        </androidx.cardview.widget.CardView>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/image1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/plus"
+                                        app:error="@{@drawable/plus}"
+                                        app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : ""}'
+                                        app:placeholder="@{@drawable/plus}" />
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/smallPhoto"
-                            android:layout_height="@dimen/smallPhoto"
-                            android:layout_margin="@dimen/normalMargin"
-                            app:cardCornerRadius="@dimen/photoRadius"
-                            app:cardElevation="@dimen/elevation"
-                            app:cardPreventCornerOverlap="false">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@drawable/circle_red_background"
+                                android:elevation="10dp"
+                                android:onClick="@{(view) -> viewModel.onDeleteClick(view, 0)}"
+                                android:padding="@dimen/smallMargin"
+                                android:src="@drawable/cross"
+                                android:visibility="@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? View.VISIBLE : View.GONE}"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                        <RelativeLayout
+                            android:layout_width="@dimen/crossSize"
+                            android:layout_height="@dimen/crossSize">
 
-                                <androidx.appcompat.widget.AppCompatImageView
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/smallPhoto"
+                                android:layout_height="@dimen/smallPhoto"
+                                android:layout_margin="@dimen/normalMargin"
+                                android:onClick="@{(view) -> viewModel.onImageClick(view, 1)}"
+                                app:cardCornerRadius="@dimen/photoRadius"
+                                app:cardElevation="@dimen/elevation"
+                                app:cardPreventCornerOverlap="false">
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/plus"
-                                    app:error="@{@drawable/plus}"
-                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 2) ? viewModel.imagesListLiveData.get(1) : ""}'
-                                    app:placeholder="@{@drawable/plus}" />
-                            </RelativeLayout>
+                                    android:layout_height="match_parent">
 
-                        </androidx.cardview.widget.CardView>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/image2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/plus"
+                                        app:error="@{@drawable/plus}"
+                                        app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 2) ? viewModel.imagesListLiveData.get(1) : ""}'
+                                        app:placeholder="@{@drawable/plus}" />
+                                </RelativeLayout>
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/smallPhoto"
-                            android:layout_height="@dimen/smallPhoto"
-                            android:layout_margin="@dimen/normalMargin"
-                            app:cardCornerRadius="@dimen/photoRadius"
-                            app:cardElevation="@dimen/elevation"
-                            app:cardPreventCornerOverlap="false">
+                            </androidx.cardview.widget.CardView>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@drawable/circle_red_background"
+                                android:elevation="10dp"
+                                android:onClick="@{(view) -> viewModel.onDeleteClick(view, 1)}"
+                                android:padding="@dimen/smallMargin"
+                                android:src="@drawable/cross"
+                                android:visibility="@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 2) ? View.VISIBLE : View.GONE}"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
 
-                                <androidx.appcompat.widget.AppCompatImageView
+                        <RelativeLayout
+                            android:layout_width="@dimen/crossSize"
+                            android:layout_height="@dimen/crossSize">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/smallPhoto"
+                                android:layout_height="@dimen/smallPhoto"
+                                android:layout_margin="@dimen/normalMargin"
+                                android:onClick="@{(view) -> viewModel.onImageClick(view, 2)}"
+                                app:cardCornerRadius="@dimen/photoRadius"
+                                app:cardElevation="@dimen/elevation"
+                                app:cardPreventCornerOverlap="false">
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/plus"
-                                    app:error="@{@drawable/plus}"
-                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 3) ? viewModel.imagesListLiveData.get(2) : ""}'
-                                    app:placeholder="@{@drawable/plus}" />
-                            </RelativeLayout>
+                                    android:layout_height="match_parent">
 
-                        </androidx.cardview.widget.CardView>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/image3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/plus"
+                                        app:error="@{@drawable/plus}"
+                                        app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 3) ? viewModel.imagesListLiveData.get(2) : ""}'
+                                        app:placeholder="@{@drawable/plus}" />
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@drawable/circle_red_background"
+                                android:elevation="10dp"
+                                android:onClick="@{(view) -> viewModel.onDeleteClick(view, 2)}"
+                                android:padding="@dimen/smallMargin"
+                                android:src="@drawable/cross"
+                                android:visibility="@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 3) ? View.VISIBLE : View.GONE}"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -287,80 +343,137 @@
                         android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/smallPhoto"
-                            android:layout_height="@dimen/smallPhoto"
-                            android:layout_margin="@dimen/normalMargin"
-                            app:cardCornerRadius="@dimen/photoRadius"
-                            app:cardElevation="@dimen/elevation"
-                            app:cardPreventCornerOverlap="false">
+                        <RelativeLayout
+                            android:layout_width="@dimen/crossSize"
+                            android:layout_height="@dimen/crossSize">
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/smallPhoto"
+                                android:layout_height="@dimen/smallPhoto"
+                                android:layout_margin="@dimen/normalMargin"
+                                android:onClick="@{(view) -> viewModel.onImageClick(view, 3)}"
+                                app:cardCornerRadius="@dimen/photoRadius"
+                                app:cardElevation="@dimen/elevation"
+                                app:cardPreventCornerOverlap="false">
 
-                                <androidx.appcompat.widget.AppCompatImageView
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/plus"
-                                    app:error="@{@drawable/plus}"
-                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 4) ? viewModel.imagesListLiveData.get(3) : ""}'
-                                    app:placeholder="@{@drawable/plus}" />
-                            </RelativeLayout>
+                                    android:layout_height="match_parent">
 
-                        </androidx.cardview.widget.CardView>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/image4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/plus"
+                                        app:error="@{@drawable/plus}"
+                                        app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 4) ? viewModel.imagesListLiveData.get(3) : ""}'
+                                        app:placeholder="@{@drawable/plus}" />
+                                </RelativeLayout>
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/smallPhoto"
-                            android:layout_height="@dimen/smallPhoto"
-                            android:layout_margin="@dimen/normalMargin"
-                            app:cardCornerRadius="@dimen/photoRadius"
-                            app:cardElevation="@dimen/elevation"
-                            app:cardPreventCornerOverlap="false">
+                            </androidx.cardview.widget.CardView>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@drawable/circle_red_background"
+                                android:elevation="10dp"
+                                android:onClick="@{(view) -> viewModel.onDeleteClick(view, 3)}"
+                                android:padding="@dimen/smallMargin"
+                                android:src="@drawable/cross"
+                                android:visibility="@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 4) ? View.VISIBLE : View.GONE}"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
 
-                                <androidx.appcompat.widget.AppCompatImageView
+                        <RelativeLayout
+                            android:layout_width="@dimen/crossSize"
+                            android:layout_height="@dimen/crossSize">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/smallPhoto"
+                                android:layout_height="@dimen/smallPhoto"
+                                android:layout_margin="@dimen/normalMargin"
+                                android:onClick="@{(view) -> viewModel.onImageClick(view, 4)}"
+                                app:cardCornerRadius="@dimen/photoRadius"
+                                app:cardElevation="@dimen/elevation"
+                                app:cardPreventCornerOverlap="false">
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/plus"
-                                    app:error="@{@drawable/plus}"
-                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 5) ? viewModel.imagesListLiveData.get(4) : ""}'
-                                    app:placeholder="@{@drawable/plus}" />
-                            </RelativeLayout>
+                                    android:layout_height="match_parent">
 
-                        </androidx.cardview.widget.CardView>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/image5"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/plus"
+                                        app:error="@{@drawable/plus}"
+                                        app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 5) ? viewModel.imagesListLiveData.get(4) : ""}'
+                                        app:placeholder="@{@drawable/plus}" />
+                                </RelativeLayout>
 
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/smallPhoto"
-                            android:layout_height="@dimen/smallPhoto"
-                            android:layout_margin="@dimen/normalMargin"
-                            app:cardCornerRadius="@dimen/photoRadius"
-                            app:cardElevation="@dimen/elevation"
-                            app:cardPreventCornerOverlap="false">
+                            </androidx.cardview.widget.CardView>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@drawable/circle_red_background"
+                                android:elevation="10dp"
+                                android:onClick="@{(view) -> viewModel.onDeleteClick(view, 4)}"
+                                android:padding="@dimen/smallMargin"
+                                android:src="@drawable/cross"
+                                android:visibility="@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 5) ? View.VISIBLE : View.GONE}"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
 
-                                <androidx.appcompat.widget.AppCompatImageView
+                        <RelativeLayout
+                            android:layout_width="@dimen/crossSize"
+                            android:layout_height="@dimen/crossSize">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="@dimen/smallPhoto"
+                                android:layout_height="@dimen/smallPhoto"
+                                android:layout_margin="@dimen/normalMargin"
+                                android:onClick="@{(view) -> viewModel.onImageClick(view, 5)}"
+                                app:cardCornerRadius="@dimen/photoRadius"
+                                app:cardElevation="@dimen/elevation"
+                                app:cardPreventCornerOverlap="false">
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:scaleType="centerInside"
-                                    android:src="@drawable/plus"
-                                    app:error="@{@drawable/plus}"
-                                    app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 6) ? viewModel.imagesListLiveData.get(5) : ""}'
-                                    app:placeholder="@{@drawable/plus}" />
-                            </RelativeLayout>
+                                    android:layout_height="match_parent">
 
-                        </androidx.cardview.widget.CardView>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/image6"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_centerInParent="true"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/plus"
+                                        app:error="@{@drawable/plus}"
+                                        app:imageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 6) ? viewModel.imagesListLiveData.get(5) : ""}'
+                                        app:placeholder="@{@drawable/plus}" />
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:background="@drawable/circle_red_background"
+                                android:elevation="10dp"
+                                android:onClick="@{(view) -> viewModel.onDeleteClick(view, 5)}"
+                                android:padding="@dimen/smallMargin"
+                                android:src="@drawable/cross"
+                                android:visibility="@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() >= 6) ? View.VISIBLE : View.GONE}"
+                                app:tint="@android:color/white" />
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <View

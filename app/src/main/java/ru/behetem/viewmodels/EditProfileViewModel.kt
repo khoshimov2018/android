@@ -1,6 +1,8 @@
 package ru.behetem.viewmodels
 
 import android.app.Application
+import android.content.DialogInterface
+import android.net.Uri
 import android.view.View
 import android.widget.AdapterView
 import android.widget.SeekBar
@@ -45,6 +47,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private val allowToGoBack: MutableLiveData<Boolean> = MutableLiveData()
 
     private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
+
+    private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
+    private var currentImageForPosition = -1
 
     fun updateProfile(): Boolean {
         return if(userProfileLiveData.value != null) {
@@ -126,6 +131,35 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         } else {
             true
         }
+    }
+
+    fun onDeleteClick(view: View, position: Int) {
+        if(imagesListLiveData.value != null && imagesListLiveData.value!!.size > position) {
+            showAlertDialog(view.context,
+                null,
+                context.getString(R.string.sure_delete_image),
+                context.getString(R.string.yes),
+                DialogInterface.OnClickListener { dialogInterface, _ ->
+                    dialogInterface.cancel()
+                    deleteImage()
+                },
+                context.getString(R.string.no),
+                null
+            )
+        }
+    }
+
+    fun onImageClick(view: View, position: Int) {
+        currentImageForPosition = position
+        openImagePicker.value = true
+    }
+
+    fun setImageUri(uri: Uri) {
+//        uploadImage(uri)
+    }
+    
+    private fun deleteImage() {
+
     }
 
     fun getInterests() {
@@ -412,5 +446,17 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getImages(): MutableList<String>? {
         return imagesListLiveData.value
+    }
+
+    fun getOpenImagePicker(): LiveData<Boolean> {
+        return openImagePicker
+    }
+
+    fun setOpenImagePicker(open: Boolean) {
+        openImagePicker.value = open
+    }
+
+    fun getCurrentImageForPosition(): Int {
+        return currentImageForPosition
     }
 }
