@@ -56,7 +56,7 @@ class AboutMeActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, ru.behetem.activities.IntroSliderActivity::class.java)
+        val intent = Intent(this, IntroActivity::class.java)
         startActivity(intent)
         finishAffinity()
     }

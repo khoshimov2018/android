@@ -85,6 +85,17 @@
     <string name="confirm">Подтвердить</string>
     <string name="new_password">Новый пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="these_gestures_will_help">Эти жесты помогут вам пользоваться приложением</string>
+    <string name="next_photo">Следующее фото</string>
+    <string name="the_right_side">Коснитесь правой части экрана</string>
+    <string name="previous_photo">Предыдущее фото</string>
+    <string name="the_left_side">Коснитесь левой части экрана</string>
+    <string name="view_profile">Просмотреть анкету</string>
+    <string name="pull_the_page_up">Потяните страницу вверх</string>
+    <string name="next_card">Следующая карточка</string>
+    <string name="swipe_left">Пролистните влево</string>
+    <string name="click_to_continue">Нажмите, чтобы продолжить</string>
 
     <string-array name="education_level">
         <item>Степень</item>

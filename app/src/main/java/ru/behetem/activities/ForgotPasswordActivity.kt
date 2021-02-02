@@ -25,9 +25,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private fun initViewModel() {
         forgotPasswordViewModel = ViewModelProvider(this).get(ForgotPasswordViewModel::class.java)
         binding.viewModel = forgotPasswordViewModel
-
-        forgotPasswordViewModel.setLoggedInUser(getLoggedInUserFromShared(this))
-
         initObservers()
     }
 
