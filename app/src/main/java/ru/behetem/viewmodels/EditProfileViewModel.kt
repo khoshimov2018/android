@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import ru.behetem.R
 import ru.behetem.interfaces.IInterestClick
 import ru.behetem.interfaces.INationalityClick
+import ru.behetem.models.ImageModel
 import ru.behetem.models.InterestModel
 import ru.behetem.models.NationalityModel
 import ru.behetem.models.UserModel
@@ -50,6 +51,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
     private var currentImageForPosition = -1
+
+    private lateinit var deleteImageApiResponse: LiveData<BaseResponse>
+    private lateinit var deleteImageObserveResponse: Observer<BaseResponse>
 
     fun updateProfile(): Boolean {
         return if(userProfileLiveData.value != null) {
@@ -141,7 +145,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                 context.getString(R.string.yes),
                 DialogInterface.OnClickListener { dialogInterface, _ ->
                     dialogInterface.cancel()
-                    deleteImage()
+                    deleteImage(position)
                 },
                 context.getString(R.string.no),
                 null
@@ -158,8 +162,29 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 //        uploadImage(uri)
     }
     
-    private fun deleteImage() {
+    private fun deleteImage(position: Int) {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
 
+            deleteImageObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+
+                if (validateResponseWithoutPopup(it)) {
+                    imagesListLiveData.value!![position] = ""
+                    imagesListLiveData.value = imagesListLiveData.value
+                } else {
+                    baseResponse.value = it
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            val imageModel = ImageModel(position)
+            deleteImageApiResponse = UserRepository.deleteImage(strToken, imageModel)
+            deleteImageApiResponse.observeForever(deleteImageObserveResponse)
+        } else {
+            showNoInternet.value = true
+        }
     }
 
     fun getInterests() {
@@ -296,6 +321,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         if (this::nationalitiesApiResponse.isInitialized) {
             nationalitiesApiResponse.removeObserver(nationalitiesObserveResponse)
+        }
+        if (this::deleteImageApiResponse.isInitialized) {
+            deleteImageApiResponse.removeObserver(deleteImageObserveResponse)
         }
     }
 
@@ -458,5 +486,13 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getCurrentImageForPosition(): Int {
         return currentImageForPosition
+    }
+
+    fun getBaseResponse(): LiveData<BaseResponse?> {
+        return baseResponse
+    }
+
+    fun setBaseResponse(baseResponse: BaseResponse?) {
+        this.baseResponse.value = baseResponse
     }
 }

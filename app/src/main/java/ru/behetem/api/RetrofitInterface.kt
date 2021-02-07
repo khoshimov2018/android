@@ -5,6 +5,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 import ru.behetem.models.FilterModel
+import ru.behetem.models.ImageModel
 import ru.behetem.models.LocationModel
 import ru.behetem.models.UserModel
 import ru.behetem.responses.BaseResponse
@@ -49,4 +50,7 @@ interface RetrofitInterface {
 
     @PUT(ApiConstants.UPDATE_LOCATION)
     fun updateLocation(@Body locationModel: LocationModel, @Header("Authorization") token: String): Call<BaseResponse>
+
+    @POST(ApiConstants.DELETE_IMAGE)
+    fun deleteImage(@Body imageModel: ImageModel, @Header("Authorization") token: String): Call<BaseResponse>
 }

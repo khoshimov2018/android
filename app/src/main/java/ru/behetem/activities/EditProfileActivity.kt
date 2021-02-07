@@ -118,6 +118,20 @@ class EditProfileActivity : AppCompatActivity() {
                 this.onBackPressed()
             }
         })
+
+        editProfileViewModel.getShowNoInternet().observe(this, {
+            if(it) {
+                editProfileViewModel.setShowNoInternet(false)
+                showInfoAlertDialog(this, getString(R.string.no_internet))
+            }
+        })
+
+        editProfileViewModel.getBaseResponse().observe(this, {
+            it?.let {
+                editProfileViewModel.setBaseResponse(null)
+                validateResponse(this, it)
+            }
+        })
     }
 
     private fun showDatePicker() {
