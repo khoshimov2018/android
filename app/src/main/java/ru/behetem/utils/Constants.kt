@@ -50,6 +50,7 @@ object ApiConstants {
     const val DELETE_IMAGE = "images/delete"
     const val SEND_REACTION = "react"
     const val GET_REACTIONS = "reaction/newReactions"
+    const val CHANGE_PASSWORD = "password/change"
 }
 
 object LoginFormErrorConstants {
@@ -113,4 +114,11 @@ object EditProfileErrorConstants {
     const val LEVEL_EMPTY = 12
     const val YEAR_EMPTY = 13
     const val YEAR_INVALID = 14
+}
+
+object ChangePasswordFormErrorConstants {
+    const val OLD_EMPTY = 1
+    const val NEW_EMPTY = 2
+    const val CONFIRM_EMPTY = 3
+    const val DO_NOT_MATCH = 4
 }

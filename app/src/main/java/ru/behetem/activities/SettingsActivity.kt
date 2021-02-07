@@ -1,5 +1,6 @@
 package ru.behetem.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -40,6 +41,10 @@ class SettingsActivity : AppCompatActivity() {
             }
         })
 
+        settingsViewModel.getMoveToChangePassword().observe(this, {
+            openChangePassword()
+        })
+
         settingsViewModel.getAboutUsClicked().observe(this, {
             openAboutUs()
         })
@@ -51,6 +56,11 @@ class SettingsActivity : AppCompatActivity() {
         settingsViewModel.getFeedbackClicked().observe(this, {
             openFeedback()
         })
+    }
+
+    private fun openChangePassword() {
+        val intent = Intent(this, ChangePasswordActivity::class.java)
+        startActivity(intent)
     }
 
     private fun openAboutUs() {

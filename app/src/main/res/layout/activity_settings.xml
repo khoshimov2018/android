@@ -61,6 +61,7 @@
                     android:layout_marginBottom="@dimen/smallMargin"
                     app:cardCornerRadius="@dimen/settingCardRadius"
                     app:cardElevation="@dimen/elevation"
+                    android:onClick="@{viewModel::onChangePasswordClicked}"
                     app:cardPreventCornerOverlap="false">
 
                     <RelativeLayout
