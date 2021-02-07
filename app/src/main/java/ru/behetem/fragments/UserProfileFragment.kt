@@ -24,6 +24,7 @@ import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
 import ru.behetem.adapters.ReactionsAdapter
 import ru.behetem.databinding.UserProfileFragmentBinding
+import ru.behetem.interfaces.IReactionCallback
 import ru.behetem.models.UserModel
 import ru.behetem.utils.*
 import ru.behetem.viewmodels.UserProfileViewModel
@@ -34,11 +35,12 @@ class UserProfileFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(userModel: UserModel) =
+        fun newInstance(userModel: UserModel, reactionCallback: IReactionCallback) =
             UserProfileFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(CURRENT_USER, userModel)
                 }
+                this.reactionCallback = reactionCallback
             }
     }
 
@@ -52,6 +54,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     private var interestsAdapter: InterestsAdapter? = null
+    private var reactionCallback: IReactionCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,7 +135,7 @@ class UserProfileFragment : Fragment() {
         viewModel.getMoveToNextProfile().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setMoveToNextProfile(false)
-
+                reactionCallback?.onReactionSent()
             }
         })
     }

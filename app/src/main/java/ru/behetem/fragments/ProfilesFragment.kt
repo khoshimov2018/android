@@ -30,9 +30,10 @@ import ru.behetem.databinding.ProfilesFragmentBinding
 import ru.behetem.models.UserModel
 import ru.behetem.viewmodels.ProfilesViewModel
 import ru.behetem.R
+import ru.behetem.interfaces.IReactionCallback
 import ru.behetem.utils.*
 
-class ProfilesFragment : Fragment() {
+class ProfilesFragment : IReactionCallback, Fragment() {
 
     companion object {
         fun newInstance() = ProfilesFragment()
@@ -254,17 +255,15 @@ class ProfilesFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun initObservers() {
-        /*viewModel.getFilterModelLiveData().observe(viewLifecycleOwner, {
-            if (it != null) {
-                viewModel.getUsers()
-            }
-        })*/
+    override fun onReactionSent() {
+        viewPager.setCurrentItem(viewPager.currentItem + 1, true)
+    }
 
+    private fun initObservers() {
         viewModel.getUsersListLiveData().observe(viewLifecycleOwner, {
             if (it != null) {
                 if(pagerAdapter == null) {
-                    pagerAdapter = ScreenSlidePagerAdapter(this, it)
+                    pagerAdapter = ScreenSlidePagerAdapter(this, it, this)
                     viewPager.adapter = pagerAdapter
                 } else {
                     pagerAdapter?.notifyDataSetChanged()
@@ -300,12 +299,13 @@ class ProfilesFragment : Fragment() {
 
     private inner class ScreenSlidePagerAdapter(
         fragment: Fragment,
-        val usersList: MutableList<UserModel>
+        private val usersList: MutableList<UserModel>,
+        private val reactionCallback: IReactionCallback
     ) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = usersList.size
 
         override fun createFragment(position: Int): Fragment {
-            return UserProfileFragment.newInstance(usersList.get(position))
+            return UserProfileFragment.newInstance(usersList[position], reactionCallback)
         }
     }
 
