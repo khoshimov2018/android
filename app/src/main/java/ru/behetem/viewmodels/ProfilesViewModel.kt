@@ -20,6 +20,8 @@ import ru.behetem.repositories.InterestsRepository
 import ru.behetem.repositories.LocationRepository
 import ru.behetem.repositories.UserRepository
 import ru.behetem.responses.BaseResponse
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ProfilesViewModel(application: Application) : BaseAndroidViewModel(application),
     IInterestClick {
@@ -33,6 +35,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     private lateinit var saveFilterApiResponse: LiveData<BaseResponse>
     private lateinit var saveFilterObserveResponse: Observer<BaseResponse>
 
+    private var shouldHitPagination = true
     private val usersListLiveData: MutableLiveData<MutableList<UserModel>> = MutableLiveData()
     private lateinit var usersApiResponse: LiveData<BaseResponse>
     private lateinit var usersObserveResponse: Observer<BaseResponse>
@@ -113,7 +116,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     }
 
     fun saveFilters() {
-        if(validateInternet(context)) {
+        if (validateInternet(context)) {
             loaderVisible.value = true // show loader
             saveFilterObserveResponse = Observer<BaseResponse> { response ->
                 loaderVisible.value = false
@@ -131,8 +134,21 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    fun getNextPageUsers() {
+        filterModelLiveData.value?.page = filterModelLiveData.value?.page!! + 1
+        getUsers()
+    }
+
+    fun clearUsers() {
+        usersListLiveData.value?.clear()
+        usersListLiveData.value = usersListLiveData.value
+    }
+
     private fun getUsers() {
         if (isInternetAvailable(context)) {
+            if (usersListLiveData.value == null) {
+                usersListLiveData.value = ArrayList()
+            }
             showNoInternet.value = false
             loaderVisible.value = true // show loader
 
@@ -158,7 +174,12 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                             user.images = imagesList
                         }
 
-                        usersListLiveData.value = usersList
+                        usersListLiveData.value?.addAll(usersList)
+                        usersListLiveData.value = usersListLiveData.value
+
+                        if (usersList.size < Constants.PAGE_SIZE) {
+                            shouldHitPagination = false
+                        }
                     }
                 } else {
                     baseResponse.value = it
@@ -255,12 +276,11 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     }
 
     fun onFilterClick(view: View) {
+        clearUsers()
         if (interestsList.value == null || interestsList.value!!.isEmpty()) {
             getInterests()
-            showFiltersLiveData.value = true
-        } else {
-            showFiltersLiveData.value = true
         }
+        showFiltersLiveData.value = true
     }
 
     fun onMaleClicked(view: View) {
@@ -283,6 +303,15 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         filterModelLiveData.value?.ageFrom = ageFrom
         filterModelLiveData.value?.ageTo = ageTo
 
+        val calendarFrom = Calendar.getInstance()
+        calendarFrom.set(Calendar.YEAR, calendarFrom.get(Calendar.YEAR) - ageFrom)
+
+        val calendarTo = Calendar.getInstance()
+        calendarTo.set(Calendar.YEAR, calendarTo.get(Calendar.YEAR) - ageTo)
+
+        filterModelLiveData.value?.dateOfBirthFrom = formatDobForAPI(calendarFrom)
+        filterModelLiveData.value?.dateOfBirthTo = formatDobForAPI(calendarTo)
+
         filterModelLiveData.value?.let {
             saveFiltersToShared(context, it)
         }
@@ -290,7 +319,6 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     }
 
     fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val array = view?.context?.resources?.getStringArray(R.array.distance_level)
         when (position) {
             0 -> {
                 filterModelLiveData.value?.maxDistance = 10
@@ -379,5 +407,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
     fun getSelectedDistancePosition(): LiveData<Int> {
         return selectedDistancePosition
+    }
+
+    fun getShouldHitPagination(): Boolean {
+        return shouldHitPagination
     }
 }

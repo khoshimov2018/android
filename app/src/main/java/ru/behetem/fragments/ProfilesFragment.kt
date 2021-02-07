@@ -30,9 +30,7 @@ import ru.behetem.databinding.ProfilesFragmentBinding
 import ru.behetem.models.UserModel
 import ru.behetem.viewmodels.ProfilesViewModel
 import ru.behetem.R
-import ru.behetem.utils.getLoggedInUserFromShared
-import ru.behetem.utils.showInfoAlertDialog
-import ru.behetem.utils.validateResponse
+import ru.behetem.utils.*
 
 class ProfilesFragment : Fragment() {
 
@@ -49,6 +47,9 @@ class ProfilesFragment : Fragment() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
+    private var pagerAdapter: ScreenSlidePagerAdapter? = null
+    private var currentTotalPages = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ProfilesViewModel::class.java)
@@ -61,6 +62,17 @@ class ProfilesFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.profiles_fragment, container, false)
         val view: View = binding.root
         viewPager = view.findViewById(R.id.pager)
+
+        viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if(viewModel.getShouldHitPagination()) {
+                    if(currentTotalPages - position == 1) {
+                        viewModel.getNextPageUsers()
+                    }
+                }
+            }
+        })
 
         initViewModel()
 
@@ -243,16 +255,21 @@ class ProfilesFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.getFilterModelLiveData().observe(viewLifecycleOwner, {
+        /*viewModel.getFilterModelLiveData().observe(viewLifecycleOwner, {
             if (it != null) {
-//                viewModel.getUsers()
+                viewModel.getUsers()
             }
-        })
+        })*/
 
         viewModel.getUsersListLiveData().observe(viewLifecycleOwner, {
             if (it != null) {
-                val pagerAdapter = ScreenSlidePagerAdapter(requireActivity(), it)
-                viewPager.adapter = pagerAdapter
+                if(pagerAdapter == null) {
+                    pagerAdapter = ScreenSlidePagerAdapter(this, it)
+                    viewPager.adapter = pagerAdapter
+                } else {
+                    pagerAdapter?.notifyDataSetChanged()
+                }
+                currentTotalPages = it.size
             }
         })
 
@@ -282,13 +299,19 @@ class ProfilesFragment : Fragment() {
     }
 
     private inner class ScreenSlidePagerAdapter(
-        fa: FragmentActivity,
+        fragment: Fragment,
         val usersList: MutableList<UserModel>
-    ) : FragmentStateAdapter(fa) {
+    ) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = usersList.size
 
         override fun createFragment(position: Int): Fragment {
             return UserProfileFragment.newInstance(usersList.get(position))
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        pagerAdapter = null
+        viewModel.clearUsers()
     }
 }
