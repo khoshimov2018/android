@@ -25,10 +25,7 @@ import ru.behetem.adapters.InterestsAdapter
 import ru.behetem.adapters.ReactionsAdapter
 import ru.behetem.databinding.UserProfileFragmentBinding
 import ru.behetem.models.UserModel
-import ru.behetem.utils.ApiConstants
-import ru.behetem.utils.Constants
-import ru.behetem.utils.dpToPx
-import ru.behetem.utils.printLog
+import ru.behetem.utils.*
 import ru.behetem.viewmodels.UserProfileViewModel
 
 private const val CURRENT_USER = "CURRENT_USER"
@@ -59,6 +56,7 @@ class UserProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+        viewModel.setLoggedInUser(getLoggedInUserFromShared(requireActivity()))
         arguments?.let {
             val currentUser = it.getParcelable<UserModel>(CURRENT_USER)
             currentUser?.let { user ->
@@ -131,7 +129,12 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.getMoveToNextProfile().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setMoveToNextProfile(false)
 
+            }
+        })
     }
 
     private fun setInterests() {
@@ -143,7 +146,7 @@ class UserProfileFragment : Fragment() {
     private fun setReactions(){
         val reactionsList = viewModel.getReactionsList()
         reactionsList?.let {
-            val reactionsAdapter = ReactionsAdapter(it)
+            val reactionsAdapter = ReactionsAdapter(it, viewModel)
             binding.reactionsAdapter = reactionsAdapter
             reactionsAdapter.notifyDataSetChanged()
         }

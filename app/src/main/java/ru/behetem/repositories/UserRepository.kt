@@ -12,6 +12,7 @@ import retrofit2.Response
 import ru.behetem.api.RetrofitService
 import ru.behetem.models.FilterModel
 import ru.behetem.models.ImageModel
+import ru.behetem.models.ReactionModel
 import ru.behetem.models.UserModel
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.getApiElseBaseResponse
@@ -192,6 +193,28 @@ object UserRepository {
     fun deleteImage(strToken: String, imageModel: ImageModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
         retrofitService.deleteImage(imageModel, strToken)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
+    fun sendReaction(reactionModel: ReactionModel, strToken: String): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.sendReaction(reactionModel, strToken)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,

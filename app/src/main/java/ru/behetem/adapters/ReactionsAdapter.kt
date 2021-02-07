@@ -8,9 +8,13 @@ import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import ru.behetem.databinding.AdapterReactionItemBinding
 import ru.behetem.models.ReactionModel
+import ru.behetem.viewmodels.UserProfileViewModel
 
-class ReactionsAdapter(private val reactionsList: MutableList<ReactionModel>) :
-    RecyclerView.Adapter<ReactionsAdapter.ReactionViewHolder>(){
+class ReactionsAdapter(
+    private val reactionsList: MutableList<ReactionModel>,
+    private val userProfileViewModel: UserProfileViewModel
+) :
+    RecyclerView.Adapter<ReactionsAdapter.ReactionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReactionViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,6 +25,7 @@ class ReactionsAdapter(private val reactionsList: MutableList<ReactionModel>) :
     override fun onBindViewHolder(holder: ReactionViewHolder, position: Int) {
         val currentReaction = reactionsList[position]
         holder.binding.item = currentReaction
+        holder.binding.viewModel = userProfileViewModel
         holder.binding.executePendingBindings()
     }
 

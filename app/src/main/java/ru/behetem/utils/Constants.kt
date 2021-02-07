@@ -48,6 +48,7 @@ object ApiConstants {
     const val GET_USERS = "users"
     const val UPDATE_LOCATION = "location/update"
     const val DELETE_IMAGE = "images/delete"
+    const val SEND_REACTION = "react"
 }
 
 object LoginFormErrorConstants {
