@@ -14,6 +14,11 @@ class SettingsViewModel: BaseViewModel() {
     private val aboutUsClicked: MutableLiveData<Boolean> = MutableLiveData()
     private val helpClicked: MutableLiveData<Boolean> = MutableLiveData()
     private val feedbackClicked: MutableLiveData<Boolean> = MutableLiveData()
+    private val moveToChangePassword: MutableLiveData<Boolean> = MutableLiveData()
+
+    fun onChangePasswordClicked(view: View) {
+        moveToChangePassword.value = true
+    }
 
     fun onAboutUsClicked(view: View) {
         aboutUsClicked.value = true
@@ -72,5 +77,13 @@ class SettingsViewModel: BaseViewModel() {
 
     fun setFeedbackClicked(clicked: Boolean) {
         feedbackClicked.value = clicked
+    }
+
+    fun getMoveToChangePassword(): LiveData<Boolean> {
+        return moveToChangePassword
+    }
+
+    fun setMoveToChangePassword(move: Boolean) {
+        moveToChangePassword.value = move
     }
 }

@@ -120,7 +120,11 @@ fun validateResponse(context: Context, baseResponse: BaseResponse): Boolean {
         true
     } else {
         val message: String = if (baseResponse.data == null || baseResponse.data !is String) {
-            Constants.SOMETHING_WENT_WRONG
+            if(baseResponse.message == null) {
+                Constants.SOMETHING_WENT_WRONG
+            } else {
+                baseResponse.message!!
+            }
         } else {
             baseResponse.data!! as String
         }

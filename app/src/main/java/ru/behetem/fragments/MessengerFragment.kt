@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import ru.behetem.R
 import ru.behetem.databinding.MessengerFragmentBinding
+import ru.behetem.utils.getLoggedInUserFromShared
+import ru.behetem.utils.showInfoAlertDialog
+import ru.behetem.utils.validateResponse
 import ru.behetem.viewmodels.MessengerViewModel
 
 class MessengerFragment : Fragment() {
@@ -23,12 +26,13 @@ class MessengerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MessengerViewModel::class.java)
+        viewModel.setLoggedInUser(getLoggedInUserFromShared(requireActivity()))
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.messenger_fragment, container, false)
         val view: View = binding.root
         initViewModel()
@@ -43,6 +47,23 @@ class MessengerFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.getShowNoInternet().observe(requireActivity(), {
+            if(it) {
+                viewModel.setShowNoInternet(false)
+                showInfoAlertDialog(requireActivity(), getString(R.string.no_internet))
+            }
+        })
 
+        viewModel.getBaseResponse().observe(requireActivity(), {
+            it?.let {
+                viewModel.setBaseResponse(null)
+                validateResponse(requireActivity(), it)
+            }
+        })
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getReactions()
     }
 }

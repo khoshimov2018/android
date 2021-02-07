@@ -18,12 +18,15 @@ import kotlinx.android.synthetic.main.user_profile_fragment.bottomSheet
 import kotlinx.android.synthetic.main.user_profile_fragment.countLinear
 import kotlinx.android.synthetic.main.user_profile_fragment.imageView
 import kotlinx.android.synthetic.main.user_profile_fragment.mainLayout
+import okhttp3.*
+import okio.ByteString
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
 import ru.behetem.adapters.ReactionsAdapter
 import ru.behetem.databinding.UserProfileFragmentBinding
+import ru.behetem.interfaces.IReactionCallback
 import ru.behetem.models.UserModel
-import ru.behetem.utils.dpToPx
+import ru.behetem.utils.*
 import ru.behetem.viewmodels.UserProfileViewModel
 
 private const val CURRENT_USER = "CURRENT_USER"
@@ -32,11 +35,12 @@ class UserProfileFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(userModel: UserModel) =
+        fun newInstance(userModel: UserModel, reactionCallback: IReactionCallback) =
             UserProfileFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(CURRENT_USER, userModel)
                 }
+                this.reactionCallback = reactionCallback
             }
     }
 
@@ -50,10 +54,12 @@ class UserProfileFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     private var interestsAdapter: InterestsAdapter? = null
+    private var reactionCallback: IReactionCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+        viewModel.setLoggedInUser(getLoggedInUserFromShared(requireActivity()))
         arguments?.let {
             val currentUser = it.getParcelable<UserModel>(CURRENT_USER)
             currentUser?.let { user ->
@@ -126,7 +132,12 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun initObservers() {
-
+        viewModel.getMoveToNextProfile().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setMoveToNextProfile(false)
+                reactionCallback?.onReactionSent()
+            }
+        })
     }
 
     private fun setInterests() {
@@ -138,7 +149,7 @@ class UserProfileFragment : Fragment() {
     private fun setReactions(){
         val reactionsList = viewModel.getReactionsList()
         reactionsList?.let {
-            val reactionsAdapter = ReactionsAdapter(it)
+            val reactionsAdapter = ReactionsAdapter(it, viewModel)
             binding.reactionsAdapter = reactionsAdapter
             reactionsAdapter.notifyDataSetChanged()
         }
@@ -178,6 +189,9 @@ class UserProfileFragment : Fragment() {
             .placeholder(R.drawable.logo)
             .into(imageView);
         listOfCountViews[index].setBackgroundResource(R.color.red)
+
+        // Connect to WebSocket
+//        connectWS()
     }
 
     private fun resetCountViews() {
@@ -194,4 +208,35 @@ class UserProfileFragment : Fragment() {
                 BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.state = state
     }
+
+    /*private fun connectWS() {
+        val request: Request = Request.Builder().url(ApiConstants.WEB_SOCKET_URL).build()
+        val client: OkHttpClient = OkHttpClient()
+        val ws: WebSocket = client.newWebSocket(request, object: WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                super.onOpen(webSocket, response)
+                printLog("Socket onOpen")
+                webSocket.send("JSON String here")
+                webSocket.close(1000, "Goodbye !")
+            }
+
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                super.onMessage(webSocket, text)
+                printLog("Socket onMessage")
+            }
+
+            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+                super.onClosing(webSocket, code, reason)
+                printLog("Socket onClosing")
+            }
+
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                super.onFailure(webSocket, t, response)
+                printLog("Socket onFailure")
+            }
+        })
+        client.dispatcher.executorService.shutdown()
+
+        ws.close(1000, "Bye")
+    }*/
 }

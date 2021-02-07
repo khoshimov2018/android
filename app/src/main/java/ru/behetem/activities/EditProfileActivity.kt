@@ -1,21 +1,23 @@
 package ru.behetem.activities
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.github.dhaval2404.imagepicker.ImagePicker
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
 import ru.behetem.adapters.NationalitiesAdapter
 import ru.behetem.databinding.ActivityEditProfileBinding
 import ru.behetem.models.UserModel
-import ru.behetem.utils.Constants
-import ru.behetem.utils.getLoggedInUserFromShared
-import ru.behetem.utils.isInternetAvailable
-import ru.behetem.utils.showInfoAlertDialog
+import ru.behetem.utils.*
 import ru.behetem.viewmodels.EditProfileViewModel
 import java.util.*
 
@@ -56,6 +58,13 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        editProfileViewModel.getOpenImagePicker().observe(this, Observer {
+            if(it) {
+                editProfileViewModel.setOpenImagePicker(false)
+                openImagePicker()
+            }
+        })
+
         editProfileViewModel.getErrorResId().observe(this, {
             if(it != null) {
                 editProfileViewModel.setErrorResId(null)
@@ -89,7 +98,7 @@ class EditProfileActivity : AppCompatActivity() {
                 if(it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_nationalities))
                 } else {
-                    nationalitiesAdapter = NationalitiesAdapter(it, editProfileViewModel)
+                    nationalitiesAdapter = NationalitiesAdapter(it, editProfileViewModel, editProfileViewModel.getChosenGender())
                     binding.nationalitiesAdapter = nationalitiesAdapter
                     nationalitiesAdapter?.notifyDataSetChanged()
                 }
@@ -107,6 +116,20 @@ class EditProfileActivity : AppCompatActivity() {
         editProfileViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
+            }
+        })
+
+        editProfileViewModel.getShowNoInternet().observe(this, {
+            if(it) {
+                editProfileViewModel.setShowNoInternet(false)
+                showInfoAlertDialog(this, getString(R.string.no_internet))
+            }
+        })
+
+        editProfileViewModel.getBaseResponse().observe(this, {
+            it?.let {
+                editProfileViewModel.setBaseResponse(null)
+                validateResponse(this, it)
             }
         })
     }
@@ -127,6 +150,57 @@ class EditProfileActivity : AppCompatActivity() {
         )
         picker.datePicker.maxDate = c.timeInMillis
         picker.show()
+    }
+
+    private fun openImagePicker() {
+        printLog("******** open image")
+        ImagePicker.with(this)
+            .crop(9f, 16f)
+            .compress(1024)
+            .maxResultSize(1080, 1080)
+            .start()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        printLog("******** on activity")
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                val fileUri: Uri? = data?.data
+
+                when(editProfileViewModel.getCurrentImageForPosition()){
+                    0 -> {
+                        image1.setImageURI(fileUri)
+                    }
+                    1 -> {
+                        image2.setImageURI(fileUri)
+                    }
+                    2 -> {
+                        image3.setImageURI(fileUri)
+                    }
+                    3 -> {
+                        image4.setImageURI(fileUri)
+                    }
+                    4 -> {
+                        image5.setImageURI(fileUri)
+                    }
+                    5 -> {
+                        image6.setImageURI(fileUri)
+                    }
+                }
+
+                fileUri?.let {
+                    editProfileViewModel.setImageUri(it)
+                }
+            }
+            ImagePicker.RESULT_ERROR -> {
+                Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                // User cancelled
+                // Do nothing
+            }
+        }
     }
 
     override fun onBackPressed() {

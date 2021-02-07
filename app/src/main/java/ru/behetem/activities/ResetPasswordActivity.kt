@@ -25,9 +25,6 @@ class ResetPasswordActivity : AppCompatActivity() {
     private fun initViewModel() {
         resetPasswordViewModel = ViewModelProvider(this).get(ResetPasswordViewModel::class.java)
         binding.viewModel = resetPasswordViewModel
-
-        resetPasswordViewModel.setLoggedInUser(getLoggedInUserFromShared(this))
-
         initObservers()
     }
 

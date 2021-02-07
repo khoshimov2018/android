@@ -31,6 +31,7 @@
 
     <dimen name="reactionPhoto">60dp</dimen>
     <dimen name="smallPhoto">80dp</dimen>
+    <dimen name="crossSize">100dp</dimen>
     <dimen name="photo">120dp</dimen>
     <dimen name="profilePhoto">150dp</dimen>
     <dimen name="photoRadius">20dp</dimen>

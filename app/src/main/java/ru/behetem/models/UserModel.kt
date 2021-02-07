@@ -31,6 +31,7 @@ data class UserModel(
     var images: MutableList<String> ? = null,
     var distanceTo: String? = null,
     var reactions: MutableList<ReactionModel>? = null,
+    var nationalityToShow: String? = null,
 ) : Parcelable {
     fun validateLoginData(): Int {
         return when {
@@ -163,6 +164,18 @@ data class UserModel(
     fun getEducationInfo(): String {
         return if (educationInfo == null || educationInfo!!.institutionName == null) ""
         else "${educationInfo?.institutionName}, ${educationInfo?.graduationYear}, ${educationInfo?.level}"
+    }
+
+    fun getDisplayableNationality(): String {
+        return if(nationalityToShow.isNullOrEmpty()) {
+            if(nationality.isNullOrEmpty()) {
+                ""
+            } else {
+                nationality!!
+            }
+        } else {
+            nationalityToShow!!
+        }
     }
 
     private fun isDobEmpty(): Boolean {

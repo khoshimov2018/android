@@ -85,6 +85,17 @@
     <string name="confirm">Подтвердить</string>
     <string name="new_password">Новый пароль</string>
     <string name="confirm_password">Подтвердите пароль</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="these_gestures_will_help">Эти жесты помогут вам пользоваться приложением</string>
+    <string name="next_photo">Следующее фото</string>
+    <string name="the_right_side">Коснитесь правой части экрана</string>
+    <string name="previous_photo">Предыдущее фото</string>
+    <string name="the_left_side">Коснитесь левой части экрана</string>
+    <string name="view_profile">Просмотреть анкету</string>
+    <string name="pull_the_page_up">Потяните страницу вверх</string>
+    <string name="next_card">Следующая карточка</string>
+    <string name="swipe_left">Пролистните влево</string>
+    <string name="click_to_continue">Нажмите, чтобы продолжить</string>
 
     <string-array name="education_level">
         <item>Степень</item>
@@ -127,6 +138,14 @@
     <string name="enter_about_me">Please enter About you</string>
     <string name="need_location_permission">This app needs to access your Location. Please allow location permission from the Settings.</string>
     <string name="could_not_get_location">Could not get your location. Please check your GPS settings and try again.</string>
+    <string name="sure_delete_image">Are you sure you want to delete this image?</string>
+    <string name="old_password">Old Password</string>
+    <string name="update_password">Update Password</string>
+    <string name="enter_old_password">Please enter your old password</string>
+    <string name="enter_new_password">Please enter your new password</string>
+    <string name="enter_confirm_password">Please confirm your password</string>
+    <string name="passwords_do_not_match">New Password and Confirm Password do not match</string>
+    <string name="passwords_changed_successfully">Password changed successfully</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

@@ -38,16 +38,14 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val nationalitiesStringList: MutableList<String> = gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<NationalityModel>>() {}.type
+                        val nationalities: MutableList<NationalityModel> = gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
-                        val tempNationalitiesList = ArrayList<NationalityModel>()
-
-                        for(nationality in nationalitiesStringList) {
-                            tempNationalitiesList.add(NationalityModel(nationality, false))
+                        for(nationality in nationalities) {
+                            nationality.isSelected = false
                         }
 
-                        nationalitiesList.value = tempNationalitiesList
+                        nationalitiesList.value = nationalities
                     }
                 } else {
                     baseResponse.value = it
@@ -97,6 +95,14 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         super.onCleared()
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
+        }
+    }
+
+    fun getChosenGender(): String {
+        return if(this.userModelLiveData.value != null && this.userModelLiveData.value!!.gender != null) {
+            this.userModelLiveData.value!!.gender!!
+        } else {
+            ""
         }
     }
 

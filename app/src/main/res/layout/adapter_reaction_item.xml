@@ -7,6 +7,10 @@
         <variable
             name="item"
             type="ru.behetem.models.ReactionModel" />
+
+        <variable
+            name="viewModel"
+            type="ru.behetem.viewmodels.UserProfileViewModel" />
     </data>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -15,6 +19,7 @@
         android:layout_marginHorizontal="@dimen/smallMargin"
         android:background="@drawable/reaction_bg"
         android:padding="@{@dimen/normalPadding}"
+        android:onClick="@{(view) -> viewModel.onReactionClicked(view, item)}"
         android:text="@{item.emoji}"
         android:textSize="@dimen/xxLargeTextSize"
         android:gravity="center"/>

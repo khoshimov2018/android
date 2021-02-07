@@ -1,6 +1,8 @@
 package ru.behetem.viewmodels
 
 import android.app.Application
+import android.content.DialogInterface
+import android.net.Uri
 import android.view.View
 import android.widget.AdapterView
 import android.widget.SeekBar
@@ -13,6 +15,7 @@ import androidx.lifecycle.Observer
 import ru.behetem.R
 import ru.behetem.interfaces.IInterestClick
 import ru.behetem.interfaces.INationalityClick
+import ru.behetem.models.ImageModel
 import ru.behetem.models.InterestModel
 import ru.behetem.models.NationalityModel
 import ru.behetem.models.UserModel
@@ -45,6 +48,12 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private val allowToGoBack: MutableLiveData<Boolean> = MutableLiveData()
 
     private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
+
+    private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
+    private var currentImageForPosition = -1
+
+    private lateinit var deleteImageApiResponse: LiveData<BaseResponse>
+    private lateinit var deleteImageObserveResponse: Observer<BaseResponse>
 
     fun updateProfile(): Boolean {
         return if(userProfileLiveData.value != null) {
@@ -128,6 +137,56 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
     }
 
+    fun onDeleteClick(view: View, position: Int) {
+        if(imagesListLiveData.value != null && imagesListLiveData.value!!.size > position) {
+            showAlertDialog(view.context,
+                null,
+                context.getString(R.string.sure_delete_image),
+                context.getString(R.string.yes),
+                DialogInterface.OnClickListener { dialogInterface, _ ->
+                    dialogInterface.cancel()
+                    deleteImage(position)
+                },
+                context.getString(R.string.no),
+                null
+            )
+        }
+    }
+
+    fun onImageClick(view: View, position: Int) {
+        currentImageForPosition = position
+        openImagePicker.value = true
+    }
+
+    fun setImageUri(uri: Uri) {
+//        uploadImage(uri)
+    }
+    
+    private fun deleteImage(position: Int) {
+        if (isInternetAvailable(context)) {
+            showNoInternet.value = false
+            loaderVisible.value = true // show loader
+
+            deleteImageObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+
+                if (validateResponseWithoutPopup(it)) {
+                    imagesListLiveData.value!![position] = ""
+                    imagesListLiveData.value = imagesListLiveData.value
+                } else {
+                    baseResponse.value = it
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            val imageModel = ImageModel(position)
+            deleteImageApiResponse = UserRepository.deleteImage(strToken, imageModel)
+            deleteImageApiResponse.observeForever(deleteImageObserveResponse)
+        } else {
+            showNoInternet.value = true
+        }
+    }
+
     fun getInterests() {
         if (isInternetAvailable(context)) {
             showNoInternet.value = false
@@ -192,24 +251,24 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val nationalitiesStringList: MutableList<String> = gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<NationalityModel>>() {}.type
+                        val nationalities: MutableList<NationalityModel> = gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
-                        val tempNationalitiesList = ArrayList<NationalityModel>()
-
-                        for(nationality in nationalitiesStringList) {
+                        for(nationality in nationalities) {
                             if(userProfileLiveData.value != null && userProfileLiveData.value!!.nationality != null) {
-                                if(userProfileLiveData.value!!.nationality!!.equals(nationality, ignoreCase = true)) {
-                                    tempNationalitiesList.add(NationalityModel(nationality, true))
-                                } else {
-                                    tempNationalitiesList.add(NationalityModel(nationality, false))
+                                if(nationality.ifNationalityMatches(userProfileLiveData.value!!.nationality!!)) {
+                                    nationality.isSelected = true
+                                    userProfileLiveData.value!!.nationality = nationality.label
+                                    userProfileLiveData.value!!.nationalityToShow = nationality.getLabelToShow(getChosenGender())
+                                } else{
+                                    nationality.isSelected = false
                                 }
                             } else {
-                                tempNationalitiesList.add(NationalityModel(nationality, false))
+                                nationality.isSelected =  false
                             }
                         }
 
-                        nationalitiesList.value = tempNationalitiesList
+                        nationalitiesList.value = nationalities
                     }
                 } else {
                     baseResponse.value = it
@@ -251,6 +310,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         nationalityItem.isSelected = true
         userProfileLiveData.value?.nationality = nationalityItem.label
+        userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
     }
@@ -262,6 +322,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         if (this::nationalitiesApiResponse.isInitialized) {
             nationalitiesApiResponse.removeObserver(nationalitiesObserveResponse)
+        }
+        if (this::deleteImageApiResponse.isInitialized) {
+            deleteImageApiResponse.removeObserver(deleteImageObserveResponse)
         }
     }
 
@@ -366,6 +429,14 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
     }
 
+    fun getChosenGender(): String {
+        return if(this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
+            this.userProfileLiveData.value!!.gender!!
+        } else {
+            ""
+        }
+    }
+
     fun getCurrentUser(): UserModel? {
         return userProfileLiveData.value
     }
@@ -412,5 +483,25 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getImages(): MutableList<String>? {
         return imagesListLiveData.value
+    }
+
+    fun getOpenImagePicker(): LiveData<Boolean> {
+        return openImagePicker
+    }
+
+    fun setOpenImagePicker(open: Boolean) {
+        openImagePicker.value = open
+    }
+
+    fun getCurrentImageForPosition(): Int {
+        return currentImageForPosition
+    }
+
+    fun getBaseResponse(): LiveData<BaseResponse?> {
+        return baseResponse
+    }
+
+    fun setBaseResponse(baseResponse: BaseResponse?) {
+        this.baseResponse.value = baseResponse
     }
 }
