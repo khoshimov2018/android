@@ -9,6 +9,7 @@ import ru.behetem.models.InterestModel
 import ru.behetem.models.ReactionModel
 import ru.behetem.models.UserModel
 import ru.behetem.repositories.FiltersRepository
+import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.repositories.UserRepository
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.Constants
@@ -48,7 +49,7 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
             val reactionModel = ReactionModel()
             reactionModel.reaction = reactionItem.id
             reactionModel.receiverId = userProfileLiveData.value?.id
-            apiResponse = UserRepository.sendReaction(reactionModel, strToken)
+            apiResponse = ReactionsRepository.sendReaction(reactionModel, strToken)
             apiResponse.observeForever(observeResponse)
         }
     }

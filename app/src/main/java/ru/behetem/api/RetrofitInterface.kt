@@ -53,4 +53,7 @@ interface RetrofitInterface {
 
     @POST(ApiConstants.SEND_REACTION)
     fun sendReaction(@Body reactionModel: ReactionModel, @Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_REACTIONS)
+    fun getReactions(@Header("Authorization") token: String): Call<BaseResponse>
 }
