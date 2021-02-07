@@ -33,8 +33,8 @@ object Constants {
 }
 
 object ApiConstants {
-    const val BASE_URL = "http://37.143.14.155:8080/"
-    const val WEB_SOCKET_URL = "ws://37.143.14.155:8080/ws/websocket"
+    const val BASE_URL = "http://37.143.14.155/"
+    const val WEB_SOCKET_URL = "ws://37.143.14.155/ws/websocket"
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
     const val CHANGE_INFO = "info"

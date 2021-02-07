@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import ru.behetem.R
 import ru.behetem.databinding.MessengerFragmentBinding
 import ru.behetem.utils.getLoggedInUserFromShared
+import ru.behetem.utils.showInfoAlertDialog
+import ru.behetem.utils.validateResponse
 import ru.behetem.viewmodels.MessengerViewModel
 
 class MessengerFragment : Fragment() {
@@ -45,7 +47,19 @@ class MessengerFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.getShowNoInternet().observe(requireActivity(), {
+            if(it) {
+                viewModel.setShowNoInternet(false)
+                showInfoAlertDialog(requireActivity(), getString(R.string.no_internet))
+            }
+        })
 
+        viewModel.getBaseResponse().observe(requireActivity(), {
+            it?.let {
+                viewModel.setBaseResponse(null)
+                validateResponse(requireActivity(), it)
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

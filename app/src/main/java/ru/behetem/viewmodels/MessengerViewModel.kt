@@ -62,4 +62,12 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
             apiResponse.removeObserver(observeResponse)
         }
     }
+
+    fun getBaseResponse(): LiveData<BaseResponse?> {
+        return baseResponse
+    }
+
+    fun setBaseResponse(baseResponse: BaseResponse?) {
+        this.baseResponse.value = baseResponse
+    }
 }
