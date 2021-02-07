@@ -691,7 +691,7 @@
                         android:layout_marginVertical="@dimen/largeMargin"
                         android:background="@color/lightGreyColor" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <!--<androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -731,7 +731,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/lineHeight"
                         android:layout_marginVertical="@dimen/largeMargin"
-                        android:background="@color/lightGreyColor" />
+                        android:background="@color/lightGreyColor" />-->
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
