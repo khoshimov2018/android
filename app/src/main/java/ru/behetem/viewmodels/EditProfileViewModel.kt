@@ -247,32 +247,26 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             nationalitiesObserveResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
 
-                /*if (validateResponseWithoutPopup(it)) {
+                if (validateResponseWithoutPopup(it)) {
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val nationalitiesStringList: MutableList<String> = gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<NationalityModel>>() {}.type
+                        val nationalities: MutableList<NationalityModel> = gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
-                        val tempNationalitiesList = ArrayList<NationalityModel>()
-
-                        for(nationality in nationalitiesStringList) {
+                        for(nationality in nationalities) {
                             if(userProfileLiveData.value != null && userProfileLiveData.value!!.nationality != null) {
-                                if(userProfileLiveData.value!!.nationality!!.equals(nationality, ignoreCase = true)) {
-                                    tempNationalitiesList.add(NationalityModel(nationality, true))
-                                } else {
-                                    tempNationalitiesList.add(NationalityModel(nationality, false))
-                                }
+                                nationality.isSelected = nationality.ifNationalityMatches(userProfileLiveData.value!!.nationality!!)
                             } else {
-                                tempNationalitiesList.add(NationalityModel(nationality, false))
+                                nationality.isSelected =  false
                             }
                         }
 
-                        nationalitiesList.value = tempNationalitiesList
+                        nationalitiesList.value = nationalities
                     }
                 } else {
                     baseResponse.value = it
-                }*/
+                }
             }
 
             val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
@@ -310,6 +304,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         nationalityItem.isSelected = true
         userProfileLiveData.value?.nationality = nationalityItem.label
+        userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
     }
@@ -425,6 +420,14 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             } else if (userProfileLiveData.value!!.educationInfo?.level == EducationLevels.HIGH) {
                 selectedLevelPosition.value = 2
             }
+        }
+    }
+
+    fun getChosenGender(): String {
+        return if(this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
+            this.userProfileLiveData.value!!.gender!!
+        } else {
+            ""
         }
     }
 

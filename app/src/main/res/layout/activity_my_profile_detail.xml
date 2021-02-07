@@ -196,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{viewModel.userProfileLiveData.nationality != null ? viewModel.userProfileLiveData.nationality : ""}'
+                        android:text='@{viewModel.userProfileLiveData.getDisplayableNationality()}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 

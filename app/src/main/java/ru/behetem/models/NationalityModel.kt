@@ -22,6 +22,10 @@ data class NationalityModel(
         }
     }
 
+    fun ifNationalityMatches(nationality: String): Boolean {
+        return label.equals(nationality, ignoreCase = true) || male.equals(nationality, ignoreCase = true) || female.equals(nationality, ignoreCase = true)
+    }
+
     private fun getMaleLabel(): String {
         return if (male.isNullOrEmpty()) {
             if (label.isNullOrEmpty()) {
