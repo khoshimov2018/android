@@ -256,7 +256,13 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
                         for(nationality in nationalities) {
                             if(userProfileLiveData.value != null && userProfileLiveData.value!!.nationality != null) {
-                                nationality.isSelected = nationality.ifNationalityMatches(userProfileLiveData.value!!.nationality!!)
+                                if(nationality.ifNationalityMatches(userProfileLiveData.value!!.nationality!!)) {
+                                    nationality.isSelected = true
+                                    userProfileLiveData.value!!.nationality = nationality.label
+                                    userProfileLiveData.value!!.nationalityToShow = nationality.getLabelToShow(getChosenGender())
+                                } else{
+                                    nationality.isSelected = false
+                                }
                             } else {
                                 nationality.isSelected =  false
                             }
