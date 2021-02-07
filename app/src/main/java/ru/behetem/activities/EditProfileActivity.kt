@@ -98,7 +98,7 @@ class EditProfileActivity : AppCompatActivity() {
                 if(it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_nationalities))
                 } else {
-                    nationalitiesAdapter = NationalitiesAdapter(it, editProfileViewModel)
+                    nationalitiesAdapter = NationalitiesAdapter(it, editProfileViewModel, "")
                     binding.nationalitiesAdapter = nationalitiesAdapter
                     nationalitiesAdapter?.notifyDataSetChanged()
                 }

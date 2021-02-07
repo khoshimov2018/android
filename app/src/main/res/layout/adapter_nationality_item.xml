@@ -11,6 +11,10 @@
         <variable
             name="item"
             type="ru.behetem.models.NationalityModel" />
+
+        <variable
+            name="chosenGender"
+            type="String" />
     </data>
 
     <LinearLayout
@@ -27,7 +31,7 @@
             android:drawablePadding="@dimen/normalPadding"
             android:onClick="@{(view) -> iNotificationClick.nationalityItemClicked(view, item)}"
             android:padding="@{@dimen/normalPadding}"
-            android:text="@{item.label}"
+            android:text="@{item.getLabelToShow(chosenGender)}"
             android:textColor="@color/textColor"
             android:textSize="@dimen/largeTextSize" />
     </LinearLayout>

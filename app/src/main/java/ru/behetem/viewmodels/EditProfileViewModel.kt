@@ -222,7 +222,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             nationalitiesObserveResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
 
-                if (validateResponseWithoutPopup(it)) {
+                /*if (validateResponseWithoutPopup(it)) {
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
@@ -247,7 +247,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     }
                 } else {
                     baseResponse.value = it
-                }
+                }*/
             }
 
             val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"

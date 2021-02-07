@@ -12,7 +12,8 @@ import ru.behetem.models.NationalityModel
 
 class NationalitiesAdapter(
     private val nationalitiesList: MutableList<NationalityModel>,
-    private val iNotificationClick: INationalityClick
+    private val iNotificationClick: INationalityClick,
+    private val chosenGender: String
 ) :
     RecyclerView.Adapter<NationalitiesAdapter.NationalityViewHolder>() {
 
@@ -28,6 +29,7 @@ class NationalitiesAdapter(
         val currentNationality = nationalitiesList[position]
         holder.binding.item = currentNationality
         holder.binding.iNotificationClick = iNotificationClick
+        holder.binding.chosenGender = chosenGender
         holder.binding.executePendingBindings()
     }
 
