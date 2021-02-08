@@ -53,8 +53,10 @@ class MyInterestsActivity : AppCompatActivity() {
                 if(it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_interests))
                 } else {
-                    interestsAdapter = InterestsAdapter(it, myInterestsViewModel)
-                    binding.adapter = interestsAdapter
+                    if(interestsAdapter == null) {
+                        interestsAdapter = InterestsAdapter(it, myInterestsViewModel)
+                        binding.adapter = interestsAdapter
+                    }
                     interestsAdapter?.notifyDataSetChanged()
                 }
             } else {

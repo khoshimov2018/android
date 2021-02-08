@@ -53,8 +53,10 @@ class NationalitiesActivity : AppCompatActivity() {
                 if(it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_nationalities))
                 } else {
-                    nationalitiesAdapter = NationalitiesAdapter(it, nationalitiesViewModel, nationalitiesViewModel.getChosenGender())
-                    binding.adapter = nationalitiesAdapter
+                    if(nationalitiesAdapter == null) {
+                        nationalitiesAdapter = NationalitiesAdapter(it, nationalitiesViewModel, nationalitiesViewModel.getChosenGender())
+                        binding.adapter = nationalitiesAdapter
+                    }
                     nationalitiesAdapter?.notifyDataSetChanged()
                 }
             } else {
