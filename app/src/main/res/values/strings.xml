@@ -58,6 +58,7 @@
     <string name="settings">Настройки</string>
     <string name="posts">Сообщения</string>
     <string name="reactions">Реакции</string>
+    <string name="all">Все</string>
     <string name="no_messages_yet">У вас еще нет диалогов</string>
     <string name="photo">Фото</string>
     <string name="about_me">Обо мне</string>

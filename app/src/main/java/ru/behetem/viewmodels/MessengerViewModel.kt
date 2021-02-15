@@ -7,9 +7,11 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.behetem.models.InterestModel
+import ru.behetem.models.ReactionModel
 import ru.behetem.repositories.InterestsRepository
 import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.responses.BaseResponse
+import ru.behetem.utils.ApiConstants
 import ru.behetem.utils.isInternetAvailable
 import ru.behetem.utils.validateResponseWithoutPopup
 
@@ -18,6 +20,7 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
+    private val receivedReactionsList: MutableLiveData<MutableList<ReactionModel>> = MutableLiveData()
 
     fun getReactions() {
         if (isInternetAvailable(context)) {
@@ -29,19 +32,17 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
 
                 if (validateResponseWithoutPopup(it)) {
                     if (it.data is MutableList<*>) {
-                        /*val gson = Gson()
+                        val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val interestStringList: MutableList<String> =
-                            gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<ReactionModel>>() {}.type
+                        val reactionsList: MutableList<ReactionModel> =
+                            gson.fromJson<MutableList<ReactionModel>>(strResponse, myType)
 
-                        val tempInterestsList = ArrayList<InterestModel>()
-
-                        for (interest in interestStringList) {
-                            tempInterestsList.add(InterestModel(interest, false))
+                        for (reaction in reactionsList) {
+                            reaction.image = "${ApiConstants.BASE_URL}${reaction.image}"
                         }
 
-                        interestsList.value = tempInterestsList*/
+                        receivedReactionsList.value = reactionsList
                     }
                 } else {
                     baseResponse.value = it
@@ -69,5 +70,9 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
 
     fun setBaseResponse(baseResponse: BaseResponse?) {
         this.baseResponse.value = baseResponse
+    }
+
+    fun getReceivedReactionsList(): LiveData<MutableList<ReactionModel>> {
+        return receivedReactionsList
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="ru.behetem.models.ReactionModel" />
+
+        <variable
+            name="viewModel"
+            type="ru.behetem.viewmodels.MessengerViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/reactionPhoto"
+        android:layout_height="@dimen/reactionPhoto"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/normalMargin"
+        app:error="@{@drawable/logo}"
+        app:placeholder="@{@drawable/logo}"
+        app:roundImageUrl='@{item.image != null ? item.image : "" }' />
+</layout>
