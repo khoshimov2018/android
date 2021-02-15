@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="ru.behetem.viewmodels.MessengerViewModel" />
+            type="ru.behetem.interfaces.IReactionClick" />
     </data>
 
     <androidx.appcompat.widget.AppCompatImageView

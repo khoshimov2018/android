@@ -59,6 +59,7 @@
                     android:layout_alignParentEnd="true"
                     android:padding="@dimen/smallMargin"
                     android:layout_marginEnd="@dimen/normalMargin"
+                    android:onClick="@{viewModel::onAllClicked}"
                     android:text="@string/all"
                     android:textColor="@color/textColor" />
             </RelativeLayout>

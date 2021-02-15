@@ -1,5 +1,6 @@
 package ru.behetem.fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import ru.behetem.R
+import ru.behetem.activities.AllReactionsActivity
 import ru.behetem.adapters.ReceivedReactionAdapter
 import ru.behetem.databinding.MessengerFragmentBinding
 import ru.behetem.utils.getLoggedInUserFromShared
@@ -60,6 +62,13 @@ class MessengerFragment : Fragment() {
             }
         })
 
+        viewModel.getAllClicked().observe(requireActivity(), {
+            if(it) {
+                viewModel.setAllClicked(false)
+                openAllReactions()
+            }
+        })
+
         viewModel.getShowNoInternet().observe(requireActivity(), {
             if(it) {
                 viewModel.setShowNoInternet(false)
@@ -73,6 +82,11 @@ class MessengerFragment : Fragment() {
                 validateResponse(requireActivity(), it)
             }
         })
+    }
+
+    private fun openAllReactions() {
+        val intent = Intent(requireActivity(), AllReactionsActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
