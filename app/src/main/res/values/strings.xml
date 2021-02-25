@@ -51,6 +51,19 @@
     <string name="weight">Вес</string>
     <string name="weight_value">%d, кг</string>
     <string name="family_status">Семейное положение</string>
+    <string name="family_and_children">Семья и дети</string>
+    <string name="a_family">Семья</string>
+    <string name="indicate_your_marital_status">Укажите ваше семейное положение</string>
+    <string name="single_not_married">Холост/не замужем</string>
+    <string name="divorced">Разведен(а)</string>
+    <string name="widower">Вдовец(ва)</string>
+    <string name="children">Дети</string>
+    <string name="indicate_presence_absence_of_children">Укажите наличие\отсутсвие детей</string>
+    <string name="not">Нет</string>
+    <string name="yes_we_live_together">Есть, живем вместе</string>
+    <string name="yes_we_live_separately">Есть, живем порознь</string>
+    <string name="the_desire_to_have_children">Желание завести детей</string>
+    <string name="yes">Да</string>
     <string name="nationality">Национальность</string>
     <string name="job">Работа</string>
     <string name="education">Образование</string>
@@ -97,6 +110,8 @@
     <string name="next_card">Следующая карточка</string>
     <string name="swipe_left">Пролистните влево</string>
     <string name="click_to_continue">Нажмите, чтобы продолжить</string>
+    <string name="do_you_want_to_continue">Хотите продолжить?</string>
+    <string name="specify_additional_params_to">Укажите дополнительные параметры, чтобы улучшить результаты поиска</string>
 
     <string-array name="education_level">
         <item>Степень</item>
@@ -122,7 +137,6 @@
     <string name="choose_dob">Please choose your Date of Birth</string>
     <string name="choose_looking_for">Please choose Looking For</string>
     <string name="sure_logout">Are you sure you want to logout?</string>
-    <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_interests">No interests available</string>
     <string name="choose_interests">Please choose your interests</string>

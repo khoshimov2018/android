@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.WantToContinueActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/normalMargin"
+        android:padding="@dimen/normalPadding"
+        android:text="@string/skip"
+        android:textColor="@color/lightTextColor"
+        android:textSize="@dimen/mediumTextSize" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/largeMargin"
+                android:background="@drawable/reaction_bg"
+                android:src="@drawable/speak_no_evil_monkey" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/reaction_bg"
+                android:src="@drawable/red_heart" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/largeMargin"
+                android:background="@drawable/reaction_bg"
+                android:src="@drawable/neutral_face" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/largeMargin"
+                android:text="@string/do_you_want_to_continue"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/xLargeTextSize"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_marginTop="2dp"
+                android:background="@color/colorPrimary" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="@dimen/xxLargeMargin"
+            android:layout_marginTop="@dimen/normalMargin"
+            android:gravity="center"
+            android:text="@string/specify_additional_params_to"
+            android:textColor="@color/lightTextColor"
+            android:textSize="@dimen/mediumTextSize" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="@dimen/xLargeMargin"
+        android:layout_marginBottom="@dimen/xLargeMargin"
+        android:background="@drawable/round_button_background"
+        android:text="@string/str_continue"
+        android:textColor="@android:color/white" />
+</RelativeLayout>
