@@ -112,6 +112,13 @@
     <string name="click_to_continue">Нажмите, чтобы продолжить</string>
     <string name="do_you_want_to_continue">Хотите продолжить?</string>
     <string name="specify_additional_params_to">Укажите дополнительные параметры, чтобы улучшить результаты поиска</string>
+    <string name="body_type">Телосложение</string>
+    <string name="indicate_your_physique">Укажите ваше телосложение</string>
+    <string name="skinny">Худощавое</string>
+    <string name="slender">Стройное</string>
+    <string name="sports">Спортивное</string>
+    <string name="dense">Плотное</string>
+    <string name="complete">Полное</string>
 
     <string-array name="education_level">
         <item>Степень</item>

@@ -5,6 +5,7 @@
     tools:context=".activities.HeightWeightActivity">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -16,64 +17,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{viewModel::backPressed}"
-                    android:padding="@dimen/mediumPadding"
-                    android:src="@drawable/back" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/height_weight"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/smallMargin"
-                    android:onClick="@{viewModel::onSkipClicked}"
-                    android:text="@string/skip"
-                    android:textColor="@color/lightTextColor"
-                    android:textSize="@dimen/smallTextSize" />
-            </RelativeLayout>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="11">
+                android:orientation="vertical">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_weight="10"
-                    android:background="@color/colorPrimary" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/lineHeight"
-                    android:layout_weight="1"
-                    android:background="@color/lightGreyColor" />
-            </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{viewModel::backPressed}"
+                        android:padding="@dimen/mediumPadding"
+                        android:src="@drawable/back" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/height_weight"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{viewModel::onSkipClicked}"
+                        android:padding="@dimen/smallMargin"
+                        android:text="@string/skip"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="@dimen/smallTextSize" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="11">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_weight="10"
+                        android:background="@color/colorPrimary" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/lineHeight"
+                        android:layout_weight="1"
+                        android:background="@color/lightGreyColor" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,8 +93,8 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
                         android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/normalMargin"
                         android:text='@{viewModel.growthValue != null ? @string/growth_value(viewModel.growthValue) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -133,8 +134,8 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
                         android:layout_gravity="end"
+                        android:layout_marginTop="@dimen/normalMargin"
                         android:text='@{viewModel.weightValue != null ? @string/weight_value(viewModel.weightValue) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -159,6 +160,67 @@
                         android:visibility="@{viewModel.weightErrorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
                 </LinearLayout>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:text="@string/body_type"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/largeTextSize"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/smallMargin"
+                    android:text="@string/indicate_your_physique"
+                    android:textColor="@color/lightTextColor"
+                    android:textSize="@dimen/mediumTextSize" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/skinny"
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="@string/slender"
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="@string/sports"
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="@string/dense"
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="@string/complete"
+                        android:textColor="@color/textColor" />
+                </RadioGroup>
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button"
                     android:layout_width="match_parent"
@@ -171,8 +233,8 @@
                     android:onClick="@{viewModel::moveFurther}"
                     android:text="@string/further"
                     android:textColor="@android:color/white" />
-            </RelativeLayout>
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <include
             layout="@layout/common_loader"
