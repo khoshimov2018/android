@@ -16,14 +16,9 @@ data class UserModel(
     var email: String? = null,
     var dateOfBirth: String? = null,
     var description: String? = null,
-    var educationInfo: EducationInfoModel? = null,
     var gender: String? = null,
-    var growth: Int? = null,
     var interestLabels: MutableList<String>? = null,
     var name: String? = null,
-    var nationality: String? = null,
-    var weight: Int? = null,
-    var workInfo: WorkInfoModel? = null,
     var selectedDOB: Calendar? = null,
     var roles: MutableList<String>? = null,
     var age: Int? = null,
@@ -32,6 +27,10 @@ data class UserModel(
     var distanceTo: String? = null,
     var reactions: MutableList<ReactionModel>? = null,
     var nationalityToShow: String? = null,
+    var bodyInfo: BodyInfoModel? = null,
+    var careerInfo: CareerInfoModel? = null,
+    var culturalInfo: CulturalInfoModel? = null,
+    var familyInfo: FamilyInfoModel? = null,
 ) : Parcelable {
     fun validateLoginData(): Int {
         return when {
@@ -133,45 +132,45 @@ data class UserModel(
     }
 
     fun getPosition(): String {
-        return if (workInfo == null || workInfo!!.position == null) ""
-        else workInfo!!.position!!
+        return if (careerInfo == null || careerInfo!!.workPosition == null) ""
+        else careerInfo!!.workPosition!!
     }
 
     fun getCompanyName(): String {
-        return if (workInfo == null || workInfo!!.companyName == null) ""
-        else workInfo!!.companyName!!
+        return if (careerInfo == null || careerInfo!!.companyName == null) ""
+        else careerInfo!!.companyName!!
     }
 
     fun getWorkInfo(): String {
-        return if (workInfo == null || workInfo!!.position == null) ""
-        else "${workInfo?.position}, ${workInfo?.companyName}"
+        return if (careerInfo == null || careerInfo!!.workPosition == null) ""
+        else "${careerInfo?.workPosition}, ${careerInfo?.companyName}"
     }
 
     fun getInstituteName(): String {
-        return if (educationInfo == null || educationInfo!!.institutionName == null) ""
-        else "${educationInfo?.institutionName}"
+        return if (careerInfo == null || careerInfo!!.institutionName == null) ""
+        else "${careerInfo?.institutionName}"
     }
 
     fun getGraduationYear(): String {
-        return if (educationInfo == null || educationInfo!!.graduationYear == null) ""
-        else "${educationInfo?.graduationYear}"
+        return if (careerInfo == null || careerInfo!!.graduationYear == null) ""
+        else "${careerInfo?.graduationYear}"
     }
 
     fun getLevel(): String {
-        return "${educationInfo?.level}"
+        return "${careerInfo?.educationLevel}"
     }
 
     fun getEducationInfo(): String {
-        return if (educationInfo == null || educationInfo!!.institutionName == null) ""
-        else "${educationInfo?.institutionName}, ${educationInfo?.graduationYear}, ${educationInfo?.level}"
+        return if (careerInfo == null || careerInfo!!.institutionName == null) ""
+        else "${careerInfo?.institutionName}, ${careerInfo?.graduationYear}, ${careerInfo?.educationLevel}"
     }
 
     fun getDisplayableNationality(): String {
         return if(nationalityToShow.isNullOrEmpty()) {
-            if(nationality.isNullOrEmpty()) {
+            if(culturalInfo == null && culturalInfo?.nationality.isNullOrEmpty()) {
                 ""
             } else {
-                nationality!!
+                culturalInfo?.nationality!!
             }
         } else {
             nationalityToShow!!
@@ -225,38 +224,38 @@ data class UserModel(
     }
 
     private fun isGrowthEmpty(): Boolean {
-        return growth == null || growth == 0
+        return bodyInfo?.growth == null || bodyInfo?.growth == 0
     }
 
     private fun isWeightEmpty(): Boolean {
-        return weight == null || weight == 0
+        return bodyInfo?.weight == null || bodyInfo?.weight == 0
     }
 
     private fun isNationalityEmpty(): Boolean {
-        return nationality.isNullOrEmpty()
+        return culturalInfo?.nationality.isNullOrEmpty()
     }
 
     private fun isCompanyNameEmpty(): Boolean {
-        return workInfo?.companyName.isNullOrEmpty()
+        return careerInfo?.companyName.isNullOrEmpty()
     }
 
     private fun isPositionEmpty(): Boolean {
-        return workInfo?.position.isNullOrEmpty()
+        return careerInfo?.workPosition.isNullOrEmpty()
     }
 
     private fun isInstitutionNameEmpty(): Boolean {
-        return educationInfo?.institutionName.isNullOrEmpty()
+        return careerInfo?.institutionName.isNullOrEmpty()
     }
 
     private fun isLevelEmpty(): Boolean {
-        return educationInfo?.level.isNullOrEmpty()
+        return careerInfo?.educationLevel.isNullOrEmpty()
     }
 
     private fun isGraduationYearEmpty(): Boolean {
-        return (educationInfo?.graduationYear == null || educationInfo?.graduationYear == 0)
+        return (careerInfo?.graduationYear == null || careerInfo?.graduationYear == 0)
     }
 
     private fun isGraduationYearInvalid(): Boolean {
-        return (educationInfo?.graduationYear!! < 1900 || educationInfo?.graduationYear!! > 2050)
+        return (careerInfo?.graduationYear!! < 1900 || careerInfo?.graduationYear!! > 2050)
     }
 }
