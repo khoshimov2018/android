@@ -145,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{viewModel.userProfileLiveData.growth != null ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
+                        android:text='@{(viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.growth != null) ? @string/growth_value(viewModel.userProfileLiveData.bodyInfo.growth) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -162,7 +162,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{viewModel.userProfileLiveData.weight != null ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
+                        android:text='@{(viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.weight != null) ? @string/weight_value(viewModel.userProfileLiveData.bodyInfo.weight) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 

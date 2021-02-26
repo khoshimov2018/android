@@ -206,9 +206,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                         val tempInterestsList = ArrayList<InterestModel>()
 
                         for (interest in interestStringList) {
-                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.interestLabels != null) {
+                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.interests != null) {
                                 var isSaved = false
-                                for(savedInterest in userProfileLiveData.value!!.interestLabels!!) {
+                                for(savedInterest in userProfileLiveData.value!!.interests!!) {
                                     if(interest.equals(savedInterest, ignoreCase = true)) {
                                         isSaved = true
                                         break
@@ -255,10 +255,10 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                         val nationalities: MutableList<NationalityModel> = gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
                         for(nationality in nationalities) {
-                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.nationality != null) {
-                                if(nationality.ifNationalityMatches(userProfileLiveData.value!!.nationality!!)) {
+                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.culturalInfo != null && userProfileLiveData.value!!.culturalInfo!!.nationality != null) {
+                                if(nationality.ifNationalityMatches(userProfileLiveData.value!!.culturalInfo!!.nationality!!)) {
                                     nationality.isSelected = true
-                                    userProfileLiveData.value!!.nationality = nationality.label
+                                    userProfileLiveData.value!!.culturalInfo!!.nationality = nationality.label
                                     userProfileLiveData.value!!.nationalityToShow = nationality.getLabelToShow(getChosenGender())
                                 } else{
                                     nationality.isSelected = false
@@ -287,15 +287,15 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
         interestsList.value = interestsList.value
         if(userProfileLiveData.value != null) {
-            if(userProfileLiveData.value!!.interestLabels == null) {
-                userProfileLiveData.value?.interestLabels = ArrayList()
+            if(userProfileLiveData.value!!.interests == null) {
+                userProfileLiveData.value?.interests = ArrayList()
             } else {
-                userProfileLiveData.value?.interestLabels?.clear()
+                userProfileLiveData.value?.interests?.clear()
             }
             if(interestsList.value != null) {
                 for(interest in interestsList.value!!) {
                     if(interest.isSelected!!) {
-                        userProfileLiveData.value?.interestLabels?.add(interest.label!!)
+                        userProfileLiveData.value?.interests?.add(interest.label!!)
                     }
                 }
             }
@@ -309,7 +309,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             }
         }
         nationalityItem.isSelected = true
-        userProfileLiveData.value?.nationality = nationalityItem.label
+        userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.label
         userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
@@ -365,41 +365,49 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun onGrowthChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         userProfileLiveData.value?.let {
-            it.growth = progress
+            it.bodyInfo?.growth = progress
         }
         userProfileLiveData.value = userProfileLiveData.value
     }
 
     fun onWeightChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         userProfileLiveData.value?.let {
-            it.weight = progress
+            it.bodyInfo?.weight = progress
         }
         userProfileLiveData.value = userProfileLiveData.value
     }
 
     fun onPositionTextChanged(charSequence: CharSequence) {
-        userProfileLiveData.value?.workInfo?.position = charSequence.toString()
+        userProfileLiveData.value?.careerInfo?.workPosition = charSequence.toString()
     }
 
     fun onCompanyTextChanged(charSequence: CharSequence) {
-        userProfileLiveData.value?.workInfo?.companyName = charSequence.toString()
+        userProfileLiveData.value?.careerInfo?.companyName = charSequence.toString()
     }
 
     fun onInstitutionNameTextChanged(charSequence: CharSequence) {
-        userProfileLiveData.value?.educationInfo?.institutionName = charSequence.toString()
+        userProfileLiveData.value?.careerInfo?.institutionName = charSequence.toString()
     }
 
     fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val array = view?.context?.resources?.getStringArray(R.array.education_level)
         when (position) {
             0 -> {
-                userProfileLiveData.value?.educationInfo?.level = null
+                userProfileLiveData.value?.careerInfo?.educationLevel = null
             }
             1 -> {
-                userProfileLiveData.value?.educationInfo?.level = array?.get(1)
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.GENERAL
+            }
+            2 -> {
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.SECONDARY
+            }
+            3 -> {
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.SPECIALIZED_SECONDARY
+            }
+            4 -> {
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.INCOMPLETE_HIGHER
             }
             else -> {
-                userProfileLiveData.value?.educationInfo?.level = array?.get(2)
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.HIGHER
             }
         }
         selectedLevelPosition.value = position
@@ -407,10 +415,10 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun onGraduationYearTextChanged(charSequence: CharSequence) {
         try {
-            userProfileLiveData.value?.educationInfo?.graduationYear =
+            userProfileLiveData.value?.careerInfo?.graduationYear =
                 charSequence.toString().toInt()
         } catch (e: Exception) {
-            userProfileLiveData.value?.educationInfo?.graduationYear = 0
+            userProfileLiveData.value?.careerInfo?.graduationYear = 0
         }
     }
 
@@ -421,10 +429,22 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     fun setCurrentUser(userModel: UserModel) {
         userProfileLiveData.value = userModel
         if (userProfileLiveData.value != null) {
-            if (userProfileLiveData.value!!.educationInfo?.level == EducationLevels.GENERAL) {
-                selectedLevelPosition.value = 1
-            } else if (userProfileLiveData.value!!.educationInfo?.level == EducationLevels.HIGH) {
-                selectedLevelPosition.value = 2
+            when (userProfileLiveData.value!!.careerInfo?.educationLevel) {
+                EducationLevels.GENERAL -> {
+                    selectedLevelPosition.value = 1
+                }
+                EducationLevels.SECONDARY -> {
+                    selectedLevelPosition.value = 2
+                }
+                EducationLevels.SPECIALIZED_SECONDARY -> {
+                    selectedLevelPosition.value = 3
+                }
+                EducationLevels.INCOMPLETE_HIGHER -> {
+                    selectedLevelPosition.value = 4
+                }
+                EducationLevels.HIGHER -> {
+                    selectedLevelPosition.value = 5
+                }
             }
         }
     }
