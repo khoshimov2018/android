@@ -217,6 +217,26 @@ data class UserModel(
         return culturalInfo?.traditionsRespect == TraditionsRespect.KNOW_RESPECT
     }
 
+    fun isSkinnySelected(): Boolean {
+        return bodyInfo?.bodyType == BodyType.THIN
+    }
+
+    fun isSlenderSelected(): Boolean {
+        return bodyInfo?.bodyType == BodyType.SLIM
+    }
+
+    fun isSportsSelected(): Boolean {
+        return bodyInfo?.bodyType == BodyType.ATHLETIC
+    }
+
+    fun isDenseSelected(): Boolean {
+        return bodyInfo?.bodyType == BodyType.PLUMP
+    }
+
+    fun isCompleteSelected(): Boolean {
+        return bodyInfo?.bodyType == BodyType.FAT
+    }
+
     private fun isDobEmpty(): Boolean {
         return selectedDOB == null
     }

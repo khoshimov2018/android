@@ -56,7 +56,7 @@ class HeightWeightActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, ru.behetem.activities.AboutMeActivity::class.java)
+        val intent = Intent(this, EducationActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, heightWeightViewModel.getCurrentUser())
         startActivity(intent)
     }

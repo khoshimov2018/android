@@ -181,6 +181,7 @@
     <string name="choose_children_desire">Please choose your children desire</string>
     <string name="indicate_attitude_to_national_tradition">Indicate your attitude to national tradition</string>
     <string name="choose_tradition_respect">Please choose Tradition Respect</string>
+    <string name="choose_body_type">Choose Body Type</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

@@ -23,7 +23,7 @@ class WantToContinueActivity : AppCompatActivity() {
         }
 
         continueButton.setOnClickListener {
-            val intent = Intent(this, NationalitiesActivity::class.java)
+            val intent = Intent(this, HeightWeightActivity::class.java)
             intent.putExtra(Constants.PROFILE_USER, profileUser)
             startActivity(intent)
         }
