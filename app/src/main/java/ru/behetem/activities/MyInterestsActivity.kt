@@ -93,7 +93,7 @@ class MyInterestsActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, NationalitiesActivity::class.java)
+        val intent = Intent(this, AboutMeActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, myInterestsViewModel.getCurrentUser())
         startActivity(intent)
     }

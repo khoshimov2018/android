@@ -66,13 +66,13 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/lineHeight"
-                        android:layout_weight="10"
+                        android:layout_weight="8"
                         android:background="@color/colorPrimary" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/lineHeight"
-                        android:layout_weight="1"
+                        android:layout_weight="3"
                         android:background="@color/lightGreyColor" />
                 </LinearLayout>
 

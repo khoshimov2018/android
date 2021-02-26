@@ -17,7 +17,7 @@ data class UserModel(
     var dateOfBirth: String? = null,
     var description: String? = null,
     var gender: String? = null,
-    var interestLabels: MutableList<String>? = null,
+//    var interestLabels: MutableList<String>? = null,
     var name: String? = null,
     var selectedDOB: Calendar? = null,
     var roles: MutableList<String>? = null,
@@ -276,7 +276,7 @@ data class UserModel(
     }
 
     private fun isInterestEmpty(): Boolean {
-        return interestLabels == null || interestLabels!!.size == 0
+        return interests == null || interests!!.size == 0
     }
 
     private fun isDescriptionEmpty(): Boolean {
