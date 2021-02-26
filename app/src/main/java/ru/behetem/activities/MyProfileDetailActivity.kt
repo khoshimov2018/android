@@ -120,13 +120,15 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun showIndex(index: Int) {
-        resetCountViews()
+        if(index < listOfImages.size) {
+            resetCountViews()
 //        imageView.setBackgroundResource(listOfImages[index])
-        Glide.with(this)
-            .load(listOfImages[index])
-            .placeholder(R.drawable.logo)
-            .into(imageView);
-        listOfCountViews[index].setBackgroundResource(R.color.red)
+            Glide.with(this)
+                .load(listOfImages[index])
+                .placeholder(R.drawable.logo)
+                .into(imageView);
+            listOfCountViews[index].setBackgroundResource(R.color.red)
+        }
     }
 
     private fun resetCountViews() {

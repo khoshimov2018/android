@@ -38,17 +38,15 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val interestStringList: MutableList<String> =
-                            gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<InterestModel>>() {}.type
+                        val interests: MutableList<InterestModel> =
+                            gson.fromJson<MutableList<InterestModel>>(strResponse, myType)
 
-                        val tempInterestsList = ArrayList<InterestModel>()
-
-                        for (interest in interestStringList) {
-                            tempInterestsList.add(InterestModel(interest, false))
+                        for (interest in interests) {
+                            interest.isSelected = false
                         }
 
-                        interestsList.value = tempInterestsList
+                        interestsList.value = interests
                     }
                 } else {
                     baseResponse.value = it
@@ -79,7 +77,7 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
         interestsList.value?.let {
             for (interest in it) {
                 if (interest.isSelected != null && interest.isSelected!!) {
-                    userModelLiveData.value?.interests?.add(interest.label!!)
+                    userModelLiveData.value?.interests?.add(interest.interestId!!)
                 }
             }
         }

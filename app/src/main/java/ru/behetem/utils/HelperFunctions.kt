@@ -265,3 +265,15 @@ fun trimText(text: String, length: Int = Constants.TRIM_TEXT_LENGTH): String {
     }
     return (text.substring(0, length) + "…")
 }
+
+fun getTimeZone(): String {
+    val dateFormat = SimpleDateFormat("z", Locale.getDefault())
+    val date = Date()
+
+    val timeZone = TimeZone.getDefault()
+    printLog("timeZone $timeZone")
+    printLog("get display name ${timeZone.getDisplayName(false, TimeZone.SHORT)}")
+
+    printLog("dateFormat.format(date) ${dateFormat.format(date)}")
+    return dateFormat.format(date)
+}

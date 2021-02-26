@@ -153,7 +153,6 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun openImagePicker() {
-        printLog("******** open image")
         ImagePicker.with(this)
             .crop(9f, 16f)
             .compress(1024)
@@ -163,7 +162,6 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        printLog("******** on activity")
         when (resultCode) {
             Activity.RESULT_OK -> {
                 val fileUri: Uri? = data?.data

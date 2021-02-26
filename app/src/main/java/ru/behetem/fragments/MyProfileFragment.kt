@@ -16,10 +16,7 @@ import ru.behetem.activities.PremiumActivity
 import ru.behetem.activities.SettingsActivity
 import ru.behetem.databinding.MyProfileFragmentBinding
 import ru.behetem.models.UserModel
-import ru.behetem.utils.Constants
-import ru.behetem.utils.getLoggedInUserFromShared
-import ru.behetem.utils.showInfoAlertDialog
-import ru.behetem.utils.validateResponse
+import ru.behetem.utils.*
 import ru.behetem.viewmodels.MyProfileViewModel
 
 class MyProfileFragment : Fragment() {

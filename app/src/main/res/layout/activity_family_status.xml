@@ -258,7 +258,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/normalMargin"
-                            android:checked="@{viewModel.userModelLiveData != null ? !viewModel.userModelLiveData.isYesDesire() : false}"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isNoDesire() : false}"
                             android:onClick="@{viewModel::onNoDesireClicked}"
                             android:text="@string/no"
                             android:textColor="@color/textColor" />

@@ -24,7 +24,7 @@ interface RetrofitInterface {
     fun uploadImage(@Part filePart: MultipartBody.Part, @PartMap partMap: @JvmSuppressWildcards Map<String, RequestBody?>,
                     @Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_INFO)
+    @GET(ApiConstants.GET_INFO + "?lang=RU")
     fun getInfo(@Header("Authorization") token: String): Call<BaseResponse>
 
     @GET(ApiConstants.GET_INTERESTS)

@@ -95,12 +95,12 @@ class EducationViewModel: BaseViewModel() {
 
     fun onPositionTextChanged(charSequence: CharSequence) {
         careerInfoModel.workPosition = charSequence.toString()
-        errorResId.value = null
+        jobErrorResId.value = null
     }
 
     fun onCompanyTextChanged(charSequence: CharSequence) {
         careerInfoModel.companyName = charSequence.toString()
-        errorResId.value = null
+        jobErrorResId.value = null
     }
 
     fun setCurrentUser(userModel: UserModel) {

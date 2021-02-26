@@ -84,7 +84,7 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         nationalitiesList.value?.let {
             for(nationality in it) {
                 if(nationality.isSelected != null && nationality.isSelected!!) {
-                    userModelLiveData.value?.culturalInfo?.nationality = nationality.label
+                    userModelLiveData.value?.culturalInfo?.nationality = nationality.nationalityId
                     break
                 }
             }

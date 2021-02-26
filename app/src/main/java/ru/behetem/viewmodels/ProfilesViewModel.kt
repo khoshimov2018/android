@@ -235,32 +235,30 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val interestStringList: MutableList<String> =
-                            gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<InterestModel>>() {}.type
+                        val interests: MutableList<InterestModel> =
+                            gson.fromJson<MutableList<InterestModel>>(strResponse, myType)
 
-                        val tempInterestsList = java.util.ArrayList<InterestModel>()
-
-                        for (interest in interestStringList) {
+                        for (interest in interests) {
                             if (filterModelLiveData.value != null && filterModelLiveData.value!!.interest != null) {
                                 var isSaved = false
                                 for (savedInterest in filterModelLiveData.value!!.interest!!) {
-                                    if (interest.equals(savedInterest, ignoreCase = true)) {
+                                    if (interest.interestId.equals(savedInterest, ignoreCase = true)) {
                                         isSaved = true
                                         break
                                     }
                                 }
                                 if (isSaved) {
-                                    tempInterestsList.add(InterestModel(interest, true))
+                                    interest.isSelected = true
                                 } else {
-                                    tempInterestsList.add(InterestModel(interest, false))
+                                    interest.isSelected = false
                                 }
                             } else {
-                                tempInterestsList.add(InterestModel(interest, false))
+                                interest.isSelected = false
                             }
                         }
 
-                        interestsList.value = tempInterestsList
+                        interestsList.value = interests
                     }
                 } else {
                     baseResponse.value = it
@@ -351,7 +349,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
             if (interestsList.value != null) {
                 for (interest in interestsList.value!!) {
                     if (interest.isSelected!!) {
-                        filterModelLiveData.value?.interest?.add(interest.label!!)
+                        filterModelLiveData.value?.interest?.add(interest.interestId!!)
                     }
                 }
             }

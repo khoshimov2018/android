@@ -199,32 +199,26 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val interestStringList: MutableList<String> =
-                            gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<InterestModel>>() {}.type
+                        val interests: MutableList<InterestModel> =
+                            gson.fromJson<MutableList<InterestModel>>(strResponse, myType)
 
-                        val tempInterestsList = ArrayList<InterestModel>()
-
-                        for (interest in interestStringList) {
+                        for (interest in interests) {
                             if(userProfileLiveData.value != null && userProfileLiveData.value!!.interests != null) {
                                 var isSaved = false
                                 for(savedInterest in userProfileLiveData.value!!.interests!!) {
-                                    if(interest.equals(savedInterest, ignoreCase = true)) {
+                                    if(interest.label.equals(savedInterest, ignoreCase = true)) {
                                         isSaved = true
                                         break
                                     }
                                 }
-                                if(isSaved) {
-                                    tempInterestsList.add(InterestModel(interest, true))
-                                } else {
-                                    tempInterestsList.add(InterestModel(interest, false))
-                                }
+                                interest.isSelected = isSaved
                             } else {
-                                tempInterestsList.add(InterestModel(interest, false))
+                                interest.isSelected = false
                             }
                         }
 
-                        interestsList.value = tempInterestsList
+                        interestsList.value = interests
                     }
                 } else {
                     baseResponse.value = it
@@ -258,7 +252,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                             if(userProfileLiveData.value != null && userProfileLiveData.value!!.culturalInfo != null && userProfileLiveData.value!!.culturalInfo!!.nationality != null) {
                                 if(nationality.ifNationalityMatches(userProfileLiveData.value!!.culturalInfo!!.nationality!!)) {
                                     nationality.isSelected = true
-                                    userProfileLiveData.value!!.culturalInfo!!.nationality = nationality.label
+                                    userProfileLiveData.value!!.culturalInfo!!.nationality = nationality.nationalityId
                                     userProfileLiveData.value!!.nationalityToShow = nationality.getLabelToShow(getChosenGender())
                                 } else{
                                     nationality.isSelected = false
@@ -295,7 +289,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             if(interestsList.value != null) {
                 for(interest in interestsList.value!!) {
                     if(interest.isSelected!!) {
-                        userProfileLiveData.value?.interests?.add(interest.label!!)
+                        userProfileLiveData.value?.interests?.add(interest.interestId!!)
                     }
                 }
             }
@@ -309,7 +303,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             }
         }
         nationalityItem.isSelected = true
-        userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.label
+        userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.nationalityId
         userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value

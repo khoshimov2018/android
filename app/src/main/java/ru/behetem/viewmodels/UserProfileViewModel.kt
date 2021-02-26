@@ -28,7 +28,10 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
         val list = ArrayList<InterestModel>()
         if (userProfileLiveData.value != null && userProfileLiveData.value?.interests != null) {
             for (interestLabel in userProfileLiveData.value!!.interests!!) {
-                list.add(InterestModel(interestLabel, true))
+                val interest = InterestModel()
+                interest.label = interestLabel
+                interest.isSelected = true
+                list.add(interest)
             }
         }
         return list

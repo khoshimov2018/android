@@ -162,9 +162,9 @@
                             android:layout_marginHorizontal="@dimen/largeMargin"
                             android:layout_marginTop="@dimen/normalMargin"
                             android:gravity="center"
-                            android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                            android:text='@{viewModel.errorTraditionResId != null ? context.getString(viewModel.errorTraditionResId) : ""}'
                             android:textAppearance="@style/ErrorTextAppearance"
-                            android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                            android:visibility="@{viewModel.errorTraditionResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
 
                         <RadioGroup
                             android:layout_width="match_parent"
@@ -185,7 +185,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/normalMargin"
-                                android:checked="@{viewModel.userModelLiveData != null ? !viewModel.userModelLiveData.isKnowButDont() : false}"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isKnowButDont() : false}"
                                 android:onClick="@{viewModel::onIKnowButIDontClicked}"
                                 android:text="@string/i_know_but_i_dont"
                                 android:textColor="@color/textColor" />
@@ -194,7 +194,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/normalMargin"
-                                android:checked="@{viewModel.userModelLiveData != null ? !viewModel.userModelLiveData.isKnowRespect() : false}"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isKnowRespect() : false}"
                                 android:onClick="@{viewModel::onIKnowRespectClicked}"
                                 android:text="@string/i_know_i_want_to_preserve"
                                 android:textColor="@color/textColor" />

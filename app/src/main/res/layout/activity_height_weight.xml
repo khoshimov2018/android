@@ -179,6 +179,16 @@
                     android:textColor="@color/lightTextColor"
                     android:textSize="@dimen/mediumTextSize" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:gravity="center"
+                    android:text='@{viewModel.bodyTypeErrorResId != null ? context.getString(viewModel.bodyTypeErrorResId) : ""}'
+                    android:textAppearance="@style/ErrorTextAppearance"
+                    android:visibility="@{viewModel.bodyTypeErrorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -31,6 +31,7 @@ data class UserModel(
     var careerInfo: CareerInfoModel? = null,
     var culturalInfo: CulturalInfoModel? = null,
     var familyInfo: FamilyInfoModel? = null,
+    var timezone: String? = null,
 ) : Parcelable {
     fun validateLoginData(): Int {
         return when {
@@ -202,7 +203,11 @@ data class UserModel(
     }
 
     fun isYesDesire(): Boolean {
-        return familyInfo?.childrenDesire?.let { it } ?: false
+        return if(familyInfo?.childrenDesire == null) false else familyInfo?.childrenDesire!!
+    }
+
+    fun isNoDesire(): Boolean {
+        return if(familyInfo?.childrenDesire == null) false else !(familyInfo?.childrenDesire!!)
     }
 
     fun isDontRespect(): Boolean {
