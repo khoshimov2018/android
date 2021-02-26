@@ -41,11 +41,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="@string/nationality"
+                    android:text="@string/nationality_title"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/largeTextSize" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <!--<androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -54,7 +54,7 @@
                     android:onClick="@{viewModel::onSkipClicked}"
                     android:text="@string/skip"
                     android:textColor="@color/lightTextColor"
-                    android:textSize="@dimen/smallTextSize" />
+                    android:textSize="@dimen/smallTextSize" />-->
             </RelativeLayout>
 
             <LinearLayout
@@ -76,28 +76,131 @@
                     android:background="@color/lightGreyColor" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/largeMargin"
-                android:layout_marginTop="@dimen/normalMargin"
-                android:gravity="center"
-                android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
-                android:textAppearance="@style/ErrorTextAppearance"
-                android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/button"
-                    android:adapter="@{adapter}"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/normalPadding"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="@string/nationality"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/smallMargin"
+                            android:text="@string/indicate_your_nationality"
+                            android:textColor="@color/lightTextColor"
+                            android:textSize="@dimen/mediumTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/largeMargin"
+                            android:layout_marginVertical="@dimen/smallMargin"
+                            android:gravity="center"
+                            android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                            android:textAppearance="@style/ErrorTextAppearance"
+                            android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adapter="@{adapter}"
+                            android:clipToPadding="false"
+                            android:paddingTop="@dimen/normalPadding"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="@string/attitude_to_national_traditions"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/smallMargin"
+                            android:text="@string/indicate_attitude_to_national_tradition"
+                            android:textColor="@color/lightTextColor"
+                            android:textSize="@dimen/mediumTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/largeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:gravity="center"
+                            android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                            android:textAppearance="@style/ErrorTextAppearance"
+                            android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/xLargeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isDontRespect() : false}"
+                                android:onClick="@{viewModel::onIDontKnowClicked}"
+                                android:text="@string/i_dont_know"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? !viewModel.userModelLiveData.isKnowButDont() : false}"
+                                android:onClick="@{viewModel::onIKnowButIDontClicked}"
+                                android:text="@string/i_know_but_i_dont"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? !viewModel.userModelLiveData.isKnowRespect() : false}"
+                                android:onClick="@{viewModel::onIKnowRespectClicked}"
+                                android:text="@string/i_know_i_want_to_preserve"
+                                android:textColor="@color/textColor" />
+                        </RadioGroup>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button"

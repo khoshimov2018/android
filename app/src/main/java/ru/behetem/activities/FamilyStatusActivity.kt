@@ -56,7 +56,7 @@ class FamilyStatusActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, HeightWeightActivity::class.java)
+        val intent = Intent(this, NationalitiesActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, familyStatusViewModel.getCurrentUser())
         startActivity(intent)
     }

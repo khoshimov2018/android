@@ -96,7 +96,10 @@ object ImageVersions {
 object EducationLevels {
     const val POWER = "Степень"
     const val GENERAL = "GENERAL"
-    const val HIGH = "HIGH"
+    const val SECONDARY = "SECONDARY"
+    const val SPECIALIZED_SECONDARY = "SPECIALIZED_SECONDARY"
+    const val INCOMPLETE_HIGHER = "INCOMPLETE_HIGHER"
+    const val HIGHER = "HIGHER"
 }
 
 object EditProfileErrorConstants {
@@ -121,4 +124,42 @@ object ChangePasswordFormErrorConstants {
     const val NEW_EMPTY = 2
     const val CONFIRM_EMPTY = 3
     const val DO_NOT_MATCH = 4
+}
+
+object FamilyStatus {
+    const val SINGLE = "SINGLE"
+    const val DIVORCED = "DIVORCED"
+    const val WIDOWED = "WIDOWED"
+}
+
+object ChildrenPresence {
+    const val NONE = "NONE"
+    const val TOGETHER = "TOGETHER"
+    const val APART = "APART"
+}
+
+object TraditionsRespect {
+    const val DONT_KNOW = "DONT_KNOW"
+    const val KNOW_NOT_RESPECT = "KNOW_NOT_RESPECT"
+    const val KNOW_RESPECT = "KNOW_RESPECT"
+}
+
+object ReligionRespect {
+    const val ATHEIST = "ATHEIST"
+    const val RELIGIOUS = "RELIGIOUS"
+    const val CANONICAL_RELIGIOUS = "CANONICAL_RELIGIOUS"
+}
+
+object BodyType {
+    const val THIN = "THIN"
+    const val SLIM = "SLIM"
+    const val ATHLETIC = "ATHLETIC"
+    const val PLUMP = "PLUMP"
+    const val FAT = "FAT"
+}
+
+object Languages {
+    const val RU = "RU"
+    const val EN = "EN"
+    const val AR = "AR"
 }

@@ -9,12 +9,14 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.behetem.R
 import ru.behetem.interfaces.INationalityClick
+import ru.behetem.models.CulturalInfoModel
+import ru.behetem.models.FamilyInfoModel
 import ru.behetem.models.NationalityModel
 import ru.behetem.models.UserModel
 import ru.behetem.repositories.NationalitiesRepository
+import ru.behetem.repositories.UserRepository
 import ru.behetem.responses.BaseResponse
-import ru.behetem.utils.isInternetAvailable
-import ru.behetem.utils.validateResponseWithoutPopup
+import ru.behetem.utils.*
 
 class NationalitiesViewModel(application: Application): BaseAndroidViewModel(application),
     INationalityClick {
@@ -24,7 +26,11 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
     private lateinit var observeResponse: Observer<BaseResponse>
     private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
+    private val errorTraditionResId: MutableLiveData<Int> = MutableLiveData()
     private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
+
+    private lateinit var submitApiResponse: LiveData<BaseResponse>
+    private lateinit var submitObserveResponse: Observer<BaseResponse>
 
     fun getNationalities() {
         if (isInternetAvailable(context)) {
@@ -72,19 +78,72 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
     }
 
     override fun moveFurther(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
         nationalitiesList.value?.let {
             for(nationality in it) {
                 if(nationality.isSelected != null && nationality.isSelected!!) {
-                    userModelLiveData.value?.nationality = nationality.label
+                    userModelLiveData.value?.culturalInfo?.nationality = nationality.label
                     break
                 }
             }
         }
-        if(userModelLiveData.value?.nationality == null) {
-            errorResId.value = R.string.choose_nationality
-        } else {
-            moveFurther.value = true
+        when {
+            userModelLiveData.value?.culturalInfo?.nationality == null -> {
+                errorResId.value = R.string.choose_nationality
+            }
+            userModelLiveData.value?.culturalInfo?.traditionsRespect == null -> {
+                errorTraditionResId.value = R.string.choose_tradition_respect
+            }
+            else -> {
+                if(validateInternet(view.context)) {
+//                        userModelLiveData.value?.selectedDOB = null
+                    hideKeyboard(view)
+                    loaderVisible.value = true // show loader
+                    observeResponse = Observer<BaseResponse> { response ->
+                        loaderVisible.value = false
+                        if (validateResponse(view.context, response)) {
+                            SharedPreferenceHelper.saveBooleanToShared(
+                                view.context,
+                                Constants.IS_USER_LOGGED_IN,
+                                true
+                            )
+                            moveFurther.value = true
+                        }
+                    }
+                    // token
+                    val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+
+                    apiResponse = UserRepository.changeInfo(userModelLiveData.value!!, strToken)
+                    apiResponse.observeForever(observeResponse)
+                }
+            }
         }
+    }
+
+    fun onIDontKnowClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.DONT_KNOW
+        errorTraditionResId.value = null
+    }
+
+    fun onIKnowButIDontClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.KNOW_NOT_RESPECT
+        errorTraditionResId.value = null
+    }
+
+    fun onIKnowRespectClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.KNOW_RESPECT
+        errorTraditionResId.value = null
     }
 
     fun onSkipClicked(view: View) {
@@ -95,6 +154,9 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         super.onCleared()
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
+        }
+        if (this::submitApiResponse.isInitialized) {
+            submitApiResponse.removeObserver(submitObserveResponse)
         }
     }
 
@@ -132,5 +194,9 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
 
     fun setBaseResponse(baseResponse: BaseResponse?) {
         this.baseResponse.value = baseResponse
+    }
+
+    fun getErrorTraditionResId(): LiveData<Int> {
+        return errorTraditionResId
     }
 }

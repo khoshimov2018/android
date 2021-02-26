@@ -119,6 +119,12 @@
     <string name="sports">Спортивное</string>
     <string name="dense">Плотное</string>
     <string name="complete">Полное</string>
+    <string name="nationality_title">Националитет</string>
+    <string name="indicate_your_nationality">Укажите вашу национальность</string>
+    <string name="attitude_to_national_traditions">Отношение к национальным традициям</string>
+    <string name="i_dont_know">Не заню</string>
+    <string name="i_know_but_i_dont">Знаю, но не соблюдаю</string>
+    <string name="i_know_i_want_to_preserve">Знаю, хочу сохранить их и привить своим детям</string>
 
     <string-array name="education_level">
         <item>Степень</item>
@@ -168,6 +174,13 @@
     <string name="enter_confirm_password">Please confirm your password</string>
     <string name="passwords_do_not_match">New Password and Confirm Password do not match</string>
     <string name="passwords_changed_successfully">Password changed successfully</string>
+    <string name="choose_family_status">Please choose your family status</string>
+    <string name="choose_children_presence">Please choose your children presence</string>
+    <string name="children_desire">Children Desire</string>
+    <string name="indicate_desire_of_children">Indicate your desire to have children</string>
+    <string name="choose_children_desire">Please choose your children desire</string>
+    <string name="indicate_attitude_to_national_tradition">Indicate your attitude to national tradition</string>
+    <string name="choose_tradition_respect">Please choose Tradition Respect</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

@@ -23,7 +23,7 @@ data class UserModel(
     var roles: MutableList<String>? = null,
     var age: Int? = null,
     var interests: MutableList<String>? = null,
-    var images: MutableList<String> ? = null,
+    var images: MutableList<String>? = null,
     var distanceTo: String? = null,
     var reactions: MutableList<ReactionModel>? = null,
     var nationalityToShow: String? = null,
@@ -118,10 +118,10 @@ data class UserModel(
 
     fun getNameAndAge(): String {
         var str = ""
-        if(name != null) {
+        if (name != null) {
             str = "$name"
         }
-        if(age != null) {
+        if (age != null) {
             str += ", ${age.toString()}"
         }
         return str
@@ -166,8 +166,8 @@ data class UserModel(
     }
 
     fun getDisplayableNationality(): String {
-        return if(nationalityToShow.isNullOrEmpty()) {
-            if(culturalInfo == null && culturalInfo?.nationality.isNullOrEmpty()) {
+        return if (nationalityToShow.isNullOrEmpty()) {
+            if (culturalInfo == null && culturalInfo?.nationality.isNullOrEmpty()) {
                 ""
             } else {
                 culturalInfo?.nationality!!
@@ -175,6 +175,46 @@ data class UserModel(
         } else {
             nationalityToShow!!
         }
+    }
+
+    fun isSingle(): Boolean {
+        return familyInfo?.status == FamilyStatus.SINGLE
+    }
+
+    fun isDivorced(): Boolean {
+        return familyInfo?.status == FamilyStatus.DIVORCED
+    }
+
+    fun isWidowed(): Boolean {
+        return familyInfo?.status == FamilyStatus.WIDOWED
+    }
+
+    fun isNoChildren(): Boolean {
+        return familyInfo?.childrenPresence == ChildrenPresence.NONE
+    }
+
+    fun isLiveTogether(): Boolean {
+        return familyInfo?.childrenPresence == ChildrenPresence.TOGETHER
+    }
+
+    fun isLiveSeparately(): Boolean {
+        return familyInfo?.childrenPresence == ChildrenPresence.APART
+    }
+
+    fun isYesDesire(): Boolean {
+        return familyInfo?.childrenDesire?.let { it } ?: false
+    }
+
+    fun isDontRespect(): Boolean {
+        return culturalInfo?.traditionsRespect == TraditionsRespect.DONT_KNOW
+    }
+
+    fun isKnowButDont(): Boolean {
+        return culturalInfo?.traditionsRespect == TraditionsRespect.KNOW_NOT_RESPECT
+    }
+
+    fun isKnowRespect(): Boolean {
+        return culturalInfo?.traditionsRespect == TraditionsRespect.KNOW_RESPECT
     }
 
     private fun isDobEmpty(): Boolean {

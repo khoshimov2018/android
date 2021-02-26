@@ -38,11 +38,11 @@ class ChooseLookingForViewModel : BaseViewModel() {
             observeResponse = Observer<BaseResponse> { response ->
                 loaderVisible.value = false
                 if (validateResponse(view.context, response)) {
-                    SharedPreferenceHelper.saveBooleanToShared(
+                    /*SharedPreferenceHelper.saveBooleanToShared(
                         view.context,
                         Constants.IS_USER_LOGGED_IN,
                         true
-                    )
+                    )*/
                     moveFurther.value = true
                 }
             }
