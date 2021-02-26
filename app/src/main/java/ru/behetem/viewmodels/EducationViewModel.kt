@@ -6,21 +6,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import ru.behetem.R
+import ru.behetem.models.CareerInfoModel
 import ru.behetem.models.EducationInfoModel
 import ru.behetem.models.UserModel
 import ru.behetem.utils.EducationFormErrorConstants
+import ru.behetem.utils.EducationLevels
+import ru.behetem.utils.WorkInfoFormErrorConstants
 
 class EducationViewModel: BaseViewModel() {
 
     private val userModelLiveData = MutableLiveData<UserModel>()
-    private lateinit var apiResponse: LiveData<UserModel>
-    private lateinit var observeResponse: Observer<UserModel>
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
+    private val jobErrorResId: MutableLiveData<Int> = MutableLiveData()
 
-    private val educationInfoModel = EducationInfoModel()
+    private val careerInfoModel = CareerInfoModel()
 
     override fun moveFurther(view: View) {
-        when(educationInfoModel.isEducationValid()) {
+        when(careerInfoModel.isEducationValid()) {
             EducationFormErrorConstants.INSTITUTE_NAME_EMPTY -> {
                 errorResId.value = R.string.enter_institute_name
             }
@@ -33,9 +35,15 @@ class EducationViewModel: BaseViewModel() {
             EducationFormErrorConstants.YEAR_INVALID -> {
                 errorResId.value = R.string.invalid_graduation_year
             }
+            EducationFormErrorConstants.POSITION_EMPTY -> {
+                jobErrorResId.value = R.string.enter_position
+            }
+            EducationFormErrorConstants.COMPANY_NAME_EMPTY -> {
+                jobErrorResId.value = R.string.enter_company_name
+            }
             else -> {
                 userModelLiveData.value?.let {
-                    it.educationInfo = educationInfoModel
+                    it.careerInfo = careerInfoModel
                 }
                 moveFurther.value = true
             }
@@ -47,16 +55,24 @@ class EducationViewModel: BaseViewModel() {
     }
 
     fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val array = view?.context?.resources?.getStringArray(R.array.education_level)
         when (position) {
             0 -> {
-                educationInfoModel.level = null
+                careerInfoModel.educationLevel = null
             }
             1 -> {
-                educationInfoModel.level = array?.get(1)
+                careerInfoModel.educationLevel = EducationLevels.GENERAL
+            }
+            2 -> {
+                careerInfoModel.educationLevel = EducationLevels.SECONDARY
+            }
+            3 -> {
+                careerInfoModel.educationLevel = EducationLevels.SPECIALIZED_SECONDARY
+            }
+            4 -> {
+                careerInfoModel.educationLevel = EducationLevels.INCOMPLETE_HIGHER
             }
             else -> {
-                educationInfoModel.level = array?.get(2)
+                careerInfoModel.educationLevel = EducationLevels.HIGHER
             }
         }
 
@@ -64,21 +80,26 @@ class EducationViewModel: BaseViewModel() {
     }
 
     fun onInstitutionNameTextChanged(charSequence: CharSequence) {
-        educationInfoModel.institutionName = charSequence.toString()
+        careerInfoModel.institutionName = charSequence.toString()
         errorResId.value = null
     }
 
-    /*fun onLevelTextChanged(charSequence: CharSequence) {
-        educationInfoModel.level = charSequence.toString()
-        errorResId.value = null
-    }*/
-
     fun onGraduationYearTextChanged(charSequence: CharSequence) {
         try {
-            educationInfoModel.graduationYear = charSequence.toString().toInt()
+            careerInfoModel.graduationYear = charSequence.toString().toInt()
         } catch (e: Exception) {
-            educationInfoModel.graduationYear = 0
+            careerInfoModel.graduationYear = 0
         }
+        errorResId.value = null
+    }
+
+    fun onPositionTextChanged(charSequence: CharSequence) {
+        careerInfoModel.workPosition = charSequence.toString()
+        errorResId.value = null
+    }
+
+    fun onCompanyTextChanged(charSequence: CharSequence) {
+        careerInfoModel.companyName = charSequence.toString()
         errorResId.value = null
     }
 
@@ -96,5 +117,9 @@ class EducationViewModel: BaseViewModel() {
 
     fun getErrorResId(): LiveData<Int> {
         return errorResId
+    }
+
+    fun getJobErrorResId(): LiveData<Int> {
+        return jobErrorResId
     }
 }

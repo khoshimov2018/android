@@ -56,7 +56,7 @@ class EducationActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, JobActivity::class.java)
+        val intent = Intent(this, MyInterestsActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, educationViewModel.getCurrentUser())
         startActivity(intent)
     }

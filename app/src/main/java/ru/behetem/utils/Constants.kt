@@ -80,6 +80,8 @@ object EducationFormErrorConstants {
     const val LEVEL_EMPTY = 2
     const val YEAR_EMPTY = 3
     const val YEAR_INVALID = 4
+    const val COMPANY_NAME_EMPTY = 5
+    const val POSITION_EMPTY = 6
 }
 
 object WorkInfoFormErrorConstants {

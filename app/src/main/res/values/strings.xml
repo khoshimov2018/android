@@ -125,11 +125,15 @@
     <string name="i_dont_know">Не заню</string>
     <string name="i_know_but_i_dont">Знаю, но не соблюдаю</string>
     <string name="i_know_i_want_to_preserve">Знаю, хочу сохранить их и привить своим детям</string>
+    <string name="career">Карьера</string>
 
     <string-array name="education_level">
         <item>Степень</item>
-        <item>GENERAL</item>
-        <item>HIGH</item>
+        <item>Общее</item> <!-- General -->
+        <item>Среднее</item> <!-- Average -->
+        <item>Среднее-специальное</item> <!-- Specialized Secondary -->
+        <item>Незаконченное высшее</item> <!--Unfinished highger-->
+        <item>Высшее</item> <!--Higher-->
     </string-array>
 
     <string-array name="distance_level">

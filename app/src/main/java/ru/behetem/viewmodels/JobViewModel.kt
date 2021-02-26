@@ -28,7 +28,7 @@ class JobViewModel: BaseViewModel() {
             }
             else -> {
                 userModelLiveData.value?.let {
-                    it.workInfo = workInfoModel
+//                    it.workInfo = workInfoModel
                 }
                 moveFurther.value = true
             }
