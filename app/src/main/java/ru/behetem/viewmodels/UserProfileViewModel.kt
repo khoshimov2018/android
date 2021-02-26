@@ -26,8 +26,8 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
 
     fun getInterestsList(): MutableList<InterestModel> {
         val list = ArrayList<InterestModel>()
-        if (userProfileLiveData.value != null && userProfileLiveData.value?.interestLabels != null) {
-            for (interestLabel in userProfileLiveData.value!!.interestLabels!!) {
+        if (userProfileLiveData.value != null && userProfileLiveData.value?.interests != null) {
+            for (interestLabel in userProfileLiveData.value!!.interests!!) {
                 list.add(InterestModel(interestLabel, true))
             }
         }

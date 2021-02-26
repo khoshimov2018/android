@@ -650,7 +650,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onGrowthChanged}"
-                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.growth) ? viewModel.userProfileLiveData.bodyInfo.growth : 0}" />
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.growth != null) ? viewModel.userProfileLiveData.bodyInfo.growth : 0}" />
 
                     <View
                         android:layout_width="match_parent"
@@ -668,7 +668,7 @@
                         android:textSize="@dimen/largeTextSize"
                         android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <!--<androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
@@ -683,7 +683,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onWeightChanged}"
-                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.weight != null) ? viewModel.userProfileLiveData.bodyInfo.weight : 0}" />
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.weight != null) ? viewModel.userProfileLiveData.bodyInfo.weight : 0}" />-->
 
                     <View
                         android:layout_width="match_parent"
