@@ -36,7 +36,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var interestsApiResponse: LiveData<BaseResponse>
     private lateinit var interestsObserveResponse: Observer<BaseResponse>
 
-    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
+    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> =
+        MutableLiveData()
     private lateinit var nationalitiesApiResponse: LiveData<BaseResponse>
     private lateinit var nationalitiesObserveResponse: Observer<BaseResponse>
 
@@ -56,8 +57,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var deleteImageObserveResponse: Observer<BaseResponse>
 
     fun updateProfile(): Boolean {
-        return if(userProfileLiveData.value != null) {
-            when(userProfileLiveData.value!!.validateEditProfile()) {
+        return if (userProfileLiveData.value != null) {
+            when (userProfileLiveData.value!!.validateEditProfile()) {
                 EditProfileErrorConstants.NAME_EMPTY -> {
                     errorResId.value = R.string.enter_name
                     false
@@ -118,7 +119,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     loaderVisible.value = true // show loader
                     editProfileObserveResponse = Observer<BaseResponse> { response ->
                         loaderVisible.value = false
-                        if(validateResponseWithoutPopup(response)) {
+                        if (validateResponseWithoutPopup(response)) {
                             allowToGoBack.value = true
                         } else {
                             baseResponse.value = response
@@ -127,7 +128,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
                     // token
                     val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-                    editProfileApiResponse = UserRepository.changeInfo(userProfileLiveData.value!!, strToken)
+                    editProfileApiResponse =
+                        UserRepository.changeInfo(userProfileLiveData.value!!, strToken)
                     editProfileApiResponse.observeForever(editProfileObserveResponse)
                     false
                 }
@@ -138,8 +140,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     }
 
     fun onDeleteClick(view: View, position: Int) {
-        if(imagesListLiveData.value != null && imagesListLiveData.value!!.size > position) {
-            showAlertDialog(view.context,
+        if (imagesListLiveData.value != null && imagesListLiveData.value!!.size > position) {
+            showAlertDialog(
+                view.context,
                 null,
                 context.getString(R.string.sure_delete_image),
                 context.getString(R.string.yes),
@@ -161,7 +164,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     fun setImageUri(uri: Uri) {
 //        uploadImage(uri)
     }
-    
+
     private fun deleteImage(position: Int) {
         if (isInternetAvailable(context)) {
             showNoInternet.value = false
@@ -204,11 +207,20 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                             gson.fromJson<MutableList<InterestModel>>(strResponse, myType)
 
                         for (interest in interests) {
-                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.interests != null) {
+                            if (userProfileLiveData.value != null && userProfileLiveData.value!!.interests != null) {
+                                if(userProfileLiveData.value?.interestsToShow == null) {
+                                    userProfileLiveData.value?.interestsToShow = ArrayList()
+                                    for (i in userProfileLiveData.value!!.interests!!) {
+                                        userProfileLiveData.value?.interestsToShow?.add(i)
+                                    }
+                                }
+                                userProfileLiveData.value?.interests = ArrayList()
+
                                 var isSaved = false
-                                for(savedInterest in userProfileLiveData.value!!.interests!!) {
-                                    if(interest.label.equals(savedInterest, ignoreCase = true)) {
+                                for (savedInterest in userProfileLiveData.value!!.interestsToShow!!) {
+                                    if (interest.label.equals(savedInterest, ignoreCase = true)) {
                                         isSaved = true
+                                        userProfileLiveData.value?.interests?.add(interest.interestId!!)
                                         break
                                     }
                                 }
@@ -246,19 +258,23 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
                         val myType = object : TypeToken<MutableList<NationalityModel>>() {}.type
-                        val nationalities: MutableList<NationalityModel> = gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
+                        val nationalities: MutableList<NationalityModel> =
+                            gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
-                        for(nationality in nationalities) {
-                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.culturalInfo != null && userProfileLiveData.value!!.culturalInfo!!.nationality != null) {
-                                if(nationality.ifNationalityMatches(userProfileLiveData.value!!.culturalInfo!!.nationality!!)) {
+                        for (nationality in nationalities) {
+                            if (userProfileLiveData.value != null && userProfileLiveData.value!!.culturalInfo != null && userProfileLiveData.value!!.culturalInfo!!.nationality != null) {
+                                if(userProfileLiveData.value!!.nationalityToShow == null) {
+                                    userProfileLiveData.value!!.nationalityToShow = userProfileLiveData.value!!.culturalInfo!!.nationality
+                                }
+
+                                if (nationality.ifNationalityMatches(userProfileLiveData.value!!.nationalityToShow!!)) {
                                     nationality.isSelected = true
                                     userProfileLiveData.value!!.culturalInfo!!.nationality = nationality.nationalityId
-                                    userProfileLiveData.value!!.nationalityToShow = nationality.getLabelToShow(getChosenGender())
-                                } else{
+                                } else {
                                     nationality.isSelected = false
                                 }
                             } else {
-                                nationality.isSelected =  false
+                                nationality.isSelected = false
                             }
                         }
 
@@ -280,16 +296,22 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     override fun interestItemClicked(view: View, interestItem: InterestModel) {
         interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
         interestsList.value = interestsList.value
-        if(userProfileLiveData.value != null) {
-            if(userProfileLiveData.value!!.interests == null) {
+        if (userProfileLiveData.value != null) {
+            if (userProfileLiveData.value!!.interests == null) {
                 userProfileLiveData.value?.interests = ArrayList()
             } else {
                 userProfileLiveData.value?.interests?.clear()
             }
-            if(interestsList.value != null) {
-                for(interest in interestsList.value!!) {
-                    if(interest.isSelected!!) {
+            if (userProfileLiveData.value!!.interestsToShow == null) {
+                userProfileLiveData.value?.interestsToShow = ArrayList()
+            } else {
+                userProfileLiveData.value?.interestsToShow?.clear()
+            }
+            if (interestsList.value != null) {
+                for (interest in interestsList.value!!) {
+                    if (interest.isSelected!!) {
                         userProfileLiveData.value?.interests?.add(interest.interestId!!)
+                        userProfileLiveData.value?.interestsToShow?.add(interest.label!!)
                     }
                 }
             }
@@ -298,13 +320,14 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     override fun nationalityItemClicked(view: View, nationalityItem: NationalityModel) {
         nationalitiesList.value?.let {
-            for(nationality in it) {
+            for (nationality in it) {
                 nationality.isSelected = false
             }
         }
         nationalityItem.isSelected = true
         userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.nationalityId
-        userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
+        userProfileLiveData.value?.nationalityToShow =
+            nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
     }
@@ -395,10 +418,12 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                 userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.SECONDARY
             }
             3 -> {
-                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.SPECIALIZED_SECONDARY
+                userProfileLiveData.value?.careerInfo?.educationLevel =
+                    EducationLevels.SPECIALIZED_SECONDARY
             }
             4 -> {
-                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.INCOMPLETE_HIGHER
+                userProfileLiveData.value?.careerInfo?.educationLevel =
+                    EducationLevels.INCOMPLETE_HIGHER
             }
             else -> {
                 userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.HIGHER
@@ -444,7 +469,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     }
 
     fun getChosenGender(): String {
-        return if(this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
+        return if (this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
             this.userProfileLiveData.value!!.gender!!
         } else {
             ""

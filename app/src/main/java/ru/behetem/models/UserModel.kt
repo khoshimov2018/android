@@ -23,6 +23,7 @@ data class UserModel(
     var roles: MutableList<String>? = null,
     var age: Int? = null,
     var interests: MutableList<String>? = null,
+    var interestsToShow: MutableList<String>? = null,
     var images: MutableList<String>? = null,
     var distanceTo: String? = null,
     var reactions: MutableList<ReactionModel>? = null,

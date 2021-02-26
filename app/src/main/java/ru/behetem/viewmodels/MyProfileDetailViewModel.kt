@@ -15,7 +15,14 @@ class MyProfileDetailViewModel: BaseViewModel(), IInterestClick {
 
     fun getInterestsList(): MutableList<InterestModel> {
         val list = ArrayList<InterestModel>()
-        if(userProfileLiveData.value != null && userProfileLiveData.value?.interests != null) {
+        if(userProfileLiveData.value != null && userProfileLiveData.value?.interestsToShow != null) {
+            for(interestLabel in userProfileLiveData.value!!.interestsToShow!!) {
+                val interest = InterestModel()
+                interest.label = interestLabel
+                interest.isSelected = true
+                list.add(interest)
+            }
+        } else if(userProfileLiveData.value != null && userProfileLiveData.value?.interests != null) {
             for(interestLabel in userProfileLiveData.value!!.interests!!) {
                 val interest = InterestModel()
                 interest.label = interestLabel
