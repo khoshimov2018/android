@@ -53,8 +53,10 @@ class MyInterestsActivity : AppCompatActivity() {
                 if(it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_interests))
                 } else {
-                    interestsAdapter = InterestsAdapter(it, myInterestsViewModel)
-                    binding.adapter = interestsAdapter
+                    if(interestsAdapter == null) {
+                        interestsAdapter = InterestsAdapter(it, myInterestsViewModel)
+                        binding.adapter = interestsAdapter
+                    }
                     interestsAdapter?.notifyDataSetChanged()
                 }
             } else {
@@ -91,7 +93,7 @@ class MyInterestsActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, NationalitiesActivity::class.java)
+        val intent = Intent(this, AboutMeActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, myInterestsViewModel.getCurrentUser())
         startActivity(intent)
     }

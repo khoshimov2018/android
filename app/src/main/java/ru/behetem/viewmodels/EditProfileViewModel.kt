@@ -36,7 +36,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var interestsApiResponse: LiveData<BaseResponse>
     private lateinit var interestsObserveResponse: Observer<BaseResponse>
 
-    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
+    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> =
+        MutableLiveData()
     private lateinit var nationalitiesApiResponse: LiveData<BaseResponse>
     private lateinit var nationalitiesObserveResponse: Observer<BaseResponse>
 
@@ -56,8 +57,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var deleteImageObserveResponse: Observer<BaseResponse>
 
     fun updateProfile(): Boolean {
-        return if(userProfileLiveData.value != null) {
-            when(userProfileLiveData.value!!.validateEditProfile()) {
+        return if (userProfileLiveData.value != null) {
+            when (userProfileLiveData.value!!.validateEditProfile()) {
                 EditProfileErrorConstants.NAME_EMPTY -> {
                     errorResId.value = R.string.enter_name
                     false
@@ -118,7 +119,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     loaderVisible.value = true // show loader
                     editProfileObserveResponse = Observer<BaseResponse> { response ->
                         loaderVisible.value = false
-                        if(validateResponseWithoutPopup(response)) {
+                        if (validateResponseWithoutPopup(response)) {
                             allowToGoBack.value = true
                         } else {
                             baseResponse.value = response
@@ -127,7 +128,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
                     // token
                     val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-                    editProfileApiResponse = UserRepository.changeInfo(userProfileLiveData.value!!, strToken)
+                    editProfileApiResponse =
+                        UserRepository.changeInfo(userProfileLiveData.value!!, strToken)
                     editProfileApiResponse.observeForever(editProfileObserveResponse)
                     false
                 }
@@ -138,8 +140,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     }
 
     fun onDeleteClick(view: View, position: Int) {
-        if(imagesListLiveData.value != null && imagesListLiveData.value!!.size > position) {
-            showAlertDialog(view.context,
+        if (imagesListLiveData.value != null && imagesListLiveData.value!!.size > position) {
+            showAlertDialog(
+                view.context,
                 null,
                 context.getString(R.string.sure_delete_image),
                 context.getString(R.string.yes),
@@ -161,7 +164,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     fun setImageUri(uri: Uri) {
 //        uploadImage(uri)
     }
-    
+
     private fun deleteImage(position: Int) {
         if (isInternetAvailable(context)) {
             showNoInternet.value = false
@@ -199,32 +202,35 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                     if (it.data is MutableList<*>) {
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
-                        val myType = object : TypeToken<MutableList<String>>() {}.type
-                        val interestStringList: MutableList<String> =
-                            gson.fromJson<MutableList<String>>(strResponse, myType)
+                        val myType = object : TypeToken<MutableList<InterestModel>>() {}.type
+                        val interests: MutableList<InterestModel> =
+                            gson.fromJson<MutableList<InterestModel>>(strResponse, myType)
 
-                        val tempInterestsList = ArrayList<InterestModel>()
+                        for (interest in interests) {
+                            if (userProfileLiveData.value != null && userProfileLiveData.value!!.interests != null) {
+                                if(userProfileLiveData.value?.interestsToShow == null) {
+                                    userProfileLiveData.value?.interestsToShow = ArrayList()
+                                    for (i in userProfileLiveData.value!!.interests!!) {
+                                        userProfileLiveData.value?.interestsToShow?.add(i)
+                                    }
+                                }
+                                userProfileLiveData.value?.interests = ArrayList()
 
-                        for (interest in interestStringList) {
-                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.interestLabels != null) {
                                 var isSaved = false
-                                for(savedInterest in userProfileLiveData.value!!.interestLabels!!) {
-                                    if(interest.equals(savedInterest, ignoreCase = true)) {
+                                for (savedInterest in userProfileLiveData.value!!.interestsToShow!!) {
+                                    if (interest.label.equals(savedInterest, ignoreCase = true)) {
                                         isSaved = true
+                                        userProfileLiveData.value?.interests?.add(interest.interestId!!)
                                         break
                                     }
                                 }
-                                if(isSaved) {
-                                    tempInterestsList.add(InterestModel(interest, true))
-                                } else {
-                                    tempInterestsList.add(InterestModel(interest, false))
-                                }
+                                interest.isSelected = isSaved
                             } else {
-                                tempInterestsList.add(InterestModel(interest, false))
+                                interest.isSelected = false
                             }
                         }
 
-                        interestsList.value = tempInterestsList
+                        interestsList.value = interests
                     }
                 } else {
                     baseResponse.value = it
@@ -252,19 +258,23 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                         val gson = Gson()
                         val strResponse = gson.toJson(it.data)
                         val myType = object : TypeToken<MutableList<NationalityModel>>() {}.type
-                        val nationalities: MutableList<NationalityModel> = gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
+                        val nationalities: MutableList<NationalityModel> =
+                            gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
-                        for(nationality in nationalities) {
-                            if(userProfileLiveData.value != null && userProfileLiveData.value!!.nationality != null) {
-                                if(nationality.ifNationalityMatches(userProfileLiveData.value!!.nationality!!)) {
+                        for (nationality in nationalities) {
+                            if (userProfileLiveData.value != null && userProfileLiveData.value!!.culturalInfo != null && userProfileLiveData.value!!.culturalInfo!!.nationality != null) {
+                                if(userProfileLiveData.value!!.nationalityToShow == null) {
+                                    userProfileLiveData.value!!.nationalityToShow = userProfileLiveData.value!!.culturalInfo!!.nationality
+                                }
+
+                                if (nationality.ifNationalityMatches(userProfileLiveData.value!!.nationalityToShow!!)) {
                                     nationality.isSelected = true
-                                    userProfileLiveData.value!!.nationality = nationality.label
-                                    userProfileLiveData.value!!.nationalityToShow = nationality.getLabelToShow(getChosenGender())
-                                } else{
+                                    userProfileLiveData.value!!.culturalInfo!!.nationality = nationality.nationalityId
+                                } else {
                                     nationality.isSelected = false
                                 }
                             } else {
-                                nationality.isSelected =  false
+                                nationality.isSelected = false
                             }
                         }
 
@@ -286,16 +296,22 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     override fun interestItemClicked(view: View, interestItem: InterestModel) {
         interestItem.isSelected = interestItem.isSelected == null || !interestItem.isSelected!!
         interestsList.value = interestsList.value
-        if(userProfileLiveData.value != null) {
-            if(userProfileLiveData.value!!.interestLabels == null) {
-                userProfileLiveData.value?.interestLabels = ArrayList()
+        if (userProfileLiveData.value != null) {
+            if (userProfileLiveData.value!!.interests == null) {
+                userProfileLiveData.value?.interests = ArrayList()
             } else {
-                userProfileLiveData.value?.interestLabels?.clear()
+                userProfileLiveData.value?.interests?.clear()
             }
-            if(interestsList.value != null) {
-                for(interest in interestsList.value!!) {
-                    if(interest.isSelected!!) {
-                        userProfileLiveData.value?.interestLabels?.add(interest.label!!)
+            if (userProfileLiveData.value!!.interestsToShow == null) {
+                userProfileLiveData.value?.interestsToShow = ArrayList()
+            } else {
+                userProfileLiveData.value?.interestsToShow?.clear()
+            }
+            if (interestsList.value != null) {
+                for (interest in interestsList.value!!) {
+                    if (interest.isSelected!!) {
+                        userProfileLiveData.value?.interests?.add(interest.interestId!!)
+                        userProfileLiveData.value?.interestsToShow?.add(interest.label!!)
                     }
                 }
             }
@@ -304,13 +320,14 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     override fun nationalityItemClicked(view: View, nationalityItem: NationalityModel) {
         nationalitiesList.value?.let {
-            for(nationality in it) {
+            for (nationality in it) {
                 nationality.isSelected = false
             }
         }
         nationalityItem.isSelected = true
-        userProfileLiveData.value?.nationality = nationalityItem.label
-        userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
+        userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.nationalityId
+        userProfileLiveData.value?.nationalityToShow =
+            nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
     }
@@ -365,41 +382,51 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun onGrowthChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         userProfileLiveData.value?.let {
-            it.growth = progress
+            it.bodyInfo?.growth = progress
         }
         userProfileLiveData.value = userProfileLiveData.value
     }
 
     fun onWeightChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         userProfileLiveData.value?.let {
-            it.weight = progress
+            it.bodyInfo?.weight = progress
         }
         userProfileLiveData.value = userProfileLiveData.value
     }
 
     fun onPositionTextChanged(charSequence: CharSequence) {
-        userProfileLiveData.value?.workInfo?.position = charSequence.toString()
+        userProfileLiveData.value?.careerInfo?.workPosition = charSequence.toString()
     }
 
     fun onCompanyTextChanged(charSequence: CharSequence) {
-        userProfileLiveData.value?.workInfo?.companyName = charSequence.toString()
+        userProfileLiveData.value?.careerInfo?.companyName = charSequence.toString()
     }
 
     fun onInstitutionNameTextChanged(charSequence: CharSequence) {
-        userProfileLiveData.value?.educationInfo?.institutionName = charSequence.toString()
+        userProfileLiveData.value?.careerInfo?.institutionName = charSequence.toString()
     }
 
     fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val array = view?.context?.resources?.getStringArray(R.array.education_level)
         when (position) {
             0 -> {
-                userProfileLiveData.value?.educationInfo?.level = null
+                userProfileLiveData.value?.careerInfo?.educationLevel = null
             }
             1 -> {
-                userProfileLiveData.value?.educationInfo?.level = array?.get(1)
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.GENERAL
+            }
+            2 -> {
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.SECONDARY
+            }
+            3 -> {
+                userProfileLiveData.value?.careerInfo?.educationLevel =
+                    EducationLevels.SPECIALIZED_SECONDARY
+            }
+            4 -> {
+                userProfileLiveData.value?.careerInfo?.educationLevel =
+                    EducationLevels.INCOMPLETE_HIGHER
             }
             else -> {
-                userProfileLiveData.value?.educationInfo?.level = array?.get(2)
+                userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.HIGHER
             }
         }
         selectedLevelPosition.value = position
@@ -407,10 +434,10 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun onGraduationYearTextChanged(charSequence: CharSequence) {
         try {
-            userProfileLiveData.value?.educationInfo?.graduationYear =
+            userProfileLiveData.value?.careerInfo?.graduationYear =
                 charSequence.toString().toInt()
         } catch (e: Exception) {
-            userProfileLiveData.value?.educationInfo?.graduationYear = 0
+            userProfileLiveData.value?.careerInfo?.graduationYear = 0
         }
     }
 
@@ -421,16 +448,28 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     fun setCurrentUser(userModel: UserModel) {
         userProfileLiveData.value = userModel
         if (userProfileLiveData.value != null) {
-            if (userProfileLiveData.value!!.educationInfo?.level == EducationLevels.GENERAL) {
-                selectedLevelPosition.value = 1
-            } else if (userProfileLiveData.value!!.educationInfo?.level == EducationLevels.HIGH) {
-                selectedLevelPosition.value = 2
+            when (userProfileLiveData.value!!.careerInfo?.educationLevel) {
+                EducationLevels.GENERAL -> {
+                    selectedLevelPosition.value = 1
+                }
+                EducationLevels.SECONDARY -> {
+                    selectedLevelPosition.value = 2
+                }
+                EducationLevels.SPECIALIZED_SECONDARY -> {
+                    selectedLevelPosition.value = 3
+                }
+                EducationLevels.INCOMPLETE_HIGHER -> {
+                    selectedLevelPosition.value = 4
+                }
+                EducationLevels.HIGHER -> {
+                    selectedLevelPosition.value = 5
+                }
             }
         }
     }
 
     fun getChosenGender(): String {
-        return if(this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
+        return if (this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
             this.userProfileLiveData.value!!.gender!!
         } else {
             ""

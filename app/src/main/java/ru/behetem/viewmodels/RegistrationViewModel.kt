@@ -56,6 +56,7 @@ class RegistrationViewModel : BaseViewModel() {
                             moveFurther.value = true
                         }
                     }
+                    userModel.timezone = getTimeZone()
                     apiResponse = UserRepository.register(userModel)
                     apiResponse.observeForever(observeResponse)
                 }

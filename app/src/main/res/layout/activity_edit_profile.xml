@@ -640,7 +640,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.growth != null) ? @string/growth_value(viewModel.userProfileLiveData.growth) : ""}'
+                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.growth != null) ? @string/growth_value(viewModel.userProfileLiveData.bodyInfo.growth) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -650,7 +650,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onGrowthChanged}"
-                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.growth != null) ? viewModel.userProfileLiveData.growth : 0}" />
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.growth != null) ? viewModel.userProfileLiveData.bodyInfo.growth : 0}" />
 
                     <View
                         android:layout_width="match_parent"
@@ -673,7 +673,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.weight != null) ? @string/weight_value(viewModel.userProfileLiveData.weight) : ""}'
+                        android:text='@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.weight != null) ? @string/weight_value(viewModel.userProfileLiveData.bodyInfo.weight) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
 
@@ -683,7 +683,7 @@
                         android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onWeightChanged}"
-                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.weight != null) ? viewModel.userProfileLiveData.weight : 0}" />
+                        android:progress="@{(viewModel.userProfileLiveData != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.weight != null) ? viewModel.userProfileLiveData.bodyInfo.weight : 0}" />
 
                     <View
                         android:layout_width="match_parent"

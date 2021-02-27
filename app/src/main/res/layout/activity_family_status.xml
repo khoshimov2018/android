@@ -5,6 +5,7 @@
     tools:context=".activities.FamilyStatusActivity">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -36,11 +37,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="@string/nationality"
+                    android:text="@string/family_and_children"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/largeTextSize" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <!--<androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -49,73 +50,233 @@
                     android:onClick="@{viewModel::moveFurther}"
                     android:text="@string/skip"
                     android:textColor="@color/lightTextColor"
-                    android:textSize="@dimen/smallTextSize" />
+                    android:textSize="@dimen/smallTextSize" />-->
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="1">
+                android:weightSum="11">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="@dimen/lineHeight"
-                    android:layout_weight="0.8"
+                    android:layout_weight="6"
                     android:background="@color/colorPrimary" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="@dimen/lineHeight"
-                    android:layout_weight="0.2"
+                    android:layout_weight="5"
                     android:background="@color/lightGreyColor" />
             </LinearLayout>
 
-            <RelativeLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <RadioGroup
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/xLargeMargin"
-                    android:layout_marginTop="@dimen/normalMargin"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/actively_looking"
-                        android:textColor="@color/textColor" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/a_family"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:text="@string/indicate_your_marital_status"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="@dimen/mediumTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:gravity="center"
+                        android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
+                        android:textAppearance="@style/ErrorTextAppearance"
+                        android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:text="@string/its_complicated"
-                        android:textColor="@color/textColor" />
+                        android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatRadioButton
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isSingle() : false}"
+                            android:onClick="@{viewModel::onSingleClicked}"
+                            android:text="@string/single_not_married"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isDivorced() : false}"
+                            android:onClick="@{viewModel::onDivorcedClicked}"
+                            android:text="@string/divorced"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isWidowed() : false}"
+                            android:onClick="@{viewModel::onWidowedClicked}"
+                            android:text="@string/widower"
+                            android:textColor="@color/textColor" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
-                        android:text="@string/married"
-                        android:textColor="@color/textColor" />
-                </RadioGroup>
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/children"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginHorizontal="@dimen/xLargeMargin"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:layout_marginBottom="@dimen/normalMargin"
-                    android:background="@drawable/round_button_background"
-                    android:onClick="@{viewModel::moveFurther}"
-                    android:text="@string/further"
-                    android:textColor="@android:color/white" />
-            </RelativeLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:text="@string/indicate_presence_absence_of_children"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="@dimen/mediumTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:gravity="center"
+                        android:text='@{viewModel.errorChildrenPresenceResId != null ? context.getString(viewModel.errorChildrenPresenceResId) : ""}'
+                        android:textAppearance="@style/ErrorTextAppearance"
+                        android:visibility="@{viewModel.errorChildrenPresenceResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isNoChildren() : false}"
+                            android:onClick="@{viewModel::onNoChildrenClicked}"
+                            android:text="@string/not"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isLiveTogether() : false}"
+                            android:onClick="@{viewModel::onLiveTogetherClicked}"
+                            android:text="@string/yes_we_live_together"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isLiveSeparately() : false}"
+                            android:onClick="@{viewModel::onLiveSeparatelyClicked}"
+                            android:text="@string/yes_we_live_separately"
+                            android:textColor="@color/textColor" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/children_desire"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:text="@string/indicate_desire_of_children"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="@dimen/mediumTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:gravity="center"
+                        android:text='@{viewModel.errorChildrenDesireResId != null ? context.getString(viewModel.errorChildrenDesireResId) : ""}'
+                        android:textAppearance="@style/ErrorTextAppearance"
+                        android:visibility="@{viewModel.errorChildrenDesireResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isYesDesire() : false}"
+                            android:onClick="@{viewModel::onYesDesireClicked}"
+                            android:text="@string/yes"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isNoDesire() : false}"
+                            android:onClick="@{viewModel::onNoDesireClicked}"
+                            android:text="@string/no"
+                            android:textColor="@color/textColor" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/xLargeMargin"
+                        android:layout_marginBottom="@dimen/largeMargin"
+                        android:background="@drawable/round_button_background"
+                        android:onClick="@{viewModel::moveFurther}"
+                        android:text="@string/further"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
         <include

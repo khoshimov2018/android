@@ -53,8 +53,10 @@ class NationalitiesActivity : AppCompatActivity() {
                 if(it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_nationalities))
                 } else {
-                    nationalitiesAdapter = NationalitiesAdapter(it, nationalitiesViewModel, nationalitiesViewModel.getChosenGender())
-                    binding.adapter = nationalitiesAdapter
+                    if(nationalitiesAdapter == null) {
+                        nationalitiesAdapter = NationalitiesAdapter(it, nationalitiesViewModel, nationalitiesViewModel.getChosenGender())
+                        binding.adapter = nationalitiesAdapter
+                    }
                     nationalitiesAdapter?.notifyDataSetChanged()
                 }
             } else {
@@ -91,7 +93,7 @@ class NationalitiesActivity : AppCompatActivity() {
     }
 
     private fun moveFurther() {
-        val intent = Intent(this, EducationActivity::class.java)
+        val intent = Intent(this, WantToContinueActivity::class.java)
         intent.putExtra(Constants.PROFILE_USER, nationalitiesViewModel.getCurrentUser())
         startActivity(intent)
     }

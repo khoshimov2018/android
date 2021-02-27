@@ -6,6 +6,7 @@ data class NationalityModel(
     var label: String? = null,
     var male: String? = null,
     var female: String? = null,
+    var nationalityId: String? = null,
     var isSelected: Boolean? = null
 ) {
     fun getLabelToShow(chosenGender: String): String {
@@ -23,7 +24,7 @@ data class NationalityModel(
     }
 
     fun ifNationalityMatches(nationality: String): Boolean {
-        return label.equals(nationality, ignoreCase = true) || male.equals(nationality, ignoreCase = true) || female.equals(nationality, ignoreCase = true)
+        return label.equals(nationality, ignoreCase = false) || male.equals(nationality, ignoreCase = false) || female.equals(nationality, ignoreCase = false)
     }
 
     private fun getMaleLabel(): String {

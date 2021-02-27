@@ -51,6 +51,19 @@
     <string name="weight">Вес</string>
     <string name="weight_value">%d, кг</string>
     <string name="family_status">Семейное положение</string>
+    <string name="family_and_children">Семья и дети</string>
+    <string name="a_family">Семья</string>
+    <string name="indicate_your_marital_status">Укажите ваше семейное положение</string>
+    <string name="single_not_married">Холост/не замужем</string>
+    <string name="divorced">Разведен(а)</string>
+    <string name="widower">Вдовец(ва)</string>
+    <string name="children">Дети</string>
+    <string name="indicate_presence_absence_of_children">Укажите наличие\отсутсвие детей</string>
+    <string name="not">Нет</string>
+    <string name="yes_we_live_together">Есть, живем вместе</string>
+    <string name="yes_we_live_separately">Есть, живем порознь</string>
+    <string name="the_desire_to_have_children">Желание завести детей</string>
+    <string name="yes">Да</string>
     <string name="nationality">Национальность</string>
     <string name="job">Работа</string>
     <string name="education">Образование</string>
@@ -58,6 +71,7 @@
     <string name="settings">Настройки</string>
     <string name="posts">Сообщения</string>
     <string name="reactions">Реакции</string>
+    <string name="all">Все</string>
     <string name="no_messages_yet">У вас еще нет диалогов</string>
     <string name="photo">Фото</string>
     <string name="about_me">Обо мне</string>
@@ -96,11 +110,30 @@
     <string name="next_card">Следующая карточка</string>
     <string name="swipe_left">Пролистните влево</string>
     <string name="click_to_continue">Нажмите, чтобы продолжить</string>
+    <string name="do_you_want_to_continue">Хотите продолжить?</string>
+    <string name="specify_additional_params_to">Укажите дополнительные параметры, чтобы улучшить результаты поиска</string>
+    <string name="body_type">Телосложение</string>
+    <string name="indicate_your_physique">Укажите ваше телосложение</string>
+    <string name="skinny">Худощавое</string>
+    <string name="slender">Стройное</string>
+    <string name="sports">Спортивное</string>
+    <string name="dense">Плотное</string>
+    <string name="complete">Полное</string>
+    <string name="nationality_title">Националитет</string>
+    <string name="indicate_your_nationality">Укажите вашу национальность</string>
+    <string name="attitude_to_national_traditions">Отношение к национальным традициям</string>
+    <string name="i_dont_know">Не заню</string>
+    <string name="i_know_but_i_dont">Знаю, но не соблюдаю</string>
+    <string name="i_know_i_want_to_preserve">Знаю, хочу сохранить их и привить своим детям</string>
+    <string name="career">Карьера</string>
 
     <string-array name="education_level">
         <item>Степень</item>
-        <item>GENERAL</item>
-        <item>HIGH</item>
+        <item>Общее</item> <!-- General -->
+        <item>Среднее</item> <!-- Average -->
+        <item>Среднее-специальное</item> <!-- Specialized Secondary -->
+        <item>Незаконченное высшее</item> <!--Unfinished highger-->
+        <item>Высшее</item> <!--Higher-->
     </string-array>
 
     <string-array name="distance_level">
@@ -121,7 +154,6 @@
     <string name="choose_dob">Please choose your Date of Birth</string>
     <string name="choose_looking_for">Please choose Looking For</string>
     <string name="sure_logout">Are you sure you want to logout?</string>
-    <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="no_interests">No interests available</string>
     <string name="choose_interests">Please choose your interests</string>
@@ -146,6 +178,14 @@
     <string name="enter_confirm_password">Please confirm your password</string>
     <string name="passwords_do_not_match">New Password and Confirm Password do not match</string>
     <string name="passwords_changed_successfully">Password changed successfully</string>
+    <string name="choose_family_status">Please choose your family status</string>
+    <string name="choose_children_presence">Please choose your children presence</string>
+    <string name="children_desire">Children Desire</string>
+    <string name="indicate_desire_of_children">Indicate your desire to have children</string>
+    <string name="choose_children_desire">Please choose your children desire</string>
+    <string name="indicate_attitude_to_national_tradition">Indicate your attitude to national tradition</string>
+    <string name="choose_tradition_respect">Please choose Tradition Respect</string>
+    <string name="choose_body_type">Choose Body Type</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

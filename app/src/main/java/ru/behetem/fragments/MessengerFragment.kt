@@ -1,5 +1,6 @@
 package ru.behetem.fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import ru.behetem.R
+import ru.behetem.activities.AllReactionsActivity
+import ru.behetem.adapters.ReceivedReactionAdapter
 import ru.behetem.databinding.MessengerFragmentBinding
 import ru.behetem.utils.getLoggedInUserFromShared
 import ru.behetem.utils.showInfoAlertDialog
@@ -22,6 +25,8 @@ class MessengerFragment : Fragment() {
 
     private lateinit var viewModel: MessengerViewModel
     private lateinit var binding: MessengerFragmentBinding
+
+    private var receivedReactionAdapter: ReceivedReactionAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +52,23 @@ class MessengerFragment : Fragment() {
     }
 
     private fun initObservers() {
+        viewModel.getReceivedReactionsList().observe(requireActivity(), {
+            if(it != null) {
+                if(receivedReactionAdapter == null) {
+                    receivedReactionAdapter = ReceivedReactionAdapter(it, viewModel)
+                    binding.receivedReactionsAdapter = receivedReactionAdapter
+                }
+                receivedReactionAdapter?.notifyDataSetChanged()
+            }
+        })
+
+        viewModel.getAllClicked().observe(requireActivity(), {
+            if(it) {
+                viewModel.setAllClicked(false)
+                openAllReactions()
+            }
+        })
+
         viewModel.getShowNoInternet().observe(requireActivity(), {
             if(it) {
                 viewModel.setShowNoInternet(false)
@@ -62,8 +84,18 @@ class MessengerFragment : Fragment() {
         })
     }
 
+    private fun openAllReactions() {
+        val intent = Intent(requireActivity(), AllReactionsActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getReactions()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        receivedReactionAdapter = null
     }
 }
