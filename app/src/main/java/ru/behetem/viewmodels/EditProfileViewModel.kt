@@ -29,32 +29,40 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     IInterestClick, INationalityClick {
 
     private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
+    private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
+
     private val showDatePicker: MutableLiveData<Boolean> = MutableLiveData()
-    private var selectedLevelPosition: MutableLiveData<Int> = MutableLiveData(0)
+    // Spinner selected positions
+    private val sFamilyStatusSelection: MutableLiveData<Int> = MutableLiveData(0)
+    private val sChildrenPresenceSelection: MutableLiveData<Int> = MutableLiveData(0)
+    private val sChildrenDesireSelection: MutableLiveData<Int> = MutableLiveData(0)
+    private val sNationalitySelection: MutableLiveData<Int> = MutableLiveData(0)
+    private val sAttitudeTowardsTraditionSelection: MutableLiveData<Int> = MutableLiveData(0)
+    private val sBodyTypeSelection: MutableLiveData<Int> = MutableLiveData(0)
+    private val sEducationLevelSelection: MutableLiveData<Int> = MutableLiveData(0)
+
+    private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
+    private var currentImageForPosition = -1
 
     private val interestsList: MutableLiveData<MutableList<InterestModel>> = MutableLiveData()
     private lateinit var interestsApiResponse: LiveData<BaseResponse>
     private lateinit var interestsObserveResponse: Observer<BaseResponse>
 
-    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> =
-        MutableLiveData()
+    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
     private lateinit var nationalitiesApiResponse: LiveData<BaseResponse>
     private lateinit var nationalitiesObserveResponse: Observer<BaseResponse>
 
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
 
     private lateinit var editProfileApiResponse: LiveData<BaseResponse>
     private lateinit var editProfileObserveResponse: Observer<BaseResponse>
     private val allowToGoBack: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
-
-    private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
-    private var currentImageForPosition = -1
-
     private lateinit var deleteImageApiResponse: LiveData<BaseResponse>
     private lateinit var deleteImageObserveResponse: Observer<BaseResponse>
+
+    private val showGrowthWeightBottomSheet: MutableLiveData<Boolean> = MutableLiveData()
+    private val showCareerBottomSheet: MutableLiveData<Boolean> = MutableLiveData()
 
     fun updateProfile(): Boolean {
         return if (userProfileLiveData.value != null) {
@@ -326,8 +334,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         nationalityItem.isSelected = true
         userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.nationalityId
-        userProfileLiveData.value?.nationalityToShow =
-            nationalityItem.getLabelToShow(getChosenGender())
+        userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
     }
@@ -343,6 +350,14 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         if (this::deleteImageApiResponse.isInitialized) {
             deleteImageApiResponse.removeObserver(deleteImageObserveResponse)
         }
+    }
+
+    fun growthWeightClicked(view: View) {
+        showGrowthWeightBottomSheet.value = true
+    }
+
+    fun careerClicked(view: View) {
+        showCareerBottomSheet.value = true
     }
 
     fun onMaleClicked(view: View) {
@@ -406,7 +421,92 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         userProfileLiveData.value?.careerInfo?.institutionName = charSequence.toString()
     }
 
-    fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    fun onFamilyStatusSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> {
+                userProfileLiveData.value?.familyInfo?.status = FamilyStatus.SINGLE
+            }
+            1 -> {
+                userProfileLiveData.value?.familyInfo?.status = FamilyStatus.DIVORCED
+            }
+            2 -> {
+                userProfileLiveData.value?.familyInfo?.status = FamilyStatus.WIDOWED
+            }
+        }
+        sFamilyStatusSelection.value = position
+    }
+
+    fun onChildrenPresenceSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> {
+                userProfileLiveData.value?.familyInfo?.childrenPresence = ChildrenPresence.NONE
+            }
+            1 -> {
+                userProfileLiveData.value?.familyInfo?.childrenPresence = ChildrenPresence.TOGETHER
+            }
+            2 -> {
+                userProfileLiveData.value?.familyInfo?.childrenPresence = ChildrenPresence.APART
+            }
+        }
+        sChildrenPresenceSelection.value = position
+    }
+
+    fun onChildrenDesireSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> {
+                userProfileLiveData.value?.familyInfo?.childrenDesire = true
+            }
+            1 -> {
+                userProfileLiveData.value?.familyInfo?.childrenDesire = false
+            }
+        }
+        sChildrenDesireSelection.value = position
+    }
+
+    fun onNationalitySelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+    }
+
+    fun onAttitudeTowardsTraditionSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> {
+                userProfileLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.DONT_KNOW
+            }
+            1 -> {
+                userProfileLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.KNOW_NOT_RESPECT
+            }
+            2 -> {
+                userProfileLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.KNOW_RESPECT
+            }
+        }
+        sAttitudeTowardsTraditionSelection.value = position
+    }
+
+    fun onBodyTypeSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (position) {
+            0 -> {
+                userProfileLiveData.value?.bodyInfo?.bodyType = null
+            }
+            1 -> {
+                userProfileLiveData.value?.bodyInfo?.bodyType = BodyType.THIN
+            }
+            2 -> {
+                userProfileLiveData.value?.bodyInfo?.bodyType = BodyType.SLIM
+            }
+            3 -> {
+                userProfileLiveData.value?.bodyInfo?.bodyType = BodyType.ATHLETIC
+            }
+            4 -> {
+                userProfileLiveData.value?.bodyInfo?.bodyType = BodyType.PLUMP
+            }
+            5 -> {
+                userProfileLiveData.value?.bodyInfo?.bodyType = BodyType.FAT
+            }
+        }
+        sBodyTypeSelection.value = position
+    }
+
+    fun onEducationLevelSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (position) {
             0 -> {
                 userProfileLiveData.value?.careerInfo?.educationLevel = null
@@ -429,7 +529,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                 userProfileLiveData.value?.careerInfo?.educationLevel = EducationLevels.HIGHER
             }
         }
-        selectedLevelPosition.value = position
+        sEducationLevelSelection.value = position
     }
 
     fun onGraduationYearTextChanged(charSequence: CharSequence) {
@@ -447,22 +547,90 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun setCurrentUser(userModel: UserModel) {
         userProfileLiveData.value = userModel
+
+//        sNationalitySelection
+
         if (userProfileLiveData.value != null) {
+            when (userProfileLiveData.value!!.familyInfo?.status) {
+                FamilyStatus.SINGLE -> {
+                    sFamilyStatusSelection.value = 0
+                }
+                FamilyStatus.DIVORCED -> {
+                    sFamilyStatusSelection.value = 1
+                }
+                FamilyStatus.WIDOWED -> {
+                    sFamilyStatusSelection.value = 2
+                }
+            }
+
+            when (userProfileLiveData.value!!.familyInfo?.childrenPresence) {
+                ChildrenPresence.NONE -> {
+                    sChildrenPresenceSelection.value = 0
+                }
+                ChildrenPresence.TOGETHER -> {
+                    sChildrenPresenceSelection.value = 1
+                }
+                ChildrenPresence.APART -> {
+                    sChildrenPresenceSelection.value = 2
+                }
+            }
+
+            if (userProfileLiveData.value!!.familyInfo?.childrenDesire == true) {
+                sChildrenDesireSelection.value = 0
+            } else {
+                sChildrenDesireSelection.value = 1
+            }
+
+            // Nationality pending
+
+            when (userProfileLiveData.value!!.culturalInfo?.traditionsRespect) {
+                TraditionsRespect.DONT_KNOW -> {
+                    sAttitudeTowardsTraditionSelection.value = 0
+                }
+                TraditionsRespect.KNOW_NOT_RESPECT -> {
+                    sAttitudeTowardsTraditionSelection.value = 1
+                }
+                TraditionsRespect.KNOW_RESPECT -> {
+                    sAttitudeTowardsTraditionSelection.value = 2
+                }
+            }
+
+            when (userProfileLiveData.value!!.bodyInfo?.bodyType) {
+                BodyType.THIN -> {
+                    sBodyTypeSelection.value = 1
+                }
+                BodyType.SLIM -> {
+                    sBodyTypeSelection.value = 2
+                }
+                BodyType.ATHLETIC -> {
+                    sBodyTypeSelection.value = 3
+                }
+                BodyType.PLUMP -> {
+                    sBodyTypeSelection.value = 4
+                }
+                BodyType.FAT -> {
+                    sBodyTypeSelection.value = 5
+                }
+                else -> {
+                    sBodyTypeSelection.value = 0
+                }
+            }
+
             when (userProfileLiveData.value!!.careerInfo?.educationLevel) {
                 EducationLevels.GENERAL -> {
-                    selectedLevelPosition.value = 1
+                    sEducationLevelSelection.value = 1
                 }
                 EducationLevels.SECONDARY -> {
-                    selectedLevelPosition.value = 2
+                    sEducationLevelSelection.value = 2
                 }
                 EducationLevels.SPECIALIZED_SECONDARY -> {
-                    selectedLevelPosition.value = 3
+                    sEducationLevelSelection.value = 3
                 }
                 EducationLevels.INCOMPLETE_HIGHER -> {
-                    selectedLevelPosition.value = 4
+                    sEducationLevelSelection.value = 4
                 }
                 EducationLevels.HIGHER -> {
-                    selectedLevelPosition.value = 5
+                    sEducationLevelSelection.value = 5
                 }
             }
         }
@@ -488,8 +656,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         showDatePicker.value = show
     }
 
-    fun getSelectedLevelPosition(): LiveData<Int> {
-        return selectedLevelPosition
+    fun getSEducationLevelSelection(): LiveData<Int> {
+        return sEducationLevelSelection
     }
 
     fun getInterestsList(): LiveData<MutableList<InterestModel>> {
@@ -536,11 +704,43 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         return currentImageForPosition
     }
 
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
+    fun setShowGrowthWeightBottomSheet(show: Boolean) {
+        showGrowthWeightBottomSheet.value = show
     }
 
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
+    fun getShowGrowthWeightBottomSheet(): LiveData<Boolean> {
+        return showGrowthWeightBottomSheet
+    }
+
+    fun setShowCareerBottomSheet(show: Boolean) {
+        showCareerBottomSheet.value = show
+    }
+
+    fun getShowCareerBottomSheet(): LiveData<Boolean> {
+        return showCareerBottomSheet
+    }
+
+    fun getSFamilyStatusSelection(): LiveData<Int> {
+        return sFamilyStatusSelection
+    }
+
+    fun getSChildrenPresenceSelection(): LiveData<Int> {
+        return sChildrenPresenceSelection
+    }
+
+    fun getSChildrenDesireSelection(): LiveData<Int> {
+        return sChildrenDesireSelection
+    }
+
+    fun getSNationalitySelection(): LiveData<Int> {
+        return sNationalitySelection
+    }
+
+    fun getSAttitudeTowardsTraditionSelection(): LiveData<Int> {
+        return sAttitudeTowardsTraditionSelection
+    }
+
+    fun getSBodyTypeSelection(): LiveData<Int> {
+        return sBodyTypeSelection
     }
 }

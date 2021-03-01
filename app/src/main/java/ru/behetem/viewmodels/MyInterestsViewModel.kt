@@ -24,7 +24,6 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var observeResponse: Observer<BaseResponse>
     private val interestsList: MutableLiveData<MutableList<InterestModel>> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
     fun getInterests() {
         if (isInternetAvailable(context)) {
@@ -118,13 +117,5 @@ class MyInterestsViewModel(application: Application) : BaseAndroidViewModel(appl
 
     fun getErrorResId(): LiveData<Int> {
         return errorResId
-    }
-
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
     }
 }

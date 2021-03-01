@@ -27,10 +27,10 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_INFO + "?lang=RU")
     fun getInfo(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_INTERESTS)
+    @GET(ApiConstants.GET_INTERESTS + "?lang=RU")
     fun getInterests(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_NATIONALITIES)
+    @GET(ApiConstants.GET_NATIONALITIES + "?lang=RU")
     fun getNationalities(@Header("Authorization") token: String): Call<BaseResponse>
 
     @GET(ApiConstants.GET_CURRENT_USER_IMAGES)
@@ -42,8 +42,8 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_FILTERS)
     fun getFilters(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @POST(ApiConstants.GET_USERS)
-    fun getUsers(@Body filterModel: FilterModel, @Header("Authorization") token: String): Call<BaseResponse>
+    @GET(ApiConstants.GET_USERS + "/lang?RU")
+    fun getUsers(@Header("Authorization") token: String): Call<BaseResponse>
 
     @PUT(ApiConstants.UPDATE_LOCATION)
     fun updateLocation(@Body locationModel: LocationModel, @Header("Authorization") token: String): Call<BaseResponse>

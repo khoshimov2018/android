@@ -27,7 +27,6 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     IInterestClick {
 
     private var filterModelLiveData: MutableLiveData<FilterModel> = MutableLiveData()
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
@@ -373,14 +372,6 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         if (this::saveFilterApiResponse.isInitialized) {
             saveFilterApiResponse.removeObserver(saveFilterObserveResponse)
         }
-    }
-
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
     }
 
     fun getFilterModelLiveData(): LiveData<FilterModel> {

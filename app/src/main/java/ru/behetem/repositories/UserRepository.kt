@@ -167,7 +167,7 @@ object UserRepository {
 
     fun getUsers(strToken: String, filterModel: FilterModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
-        retrofitService.getUsers(filterModel, strToken)
+        retrofitService.getUsers(strToken)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,
@@ -187,13 +187,13 @@ object UserRepository {
         return data
     }
 
-    fun getUsersMultipart(strToken: String, filterModel: FilterModel): LiveData<BaseResponse> {
+    /*fun getUsersMultipart(strToken: String, filterModel: FilterModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
 
         val map: MutableMap<String, RequestBody?> = HashMap()
 
-//        val page: RequestBody = filterModel.page.toRequestBody(MultipartBody.FORM)
-//        map["extension"] = extension
+        val page: RequestBody = filterModel.page.toRequestBody(MultipartBody.FORM)
+        map["extension"] = extension
 
         retrofitService.getUsers(filterModel, strToken)
             .enqueue(object : Callback<BaseResponse> {
@@ -213,7 +213,7 @@ object UserRepository {
                 }
             })
         return data
-    }
+    }*/
 
     fun deleteImage(strToken: String, imageModel: ImageModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()

@@ -27,7 +27,6 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
     private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
     private val errorTraditionResId: MutableLiveData<Int> = MutableLiveData()
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
 
     private lateinit var submitApiResponse: LiveData<BaseResponse>
     private lateinit var submitObserveResponse: Observer<BaseResponse>
@@ -186,14 +185,6 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
 
     fun getErrorResId(): LiveData<Int> {
         return errorResId
-    }
-
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
     }
 
     fun getErrorTraditionResId(): LiveData<Int> {

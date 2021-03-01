@@ -17,7 +17,6 @@ import ru.behetem.utils.validateResponseWithoutPopup
 
 class AllReactionsViewModel(application: Application) : BaseAndroidViewModel(application), IReactionClick {
 
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
     private val receivedReactionsList: MutableLiveData<MutableList<ReactionModel>> = MutableLiveData()
@@ -70,13 +69,5 @@ class AllReactionsViewModel(application: Application) : BaseAndroidViewModel(app
 
     fun getReceivedReactionsList(): LiveData<MutableList<ReactionModel>> {
         return receivedReactionsList
-    }
-
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
     }
 }

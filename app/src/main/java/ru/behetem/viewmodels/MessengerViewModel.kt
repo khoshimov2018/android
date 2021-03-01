@@ -21,7 +21,6 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
     private val receivedReactionsList: MutableLiveData<MutableList<ReactionModel>> = MutableLiveData()
     private val allClicked: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -73,14 +72,6 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
         }
-    }
-
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
     }
 
     fun getReceivedReactionsList(): LiveData<MutableList<ReactionModel>> {

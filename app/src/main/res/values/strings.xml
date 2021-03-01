@@ -126,14 +126,53 @@
     <string name="i_know_but_i_dont">Знаю, но не соблюдаю</string>
     <string name="i_know_i_want_to_preserve">Знаю, хочу сохранить их и привить своим детям</string>
     <string name="career">Карьера</string>
+    <string name="more_options">Больше параметров</string>
+    <string name="having_children">Наличие детей</string>
+    <string name="children_desire">Желание детей</string>
+    <string name="attitude_towards_traditions">Отношение к традициям</string>
+    <string name="edit_2">Изменить</string>
+    <string name="work_education">Работа, образование</string>
+    <string name="growth_weight_value">%1$d см, %2$d кг</string>
 
     <string-array name="education_level">
         <item>Степень</item>
         <item>Общее</item> <!-- General -->
         <item>Среднее</item> <!-- Average -->
         <item>Среднее-специальное</item> <!-- Specialized Secondary -->
-        <item>Незаконченное высшее</item> <!--Unfinished highger-->
+        <item>Незаконченное высшее</item> <!--Unfinished higher-->
         <item>Высшее</item> <!--Higher-->
+    </string-array>
+
+    <string-array name="family_status_array">
+        <item>Холост/не замужем</item> <!-- Single -->
+        <item>Разведен(а)</item> <!-- Divorced -->
+        <item>Вдовец(ва)</item> <!-- Widowed -->
+    </string-array>
+
+    <string-array name="children_status_array">
+        <item>Нет</item> <!-- Not -->
+        <item>Есть, живем вместе</item> <!-- Live Together -->
+        <item>Есть, живем порознь</item> <!-- Live Apart -->
+    </string-array>
+
+    <string-array name="children_desire_status_array">
+        <item>Да</item> <!-- Yes -->
+        <item>Нет</item> <!-- No -->
+    </string-array>
+
+    <string-array name="attitude_array">
+        <item>Не заню</item> <!--i_dont_know-->
+        <item>Знаю, но не соблюдаю</item> <!--i_know_but_i_dont-->
+        <item>Знаю, хочу сохранить их и привить своим детям</item> <!--i_know_i_want_to_preserve-->
+    </string-array>
+
+    <string-array name="body_type_array">
+        <item>Choose</item>
+        <item>Худощавое</item> <!--skinny-->
+        <item>Стройное</item> <!--slender-->
+        <item>Спортивное</item> <!--sports-->
+        <item>Плотное</item> <!--dense-->
+        <item>Полное</item> <!--complete-->
     </string-array>
 
     <string-array name="distance_level">
@@ -180,7 +219,6 @@
     <string name="passwords_changed_successfully">Password changed successfully</string>
     <string name="choose_family_status">Please choose your family status</string>
     <string name="choose_children_presence">Please choose your children presence</string>
-    <string name="children_desire">Children Desire</string>
     <string name="indicate_desire_of_children">Indicate your desire to have children</string>
     <string name="choose_children_desire">Please choose your children desire</string>
     <string name="indicate_attitude_to_national_tradition">Indicate your attitude to national tradition</string>
