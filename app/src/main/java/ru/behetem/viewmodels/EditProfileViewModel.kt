@@ -32,6 +32,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
     private val showDatePicker: MutableLiveData<Boolean> = MutableLiveData()
+
     // Spinner selected positions
     private val sFamilyStatusSelection: MutableLiveData<Int> = MutableLiveData(0)
     private val sChildrenPresenceSelection: MutableLiveData<Int> = MutableLiveData(0)
@@ -48,7 +49,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var interestsApiResponse: LiveData<BaseResponse>
     private lateinit var interestsObserveResponse: Observer<BaseResponse>
 
-    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
+    private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> =
+        MutableLiveData()
     private lateinit var nationalitiesApiResponse: LiveData<BaseResponse>
     private lateinit var nationalitiesObserveResponse: Observer<BaseResponse>
 
@@ -214,15 +216,16 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                         val interests: MutableList<InterestModel> =
                             gson.fromJson<MutableList<InterestModel>>(strResponse, myType)
 
+                        if (userProfileLiveData.value?.interestsToShow == null) {
+                            userProfileLiveData.value?.interestsToShow = ArrayList()
+                            for (i in userProfileLiveData.value!!.interests!!) {
+                                userProfileLiveData.value?.interestsToShow?.add(i)
+                            }
+                        }
+                        userProfileLiveData.value?.interests = ArrayList()
+
                         for (interest in interests) {
                             if (userProfileLiveData.value != null && userProfileLiveData.value!!.interests != null) {
-                                if(userProfileLiveData.value?.interestsToShow == null) {
-                                    userProfileLiveData.value?.interestsToShow = ArrayList()
-                                    for (i in userProfileLiveData.value!!.interests!!) {
-                                        userProfileLiveData.value?.interestsToShow?.add(i)
-                                    }
-                                }
-                                userProfileLiveData.value?.interests = ArrayList()
 
                                 var isSaved = false
                                 for (savedInterest in userProfileLiveData.value!!.interestsToShow!!) {
@@ -232,11 +235,15 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                                         break
                                     }
                                 }
+
                                 interest.isSelected = isSaved
                             } else {
                                 interest.isSelected = false
                             }
                         }
+
+                        printLog("after interestsToShow ${userProfileLiveData.value?.interestsToShow}")
+                        printLog("after interests ${userProfileLiveData.value?.interests}")
 
                         interestsList.value = interests
                     }
@@ -269,15 +276,18 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                         val nationalities: MutableList<NationalityModel> =
                             gson.fromJson<MutableList<NationalityModel>>(strResponse, myType)
 
-                        for (nationality in nationalities) {
+                        nationalities.forEachIndexed { index, nationality ->
                             if (userProfileLiveData.value != null && userProfileLiveData.value!!.culturalInfo != null && userProfileLiveData.value!!.culturalInfo!!.nationality != null) {
-                                if(userProfileLiveData.value!!.nationalityToShow == null) {
-                                    userProfileLiveData.value!!.nationalityToShow = userProfileLiveData.value!!.culturalInfo!!.nationality
+                                if (userProfileLiveData.value!!.nationalityToShow == null) {
+                                    userProfileLiveData.value!!.nationalityToShow =
+                                        userProfileLiveData.value!!.culturalInfo!!.nationality
                                 }
 
                                 if (nationality.ifNationalityMatches(userProfileLiveData.value!!.nationalityToShow!!)) {
                                     nationality.isSelected = true
-                                    userProfileLiveData.value!!.culturalInfo!!.nationality = nationality.nationalityId
+                                    sNationalitySelection.value = index
+                                    userProfileLiveData.value!!.culturalInfo!!.nationality =
+                                        nationality.nationalityId
                                 } else {
                                     nationality.isSelected = false
                                 }
@@ -334,7 +344,8 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         nationalityItem.isSelected = true
         userProfileLiveData.value?.culturalInfo?.nationality = nationalityItem.nationalityId
-        userProfileLiveData.value?.nationalityToShow = nationalityItem.getLabelToShow(getChosenGender())
+        userProfileLiveData.value?.nationalityToShow =
+            nationalityItem.getLabelToShow(getChosenGender())
         nationalitiesList.value = nationalitiesList.value
         userProfileLiveData.value = userProfileLiveData.value
     }
@@ -464,19 +475,29 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     }
 
     fun onNationalitySelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
+        userProfileLiveData.value?.culturalInfo?.nationality = nationalitiesList.value!![position].nationalityId
+        userProfileLiveData.value?.nationalityToShow = nationalitiesList.value!![position].label
+        sNationalitySelection.value = position
     }
 
-    fun onAttitudeTowardsTraditionSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    fun onAttitudeTowardsTraditionSelected(
+        parent: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        id: Long
+    ) {
         when (position) {
             0 -> {
-                userProfileLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.DONT_KNOW
+                userProfileLiveData.value?.culturalInfo?.traditionsRespect =
+                    TraditionsRespect.DONT_KNOW
             }
             1 -> {
-                userProfileLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.KNOW_NOT_RESPECT
+                userProfileLiveData.value?.culturalInfo?.traditionsRespect =
+                    TraditionsRespect.KNOW_NOT_RESPECT
             }
             2 -> {
-                userProfileLiveData.value?.culturalInfo?.traditionsRespect = TraditionsRespect.KNOW_RESPECT
+                userProfileLiveData.value?.culturalInfo?.traditionsRespect =
+                    TraditionsRespect.KNOW_RESPECT
             }
         }
         sAttitudeTowardsTraditionSelection.value = position
@@ -548,8 +569,6 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     fun setCurrentUser(userModel: UserModel) {
         userProfileLiveData.value = userModel
 
-//        sNationalitySelection
-
         if (userProfileLiveData.value != null) {
             when (userProfileLiveData.value!!.familyInfo?.status) {
                 FamilyStatus.SINGLE -> {
@@ -580,8 +599,6 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
             } else {
                 sChildrenDesireSelection.value = 1
             }
-
-            // Nationality pending
 
             when (userProfileLiveData.value!!.culturalInfo?.traditionsRespect) {
                 TraditionsRespect.DONT_KNOW -> {
