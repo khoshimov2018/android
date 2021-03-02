@@ -285,6 +285,13 @@ class EditProfileActivity : AppCompatActivity() {
     private fun moveUserBack() {
         val returnIntent = Intent()
         returnIntent.putExtra(Constants.PROFILE_USER, editProfileViewModel.getCurrentUser())
+
+        var arrayList: ArrayList<String>? = null
+        if(editProfileViewModel.getImages() != null) {
+            arrayList = ArrayList(editProfileViewModel.getImages()!!)
+        }
+        returnIntent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
+
         setResult(RESULT_OK, returnIntent)
         super.onBackPressed()
     }

@@ -158,6 +158,10 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
         return imagesListLiveData
     }
 
+    fun setImages(images: MutableList<String>) {
+        imagesListLiveData.value = images
+    }
+
     fun getImages(): MutableList<String>? {
         return imagesListLiveData.value
     }

@@ -18,6 +18,7 @@ import ru.behetem.databinding.ActivityMyProfileDetailBinding
 import ru.behetem.models.UserModel
 import ru.behetem.utils.Constants
 import ru.behetem.utils.dpToPx
+import ru.behetem.utils.printLog
 import ru.behetem.viewmodels.MyProfileDetailViewModel
 
 class MyProfileDetailActivity : AppCompatActivity() {
@@ -103,6 +104,9 @@ class MyProfileDetailActivity : AppCompatActivity() {
 
     private fun initView() {
         if (this::listOfImages.isInitialized) {
+            countLinear.removeAllViews()
+            listOfCountViews.clear()
+
             for (index in 0 until listOfImages.size) {
                 val view = View(this)
                 val layoutParams: LinearLayout.LayoutParams =
@@ -120,7 +124,7 @@ class MyProfileDetailActivity : AppCompatActivity() {
     }
 
     private fun showIndex(index: Int) {
-        if(index < listOfImages.size) {
+        if (index < listOfImages.size) {
             resetCountViews()
 //        imageView.setBackgroundResource(listOfImages[index])
             Glide.with(this)
@@ -160,6 +164,12 @@ class MyProfileDetailActivity : AppCompatActivity() {
                     myProfileDetailViewModel.setCurrentUser(it)
                     setInterests()
                 }
+                val imagesList = data?.getStringArrayListExtra(Constants.USER_IMAGES)
+                imagesList?.let {
+                    myProfileDetailViewModel.setImagesListLiveData(it)
+                    listOfImages = it
+                    initView()
+                }
             }
         }
     }
@@ -174,6 +184,13 @@ class MyProfileDetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val returnIntent = Intent()
         returnIntent.putExtra(Constants.PROFILE_USER, myProfileDetailViewModel.getCurrentUser())
+
+        var arrayList: java.util.ArrayList<String>? = null
+        if(myProfileDetailViewModel.getImages() != null) {
+            arrayList = java.util.ArrayList(myProfileDetailViewModel.getImages()!!)
+        }
+        returnIntent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
+
         setResult(RESULT_OK, returnIntent)
         super.onBackPressed()
     }

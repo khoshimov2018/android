@@ -139,6 +139,10 @@ class MyProfileFragment : Fragment() {
                 currentUser?.let {
                     viewModel.setCurrentUser(it)
                 }
+                val imagesList = data?.getStringArrayListExtra(Constants.USER_IMAGES)
+                imagesList?.let {
+                    viewModel.setImages(it)
+                }
             }
         }
     }

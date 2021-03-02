@@ -44,6 +44,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
 
     private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
     private var currentImageForPosition = -1
+    private lateinit var view: View
 
     private val interestsList: MutableLiveData<MutableList<InterestModel>> = MutableLiveData()
     private lateinit var interestsApiResponse: LiveData<BaseResponse>
@@ -59,6 +60,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     private lateinit var editProfileApiResponse: LiveData<BaseResponse>
     private lateinit var editProfileObserveResponse: Observer<BaseResponse>
     private val allowToGoBack: MutableLiveData<Boolean> = MutableLiveData()
+
+    private lateinit var uploadImageApiResponse: LiveData<BaseResponse>
+    private lateinit var uploadImageObserveResponse: Observer<BaseResponse>
 
     private lateinit var deleteImageApiResponse: LiveData<BaseResponse>
     private lateinit var deleteImageObserveResponse: Observer<BaseResponse>
@@ -167,12 +171,41 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
     }
 
     fun onImageClick(view: View, position: Int) {
+        this.view = view
         currentImageForPosition = position
         openImagePicker.value = true
     }
 
     fun setImageUri(uri: Uri) {
-//        uploadImage(uri)
+        uploadImage(uri)
+    }
+
+    private fun uploadImage(uri: Uri) {
+        if(validateInternet(view.context)) {
+            hideKeyboard(view)
+            loaderVisible.value = true // show loader
+            uploadImageObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+                if(validateResponse(view.context, it)){
+                    if(it.data is String) {
+                        val url = "${ApiConstants.BASE_URL}${it.data}"
+                        if(imagesListLiveData.value != null && imagesListLiveData.value!!.size > currentImageForPosition) {
+                            imagesListLiveData.value!![currentImageForPosition] = url
+                        } else {
+                            imagesListLiveData.value!!.add(url)
+                        }
+                    }
+                    imagesListLiveData.value = imagesListLiveData.value
+                }
+            }
+
+            // token
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+
+            val inputStream = view.context.contentResolver.openInputStream(uri)!!
+            uploadImageApiResponse = UserRepository.uploadImage(inputStream, strToken)
+            uploadImageApiResponse.observeForever(uploadImageObserveResponse)
+        }
     }
 
     private fun deleteImage(position: Int) {
@@ -241,9 +274,6 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
                                 interest.isSelected = false
                             }
                         }
-
-                        printLog("after interestsToShow ${userProfileLiveData.value?.interestsToShow}")
-                        printLog("after interests ${userProfileLiveData.value?.interests}")
 
                         interestsList.value = interests
                     }
@@ -360,6 +390,9 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
         if (this::deleteImageApiResponse.isInitialized) {
             deleteImageApiResponse.removeObserver(deleteImageObserveResponse)
+        }
+        if (this::uploadImageApiResponse.isInitialized) {
+            uploadImageApiResponse.removeObserver(uploadImageObserveResponse)
         }
     }
 
@@ -653,7 +686,7 @@ class EditProfileViewModel(application: Application) : BaseAndroidViewModel(appl
         }
     }
 
-    fun getChosenGender(): String {
+    private fun getChosenGender(): String {
         return if (this.userProfileLiveData.value != null && this.userProfileLiveData.value!!.gender != null) {
             this.userProfileLiveData.value!!.gender!!
         } else {
