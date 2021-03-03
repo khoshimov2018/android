@@ -60,4 +60,7 @@ interface RetrofitInterface {
 
     @POST(ApiConstants.CHANGE_PASSWORD)
     fun changePassword(@Body changePasswordModel: ChangePasswordModel, @Header("Authorization") token: String): Call<BaseResponse>
+
+    @POST(ApiConstants.DELETE_ACCOUNT)
+    fun deleteAccount(@Header("Authorization") token: String): Call<BaseResponse>
 }

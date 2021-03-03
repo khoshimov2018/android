@@ -51,6 +51,7 @@ object ApiConstants {
     const val SEND_REACTION = "react"
     const val GET_REACTIONS = "reaction/newReactions"
     const val CHANGE_PASSWORD = "password/change"
+    const val DELETE_ACCOUNT = "delete-account"
 }
 
 object LoginFormErrorConstants {

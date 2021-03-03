@@ -10,6 +10,7 @@ import ru.behetem.BuildConfig
 import ru.behetem.R
 import ru.behetem.databinding.ActivitySettingsBinding
 import ru.behetem.utils.Constants
+import ru.behetem.utils.getLoggedInUserFromShared
 import ru.behetem.utils.openUrlInBrowser
 import ru.behetem.viewmodels.SettingsViewModel
 
@@ -30,6 +31,8 @@ class SettingsActivity : AppCompatActivity() {
         binding.viewModel = settingsViewModel
 
         settingsViewModel.setVersionName(BuildConfig.VERSION_NAME)
+        val loggedInUser = getLoggedInUserFromShared(this)
+        settingsViewModel.setLoggedInUser(loggedInUser)
 
         initObservers()
     }

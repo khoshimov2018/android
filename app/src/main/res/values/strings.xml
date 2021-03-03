@@ -238,6 +238,7 @@
     <string name="choose_body_type">Choose Body Type</string>
     <string name="choose_language_proficiency">Choose Language Proficiency</string>
     <string name="choose_religion_respect">Choose Religion Respect</string>
+    <string name="sure_delete_account">Are you sure you want to delete your account?</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>
