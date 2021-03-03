@@ -133,6 +133,18 @@
     <string name="edit_2">Изменить</string>
     <string name="work_education">Работа, образование</string>
     <string name="growth_weight_value">%1$d см, %2$d кг</string>
+    <string name="knowledge_of_national_language">Знание национального языка</string>
+    <string name="indicate_your_level_of_language_proficiency">Укажите ваш уровень знания языка</string>
+    <string name="i_do_not_know">Не заню</string>
+    <string name="i_know_some_words">Знаю некоторые слова</string>
+    <string name="i_understand_but_cannot_maintain_dialogue">Понимаю, но не могу поддержать диалог</string>
+    <string name="i_understand_i_can_maintain_dialogue">Понимаю, могу поддержать диалог</string>
+    <string name="i_know_well">Знаю хорошо</string>
+    <string name="relation_to_religion">Отношение к религии</string>
+    <string name="indicate_your_attitude_to_religion">Укажите ваше отнршение к религии</string>
+    <string name="non_believer">Не верующий(ая)</string>
+    <string name="believer">Верующий(ая)</string>
+    <string name="believer_and_observer_of_canons">Верующий(ая) и соблядающий(ая) каноны</string>
 
     <string-array name="education_level">
         <item>Степень</item>
@@ -224,6 +236,8 @@
     <string name="indicate_attitude_to_national_tradition">Indicate your attitude to national tradition</string>
     <string name="choose_tradition_respect">Please choose Tradition Respect</string>
     <string name="choose_body_type">Choose Body Type</string>
+    <string name="choose_language_proficiency">Choose Language Proficiency</string>
+    <string name="choose_religion_respect">Choose Religion Respect</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

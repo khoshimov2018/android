@@ -80,18 +80,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@+id/button"
-                    android:orientation="vertical"
-                    android:weightSum="1">
+                    android:layout_above="@+id/button">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
+
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -129,13 +127,6 @@
                             android:clipToPadding="false"
                             android:paddingTop="@dimen/normalPadding"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.5"
-                        android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
@@ -199,8 +190,152 @@
                                 android:text="@string/i_know_i_want_to_preserve"
                                 android:textColor="@color/textColor" />
                         </RadioGroup>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="@string/knowledge_of_national_language"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/smallMargin"
+                            android:text="@string/indicate_your_level_of_language_proficiency"
+                            android:textColor="@color/lightTextColor"
+                            android:textSize="@dimen/mediumTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/largeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:gravity="center"
+                            android:text='@{viewModel.errorLanguageKnowledgeResId != null ? context.getString(viewModel.errorLanguageKnowledgeResId) : ""}'
+                            android:textAppearance="@style/ErrorTextAppearance"
+                            android:visibility="@{viewModel.errorLanguageKnowledgeResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/xLargeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isDoNotKnow() : false}"
+                                android:onClick="@{viewModel::onIDoNotKnowClicked}"
+                                android:text="@string/i_do_not_know"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isKnowSomeWords() : false}"
+                                android:onClick="@{viewModel::onIKnowSomeWords}"
+                                android:text="@string/i_know_some_words"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isKnowCannotMaintainDialogue() : false}"
+                                android:onClick="@{viewModel::onIUnderstandButCannotMaintainDialogue}"
+                                android:text="@string/i_understand_but_cannot_maintain_dialogue"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isKnowCanMaintainDialogue() : false}"
+                                android:onClick="@{viewModel::onIUnderstandICanMaintainDialogue}"
+                                android:text="@string/i_understand_i_can_maintain_dialogue"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isKnowWell() : false}"
+                                android:onClick="@{viewModel::onIKnowWell}"
+                                android:text="@string/i_know_well"
+                                android:textColor="@color/textColor" />
+                        </RadioGroup>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="@string/relation_to_religion"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/smallMargin"
+                            android:text="@string/indicate_your_attitude_to_religion"
+                            android:textColor="@color/lightTextColor"
+                            android:textSize="@dimen/mediumTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/largeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:gravity="center"
+                            android:text='@{viewModel.errorReligionResId != null ? context.getString(viewModel.errorReligionResId) : ""}'
+                            android:textAppearance="@style/ErrorTextAppearance"
+                            android:visibility="@{viewModel.errorReligionResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/xLargeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isNonBeliever() : false}"
+                                android:onClick="@{viewModel::onNonBelieverClicked}"
+                                android:text="@string/non_believer"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isBeliever() : false}"
+                                android:onClick="@{viewModel::onBelieverClicked}"
+                                android:text="@string/believer"
+                                android:textColor="@color/textColor" />
+
+                            <androidx.appcompat.widget.AppCompatRadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/normalMargin"
+                                android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isCanonicalBeliever() : false}"
+                                android:onClick="@{viewModel::onCanonicalBelieverClicked}"
+                                android:text="@string/believer_and_observer_of_canons"
+                                android:textColor="@color/textColor" />
+                        </RadioGroup>
                     </LinearLayout>
-                </LinearLayout>
+                </ScrollView>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button"

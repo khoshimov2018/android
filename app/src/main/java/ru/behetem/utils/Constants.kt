@@ -33,7 +33,7 @@ object Constants {
 }
 
 object ApiConstants {
-    const val BASE_URL = "http://37.143.14.155/"
+    const val BASE_URL = "http://behetem.ru/"
     const val WEB_SOCKET_URL = "ws://37.143.14.155/ws/websocket"
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
@@ -150,6 +150,14 @@ object ReligionRespect {
     const val ATHEIST = "ATHEIST"
     const val RELIGIOUS = "RELIGIOUS"
     const val CANONICAL_RELIGIOUS = "CANONICAL_RELIGIOUS"
+}
+
+object LanguageKnowledge {
+    const val DONT_KNOW = "DONT_KNOW"
+    const val KNOW_SOME_WORDS = "KNOW_SOME_WORDS"
+    const val UNDERSTAND_CANT_SPEAK = "UNDERSTAND_CANT_SPEAK"
+    const val UNDERSTAND_CAN_SPEAK = "UNDERSTAND_CAN_SPEAK"
+    const val KNOW_WELL = "KNOW_WELL"
 }
 
 object BodyType {

@@ -12,6 +12,7 @@ import retrofit2.Response
 import ru.behetem.api.RetrofitService
 import ru.behetem.models.*
 import ru.behetem.responses.BaseResponse
+import ru.behetem.utils.ApiConstants
 import ru.behetem.utils.getApiElseBaseResponse
 import ru.behetem.utils.getFailureBaseResponse
 import java.io.InputStream
@@ -167,7 +168,26 @@ object UserRepository {
 
     fun getUsers(strToken: String, filterModel: FilterModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
-        retrofitService.getUsers(strToken)
+
+        var params = "lang=RU&page=${filterModel.page}&size=${filterModel.size}"
+
+        if(filterModel.gender != null) {
+            params += "&gender=${filterModel.gender}"
+        }
+
+        if(filterModel.maxDistance != null) {
+            params += "&maxDistance=${filterModel.maxDistance}"
+        }
+
+        if(filterModel.dateOfBirthFrom != null) {
+            params += "&dateOfBirthFrom=${filterModel.dateOfBirthFrom}"
+        }
+
+        if(filterModel.dateOfBirthTo != null) {
+            params += "&dateOfBirthTo=${filterModel.dateOfBirthTo}"
+        }
+
+        retrofitService.getUsers(strToken, "${ApiConstants.GET_USERS}?${params}")
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,

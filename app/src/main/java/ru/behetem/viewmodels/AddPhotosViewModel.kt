@@ -57,11 +57,12 @@ class AddPhotosViewModel : BaseViewModel() {
     }
 
     override fun moveFurther(view: View) {
-        if(numberOfImagesUploaded < Constants.MINIMUM_PHOTOS) {
+        moveFurther.value = true
+        /*if(numberOfImagesUploaded < Constants.MINIMUM_PHOTOS) {
             showLessImagesError.value = true
         } else {
             moveFurther.value = true
-        }
+        }*/
     }
 
     fun setCurrentUser(userModel: UserModel) {

@@ -42,8 +42,9 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_FILTERS)
     fun getFilters(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_USERS + "/lang?RU")
-    fun getUsers(@Header("Authorization") token: String): Call<BaseResponse>
+//    (ApiConstants.GET_USERS + "{params}")
+    @GET
+    fun getUsers(@Header("Authorization") token: String, @Url url: String): Call<BaseResponse>
 
     @PUT(ApiConstants.UPDATE_LOCATION)
     fun updateLocation(@Body locationModel: LocationModel, @Header("Authorization") token: String): Call<BaseResponse>
