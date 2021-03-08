@@ -15,160 +15,758 @@
             type="ru.behetem.adapters.InterestsAdapter" />
     </data>
 
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/round_dialog_background"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/normalPadding"
-                android:src="@drawable/cross" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_horizontal"
-                android:text="@string/filters"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/largeTextSize" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lineHeight"
-            android:layout_marginTop="@dimen/smallMargin"
-            android:background="@color/lightGreyColor" />
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/round_dialog_background"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/i_am_looking_for"
+                    android:padding="@dimen/normalPadding"
+                    android:src="@drawable/cross" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:text="@string/filters"
                     android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/largeTextSize" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_marginTop="@dimen/smallMargin"
+                android:background="@color/lightGreyColor" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normalMargin"
-                        android:layout_marginEnd="@dimen/smallMargin"
-                        android:layout_weight="1"
-                        android:background="@{viewModel.filterModelLiveData.isLookingForMale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
-                        android:onClick="@{viewModel::onMaleClicked}"
-                        android:text="@string/male"
-                        android:textColor="@{viewModel.filterModelLiveData.isLookingForMale() ? @android:color/white : @color/textColor}" />
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/i_am_looking_for"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/smallMargin"
-                        android:layout_marginEnd="@dimen/normalMargin"
-                        android:layout_weight="1"
-                        android:background="@{viewModel.filterModelLiveData.isLookingForFemale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
-                        android:onClick="@{viewModel::onFemaleClicked}"
-                        android:text="@string/female"
-                        android:textColor="@{viewModel.filterModelLiveData.isLookingForFemale() ? @android:color/white : @color/textColor}" />
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/normalMargin"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="1"
+                            android:background="@{viewModel.filterModelLiveData.isLookingForMale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                            android:onClick="@{viewModel::onMaleClicked}"
+                            android:text="@string/male"
+                            android:textColor="@{viewModel.filterModelLiveData.isLookingForMale() ? @android:color/white : @color/textColor}" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_marginEnd="@dimen/normalMargin"
+                            android:layout_weight="1"
+                            android:background="@{viewModel.filterModelLiveData.isLookingForFemale() ? @drawable/round_button_selected : @drawable/round_button_unselected}"
+                            android:onClick="@{viewModel::onFemaleClicked}"
+                            android:text="@string/female"
+                            android:textColor="@{viewModel.filterModelLiveData.isLookingForFemale() ? @android:color/white : @color/textColor}" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/age"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:text="@{viewModel.filterModelLiveData.getFromToAge()}"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
+                        android:id="@+id/ageSeekBar"
+                        style="@style/Base.Sephiroth.Widget.RangeSeekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:max="82"
+                        app:range_progress_startEnd_minDiff="1"
+                        app:setMaxProgress="@{viewModel.filterModelLiveData.getAgeTo()}"
+                        app:setMinProgress="@{viewModel.filterModelLiveData.getAgeFrom()}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/max_distance_from_me"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:entries="@array/distance_level"
+                        android:onItemSelected="@{viewModel::onItemSelected}"
+                        android:padding="@dimen/normalPadding"
+                        android:selection="@{viewModel.selectedDistancePosition}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/interests"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adapter="@{interestsAdapter}"
+                        android:clipToPadding="false"
+                        android:paddingTop="@dimen/normalPadding"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/more_filters"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="@string/specify_additional_params_to"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="@dimen/normalTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/height_weight"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_unselected"
+                        android:onClick="@{viewModel::growthWeightClicked}"
+                        android:paddingHorizontal="@dimen/normalPadding"
+                        android:paddingVertical="@dimen/normalPadding">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{(viewModel.filterModelLiveData != null &amp;&amp; viewModel.filterModelLiveData.growthFrom != null) ? @string/growth_from_to_value_comma(viewModel.filterModelLiveData.growthFrom, viewModel.filterModelLiveData.growthTo) : @string/height_weight}"
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/largeTextSize" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text='@{(viewModel.filterModelLiveData != null &amp;&amp; viewModel.filterModelLiveData.weightFrom != null) ? @string/weight_from_to_value(viewModel.filterModelLiveData.weightFrom, viewModel.filterModelLiveData.weightTo) : ""}'
+                                android:textColor="@color/textColor"
+                                android:textSize="@dimen/largeTextSize" />
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="@string/edit_2"
+                            android:textColor="@color/lightTextColor"
+                            android:textSize="@dimen/normalTextSize" />
+                    </RelativeLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/family_status"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isSingleChosen()}"
+                            android:onClick="@{viewModel::onSingleClicked}"
+                            android:text="@string/single_not_married" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isDivorcedChosen()}"
+                            android:onClick="@{viewModel::onDivorcedClicked}"
+                            android:text="@string/divorced" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isWidowedChosen()}"
+                        android:onClick="@{viewModel::onWidowedClicked}"
+                        android:text="@string/widower" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/attitude_towards_traditions"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isIDontKnowTraditionChosen()}"
+                            android:onClick="@{viewModel::onIDontKnowTraditionClicked}"
+                            android:text="@string/i_dont_know" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isKnowNotRespectTraditionChosen()}"
+                            android:onClick="@{viewModel::onKnowNotRespectTraditionClicked}"
+                            android:text="@string/i_know_but_i_dont" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isKnowRespectTraditionChosen()}"
+                        android:onClick="@{viewModel::onKnowRespectTraditionClicked}"
+                        android:text="@string/i_know_i_want_to_preserve" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/body_type"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isSkinnyChosen()}"
+                            android:onClick="@{viewModel::onSkinnyClicked}"
+                            android:text="@string/skinny" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isSlenderChosen()}"
+                            android:onClick="@{viewModel::onSlenderClicked}"
+                            android:text="@string/slender" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isSportsChosen()}"
+                            android:onClick="@{viewModel::onSportsClicked}"
+                            android:text="@string/sports" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isDenseChosen()}"
+                            android:onClick="@{viewModel::onDenseClicked}"
+                            android:text="@string/dense" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isCompleteChosen()}"
+                        android:onClick="@{viewModel::onCompleteClicked}"
+                        android:text="@string/complete" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/education"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isGeneralChosen()}"
+                            android:onClick="@{viewModel::onGeneralClicked}"
+                            android:text="@string/general" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isAverageChosen()}"
+                            android:onClick="@{viewModel::onAverageClicked}"
+                            android:text="@string/average" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isSpecializedSecondaryChosen()}"
+                            android:onClick="@{viewModel::onSpecializedSecondaryClicked}"
+                            android:text="@string/specialized_secondary" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isUnfinishedHigherChosen()}"
+                            android:onClick="@{viewModel::onUnfinishedHigherClicked}"
+                            android:text="@string/unfinished_higher" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isHigherChosen()}"
+                        android:onClick="@{viewModel::onHigherClicked}"
+                        android:text="@string/higher" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/having_children"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isNotHavingChildrenChosen()}"
+                            android:onClick="@{viewModel::onNotHavingChildrenClicked}"
+                            android:text="@string/not" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isLiveTogetherChosen()}"
+                            android:onClick="@{viewModel::onLiveTogetherClicked}"
+                            android:text="@string/yes_we_live_together" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isLiveSeparateChosen()}"
+                        android:onClick="@{viewModel::onLiveSeparateClicked}"
+                        android:text="@string/yes_we_live_separately" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/children_desire"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:checked="@{viewModel.isYesDesire()}"
+                            android:onClick="@{viewModel::onYesDesireClicked}"
+                            android:text="@string/yes"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isNoDesire()}"
+                            android:onClick="@{viewModel::onNoDesireClicked}"
+                            android:text="@string/not"
+                            android:textColor="@color/textColor" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/relation_to_religion"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isNonBelieverChosen()}"
+                            android:onClick="@{viewModel::onNonBelieverClicked}"
+                            android:text="@string/non_believer" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isBelieverChosen()}"
+                            android:onClick="@{viewModel::onBelieverClicked}"
+                            android:text="@string/believer" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isCanonicalBelieverChosen()}"
+                        android:onClick="@{viewModel::onCanonicalBelieverClicked}"
+                        android:text="@string/believer_and_observer_of_canons" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
+                        android:text="@string/knowledge_of_national_language"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:checked="@{viewModel.isDontKnowLanguageChosen()}"
+                            android:onClick="@{viewModel::onDontKnowLanguageClicked}"
+                            android:text="@string/i_do_not_know" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:text="@string/i_know_some_words" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:text="@string/i_understand_but_cannot_maintain_dialogue" />
+
+                        <androidx.appcompat.widget.AppCompatCheckBox
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/smallMargin"
+                            android:layout_weight="0.5"
+                            android:text="@string/i_understand_i_can_maintain_dialogue" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:text="@string/i_know_well" />
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/age"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+        <View
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="gone" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/smallMargin"
-                    android:text="@{viewModel.filterModelLiveData.getFromToAge()}"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize" />
+        <LinearLayout
+            android:id="@+id/bottomSheetForGrowthWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_tabs_background"
+            android:orientation="vertical"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="0dp"
+            app:cardElevation="@dimen/elevation"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-                <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
-                    android:id="@+id/ageSeekBar"
-                    style="@style/Base.Sephiroth.Widget.RangeSeekBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:max="82"
-                    app:setMinProgress="@{viewModel.filterModelLiveData.getAgeFrom()}"
-                    app:setMaxProgress="@{viewModel.filterModelLiveData.getAgeTo()}"
-                    app:range_progress_startEnd_minDiff="1" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/largeMargin"
+                android:text="@string/growth"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize"
+                android:textStyle="bold" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/distance_from_me"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_marginEnd="@dimen/normalMargin"
+                android:text='@{(viewModel.filterModelLiveData != null &amp;&amp; viewModel.filterModelLiveData.growthFrom != null) ? @string/growth_from_to_value(viewModel.filterModelLiveData.growthFrom, viewModel.filterModelLiveData.growthTo) : ""}'
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/normalMargin"
-                    android:background="@drawable/round_button_unselected"
-                    android:entries="@array/distance_level"
-                    android:onItemSelected="@{viewModel::onItemSelected}"
-                    android:padding="@dimen/normalPadding"
-                    android:selection="@{viewModel.selectedDistancePosition}"/>
+            <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
+                android:id="@+id/growthSeekBar"
+                style="@style/Base.Sephiroth.Widget.RangeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/normalMargin"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:max="250"
+                app:range_progress_startEnd_minDiff="1"
+                app:setMaxProgress="@{viewModel.filterModelLiveData.getChosenGrowthTo()}"
+                app:setMinProgress="@{viewModel.filterModelLiveData.getChosenGrowthFrom()}" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/normalMargin"
-                    android:layout_marginTop="@dimen/largeMargin"
-                    android:text="@string/interests"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/largeTextSize"
-                    android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_marginVertical="@dimen/largeMargin"
+                android:background="@color/lightGreyColor" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adapter="@{interestsAdapter}"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/normalPadding"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/largeMargin"
+                android:text="@string/weight"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_marginEnd="@dimen/normalMargin"
+                android:text='@{(viewModel.filterModelLiveData != null &amp;&amp; viewModel.filterModelLiveData.weightFrom != null) ? @string/weight_from_to_value(viewModel.filterModelLiveData.weightFrom, viewModel.filterModelLiveData.weightTo) : ""}'
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/largeTextSize" />
+
+            <it.sephiroth.android.library.rangeseekbar.RangeSeekBar
+                android:id="@+id/weightSeekBar"
+                style="@style/Base.Sephiroth.Widget.RangeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/normalMargin"
+                android:layout_marginTop="@dimen/normalMargin"
+                android:layout_marginBottom="@dimen/xLargeMargin"
+                android:max="250"
+                app:range_progress_startEnd_minDiff="1"
+                app:setMaxProgress="@{viewModel.filterModelLiveData.getChosenWeightTo()}"
+                app:setMinProgress="@{viewModel.filterModelLiveData.getChosenWeightFrom()}" />
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

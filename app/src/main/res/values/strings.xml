@@ -48,8 +48,10 @@
     <string name="interests">Интересы</string>
     <string name="growth">Рост</string>
     <string name="growth_value">%d, см</string>
+    <string name="growth_from_to_value">%1$d-%2$d, см</string>
     <string name="weight">Вес</string>
     <string name="weight_value">%d, кг</string>
+    <string name="weight_from_to_value">%1$d-%2$d, кг</string>
     <string name="family_status">Семейное положение</string>
     <string name="family_and_children">Семья и дети</string>
     <string name="a_family">Семья</string>
@@ -95,6 +97,7 @@
     <string name="i_am_looking_for">Я ищу</string>
     <string name="age">Возраст</string>
     <string name="distance_from_me">Растояние от меня, км</string>
+    <string name="max_distance_from_me">Максимальное растояние от меня, км</string>
     <string name="password_recovery">Восстановление пароля</string>
     <string name="confirm">Подтвердить</string>
     <string name="new_password">Новый пароль</string>
@@ -133,6 +136,7 @@
     <string name="edit_2">Изменить</string>
     <string name="work_education">Работа, образование</string>
     <string name="growth_weight_value">%1$d см, %2$d кг</string>
+    <string name="growth_from_to_value_comma">%1$d-%2$d см,</string>
     <string name="knowledge_of_national_language">Знание национального языка</string>
     <string name="indicate_your_level_of_language_proficiency">Укажите ваш уровень знания языка</string>
     <string name="i_do_not_know">Не заню</string>
@@ -145,6 +149,13 @@
     <string name="non_believer">Не верующий(ая)</string>
     <string name="believer">Верующий(ая)</string>
     <string name="believer_and_observer_of_canons">Верующий(ая) и соблядающий(ая) каноны</string>
+    <string name="more_filters">Больше фильтров</string>
+    <string name="general">Общее</string>
+    <string name="average">Среднее</string>
+    <string name="specialized_secondary">Среднее-специальное</string>
+    <string name="unfinished_higher">Незаконченное высшее</string>
+    <string name="higher">Высшее</string>
+
 
     <string-array name="education_level">
         <item>Степень</item>
