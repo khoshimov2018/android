@@ -878,6 +878,90 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    fun onKnowSomeWordsClicked(view: View) {
+        if(filterModelLiveData.value!!.languageKnowledge == null) {
+            filterModelLiveData.value!!.languageKnowledge = ArrayList()
+        }
+        if (filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.KNOW_SOME_WORDS)) {
+            filterModelLiveData.value!!.languageKnowledge!!.remove(LanguageKnowledge.KNOW_SOME_WORDS)
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.add(LanguageKnowledge.KNOW_SOME_WORDS)
+        }
+
+        filterModelLiveData.value = filterModelLiveData.value
+    }
+
+    fun isKnowSomeWordsChosen(): Boolean {
+        return if(filterModelLiveData.value == null || filterModelLiveData.value?.languageKnowledge == null) {
+            false
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.KNOW_SOME_WORDS)
+        }
+    }
+
+    fun onUnderstandCantSpeakClicked(view: View) {
+        if(filterModelLiveData.value!!.languageKnowledge == null) {
+            filterModelLiveData.value!!.languageKnowledge = ArrayList()
+        }
+        if (filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.UNDERSTAND_CANT_SPEAK)) {
+            filterModelLiveData.value!!.languageKnowledge!!.remove(LanguageKnowledge.UNDERSTAND_CANT_SPEAK)
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.add(LanguageKnowledge.UNDERSTAND_CANT_SPEAK)
+        }
+
+        filterModelLiveData.value = filterModelLiveData.value
+    }
+
+    fun isUnderstandCantSpeakChosen(): Boolean {
+        return if(filterModelLiveData.value == null || filterModelLiveData.value?.languageKnowledge == null) {
+            false
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.UNDERSTAND_CANT_SPEAK)
+        }
+    }
+
+    fun onUnderstandCanSpeakClicked(view: View) {
+        if(filterModelLiveData.value!!.languageKnowledge == null) {
+            filterModelLiveData.value!!.languageKnowledge = ArrayList()
+        }
+        if (filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.UNDERSTAND_CAN_SPEAK)) {
+            filterModelLiveData.value!!.languageKnowledge!!.remove(LanguageKnowledge.UNDERSTAND_CAN_SPEAK)
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.add(LanguageKnowledge.UNDERSTAND_CAN_SPEAK)
+        }
+
+        filterModelLiveData.value = filterModelLiveData.value
+    }
+
+    fun isUnderstandCanSpeakChosen(): Boolean {
+        return if(filterModelLiveData.value == null || filterModelLiveData.value?.languageKnowledge == null) {
+            false
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.UNDERSTAND_CAN_SPEAK)
+        }
+    }
+
+    fun onKnowWellClicked(view: View) {
+        if(filterModelLiveData.value!!.languageKnowledge == null) {
+            filterModelLiveData.value!!.languageKnowledge = ArrayList()
+        }
+        if (filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.KNOW_WELL)) {
+            filterModelLiveData.value!!.languageKnowledge!!.remove(LanguageKnowledge.KNOW_WELL)
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.add(LanguageKnowledge.KNOW_WELL)
+        }
+
+        filterModelLiveData.value = filterModelLiveData.value
+    }
+
+    fun isKnowWellChosen(): Boolean {
+        return if(filterModelLiveData.value == null || filterModelLiveData.value?.languageKnowledge == null) {
+            false
+        } else {
+            filterModelLiveData.value!!.languageKnowledge!!.contains(LanguageKnowledge.KNOW_WELL)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (this::apiResponse.isInitialized) {

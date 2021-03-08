@@ -643,6 +643,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/smallMargin"
                             android:layout_weight="0.5"
+                            android:checked="@{viewModel.isKnowSomeWordsChosen()}"
+                            android:onClick="@{viewModel::onKnowSomeWordsClicked}"
                             android:text="@string/i_know_some_words" />
                     </LinearLayout>
 
@@ -659,6 +661,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/smallMargin"
                             android:layout_weight="0.5"
+                            android:checked="@{viewModel.isUnderstandCantSpeakChosen()}"
+                            android:onClick="@{viewModel::onUnderstandCantSpeakClicked}"
                             android:text="@string/i_understand_but_cannot_maintain_dialogue" />
 
                         <androidx.appcompat.widget.AppCompatCheckBox
@@ -666,6 +670,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/smallMargin"
                             android:layout_weight="0.5"
+                            android:checked="@{viewModel.isUnderstandCanSpeakChosen()}"
+                            android:onClick="@{viewModel::onUnderstandCanSpeakClicked}"
                             android:text="@string/i_understand_i_can_maintain_dialogue" />
                     </LinearLayout>
 
@@ -674,6 +680,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/normalMargin"
                         android:layout_marginTop="@dimen/normalMargin"
+                        android:checked="@{viewModel.isKnowWellChosen()}"
+                        android:onClick="@{viewModel::onKnowWellClicked}"
                         android:text="@string/i_know_well" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
