@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:onClick="@{(view) -> viewModel.reactionItemClicked(view, item)}"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -31,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normalMargin"
-            android:text="Name"
+            android:text='@{item.senderName != null ? item.senderName : ""}'
             android:textColor="@color/textColor" />
     </LinearLayout>
 </layout>

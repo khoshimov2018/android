@@ -63,4 +63,7 @@ interface RetrofitInterface {
 
     @POST(ApiConstants.DELETE_ACCOUNT)
     fun deleteAccount(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_USER_DETAIL)
+    fun getUserDetail(@Header("Authorization") token: String, @Query("lang") lang: String, @Query("id") userId: Int): Call<BaseResponse>
 }

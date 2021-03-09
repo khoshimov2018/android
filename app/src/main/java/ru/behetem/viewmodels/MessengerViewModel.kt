@@ -1,12 +1,14 @@
 package ru.behetem.viewmodels
 
 import android.app.Application
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.behetem.activities.ReceivedReactionDetailActivity
 import ru.behetem.interfaces.IReactionClick
 import ru.behetem.models.InterestModel
 import ru.behetem.models.ReactionModel
@@ -14,6 +16,7 @@ import ru.behetem.repositories.InterestsRepository
 import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.ApiConstants
+import ru.behetem.utils.Constants
 import ru.behetem.utils.isInternetAvailable
 import ru.behetem.utils.validateResponseWithoutPopup
 
@@ -60,7 +63,9 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
     }
 
     override fun reactionItemClicked(view: View, reactionItem: ReactionModel) {
-
+        val intent = Intent(view.context, ReceivedReactionDetailActivity::class.java)
+        intent.putExtra(Constants.RECEIVED_REACTION, reactionItem)
+        view.context.startActivity(intent)
     }
 
     fun onAllClicked(view: View) {

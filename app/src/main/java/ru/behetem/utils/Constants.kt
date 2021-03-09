@@ -9,6 +9,7 @@ object Constants {
     const val PROFILE_USER = "PROFILE_USER"
     const val USER_IMAGES = "USER_IMAGES"
     const val USER_FILTERS = "USER_FILTERS"
+    const val RECEIVED_REACTION = "RECEIVED_REACTION"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
@@ -53,6 +54,7 @@ object ApiConstants {
     const val GET_REACTIONS = "reaction/newReactions"
     const val CHANGE_PASSWORD = "password/change"
     const val DELETE_ACCOUNT = "delete-account"
+    const val GET_USER_DETAIL = "user"
 }
 
 object LoginFormErrorConstants {

@@ -18,6 +18,7 @@
         android:layout_height="@dimen/reactionPhoto"
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/normalMargin"
+        android:onClick="@{(view) -> viewModel.reactionItemClicked(view, item)}"
         app:error="@{@drawable/logo}"
         app:placeholder="@{@drawable/logo}"
         app:roundImageUrl='@{item.image != null ? item.image : "" }' />
