@@ -155,7 +155,8 @@
     <string name="specialized_secondary">Среднее-специальное</string>
     <string name="unfinished_higher">Незаконченное высшее</string>
     <string name="higher">Высшее</string>
-
+    <string name="to_write_message">Написать сообщение</string>
+    <string name="skip_underline"><u>Пропустить</u></string>
 
     <string-array name="education_level">
         <item>Степень</item>
