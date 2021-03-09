@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:background="@drawable/round_button_unselected"
+                        android:background="@drawable/round_button_white"
                         android:onClick="@{viewModel::onWriteMessageClicked}"
                         android:text="@string/to_write_message"
                         android:textColor="@color/textColor" />
