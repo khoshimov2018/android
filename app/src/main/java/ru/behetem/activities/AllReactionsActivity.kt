@@ -36,8 +36,16 @@ class AllReactionsActivity : AppCompatActivity() {
         allReactionsViewModel.setLoggedInUser(getLoggedInUserFromShared(this))
 
         initObservers()
+    }
 
+    override fun onResume() {
+        super.onResume()
         allReactionsViewModel.getReactions()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bigReceivedReactionAdapter = null
     }
 
     private fun initObservers() {
@@ -65,11 +73,11 @@ class AllReactionsActivity : AppCompatActivity() {
             }
         })
 
-        /*allReactionsViewModel.getBaseResponse().observe(this, {
+        allReactionsViewModel.getBaseResponse().observe(this, {
             it?.let {
                 allReactionsViewModel.setBaseResponse(null)
                 validateResponse(this, it)
             }
-        })*/
+        })
     }
 }

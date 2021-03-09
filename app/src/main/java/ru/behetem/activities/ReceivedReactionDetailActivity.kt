@@ -91,6 +91,19 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
             }
         })
 
+        receivedReactionDetailViewModel.getMoveToMessage().observe(this, {
+            if(it) {
+                receivedReactionDetailViewModel.setMoveToMessage(false)
+            }
+        })
+
+        receivedReactionDetailViewModel.getMoveBack().observe(this, {
+            if(it) {
+                receivedReactionDetailViewModel.setMoveBack(false)
+                onBackPressed()
+            }
+        })
+
         receivedReactionDetailViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()

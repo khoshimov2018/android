@@ -15,5 +15,7 @@ data class ReactionModel(
     var interactionStatus: String? = null,
     var senderId: Int? = null,
     var image: String? = null,
-    var senderName: String? = null
+    var senderName: String? = null,
+    var reactionId: Int? = null,
+    var status: String? = null
 ): Parcelable

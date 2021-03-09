@@ -55,6 +55,7 @@ object ApiConstants {
     const val CHANGE_PASSWORD = "password/change"
     const val DELETE_ACCOUNT = "delete-account"
     const val GET_USER_DETAIL = "user"
+    const val CHANGE_REACTION = "reaction/change"
 }
 
 object LoginFormErrorConstants {
@@ -176,4 +177,13 @@ object Languages {
     const val RU = "RU"
     const val EN = "EN"
     const val AR = "AR"
+}
+
+object ReactionStatuses {
+    const val DELETED = "DELETED"
+    const val EXPIRED = "EXPIRED"
+    const val IGNORED = "IGNORED"
+    const val MUTUAL = "MUTUAL"
+    const val SEND = "SEND"
+    const val SHOWED = "SHOWED"
 }

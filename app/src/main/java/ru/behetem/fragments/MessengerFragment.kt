@@ -89,13 +89,13 @@ class MessengerFragment : Fragment() {
         startActivity(intent)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
         viewModel.getReactions()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
         receivedReactionAdapter = null
     }
 }

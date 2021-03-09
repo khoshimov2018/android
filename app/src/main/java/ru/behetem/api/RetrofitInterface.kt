@@ -66,4 +66,7 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.GET_USER_DETAIL)
     fun getUserDetail(@Header("Authorization") token: String, @Query("lang") lang: String, @Query("id") userId: Int): Call<BaseResponse>
+
+    @PUT
+    fun changeReaction(@Header("Authorization") token: String, @Url url: String): Call<BaseResponse>
 }
