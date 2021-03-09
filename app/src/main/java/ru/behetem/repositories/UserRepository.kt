@@ -187,6 +187,80 @@ object UserRepository {
             params += "&dateOfBirthTo=${filterModel.dateOfBirthTo}"
         }
 
+        if(filterModel.growthFrom != null) {
+            params += "&growthFrom=${filterModel.growthFrom}"
+        }
+
+        if(filterModel.growthTo != null) {
+            params += "&growthTo=${filterModel.growthTo}"
+        }
+
+        if(filterModel.weightFrom != null) {
+            params += "&weightFrom=${filterModel.weightFrom}"
+        }
+
+        if(filterModel.weightTo != null) {
+            params += "&weightTo=${filterModel.weightTo}"
+        }
+
+        if(filterModel.childrenDesire != null) {
+            params += "&childrenDesire=${filterModel.childrenDesire}"
+        }
+
+        if(filterModel.interest != null) {
+            for(interest in filterModel.interest!!) {
+                params += "&interest=${interest}"
+            }
+        }
+
+        if(filterModel.nationality != null) {
+            for(nationality in filterModel.nationality!!) {
+                params += "&nationality=${nationality}"
+            }
+        }
+
+        if(filterModel.bodyType != null) {
+            for(bodyType in filterModel.bodyType!!) {
+                params += "&bodyType=${bodyType}"
+            }
+        }
+
+        if(filterModel.childrenPresence != null) {
+            for(childrenPresence in filterModel.childrenPresence!!) {
+                params += "&childrenPresence=${childrenPresence}"
+            }
+        }
+
+        if(filterModel.educationLevel != null) {
+            for(educationLevel in filterModel.educationLevel!!) {
+                params += "&educationLevel=${educationLevel}"
+            }
+        }
+
+        if(filterModel.languageKnowledge != null) {
+            for(languageKnowledge in filterModel.languageKnowledge!!) {
+                params += "&languageKnowledge=${languageKnowledge}"
+            }
+        }
+
+        if(filterModel.religionRespect != null) {
+            for(religionRespect in filterModel.religionRespect!!) {
+                params += "&religionRespect=${religionRespect}"
+            }
+        }
+
+        if(filterModel.status != null) {
+            for(status in filterModel.status!!) {
+                params += "&status=${status}"
+            }
+        }
+
+        if(filterModel.traditionsRespect != null) {
+            for(traditionsRespect in filterModel.traditionsRespect!!) {
+                params += "&traditionsRespect=${traditionsRespect}"
+            }
+        }
+
         retrofitService.getUsers(strToken, "${ApiConstants.GET_USERS}?${params}")
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
