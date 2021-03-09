@@ -112,6 +112,14 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
     }
 
+    fun resetPage() {
+        filterModelLiveData.value?.page = 0
+        filterModelLiveData.value?.let { filter ->
+            saveFiltersToShared(context, filter)
+        }
+        filterModelLiveData.value = filterModelLiveData.value
+    }
+
     fun saveFilters() {
         if (validateInternet(context)) {
             loaderVisible.value = true // show loader

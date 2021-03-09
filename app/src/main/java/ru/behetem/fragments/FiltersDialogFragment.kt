@@ -46,7 +46,6 @@ class FiltersDialogFragment(private val profilesViewModel: ProfilesViewModel) : 
         val view = binding.root
         initViewModel()
         addListeners(view)
-        setAdapters()
 
         return view
     }
@@ -127,10 +126,6 @@ class FiltersDialogFragment(private val profilesViewModel: ProfilesViewModel) : 
         }
     }
 
-    private fun setAdapters() {
-
-    }
-
     private fun initViewModel() {
         binding.lifecycleOwner = this
         binding.setVariable(BR.viewModel, profilesViewModel)
@@ -170,6 +165,7 @@ class FiltersDialogFragment(private val profilesViewModel: ProfilesViewModel) : 
 
     override fun onDestroyView() {
         super.onDestroyView()
+        profilesViewModel.resetPage()
         profilesViewModel.saveFilters()
     }
 }
