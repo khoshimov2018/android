@@ -10,6 +10,7 @@ object Constants {
     const val USER_IMAGES = "USER_IMAGES"
     const val USER_FILTERS = "USER_FILTERS"
     const val RECEIVED_REACTION = "RECEIVED_REACTION"
+    const val CHAT_ROOM = "CHAT_ROOM"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"

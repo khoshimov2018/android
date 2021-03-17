@@ -157,6 +157,7 @@
     <string name="higher">Высшее</string>
     <string name="to_write_message">Написать сообщение</string>
     <string name="skip_underline"><u>Пропустить</u></string>
+    <string name="write_something">Напишите что-нибудь</string>
 
     <string-array name="education_level">
         <item>Степень</item>

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.behetem.activities.ChatActivity
 import ru.behetem.activities.ReceivedReactionDetailActivity
 import ru.behetem.interfaces.IReactionClick
 import ru.behetem.models.ChatRoomModel
@@ -136,6 +137,12 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
 
     fun onAllClicked(view: View) {
         allClicked.value = true
+    }
+
+    fun chatRoomClicked(view: View, chatRoomItem: ChatRoomModel) {
+        val intent = Intent(view.context, ChatActivity::class.java)
+        intent.putExtra(Constants.CHAT_ROOM, chatRoomItem)
+        view.context.startActivity(intent)
     }
 
     override fun onCleared() {

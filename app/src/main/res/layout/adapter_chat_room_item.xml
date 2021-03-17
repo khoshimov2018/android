@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/smallMargin"
             android:layout_marginHorizontal="@dimen/normalMargin"
+            android:onClick="@{(view) -> viewModel.chatRoomClicked(view, item)}"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
