@@ -252,6 +252,7 @@
     <string name="choose_religion_respect">Choose Religion Respect</string>
     <string name="sure_delete_account">Are you sure you want to delete your account?</string>
     <string name="sure_skip_user">Are you sure you want to skip this user?</string>
+    <string name="sure_delete_chat_room">Are you sure you want to delete chat room?</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

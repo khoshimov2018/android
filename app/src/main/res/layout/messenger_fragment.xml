@@ -15,6 +15,10 @@
         <variable
             name="receivedReactionsAdapter"
             type="ru.behetem.adapters.ReceivedReactionAdapter" />
+        
+        <variable
+            name="chatRoomsAdapter"
+            type="ru.behetem.adapters.ChatRoomsAdapter" />
     </data>
 
     <RelativeLayout
@@ -78,11 +82,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chatRoomsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adapter="@{chatRoomsAdapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:drawableTop="@drawable/heart"
+                    android:visibility="@{(viewModel.chatRoomsLiveData != null &amp;&amp; viewModel.chatRoomsLiveData.size > 0) ? View.GONE : View.VISIBLE}"
                     android:text="@string/no_messages_yet"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/largeTextSize" />

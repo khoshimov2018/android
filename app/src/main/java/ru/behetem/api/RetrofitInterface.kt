@@ -69,4 +69,10 @@ interface RetrofitInterface {
 
     @PUT
     fun changeReaction(@Header("Authorization") token: String, @Url url: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_CHAT_ROOM)
+    fun getChatRooms(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @POST(ApiConstants.DELETE_CHAT_ROOM)
+    fun deleteChatRoom(@Header("Authorization") token: String, @Body chatRoomModel: ChatRoomModel): Call<BaseResponse>
 }

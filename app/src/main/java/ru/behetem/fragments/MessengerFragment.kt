@@ -1,5 +1,6 @@
 package ru.behetem.fragments
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -8,13 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.messenger_fragment.*
 import ru.behetem.R
 import ru.behetem.activities.AllReactionsActivity
+import ru.behetem.adapters.ChatRoomsAdapter
 import ru.behetem.adapters.ReceivedReactionAdapter
 import ru.behetem.databinding.MessengerFragmentBinding
-import ru.behetem.utils.getLoggedInUserFromShared
-import ru.behetem.utils.showInfoAlertDialog
-import ru.behetem.utils.validateResponse
+import ru.behetem.utils.*
 import ru.behetem.viewmodels.MessengerViewModel
 
 class MessengerFragment : Fragment() {
@@ -27,6 +30,7 @@ class MessengerFragment : Fragment() {
     private lateinit var binding: MessengerFragmentBinding
 
     private var receivedReactionAdapter: ReceivedReactionAdapter? = null
+    private var chatRoomsAdapter: ChatRoomsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,8 @@ class MessengerFragment : Fragment() {
         val view: View = binding.root
         initViewModel()
 
+
+
         return view
     }
 
@@ -52,7 +58,7 @@ class MessengerFragment : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.getReceivedReactionsList().observe(requireActivity(), {
+        viewModel.getReceivedReactionsList().observe(viewLifecycleOwner, {
             if(it != null) {
                 if(receivedReactionAdapter == null) {
                     receivedReactionAdapter = ReceivedReactionAdapter(it, viewModel)
@@ -62,24 +68,62 @@ class MessengerFragment : Fragment() {
             }
         })
 
-        viewModel.getAllClicked().observe(requireActivity(), {
+        viewModel.getChatRoomsLiveData().observe(viewLifecycleOwner, {
+            if(it != null) {
+                if(chatRoomsAdapter == null) {
+                    chatRoomsAdapter = ChatRoomsAdapter(it, viewModel)
+                    binding.chatRoomsAdapter = chatRoomsAdapter
+
+                    val swipeHandler = object : SwipeToDeleteCallback(requireActivity()) {
+                        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                            val adapter = chatRoomsRecyclerView.adapter as ChatRoomsAdapter
+                            printLog("on swiped ${viewHolder.adapterPosition}")
+
+                            showAlertDialog(
+                                requireActivity(),
+                                null,
+                                getString(R.string.sure_delete_chat_room),
+                                getString(R.string.yes),
+                                { dialogInterface, _ ->
+                                    dialogInterface.cancel()
+                                    viewModel.deleteChatRoom(viewHolder.adapterPosition)
+                                },
+                                getString(R.string.no),
+                                { dialogInterface, _ ->
+                                    dialogInterface.cancel()
+                                    chatRoomsAdapter?.notifyDataSetChanged()
+                                }
+                            )
+//                            adapter.removeAt(viewHolder.adapterPosition)
+                        }
+                    }
+                    val itemTouchHelper = ItemTouchHelper(swipeHandler)
+                    itemTouchHelper.attachToRecyclerView(chatRoomsRecyclerView)
+                }
+                chatRoomsAdapter?.notifyDataSetChanged()
+            }
+        })
+
+        viewModel.getAllClicked().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setAllClicked(false)
                 openAllReactions()
             }
         })
 
-        viewModel.getShowNoInternet().observe(requireActivity(), {
+        viewModel.getShowNoInternet().observe(viewLifecycleOwner, {
             if(it) {
                 viewModel.setShowNoInternet(false)
                 showInfoAlertDialog(requireActivity(), getString(R.string.no_internet))
+                chatRoomsAdapter?.notifyDataSetChanged()
             }
         })
 
-        viewModel.getBaseResponse().observe(requireActivity(), {
+        viewModel.getBaseResponse().observe(viewLifecycleOwner, {
             it?.let {
                 viewModel.setBaseResponse(null)
                 validateResponse(requireActivity(), it)
+                chatRoomsAdapter?.notifyDataSetChanged()
             }
         })
     }
@@ -92,6 +136,7 @@ class MessengerFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getReactions()
+        viewModel.getChatRooms()
     }
 
     override fun onPause() {

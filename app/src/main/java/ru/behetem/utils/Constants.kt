@@ -56,6 +56,8 @@ object ApiConstants {
     const val DELETE_ACCOUNT = "delete-account"
     const val GET_USER_DETAIL = "user"
     const val CHANGE_REACTION = "reaction/change"
+    const val GET_CHAT_ROOM = "messages/chatroom"
+    const val DELETE_CHAT_ROOM = "messages/deletechatroom"
 }
 
 object LoginFormErrorConstants {
@@ -186,4 +188,12 @@ object ReactionStatuses {
     const val MUTUAL = "MUTUAL"
     const val SEND = "SEND"
     const val SHOWED = "SHOWED"
+}
+
+object MessageTypes {
+    const val TEXT = "TEXT"
+    const val VOICE = "VOICE"
+    const val IMAGE = "IMAGE"
+    const val CHAT_DELETED_AND_BLOCKED = "CHAT_DELETED_AND_BLOCKED"
+    const val CHAT_EXPIRED = "CHAT_EXPIRED"
 }

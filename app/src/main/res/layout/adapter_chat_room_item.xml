@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="ru.behetem.models.ChatRoomModel" />
+
+        <variable
+            name="viewModel"
+            type="ru.behetem.viewmodels.MessengerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/smallMargin"
+            android:layout_marginHorizontal="@dimen/normalMargin"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/reactionPhoto"
+                android:layout_height="@dimen/reactionPhoto"
+                app:error="@{@drawable/logo}"
+                app:placeholder="@{@drawable/logo}"
+                app:roundImageUrl='@{item.receiverImage != null ? item.receiverImage : "" }' />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/normalMargin"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.receiverName}"
+                    android:textStyle="bold"
+                    android:textColor="@color/textColor" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.lastMessage.content}"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lineHeight"
+            android:background="@color/lightGreyColor" />
+    </LinearLayout>
+</layout>
