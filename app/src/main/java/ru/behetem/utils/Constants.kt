@@ -59,6 +59,7 @@ object ApiConstants {
     const val CHANGE_REACTION = "reaction/change"
     const val GET_CHAT_ROOM = "messages/chatroom"
     const val DELETE_CHAT_ROOM = "messages/deletechatroom"
+    const val GET_COMMERCIAL = "commercial"
 }
 
 object LoginFormErrorConstants {

@@ -12,10 +12,7 @@ import com.google.gson.reflect.TypeToken
 import ru.behetem.R
 import ru.behetem.interfaces.IInterestClick
 import ru.behetem.models.*
-import ru.behetem.repositories.FiltersRepository
-import ru.behetem.repositories.InterestsRepository
-import ru.behetem.repositories.LocationRepository
-import ru.behetem.repositories.UserRepository
+import ru.behetem.repositories.*
 import ru.behetem.responses.BaseResponse
 import java.util.*
 import kotlin.collections.ArrayList
@@ -45,6 +42,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
     private lateinit var interestsObserveResponse: Observer<BaseResponse>
     private var selectedDistancePosition: MutableLiveData<Int> = MutableLiveData(0)
     private val showGrowthWeightBottomSheet: MutableLiveData<Boolean> = MutableLiveData()
+
+    private lateinit var getCommercialApiResponse: LiveData<BaseResponse>
+    private lateinit var getCommercialObserveResponse: Observer<BaseResponse>
 
     private fun getFilters() {
         filterModelLiveData.value = getFiltersFromShared(context)
@@ -214,7 +214,8 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                 loaderVisible.value = false
 
                 if (validateResponseWithoutPopup(it)) {
-                    getFilters()
+//                    getFilters()
+                    getCommercial()
                 } else {
                     baseResponse.value = it
                 }
@@ -225,6 +226,22 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
             locationApiResponse.observeForever(locationObserveResponse)
         } else {
             showNoInternet.value = true
+        }
+    }
+
+    private fun getCommercial() {
+        if (validateInternet(context)) {
+            loaderVisible.value = true // show loader
+            getCommercialObserveResponse = Observer<BaseResponse> { response ->
+                loaderVisible.value = false
+                if (validateResponse(context, response)) {
+                    getFilters()
+                }
+            }
+            // token
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            getCommercialApiResponse = CommercialRepository.getCommercial(strToken)
+            getCommercialApiResponse.observeForever(getCommercialObserveResponse)
         }
     }
 
@@ -986,6 +1003,9 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
         }
         if (this::saveFilterApiResponse.isInitialized) {
             saveFilterApiResponse.removeObserver(saveFilterObserveResponse)
+        }
+        if (this::getCommercialApiResponse.isInitialized) {
+            getCommercialApiResponse.removeObserver(getCommercialObserveResponse)
         }
     }
 
