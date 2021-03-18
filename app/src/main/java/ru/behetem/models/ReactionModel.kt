@@ -2,6 +2,7 @@ package ru.behetem.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import ru.behetem.utils.ReactionType
 
 @Parcelize
 data class ReactionModel(
@@ -18,4 +19,8 @@ data class ReactionModel(
     var senderName: String? = null,
     var reactionId: Int? = null,
     var status: String? = null
-): Parcelable
+): Parcelable {
+    fun isSuper(): Boolean {
+        return type == ReactionType.SUPER
+    }
+}

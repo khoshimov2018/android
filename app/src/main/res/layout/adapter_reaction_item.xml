@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/smallMargin"
-        android:background="@drawable/reaction_bg"
+        android:background="@{item.isSuper() ? @drawable/premium_reaction_bg : @drawable/reaction_bg}"
         android:padding="@{@dimen/normalPadding}"
         android:onClick="@{(view) -> viewModel.onReactionClicked(view, item)}"
         android:text="@{item.emoji}"

@@ -198,3 +198,8 @@ object MessageTypes {
     const val CHAT_DELETED_AND_BLOCKED = "CHAT_DELETED_AND_BLOCKED"
     const val CHAT_EXPIRED = "CHAT_EXPIRED"
 }
+
+object ReactionType {
+    const val STANDARD = "STANDARD"
+    const val SUPER = "SUPER"
+}
