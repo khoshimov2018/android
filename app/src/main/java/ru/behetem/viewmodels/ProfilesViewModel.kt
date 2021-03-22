@@ -235,6 +235,13 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
             getCommercialObserveResponse = Observer<BaseResponse> { response ->
                 loaderVisible.value = false
                 if (validateResponse(context, response)) {
+                    val gson = Gson()
+                    val strResponse = gson.toJson(response.data)
+                    val myType = object : TypeToken<CommercialModel>() {}.type
+                    val commercialModel: CommercialModel = gson.fromJson<CommercialModel>(strResponse, myType)
+
+                    saveCommercialToShared(context, commercialModel)
+
                     getFilters()
                 }
             }

@@ -11,6 +11,7 @@ object Constants {
     const val USER_FILTERS = "USER_FILTERS"
     const val RECEIVED_REACTION = "RECEIVED_REACTION"
     const val CHAT_ROOM = "CHAT_ROOM"
+    const val COMMERCIAL_MODEL = "COMMERCIAL_MODEL"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
@@ -203,4 +204,9 @@ object MessageTypes {
 object ReactionType {
     const val STANDARD = "STANDARD"
     const val SUPER = "SUPER"
+}
+
+object CommercialStatus {
+    const val STANDARD = "STANDARD"
+    const val PREMIUM = "PREMIUM"
 }

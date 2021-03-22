@@ -16,6 +16,7 @@ import com.google.gson.Gson
 import retrofit2.Response
 import ru.behetem.R
 import ru.behetem.activities.RegisterActivity
+import ru.behetem.models.CommercialModel
 import ru.behetem.models.FilterModel
 import ru.behetem.models.UserModel
 import ru.behetem.responses.BaseResponse
@@ -199,6 +200,24 @@ fun getFiltersFromShared(context: Context): FilterModel? {
     )
     strJson?.let {
         return gson.fromJson(strJson, FilterModel::class.java)
+    }
+    return null
+}
+
+fun saveCommercialToShared(context: Context, commercialModel: CommercialModel) {
+    val gson = Gson()
+    val strJson = gson.toJson(commercialModel)
+    SharedPreferenceHelper.saveStringToShared(context, Constants.COMMERCIAL_MODEL, strJson)
+}
+
+fun getCommercialFromShared(context: Context): CommercialModel? {
+    val gson = Gson()
+    val strJson: String? = SharedPreferenceHelper.getStringFromShared(
+        context,
+        Constants.COMMERCIAL_MODEL
+    )
+    strJson?.let {
+        return gson.fromJson(strJson, CommercialModel::class.java)
     }
     return null
 }
