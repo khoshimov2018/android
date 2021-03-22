@@ -39,7 +39,8 @@ object ChatsRepository {
 
     fun deleteChatRoom(strToken: String, chatRoomModel: ChatRoomModel): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
-        retrofitService.deleteChatRoom(strToken, chatRoomModel)
+        val chatId = chatRoomModel.chatId ?: ""
+        retrofitService.deleteChatRoom(strToken, chatId)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,

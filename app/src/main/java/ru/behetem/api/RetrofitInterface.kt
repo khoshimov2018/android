@@ -73,8 +73,11 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_CHAT_ROOM)
     fun getChatRooms(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @POST(ApiConstants.DELETE_CHAT_ROOM)
-    fun deleteChatRoom(@Header("Authorization") token: String, @Body chatRoomModel: ChatRoomModel): Call<BaseResponse>
+    /*@POST(ApiConstants.DELETE_CHAT_ROOM)
+    fun deleteChatRoom(@Header("Authorization") token: String, @Body chatRoomModel: ChatRoomModel): Call<BaseResponse>*/
+
+    @GET(ApiConstants.DELETE_CHAT_ROOM)
+    fun deleteChatRoom(@Header("Authorization") token: String, @Query("chatId") chatId: String): Call<BaseResponse>
 
     @GET(ApiConstants.GET_COMMERCIAL)
     fun getCommercial(@Header("Authorization") token: String): Call<BaseResponse>
