@@ -15,4 +15,5 @@
     <color name="selectedTabColor">#BA62FF</color>
     <color name="premiumBackground">#90FCFCFD</color>
     <color name="introBackground">#80000000</color>
+    <color name="chatBackground">#E4E4E4</color>
 </resources>

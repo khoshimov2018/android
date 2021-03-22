@@ -6,15 +6,20 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import kotlinx.android.synthetic.main.user_profile_fragment.*
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
 import ru.behetem.adapters.NationalitiesAdapter
+import ru.behetem.adapters.NationalitiesSpinnerAdapter
 import ru.behetem.databinding.ActivityEditProfileBinding
 import ru.behetem.models.UserModel
 import ru.behetem.utils.*
@@ -27,13 +32,53 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var editProfileViewModel: EditProfileViewModel
 
     private var interestsAdapter: InterestsAdapter? = null
-    private var nationalitiesAdapter: NationalitiesAdapter? = null
+
+    //    private var nationalitiesAdapter: NationalitiesAdapter? = null
+    private var nationalitiesSpinnerAdapter: NationalitiesSpinnerAdapter? = null
+
+    private lateinit var growthWeightBottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+    private lateinit var careerBottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile)
         binding.lifecycleOwner = this
         initViewModel()
+
+        growthWeightBottomSheetBehavior = BottomSheetBehavior.from(bottomSheetForGrowthWeight)
+        careerBottomSheetBehavior = BottomSheetBehavior.from(bottomSheetForCareer)
+        growthWeightBottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                    bg.visibility = View.GONE
+                else
+                    bg.visibility = View.VISIBLE
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+        })
+
+        careerBottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED)
+                    bg.visibility = View.GONE
+                else
+                    bg.visibility = View.VISIBLE
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+        })
+
+        bg.setOnClickListener {
+            growthWeightBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            careerBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
     }
 
     private fun initViewModel() {
@@ -59,14 +104,14 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun initObservers() {
         editProfileViewModel.getOpenImagePicker().observe(this, Observer {
-            if(it) {
+            if (it) {
                 editProfileViewModel.setOpenImagePicker(false)
                 openImagePicker()
             }
         })
 
         editProfileViewModel.getErrorResId().observe(this, {
-            if(it != null) {
+            if (it != null) {
                 editProfileViewModel.setErrorResId(null)
                 showInfoAlertDialog(this, getString(it))
             }
@@ -80,8 +125,8 @@ class EditProfileActivity : AppCompatActivity() {
         })
 
         editProfileViewModel.getInterestsList().observe(this, {
-            if(it != null) {
-                if(it.isEmpty()) {
+            if (it != null) {
+                if (it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_interests))
                 } else {
                     interestsAdapter = InterestsAdapter(it, editProfileViewModel)
@@ -94,22 +139,48 @@ class EditProfileActivity : AppCompatActivity() {
         })
 
         editProfileViewModel.getNationalitiesList().observe(this, {
-            if(it != null) {
-                if(it.isEmpty()) {
+            if (it != null) {
+                if (it.isEmpty()) {
                     showInfoAlertDialog(this, getString(R.string.no_nationalities))
                 } else {
-                    nationalitiesAdapter = NationalitiesAdapter(it, editProfileViewModel, editProfileViewModel.getChosenGender())
+                    /*nationalitiesAdapter = NationalitiesAdapter(
+                        it,
+                        editProfileViewModel,
+                        editProfileViewModel.getChosenGender()
+                    )
                     binding.nationalitiesAdapter = nationalitiesAdapter
-                    nationalitiesAdapter?.notifyDataSetChanged()
+                    nationalitiesAdapter?.notifyDataSetChanged()*/
+                    nationalitiesSpinnerAdapter = NationalitiesSpinnerAdapter(
+                        this,
+                        R.layout.adapter_nationality_spinner_item,
+                        it
+                    )
+                    binding.nationalitiesSpinnerAdapter = nationalitiesSpinnerAdapter
+                    nationalitiesSpinnerAdapter?.notifyDataSetChanged()
                 }
             } else {
-                nationalitiesAdapter = null
+//                nationalitiesAdapter = null
+                nationalitiesSpinnerAdapter = null
             }
         })
 
         editProfileViewModel.getAllowToGoBack().observe(this, {
-            if(it) {
+            if (it) {
                 moveUserBack()
+            }
+        })
+
+        editProfileViewModel.getShowGrowthWeightBottomSheet().observe(this, {
+            if (it) {
+                editProfileViewModel.setShowGrowthWeightBottomSheet(false)
+                growthWeightBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        })
+
+        editProfileViewModel.getShowCareerBottomSheet().observe(this, {
+            if (it) {
+                editProfileViewModel.setShowCareerBottomSheet(false)
+                careerBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
         })
 
@@ -120,7 +191,7 @@ class EditProfileActivity : AppCompatActivity() {
         })
 
         editProfileViewModel.getShowNoInternet().observe(this, {
-            if(it) {
+            if (it) {
                 editProfileViewModel.setShowNoInternet(false)
                 showInfoAlertDialog(this, getString(R.string.no_internet))
             }
@@ -166,7 +237,7 @@ class EditProfileActivity : AppCompatActivity() {
             Activity.RESULT_OK -> {
                 val fileUri: Uri? = data?.data
 
-                when(editProfileViewModel.getCurrentImageForPosition()){
+                when (editProfileViewModel.getCurrentImageForPosition()) {
                     0 -> {
                         image1.setImageURI(fileUri)
                     }
@@ -203,7 +274,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (isInternetAvailable(this)) {
-            if(editProfileViewModel.updateProfile()) {
+            if (editProfileViewModel.updateProfile()) {
                 moveUserBack()
             }
         } else {
@@ -214,6 +285,13 @@ class EditProfileActivity : AppCompatActivity() {
     private fun moveUserBack() {
         val returnIntent = Intent()
         returnIntent.putExtra(Constants.PROFILE_USER, editProfileViewModel.getCurrentUser())
+
+        var arrayList: ArrayList<String>? = null
+        if(editProfileViewModel.getImages() != null) {
+            arrayList = ArrayList(editProfileViewModel.getImages()!!)
+        }
+        returnIntent.putStringArrayListExtra(Constants.USER_IMAGES, arrayList)
+
         setResult(RESULT_OK, returnIntent)
         super.onBackPressed()
     }

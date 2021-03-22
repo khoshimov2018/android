@@ -46,6 +46,9 @@ class HeightWeightViewModel: BaseViewModel() {
 
     fun onGrowthChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         growthValue.value = progress
+        if(userModelLiveData.value?.bodyInfo == null) {
+            userModelLiveData.value?.bodyInfo = BodyInfoModel()
+        }
         userModelLiveData.value?.let {
             it.bodyInfo?.growth = progress
         }
@@ -54,6 +57,9 @@ class HeightWeightViewModel: BaseViewModel() {
 
     fun onWeightChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         weightValue.value = progress
+        if(userModelLiveData.value?.bodyInfo == null) {
+            userModelLiveData.value?.bodyInfo = BodyInfoModel()
+        }
         userModelLiveData.value?.let {
             it.bodyInfo?.weight = progress
         }

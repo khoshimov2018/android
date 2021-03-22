@@ -24,7 +24,6 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
 
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
     private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
     private val imagesListLiveData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
@@ -147,14 +146,6 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
         moveToPremium.value = move
     }
 
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
-    }
-
     fun getUserProfileLiveData(): LiveData<UserModel> {
         return userProfileLiveData
     }
@@ -165,6 +156,10 @@ class MyProfileViewModel(application: Application) : BaseAndroidViewModel(applic
 
     fun getImagesListLiveData(): LiveData<MutableList<String>> {
         return imagesListLiveData
+    }
+
+    fun setImages(images: MutableList<String>) {
+        imagesListLiveData.value = images
     }
 
     fun getImages(): MutableList<String>? {

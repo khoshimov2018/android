@@ -21,6 +21,7 @@ import ru.behetem.models.UserModel
 import ru.behetem.responses.BaseResponse
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 fun hideKeyboard(view: View?) {
     view?.let { v ->
@@ -192,7 +193,10 @@ fun saveFiltersToShared(context: Context, filterModel: FilterModel) {
 
 fun getFiltersFromShared(context: Context): FilterModel? {
     val gson = Gson()
-    val strJson: String? = SharedPreferenceHelper.getStringFromShared(context, Constants.USER_FILTERS)
+    val strJson: String? = SharedPreferenceHelper.getStringFromShared(
+        context,
+        Constants.USER_FILTERS
+    )
     strJson?.let {
         return gson.fromJson(strJson, FilterModel::class.java)
     }
@@ -267,13 +271,16 @@ fun trimText(text: String, length: Int = Constants.TRIM_TEXT_LENGTH): String {
 }
 
 fun getTimeZone(): String {
-    val dateFormat = SimpleDateFormat("z", Locale.getDefault())
-    val date = Date()
+    val tz = TimeZone.getDefault()
+    val cal = GregorianCalendar.getInstance(tz)
+    val offsetInMillis = tz.getOffset(cal.timeInMillis)
 
-    val timeZone = TimeZone.getDefault()
-    printLog("timeZone $timeZone")
-    printLog("get display name ${timeZone.getDisplayName(false, TimeZone.SHORT)}")
+    var offset = String.format(
+        "%02d:%02d", abs(offsetInMillis / 3600000), abs(
+            offsetInMillis / 60000 % 60
+        )
+    )
+    offset = "UTC" + (if (offsetInMillis >= 0) "+" else "-") + offset
 
-    printLog("dateFormat.format(date) ${dateFormat.format(date)}")
-    return dateFormat.format(date)
+    return offset
 }

@@ -27,10 +27,10 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_INFO + "?lang=RU")
     fun getInfo(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_INTERESTS)
+    @GET(ApiConstants.GET_INTERESTS + "?lang=RU")
     fun getInterests(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @GET(ApiConstants.GET_NATIONALITIES)
+    @GET(ApiConstants.GET_NATIONALITIES + "?lang=RU")
     fun getNationalities(@Header("Authorization") token: String): Call<BaseResponse>
 
     @GET(ApiConstants.GET_CURRENT_USER_IMAGES)
@@ -42,8 +42,9 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_FILTERS)
     fun getFilters(@Header("Authorization") token: String): Call<BaseResponse>
 
-    @POST(ApiConstants.GET_USERS)
-    fun getUsers(@Body filterModel: FilterModel, @Header("Authorization") token: String): Call<BaseResponse>
+//    (ApiConstants.GET_USERS + "{params}")
+    @GET
+    fun getUsers(@Header("Authorization") token: String, @Url url: String): Call<BaseResponse>
 
     @PUT(ApiConstants.UPDATE_LOCATION)
     fun updateLocation(@Body locationModel: LocationModel, @Header("Authorization") token: String): Call<BaseResponse>
@@ -59,4 +60,25 @@ interface RetrofitInterface {
 
     @POST(ApiConstants.CHANGE_PASSWORD)
     fun changePassword(@Body changePasswordModel: ChangePasswordModel, @Header("Authorization") token: String): Call<BaseResponse>
+
+    @POST(ApiConstants.DELETE_ACCOUNT)
+    fun deleteAccount(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_USER_DETAIL)
+    fun getUserDetail(@Header("Authorization") token: String, @Query("lang") lang: String, @Query("id") userId: Int): Call<BaseResponse>
+
+    @PUT
+    fun changeReaction(@Header("Authorization") token: String, @Url url: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_CHAT_ROOM)
+    fun getChatRooms(@Header("Authorization") token: String): Call<BaseResponse>
+
+    /*@POST(ApiConstants.DELETE_CHAT_ROOM)
+    fun deleteChatRoom(@Header("Authorization") token: String, @Body chatRoomModel: ChatRoomModel): Call<BaseResponse>*/
+
+    @GET(ApiConstants.DELETE_CHAT_ROOM)
+    fun deleteChatRoom(@Header("Authorization") token: String, @Query("chatId") chatId: String): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_COMMERCIAL)
+    fun getCommercial(@Header("Authorization") token: String): Call<BaseResponse>
 }

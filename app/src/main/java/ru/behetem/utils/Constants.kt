@@ -9,6 +9,8 @@ object Constants {
     const val PROFILE_USER = "PROFILE_USER"
     const val USER_IMAGES = "USER_IMAGES"
     const val USER_FILTERS = "USER_FILTERS"
+    const val RECEIVED_REACTION = "RECEIVED_REACTION"
+    const val CHAT_ROOM = "CHAT_ROOM"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
@@ -19,6 +21,7 @@ object Constants {
     const val SHORT_DESCRIPTION_TRIM_LENGTH = 40
     const val PAGE_SIZE = 10
     const val MIN_AGE_FOR_CAL = 18
+    const val MAX_GROWTH_WEIGHT = 250
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -33,7 +36,7 @@ object Constants {
 }
 
 object ApiConstants {
-    const val BASE_URL = "http://37.143.14.155/"
+    const val BASE_URL = "http://behetem.ru/"
     const val WEB_SOCKET_URL = "ws://37.143.14.155/ws/websocket"
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
@@ -51,6 +54,12 @@ object ApiConstants {
     const val SEND_REACTION = "react"
     const val GET_REACTIONS = "reaction/newReactions"
     const val CHANGE_PASSWORD = "password/change"
+    const val DELETE_ACCOUNT = "delete-account"
+    const val GET_USER_DETAIL = "user"
+    const val CHANGE_REACTION = "reaction/change"
+    const val GET_CHAT_ROOM = "messages/chatroom"
+    const val DELETE_CHAT_ROOM = "messages/deletechatroom"
+    const val GET_COMMERCIAL = "commercial"
 }
 
 object LoginFormErrorConstants {
@@ -152,6 +161,14 @@ object ReligionRespect {
     const val CANONICAL_RELIGIOUS = "CANONICAL_RELIGIOUS"
 }
 
+object LanguageKnowledge {
+    const val DONT_KNOW = "DONT_KNOW"
+    const val KNOW_SOME_WORDS = "KNOW_SOME_WORDS"
+    const val UNDERSTAND_CANT_SPEAK = "UNDERSTAND_CANT_SPEAK"
+    const val UNDERSTAND_CAN_SPEAK = "UNDERSTAND_CAN_SPEAK"
+    const val KNOW_WELL = "KNOW_WELL"
+}
+
 object BodyType {
     const val THIN = "THIN"
     const val SLIM = "SLIM"
@@ -164,4 +181,26 @@ object Languages {
     const val RU = "RU"
     const val EN = "EN"
     const val AR = "AR"
+}
+
+object ReactionStatuses {
+    const val DELETED = "DELETED"
+    const val EXPIRED = "EXPIRED"
+    const val IGNORED = "IGNORED"
+    const val MUTUAL = "MUTUAL"
+    const val SEND = "SEND"
+    const val SHOWED = "SHOWED"
+}
+
+object MessageTypes {
+    const val TEXT = "TEXT"
+    const val VOICE = "VOICE"
+    const val IMAGE = "IMAGE"
+    const val CHAT_DELETED_AND_BLOCKED = "CHAT_DELETED_AND_BLOCKED"
+    const val CHAT_EXPIRED = "CHAT_EXPIRED"
+}
+
+object ReactionType {
+    const val STANDARD = "STANDARD"
+    const val SUPER = "SUPER"
 }

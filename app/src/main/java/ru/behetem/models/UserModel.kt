@@ -223,6 +223,38 @@ data class UserModel(
         return culturalInfo?.traditionsRespect == TraditionsRespect.KNOW_RESPECT
     }
 
+    fun isDoNotKnow(): Boolean {
+        return culturalInfo?.languageKnowledge == LanguageKnowledge.DONT_KNOW
+    }
+
+    fun isKnowSomeWords(): Boolean {
+        return culturalInfo?.languageKnowledge == LanguageKnowledge.KNOW_SOME_WORDS
+    }
+
+    fun isKnowCannotMaintainDialogue(): Boolean {
+        return culturalInfo?.languageKnowledge == LanguageKnowledge.UNDERSTAND_CANT_SPEAK
+    }
+
+    fun isKnowCanMaintainDialogue(): Boolean {
+        return culturalInfo?.languageKnowledge == LanguageKnowledge.UNDERSTAND_CAN_SPEAK
+    }
+
+    fun isKnowWell(): Boolean {
+        return culturalInfo?.languageKnowledge == LanguageKnowledge.KNOW_WELL
+    }
+
+    fun isNonBeliever(): Boolean {
+        return culturalInfo?.religionRespect == ReligionRespect.ATHEIST
+    }
+
+    fun isBeliever(): Boolean {
+        return culturalInfo?.religionRespect == ReligionRespect.RELIGIOUS
+    }
+
+    fun isCanonicalBeliever(): Boolean {
+        return culturalInfo?.religionRespect == ReligionRespect.CANONICAL_RELIGIOUS
+    }
+
     fun isSkinnySelected(): Boolean {
         return bodyInfo?.bodyType == BodyType.THIN
     }

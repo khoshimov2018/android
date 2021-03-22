@@ -260,7 +260,7 @@
                             android:layout_marginTop="@dimen/normalMargin"
                             android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isNoDesire() : false}"
                             android:onClick="@{viewModel::onNoDesireClicked}"
-                            android:text="@string/no"
+                            android:text="@string/not"
                             android:textColor="@color/textColor" />
                     </RadioGroup>
 

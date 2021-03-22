@@ -1,23 +1,25 @@
 package ru.behetem.viewmodels
 
 import android.app.Application
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.behetem.activities.ReceivedReactionDetailActivity
 import ru.behetem.interfaces.IReactionClick
 import ru.behetem.models.ReactionModel
 import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.ApiConstants
+import ru.behetem.utils.Constants
 import ru.behetem.utils.isInternetAvailable
 import ru.behetem.utils.validateResponseWithoutPopup
 
 class AllReactionsViewModel(application: Application) : BaseAndroidViewModel(application), IReactionClick {
 
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
     private val receivedReactionsList: MutableLiveData<MutableList<ReactionModel>> = MutableLiveData()
@@ -58,7 +60,9 @@ class AllReactionsViewModel(application: Application) : BaseAndroidViewModel(app
     }
 
     override fun reactionItemClicked(view: View, reactionItem: ReactionModel) {
-
+        val intent = Intent(view.context, ReceivedReactionDetailActivity::class.java)
+        intent.putExtra(Constants.RECEIVED_REACTION, reactionItem)
+        view.context.startActivity(intent)
     }
 
     override fun onCleared() {
@@ -70,13 +74,5 @@ class AllReactionsViewModel(application: Application) : BaseAndroidViewModel(app
 
     fun getReceivedReactionsList(): LiveData<MutableList<ReactionModel>> {
         return receivedReactionsList
-    }
-
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
     }
 }

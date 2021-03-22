@@ -9,12 +9,280 @@
 
         <variable
             name="viewModel"
-            type="ru.behetem.viewmodels.AllReactionsViewModel" />
+            type="ru.behetem.viewmodels.ReceivedReactionDetailViewModel" />
+
+        <variable
+            name="interestsAdapter"
+            type="ru.behetem.adapters.InterestsAdapter" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+
+                <LinearLayout
+                    android:id="@+id/countLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:layout_marginBottom="@dimen/smallMargin"
+                    android:orientation="horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="100dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:gravity="center_horizontal"
+                        android:text='@{viewModel.userProfileLiveData.name != null ? viewModel.userProfileLiveData.getNameAndAge() : ""}'
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
+                        android:gravity="center_horizontal"
+                        android:text='@{viewModel.userProfileLiveData.description != null ? viewModel.userProfileLiveData.getShortDescription() : ""}'
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/largeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:background="@drawable/round_button_white"
+                        android:onClick="@{viewModel::onWriteMessageClicked}"
+                        android:text="@string/to_write_message"
+                        android:textColor="@color/textColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:gravity="center_horizontal"
+                        android:onClick="@{viewModel::onSkipClicked}"
+                        android:text="@string/skip_underline"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/largeTextSize" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/countLinear"
+                    android:padding="@dimen/largePadding"
+                    android:onClick="@{viewModel::backPressed}"
+                    app:tint="@android:color/white"
+                    android:src="@drawable/back" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/bottomSheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bottom_tabs_background"
+                app:behavior_hideable="true"
+                app:behavior_peekHeight="60dp"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="@dimen/largeMargin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/normalPadding"
+                        android:paddingTop="@dimen/normalPadding">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/location"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="Москва"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/about_myself"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text='@{viewModel.userProfileLiveData.description != null ? viewModel.userProfileLiveData.description : ""}'
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/interests"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adapter="@{interestsAdapter}"
+                            android:clipToPadding="false"
+                            android:paddingTop="@dimen/normalPadding"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:spanCount="2" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/growth"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text='@{(viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.growth != null) ? @string/growth_value(viewModel.userProfileLiveData.bodyInfo.growth) : ""}'
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/weight"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text='@{(viewModel.userProfileLiveData.bodyInfo != null &amp;&amp; viewModel.userProfileLiveData.bodyInfo.weight != null) ? @string/weight_value(viewModel.userProfileLiveData.bodyInfo.weight) : ""}'
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/family_status"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text="В активном поиске"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/nationality"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text='@{viewModel.userProfileLiveData.getDisplayableNationality()}'
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/job"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getWorkInfo() : ""}'
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/largeMargin"
+                            android:text="@string/education"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:layout_marginBottom="@dimen/largeMargin"
+                            android:text='@{viewModel.userProfileLiveData != null ? viewModel.userProfileLiveData.getEducationInfo() : ""}'
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/largeTextSize" />
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <include
             layout="@layout/common_loader"

@@ -27,7 +27,8 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
     private val nationalitiesList: MutableLiveData<MutableList<NationalityModel>> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
     private val errorTraditionResId: MutableLiveData<Int> = MutableLiveData()
-    private val baseResponse: MutableLiveData<BaseResponse> = MutableLiveData()
+    private val errorLanguageKnowledgeResId: MutableLiveData<Int> = MutableLiveData()
+    private val errorReligionResId: MutableLiveData<Int> = MutableLiveData()
 
     private lateinit var submitApiResponse: LiveData<BaseResponse>
     private lateinit var submitObserveResponse: Observer<BaseResponse>
@@ -96,6 +97,12 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
             userModelLiveData.value?.culturalInfo?.traditionsRespect == null -> {
                 errorTraditionResId.value = R.string.choose_tradition_respect
             }
+            userModelLiveData.value?.culturalInfo?.languageKnowledge == null -> {
+                errorLanguageKnowledgeResId.value = R.string.choose_language_proficiency
+            }
+            userModelLiveData.value?.culturalInfo?.religionRespect == null -> {
+                errorReligionResId.value = R.string.choose_religion_respect
+            }
             else -> {
                 if(validateInternet(view.context)) {
 //                        userModelLiveData.value?.selectedDOB = null
@@ -146,6 +153,70 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         errorTraditionResId.value = null
     }
 
+    fun onIDoNotKnowClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.languageKnowledge = LanguageKnowledge.DONT_KNOW
+        errorLanguageKnowledgeResId.value = null
+    }
+
+    fun onIKnowSomeWords(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.languageKnowledge = LanguageKnowledge.KNOW_SOME_WORDS
+        errorLanguageKnowledgeResId.value = null
+    }
+
+    fun onIUnderstandButCannotMaintainDialogue(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.languageKnowledge = LanguageKnowledge.UNDERSTAND_CANT_SPEAK
+        errorLanguageKnowledgeResId.value = null
+    }
+
+    fun onIUnderstandICanMaintainDialogue(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.languageKnowledge = LanguageKnowledge.UNDERSTAND_CAN_SPEAK
+        errorLanguageKnowledgeResId.value = null
+    }
+
+    fun onIKnowWell(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.languageKnowledge = LanguageKnowledge.KNOW_WELL
+        errorLanguageKnowledgeResId.value = null
+    }
+
+    fun onNonBelieverClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.religionRespect = ReligionRespect.ATHEIST
+        errorReligionResId.value = null
+    }
+
+    fun onBelieverClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.religionRespect = ReligionRespect.RELIGIOUS
+        errorReligionResId.value = null
+    }
+
+    fun onCanonicalBelieverClicked(view: View) {
+        if(userModelLiveData.value?.culturalInfo == null) {
+            userModelLiveData.value?.culturalInfo = CulturalInfoModel()
+        }
+        userModelLiveData.value?.culturalInfo?.religionRespect = ReligionRespect.CANONICAL_RELIGIOUS
+        errorReligionResId.value = null
+    }
+
     fun onSkipClicked(view: View) {
         moveFurther.value = true
     }
@@ -188,15 +259,15 @@ class NationalitiesViewModel(application: Application): BaseAndroidViewModel(app
         return errorResId
     }
 
-    fun getBaseResponse(): LiveData<BaseResponse?> {
-        return baseResponse
-    }
-
-    fun setBaseResponse(baseResponse: BaseResponse?) {
-        this.baseResponse.value = baseResponse
-    }
-
     fun getErrorTraditionResId(): LiveData<Int> {
         return errorTraditionResId
+    }
+
+    fun getErrorLanguageKnowledgeResId(): LiveData<Int> {
+        return errorLanguageKnowledgeResId
+    }
+
+    fun getErrorReligionResId(): LiveData<Int> {
+        return errorReligionResId
     }
 }
