@@ -1,14 +1,15 @@
 package ru.behetem.fragments
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
+import android.widget.Button
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -138,6 +139,13 @@ class UserProfileFragment : Fragment() {
                 reactionCallback?.onReactionSent()
             }
         })
+
+        viewModel.getShowOutOfReactionsPopup().observe(viewLifecycleOwner, {
+            if(it) {
+                viewModel.setShowOutOfReactionsPopup(false)
+                showOutOfReactionsPopup()
+            }
+        })
     }
 
     private fun setInterests() {
@@ -207,6 +215,26 @@ class UserProfileFragment : Fragment() {
             else
                 BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.state = state
+    }
+
+    private fun showOutOfReactionsPopup() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_out_of_reactions)
+
+        val close = dialog.findViewById<ImageView>(R.id.close)
+        val buyMore = dialog.findViewById<Button>(R.id.buyMore)
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buyMore.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     /*private fun connectWS() {

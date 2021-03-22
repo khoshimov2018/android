@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/round_dialog_background"
+    android:padding="@dimen/largeMargin"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="@dimen/normalPadding"
+        android:src="@drawable/cross" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/reaction_bg"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/speak_no_evil_monkey" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/oh_no"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/xLargeTextSize"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reactions_are_over"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/xLargeTextSize"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/largeMargin"
+        android:layout_marginTop="@dimen/normalMargin"
+        android:gravity="center"
+        android:text="@string/buy_additional_or_visit_tomorrow"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/largeTextSize" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buyMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/xLargeMargin"
+        android:layout_marginTop="@dimen/largeMargin"
+        android:background="@drawable/round_button_white"
+        android:text="@string/buy_more"
+        android:textColor="@color/textColor" />
+</LinearLayout>
