@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_received_reaction_detail.mainLayo
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
 import ru.behetem.databinding.ActivityReceivedReactionDetailBinding
+import ru.behetem.models.ChatRoomModel
 import ru.behetem.models.ReactionModel
 import ru.behetem.models.UserModel
 import ru.behetem.utils.*
@@ -66,15 +67,28 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        receivedReactionDetailViewModel = ViewModelProvider(this).get(ReceivedReactionDetailViewModel::class.java)
+        receivedReactionDetailViewModel =
+            ViewModelProvider(this).get(ReceivedReactionDetailViewModel::class.java)
         binding.viewModel = receivedReactionDetailViewModel
 
         val loggedInUser = getLoggedInUserFromShared(this)
         receivedReactionDetailViewModel.setLoggedInUser(loggedInUser)
 
-        val receivedReaction = intent.getParcelableExtra<ReactionModel>(Constants.RECEIVED_REACTION)
-        receivedReaction?.let {
-            receivedReactionDetailViewModel.setReceivedReaction(it)
+        val comingFrom = intent.getStringExtra(Constants.COMING_FROM)
+        comingFrom?.let {
+            if (it.equals(Constants.RECEIVED_REACTION, ignoreCase = true)) {
+                val receivedReaction =
+                    intent.getParcelableExtra<ReactionModel>(Constants.RECEIVED_REACTION)
+                receivedReaction?.let { reaction ->
+                    receivedReactionDetailViewModel.setReceivedReaction(reaction)
+                }
+            }
+            if (it.equals(Constants.CHAT_ROOM, ignoreCase = true)) {
+                val chatRoom = intent.getParcelableExtra<ChatRoomModel>(Constants.CHAT_ROOM)
+                chatRoom?.let { chat ->
+                    receivedReactionDetailViewModel.setChatRoom(chat)
+                }
+            }
         }
 
         initObservers()
@@ -82,9 +96,9 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
 
     private fun initObservers() {
         receivedReactionDetailViewModel.getUserProfileLiveData().observe(this, {
-            if(it != null) {
+            if (it != null) {
                 setInterests()
-                if(it.images != null) {
+                if (it.images != null) {
                     listOfImages = it.images!!
                     initView()
                 }
@@ -92,23 +106,31 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
         })
 
         receivedReactionDetailViewModel.getMoveToMessage().observe(this, {
-            if(it) {
+            if (it) {
                 receivedReactionDetailViewModel.setMoveToMessage(false)
             }
         })
 
-        receivedReactionDetailViewModel.getMoveBack().observe(this, {
+        receivedReactionDetailViewModel.getShowActivityPopup().observe(this, {
             if(it) {
+                receivedReactionDetailViewModel.setShowActivityPopup(false)
+
+            }
+        })
+
+        receivedReactionDetailViewModel.getMoveBack().observe(this, {
+            if (it) {
                 receivedReactionDetailViewModel.setMoveBack(false)
                 onBackPressed()
             }
         })
 
-        receivedReactionDetailViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
-            if (isPressed) {
-                this.onBackPressed()
-            }
-        })
+        receivedReactionDetailViewModel.getBackButtonClicked()
+            .observe(this, Observer { isPressed: Boolean ->
+                if (isPressed) {
+                    this.onBackPressed()
+                }
+            })
 
         receivedReactionDetailViewModel.getShowNoInternet().observe(this, {
             if (it) {
@@ -127,7 +149,10 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
 
     private fun setInterests() {
         interestsAdapter =
-            InterestsAdapter(receivedReactionDetailViewModel.getInterestsList(), receivedReactionDetailViewModel)
+            InterestsAdapter(
+                receivedReactionDetailViewModel.getInterestsList(),
+                receivedReactionDetailViewModel
+            )
         binding.interestsAdapter = interestsAdapter
         interestsAdapter?.notifyDataSetChanged()
     }

@@ -46,8 +46,6 @@ class MessengerFragment : Fragment() {
         val view: View = binding.root
         initViewModel()
 
-
-
         return view
     }
 
@@ -141,6 +139,12 @@ class MessengerFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+        receivedReactionAdapter = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        chatRoomsAdapter = null
         receivedReactionAdapter = null
     }
 }

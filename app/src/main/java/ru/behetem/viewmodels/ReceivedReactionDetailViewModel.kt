@@ -10,10 +10,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ru.behetem.R
 import ru.behetem.interfaces.IInterestClick
-import ru.behetem.models.InterestModel
-import ru.behetem.models.NationalityModel
-import ru.behetem.models.ReactionModel
-import ru.behetem.models.UserModel
+import ru.behetem.models.*
 import ru.behetem.repositories.NationalitiesRepository
 import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.repositories.UserRepository
@@ -24,12 +21,18 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
     IInterestClick {
 
     private var receivedReaction: ReactionModel? = null
+    private var chatRoom: ChatRoomModel? = null
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
     private val userProfileLiveData: MutableLiveData<UserModel> = MutableLiveData()
     private var isMutual = false
     private val moveToMessage: MutableLiveData<Boolean> = MutableLiveData()
     private val moveBack: MutableLiveData<Boolean> = MutableLiveData()
+    private lateinit var updateStatusApiResponse: LiveData<BaseResponse>
+    private lateinit var updateStatusObserveResponse: Observer<BaseResponse>
+    private lateinit var activityCheckApiResponse: LiveData<BaseResponse>
+    private lateinit var activityCheckObserveResponse: Observer<BaseResponse>
+    private val showActivityPopup: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getUserDetail() {
         if (isInternetAvailable(context)) {
@@ -62,9 +65,8 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
             }
 
             val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-            receivedReaction?.senderId?.let {
-                apiResponse = UserRepository.getUserDetail(strToken, it)
-            }
+
+            apiResponse = UserRepository.getUserDetail(strToken, getUserId())
             apiResponse.observeForever(observeResponse)
         } else {
             showNoInternet.value = true
@@ -99,11 +101,28 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
         )
     }
 
+    fun onCheckActivityClicked(view: View) {
+        if (validateInternet(view.context)) {
+            hideKeyboard(view)
+            loaderVisible.value = true // show loader
+            activityCheckObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+                if (validateResponse(view.context, it)) {
+                    showActivityPopup.value = true
+                }
+            }
+
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+            activityCheckApiResponse = UserRepository.activityCheck(strToken, getUserId())
+            activityCheckApiResponse.observeForever(activityCheckObserveResponse)
+        }
+    }
+
     private fun updateStatus(view: View, reactionModel: ReactionModel) {
         if (validateInternet(view.context)) {
             hideKeyboard(view)
             loaderVisible.value = true // show loader
-            observeResponse = Observer<BaseResponse> {
+            updateStatusObserveResponse = Observer<BaseResponse> {
                 loaderVisible.value = false
                 if (validateResponse(view.context, it)) {
                     if (isMutual) {
@@ -115,8 +134,8 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
             }
 
             val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-            apiResponse = ReactionsRepository.changeReactions(strToken, reactionModel)
-            apiResponse.observeForever(observeResponse)
+            updateStatusApiResponse = ReactionsRepository.changeReactions(strToken, reactionModel)
+            updateStatusApiResponse.observeForever(updateStatusObserveResponse)
         }
     }
 
@@ -142,10 +161,38 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
         }
+        if (this::activityCheckApiResponse.isInitialized) {
+            activityCheckApiResponse.removeObserver(activityCheckObserveResponse)
+        }
+        if (this::updateStatusApiResponse.isInitialized) {
+            updateStatusApiResponse.removeObserver(updateStatusObserveResponse)
+        }
+    }
+
+    private fun getUserId(): Int {
+        return if(receivedReaction != null && receivedReaction!!.senderId != null) {
+            receivedReaction!!.senderId!!
+        } else if(chatRoom != null && chatRoom!!.recipientId != null) {
+            chatRoom!!.recipientId!!.toInt()
+        } else {
+            0
+        }
+    }
+
+    fun isReceivedReaction(): Boolean {
+        return receivedReaction != null
+    }
+
+    fun isChatUser(): Boolean {
+        return chatRoom != null
     }
 
     fun setReceivedReaction(reaction: ReactionModel) {
         receivedReaction = reaction
+    }
+
+    fun setChatRoom(chatRoom: ChatRoomModel) {
+        this.chatRoom = chatRoom
     }
 
     fun getUserProfileLiveData(): LiveData<UserModel> {
@@ -166,5 +213,13 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
 
     fun setMoveBack(move: Boolean) {
         moveBack.value = move
+    }
+
+    fun getShowActivityPopup(): LiveData<Boolean> {
+        return showActivityPopup
+    }
+
+    fun setShowActivityPopup(show: Boolean) {
+        showActivityPopup.value = show
     }
 }

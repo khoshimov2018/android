@@ -132,11 +132,19 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
     override fun reactionItemClicked(view: View, reactionItem: ReactionModel) {
         val intent = Intent(view.context, ReceivedReactionDetailActivity::class.java)
         intent.putExtra(Constants.RECEIVED_REACTION, reactionItem)
+        intent.putExtra(Constants.COMING_FROM, Constants.RECEIVED_REACTION)
         view.context.startActivity(intent)
     }
 
     fun onAllClicked(view: View) {
         allClicked.value = true
+    }
+
+    fun userProfilePicClicked(view: View, chatRoomModel: ChatRoomModel) {
+        val intent = Intent(view.context, ReceivedReactionDetailActivity::class.java)
+        intent.putExtra(Constants.CHAT_ROOM, chatRoomModel)
+        intent.putExtra(Constants.COMING_FROM, Constants.CHAT_ROOM)
+        view.context.startActivity(intent)
     }
 
     fun chatRoomClicked(view: View, chatRoomItem: ChatRoomModel) {

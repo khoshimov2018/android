@@ -84,4 +84,7 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.GET_COMMERCIAL)
     fun getCommercial(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.ACTIVITY_CHECK)
+    fun activityCheck(@Header("Authorization") token: String, @Query("userId") userId: String): Call<BaseResponse>
 }
