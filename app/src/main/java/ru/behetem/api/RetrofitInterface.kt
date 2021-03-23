@@ -58,6 +58,9 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_REACTIONS)
     fun getReactions(@Header("Authorization") token: String): Call<BaseResponse>
 
+    @POST(ApiConstants.CHANGE_EMAIL)
+    fun changeEmail(@Body userModel: UserModel, @Header("Authorization") token: String): Call<BaseResponse>
+
     @POST(ApiConstants.CHANGE_PASSWORD)
     fun changePassword(@Body changePasswordModel: ChangePasswordModel, @Header("Authorization") token: String): Call<BaseResponse>
 

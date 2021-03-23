@@ -54,6 +54,7 @@ object ApiConstants {
     const val DELETE_IMAGE = "images/delete"
     const val SEND_REACTION = "react"
     const val GET_REACTIONS = "reaction/newReactions"
+    const val CHANGE_EMAIL = "email/change"
     const val CHANGE_PASSWORD = "password/change"
     const val DELETE_ACCOUNT = "delete-account"
     const val GET_USER_DETAIL = "user"
