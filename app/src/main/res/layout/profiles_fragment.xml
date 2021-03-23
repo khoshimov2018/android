@@ -21,6 +21,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="@{(viewModel.usersListLiveData != null &amp;&amp; viewModel.usersListLiveData.size() == 0) ? View.VISIBLE : View.GONE}"
+            android:text="@string/no_users_found"
+            android:textSize="@dimen/xxLargeTextSize"
+            android:background="@color/loaderBackground" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

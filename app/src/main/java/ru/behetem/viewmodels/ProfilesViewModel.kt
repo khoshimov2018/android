@@ -234,7 +234,7 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
             loaderVisible.value = true // show loader
             getCommercialObserveResponse = Observer<BaseResponse> { response ->
                 loaderVisible.value = false
-                if (validateResponse(context, response)) {
+                if (validateResponseWithoutPopup(response)) {
                     val gson = Gson()
                     val strResponse = gson.toJson(response.data)
                     val myType = object : TypeToken<CommercialModel>() {}.type
@@ -243,6 +243,8 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
                     saveCommercialToShared(context, commercialModel)
 
                     getFilters()
+                } else {
+                    baseResponse.value = response
                 }
             }
             // token
