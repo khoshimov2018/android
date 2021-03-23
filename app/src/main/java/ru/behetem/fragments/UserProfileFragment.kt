@@ -2,6 +2,8 @@ package ru.behetem.fragments
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
@@ -221,6 +223,7 @@ class UserProfileFragment : Fragment() {
         val dialog = Dialog(requireActivity())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(R.layout.dialog_out_of_reactions)
 
         val close = dialog.findViewById<ImageView>(R.id.close)

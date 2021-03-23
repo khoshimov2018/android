@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/xLargeMargin"
         android:layout_marginTop="@dimen/largeMargin"
+        android:layout_marginBottom="@dimen/normalMargin"
         android:background="@drawable/round_button_white"
         android:text="@string/buy_more"
         android:textColor="@color/textColor" />
