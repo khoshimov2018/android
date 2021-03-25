@@ -163,6 +163,9 @@
     <string name="reactions_are_over">Реакции закончились</string>
     <string name="buy_additional_or_visit_tomorrow">Купи дополнительные реакции сейчас или заходи в приложение завтра</string>
     <string name="buy_more">Купить еще!</string>
+    <string name="moment_of_truth">Момент истины</string>
+    <string name="only_with_you">За последние 7 дней пользователь Имя активно общался только с вами!</string>
+    <string name="with_other_people">За последние 7 дней пользователь Имя активно общался с %1$d людьми!</string>
 
     <string-array name="education_level">
         <item>Степень</item>

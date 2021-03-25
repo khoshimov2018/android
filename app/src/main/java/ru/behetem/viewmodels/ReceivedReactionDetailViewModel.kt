@@ -33,6 +33,8 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
     private lateinit var activityCheckApiResponse: LiveData<BaseResponse>
     private lateinit var activityCheckObserveResponse: Observer<BaseResponse>
     private val showActivityPopup: MutableLiveData<Boolean> = MutableLiveData()
+    private var activityStatus: Double = -1.0
+    private val showOutOfReactionsPopup: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getUserDetail() {
         if (isInternetAvailable(context)) {
@@ -102,19 +104,36 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
     }
 
     fun onCheckActivityClicked(view: View) {
-        if (validateInternet(view.context)) {
-            hideKeyboard(view)
-            loaderVisible.value = true // show loader
-            activityCheckObserveResponse = Observer<BaseResponse> {
-                loaderVisible.value = false
-                if (validateResponse(view.context, it)) {
-                    showActivityPopup.value = true
-                }
-            }
+        val commercialModel = getCommercialFromShared(view.context)
+        var left: Int? = commercialModel?.actionsLeft?.ACTIVITY_CHECK
+        var allow = left != null && left > 0
 
-            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
-            activityCheckApiResponse = UserRepository.activityCheck(strToken, getUserId())
-            activityCheckApiResponse.observeForever(activityCheckObserveResponse)
+        if(allow) {
+            if (validateInternet(view.context)) {
+                hideKeyboard(view)
+                loaderVisible.value = true // show loader
+                activityCheckObserveResponse = Observer<BaseResponse> {
+                    loaderVisible.value = false
+                    if (validateResponse(view.context, it)) {
+                        if(left != null) {
+                            left -= 1
+                        }
+                        commercialModel?.actionsLeft?.ACTIVITY_CHECK = left
+                        commercialModel?.let {
+                            saveCommercialToShared(view.context, it)
+                        }
+
+                        activityStatus = it.data as Double
+                        showActivityPopup.value = true
+                    }
+                }
+
+                val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+                activityCheckApiResponse = UserRepository.activityCheck(strToken, getUserId())
+                activityCheckApiResponse.observeForever(activityCheckObserveResponse)
+            }
+        } else {
+            showOutOfReactionsPopup.value = true
         }
     }
 
@@ -221,5 +240,17 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
 
     fun setShowActivityPopup(show: Boolean) {
         showActivityPopup.value = show
+    }
+
+    fun getActivityStatus(): Double {
+        return activityStatus
+    }
+
+    fun getShowOutOfReactionsPopup(): LiveData<Boolean> {
+        return showOutOfReactionsPopup
+    }
+
+    fun setShowOutOfReactionsPopup(show: Boolean) {
+        showOutOfReactionsPopup.value = show
     }
 }

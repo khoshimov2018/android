@@ -1,11 +1,18 @@
 package ru.behetem.activities
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -112,9 +119,16 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
         })
 
         receivedReactionDetailViewModel.getShowActivityPopup().observe(this, {
-            if(it) {
+            if (it) {
                 receivedReactionDetailViewModel.setShowActivityPopup(false)
+                showActivityStatusPopup(receivedReactionDetailViewModel.getActivityStatus())
+            }
+        })
 
+        receivedReactionDetailViewModel.getShowOutOfReactionsPopup().observe(this, {
+            if (it) {
+                receivedReactionDetailViewModel.setShowOutOfReactionsPopup(false)
+                showOutOfReactionsPopup()
             }
         })
 
@@ -194,5 +208,47 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
         for (view in listOfCountViews) {
             view.setBackgroundResource(R.color.lightGreyColor)
         }
+    }
+
+    private fun showActivityStatusPopup(activity: Double) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setContentView(R.layout.dialog_activity_status)
+
+        val close = dialog.findViewById<ImageView>(R.id.close)
+        val description = dialog.findViewById<TextView>(R.id.description)
+
+        if (activity > 0) {
+            description.text = getString(R.string.with_other_people, activity)
+        }
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun showOutOfReactionsPopup() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setContentView(R.layout.dialog_out_of_reactions)
+
+        val close = dialog.findViewById<ImageView>(R.id.close)
+        val buyMore = dialog.findViewById<Button>(R.id.buyMore)
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buyMore.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }
