@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.behetem.api.RetrofitService
+import ru.behetem.models.ChatMessageModel
 import ru.behetem.models.ChatRoomModel
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.getApiElseBaseResponse
@@ -63,6 +64,28 @@ object ChatsRepository {
     fun getMessages(strToken: String, otherUserId: String, page: Int, pageSize: Int): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
         retrofitService.getMessages(strToken, otherUserId, page, pageSize)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
+    fun sendMessage(strToken: String, chatMessageModel: ChatMessageModel): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.sendMessage(strToken, chatMessageModel)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,

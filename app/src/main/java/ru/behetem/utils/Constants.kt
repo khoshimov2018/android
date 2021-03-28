@@ -70,6 +70,7 @@ object ApiConstants {
     const val GET_COMMERCIAL = "commercial"
     const val ACTIVITY_CHECK = "activitycheck"
     const val GET_MESSAGES = "messages"
+    const val SEND_MESSAGE = "chat"
 }
 
 object LoginFormErrorConstants {

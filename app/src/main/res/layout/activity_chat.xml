@@ -102,6 +102,8 @@
                         android:padding="@dimen/normalPadding"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:singleLine="true"
+                        android:imeOptions="actionSend"
+                        android:onEditorAction="@{(view, actionId, event) -> viewModel.onSendMessage(view, actionId, event)}"
                         android:textColor="@color/textColor" />
                 </LinearLayout>
             </RelativeLayout>

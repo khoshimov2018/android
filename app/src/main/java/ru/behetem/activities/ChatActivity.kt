@@ -12,6 +12,8 @@ import ru.behetem.models.ChatRoomModel
 import ru.behetem.models.UserModel
 import ru.behetem.utils.Constants
 import ru.behetem.utils.getLoggedInUserFromShared
+import ru.behetem.utils.showInfoAlertDialog
+import ru.behetem.utils.validateResponse
 import ru.behetem.viewmodels.ChatViewModel
 import ru.behetem.viewmodels.ChooseLookingForViewModel
 
@@ -61,6 +63,20 @@ class ChatActivity : AppCompatActivity() {
         chatViewModel.getBackButtonClicked().observe(this, { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
+            }
+        })
+
+        chatViewModel.getShowNoInternet().observe(this, {
+            if(it) {
+                chatViewModel.setShowNoInternet(false)
+                showInfoAlertDialog(this, getString(R.string.no_internet))
+            }
+        })
+
+        chatViewModel.getBaseResponse().observe(this, {
+            it?.let {
+                chatViewModel.setBaseResponse(null)
+                validateResponse(this, it)
             }
         })
     }
