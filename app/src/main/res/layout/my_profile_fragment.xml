@@ -127,7 +127,8 @@
                     android:layout_marginVertical="@dimen/normalMargin"
                     android:background="@drawable/round_button_blue"
                     android:elevation="@dimen/elevation"
-                    android:padding="@dimen/largeMargin">
+                    android:padding="@dimen/largeMargin"
+                    android:onClick="@{viewModel::premiumClicked}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"

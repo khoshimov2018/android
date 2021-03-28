@@ -34,9 +34,9 @@
                 app:tint="@android:color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@android:color/white" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/crown_big" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/xLargeMargin"
+                android:layout_marginHorizontal="@dimen/xxLargeMargin"
                 android:layout_marginTop="@dimen/normalMargin"
                 android:gravity="center"
                 android:text="@string/send_unlimited_reactions"
@@ -83,7 +83,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12"
+                        android:text="3"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xxLargeTextSize" />
 
@@ -121,14 +121,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="6"
+                        android:text="1"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xxLargeTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/months"
+                        android:text="@string/month"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xxLargeTextSize" />
 
@@ -158,14 +158,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
+                        android:text="6"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xxLargeTextSize" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/month"
+                        android:text="@string/months"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xxLargeTextSize" />
 
@@ -202,7 +202,8 @@
                 android:layout_marginTop="@dimen/normalMargin"
                 android:layout_marginBottom="@dimen/largeMargin"
                 android:background="@null"
-                android:text="@string/str_continue"
+                android:onClick="@{viewModel::onCancelled}"
+                android:text="@string/cancel"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>
