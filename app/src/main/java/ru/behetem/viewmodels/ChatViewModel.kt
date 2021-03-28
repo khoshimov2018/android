@@ -34,6 +34,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
     private val isPullToRefreshLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var shouldHitPagination = true
     val messageToBeSent: MutableLiveData<String> = MutableLiveData()
+    private val shouldMoveToBottom: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getLatestMessages() {
         if (isInternetAvailable(context)) {
@@ -57,6 +58,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
                         chatsList.reverse()
                         chatsListingLiveData.value = chatsList
+                        shouldMoveToBottom.value = true
 
                         if (chatsList.size < Constants.PAGE_SIZE) {
                             shouldHitPagination = false
@@ -222,5 +224,13 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     fun getMessageToBeSent(): LiveData<String> {
         return messageToBeSent
+    }
+
+    fun getShouldMoveToBottom(): LiveData<Boolean> {
+        return shouldMoveToBottom
+    }
+
+    fun setShouldMoveToBottom(shouldMove: Boolean) {
+        shouldMoveToBottom.value = shouldMove
     }
 }
