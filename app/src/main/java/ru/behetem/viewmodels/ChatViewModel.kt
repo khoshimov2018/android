@@ -33,6 +33,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     private val isPullToRefreshLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var shouldHitPagination = true
+    val messageToBeSent: MutableLiveData<String> = MutableLiveData()
 
     fun getLatestMessages() {
         if (isInternetAvailable(context)) {
@@ -54,9 +55,10 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                             reaction.image = "${ApiConstants.BASE_URL}${reaction.image}"
                         }*/
 
+                        chatsList.reverse()
                         chatsListingLiveData.value = chatsList
 
-                        if(chatsList.size < Constants.PAGE_SIZE) {
+                        if (chatsList.size < Constants.PAGE_SIZE) {
                             shouldHitPagination = false
                         }
 
@@ -81,7 +83,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
     }
 
     fun onPullToRefresh() {
-        if(shouldHitPagination) {
+        if (shouldHitPagination) {
             isPullToRefreshLoading.value = true
             if (isInternetAvailable(context)) {
                 showNoInternet.value = false
@@ -102,13 +104,16 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                                 reaction.image = "${ApiConstants.BASE_URL}${reaction.image}"
                             }*/
 
-//                        chatsListingLiveData.value = chatsList
+                            chatsList.reverse()
+                            chatsListingLiveData.value?.addAll(0, chatsList)
 
-                            if(chatsList.size < Constants.PAGE_SIZE) {
+                            chatsListingLiveData.value = chatsListingLiveData.value
+
+                            if (chatsList.size < Constants.PAGE_SIZE) {
                                 shouldHitPagination = false
                             }
 
-                            if(chatsList.size > 0) {
+                            if (chatsList.size > 0) {
                                 chatRoomLiveData.value?.page = chatRoomLiveData.value?.page!! + 1
                             }
                         }
@@ -121,7 +126,12 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                 val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
                 chatRoomLiveData.value?.let {
                     apiResponse =
-                        ChatsRepository.getMessages(strToken, it.recipientId!!, chatRoomLiveData.value?.page!!, it.pageSize)
+                        ChatsRepository.getMessages(
+                            strToken,
+                            it.recipientId!!,
+                            chatRoomLiveData.value?.page!!,
+                            it.pageSize
+                        )
                 }
                 apiResponse.observeForever(observeResponse)
             } else {
@@ -133,16 +143,20 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
         }
     }
 
-    fun onMessageTextChanged(charSequence: CharSequence) {
+    /*fun onMessageTextChanged(charSequence: CharSequence) {
         chatMessageModel.content = charSequence.toString()
-    }
+    }*/
 
     fun onSendMessage(view: View, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             chatMessageModel.recipientId = chatRoomLiveData.value?.recipientId
-            if (!chatMessageModel.content.isNullOrEmpty()) {
+            if(messageToBeSent.value != null && messageToBeSent.value!!.isNotEmpty()) {
+                chatMessageModel.content = messageToBeSent.value
                 sendMessage()
             }
+            /*if (!chatMessageModel.content.isNullOrEmpty()) {
+                sendMessage()
+            }*/
             return true
         }
         return false
@@ -157,7 +171,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                 loaderVisible.value = false
 
                 if (validateResponseWithoutPopup(it)) {
-
+                    messageToBeSent.value = ""
                 } else {
                     baseResponse.value = it
                 }
@@ -204,5 +218,9 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     fun getIsPullToRefreshLoading(): LiveData<Boolean> {
         return isPullToRefreshLoading
+    }
+
+    fun getMessageToBeSent(): LiveData<String> {
+        return messageToBeSent
     }
 }

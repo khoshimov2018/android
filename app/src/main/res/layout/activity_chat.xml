@@ -75,13 +75,13 @@
                 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/bottomLinear"
                     app:onRefreshListener="@{() -> viewModel.onPullToRefresh()}"
                     app:refreshing="@{viewModel.isPullToRefreshLoading}">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_above="@+id/bottomLinear"
                         android:adapter="@{chatMessagesAdapter}"
                         android:clipToPadding="false"
                         android:paddingHorizontal="@dimen/normalPadding"
@@ -106,11 +106,13 @@
                         android:hint="@string/write_something"
                         android:imeOptions="actionSend"
                         android:onEditorAction="@{(view, actionId, event) -> viewModel.onSendMessage(view, actionId, event)}"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onMessageTextChanged(text)}"
+                        android:text="@={viewModel.messageToBeSent}"
                         android:padding="@dimen/normalPadding"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:singleLine="true"
                         android:textColor="@color/textColor" />
+
+                    <!--android:onTextChanged="@{(text, start, before, count) -> viewModel.onMessageTextChanged(text)}"-->
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
