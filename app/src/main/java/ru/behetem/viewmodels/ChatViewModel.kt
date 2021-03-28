@@ -31,11 +31,10 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     private val chatMessageModel = ChatMessageModel()
 
-    fun getLatestMessages() {
-        if (chatRoomLiveData.value?.page == null) {
-            chatRoomLiveData.value?.page = 0
-        }
+    private val isPullToRefreshLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private var shouldHitPagination = true
 
+    fun getLatestMessages() {
         if (isInternetAvailable(context)) {
             showNoInternet.value = false
             loaderVisible.value = true // show loader
@@ -56,6 +55,14 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                         }*/
 
                         chatsListingLiveData.value = chatsList
+
+                        if(chatsList.size < Constants.PAGE_SIZE) {
+                            shouldHitPagination = false
+                        }
+
+                        if (chatRoomLiveData.value?.page == null) {
+                            chatRoomLiveData.value?.page = 1
+                        }
                     }
                 } else {
                     baseResponse.value = it
@@ -70,6 +77,59 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
             apiResponse.observeForever(observeResponse)
         } else {
             showNoInternet.value = true
+        }
+    }
+
+    fun onPullToRefresh() {
+        if(shouldHitPagination) {
+            isPullToRefreshLoading.value = true
+            if (isInternetAvailable(context)) {
+                showNoInternet.value = false
+                loaderVisible.value = true // show loader
+
+                observeResponse = Observer<BaseResponse> {
+                    loaderVisible.value = false
+
+                    if (validateResponseWithoutPopup(it)) {
+                        if (it.data is MutableList<*>) {
+                            val gson = Gson()
+                            val strResponse = gson.toJson(it.data)
+                            val myType = object : TypeToken<MutableList<ChatMessageModel>>() {}.type
+                            val chatsList: MutableList<ChatMessageModel> =
+                                gson.fromJson<MutableList<ChatMessageModel>>(strResponse, myType)
+
+                            /*for (reaction in reactionsList) {
+                                reaction.image = "${ApiConstants.BASE_URL}${reaction.image}"
+                            }*/
+
+//                        chatsListingLiveData.value = chatsList
+
+                            if(chatsList.size < Constants.PAGE_SIZE) {
+                                shouldHitPagination = false
+                            }
+
+                            if(chatsList.size > 0) {
+                                chatRoomLiveData.value?.page = chatRoomLiveData.value?.page!! + 1
+                            }
+                        }
+                    } else {
+                        baseResponse.value = it
+                    }
+                    isPullToRefreshLoading.value = false
+                }
+
+                val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+                chatRoomLiveData.value?.let {
+                    apiResponse =
+                        ChatsRepository.getMessages(strToken, it.recipientId!!, chatRoomLiveData.value?.page!!, it.pageSize)
+                }
+                apiResponse.observeForever(observeResponse)
+            } else {
+                showNoInternet.value = true
+                isPullToRefreshLoading.value = false
+            }
+        } else {
+            isPullToRefreshLoading.value = false
         }
     }
 
@@ -140,5 +200,9 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     fun getChatsListingLiveData(): LiveData<MutableList<ChatMessageModel>> {
         return chatsListingLiveData
+    }
+
+    fun getIsPullToRefreshLoading(): LiveData<Boolean> {
+        return isPullToRefreshLoading
     }
 }

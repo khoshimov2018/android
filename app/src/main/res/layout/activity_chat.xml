@@ -72,16 +72,22 @@
                 android:layout_height="match_parent"
                 android:background="@color/chatBackground">
 
-                <androidx.recyclerview.widget.RecyclerView
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@+id/bottomLinear"
-                    android:clipToPadding="false"
-                    android:paddingHorizontal="@dimen/normalPadding"
-                    android:paddingVertical="@dimen/normalPadding"
-                    android:adapter="@{chatMessagesAdapter}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    app:onRefreshListener="@{() -> viewModel.onPullToRefresh()}"
+                    app:refreshing="@{viewModel.isPullToRefreshLoading}">
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/bottomLinear"
+                        android:adapter="@{chatMessagesAdapter}"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="@dimen/normalPadding"
+                        android:paddingVertical="@dimen/normalPadding"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <LinearLayout
                     android:id="@+id/bottomLinear"
@@ -98,12 +104,12 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/write_something"
+                        android:imeOptions="actionSend"
+                        android:onEditorAction="@{(view, actionId, event) -> viewModel.onSendMessage(view, actionId, event)}"
                         android:onTextChanged="@{(text, start, before, count) -> viewModel.onMessageTextChanged(text)}"
                         android:padding="@dimen/normalPadding"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:singleLine="true"
-                        android:imeOptions="actionSend"
-                        android:onEditorAction="@{(view, actionId, event) -> viewModel.onSendMessage(view, actionId, event)}"
                         android:textColor="@color/textColor" />
                 </LinearLayout>
             </RelativeLayout>
