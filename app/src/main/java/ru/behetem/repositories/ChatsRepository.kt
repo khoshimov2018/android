@@ -59,4 +59,26 @@ object ChatsRepository {
             })
         return data
     }
+
+    fun getMessages(strToken: String, otherUserId: String, page: Int, pageSize: Int): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.getMessages(strToken, otherUserId, page, pageSize)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
 }

@@ -24,6 +24,11 @@ object Constants {
     const val PAGE_SIZE = 10
     const val MIN_AGE_FOR_CAL = 18
     const val MAX_GROWTH_WEIGHT = 250
+    const val MAX_WIDTH_FOR_CHAT_PERCENTAGE = 0.7
+
+    const val UTC = "UTC"
+    const val DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    const val SHOW_TIME_FORMAT = "hh:mm a"
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -64,6 +69,7 @@ object ApiConstants {
     const val DELETE_CHAT_ROOM = "messages/deletechatroom"
     const val GET_COMMERCIAL = "commercial"
     const val ACTIVITY_CHECK = "activitycheck"
+    const val GET_MESSAGES = "messages"
 }
 
 object LoginFormErrorConstants {

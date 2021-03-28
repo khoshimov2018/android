@@ -87,4 +87,7 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.ACTIVITY_CHECK)
     fun activityCheck(@Header("Authorization") token: String, @Query("userId") userId: Int): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_MESSAGES + "/{otherUserId}")
+    fun getMessages(@Header("Authorization") token: String, @Path("otherUserId") otherUserId: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Call<BaseResponse>
 }

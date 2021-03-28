@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/sentMessageBackground" />
+
+    <stroke
+        android:width="@dimen/lineHeight"
+        android:color="@color/sentMessageBackground" />
+
+    <corners android:radius="@dimen/buttonRadius" />
+
+    <padding
+        android:bottom="@dimen/normalPadding"
+        android:left="@dimen/normalPadding"
+        android:right="@dimen/normalPadding"
+        android:top="@dimen/normalPadding" />
+</shape>

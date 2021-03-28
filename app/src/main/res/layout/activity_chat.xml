@@ -11,6 +11,10 @@
         <variable
             name="viewModel"
             type="ru.behetem.viewmodels.ChatViewModel" />
+
+        <variable
+            name="chatMessagesAdapter"
+            type="ru.behetem.adapters.ChatMessagesAdapter" />
     </data>
 
     <RelativeLayout
@@ -75,8 +79,9 @@
                     android:clipToPadding="false"
                     android:paddingHorizontal="@dimen/normalPadding"
                     android:paddingVertical="@dimen/normalPadding"
+                    android:adapter="@{chatMessagesAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                <!--android:adapter="@{receivedReactionsAdapter}"-->
+
 
                 <LinearLayout
                     android:id="@+id/bottomLinear"

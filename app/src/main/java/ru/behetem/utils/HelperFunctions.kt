@@ -10,6 +10,7 @@ import android.os.Build
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import com.google.gson.Gson
@@ -23,6 +24,7 @@ import ru.behetem.responses.BaseResponse
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
+
 
 fun hideKeyboard(view: View?) {
     view?.let { v ->
@@ -174,6 +176,11 @@ fun dpToPx(context: Context, valueInDp: Float): Float {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, displayMetrics)
 }
 
+fun pxToDp(context: Context, pixels: Int): Float {
+    val displayMetrics = context.resources.displayMetrics
+    return pixels / displayMetrics.density
+}
+
 fun saveLoggedInUserToShared(context: Context, userModel: UserModel) {
     val gson = Gson()
     val strJson = gson.toJson(userModel)
@@ -302,4 +309,26 @@ fun getTimeZone(): String {
     offset = "UTC" + (if (offsetInMillis >= 0) "+" else "-") + offset
 
     return offset
+}
+
+fun getLocalDateTimeFromUtc(strUtcDateTime: String): Date? {
+    val format = SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.US)
+    format.timeZone = TimeZone.getTimeZone(Constants.UTC)
+    return format.parse(strUtcDateTime)
+}
+
+fun getOnlyTimeFromUtcDateTime(strUtcDateTime: String): String {
+    val localDateTime = getLocalDateTimeFromUtc(strUtcDateTime)
+
+    return localDateTime?.let {
+        val showFormat = SimpleDateFormat(Constants.SHOW_TIME_FORMAT, Locale.US)
+        showFormat.timeZone = TimeZone.getDefault()
+        showFormat.format(it)
+    } ?: ""
+}
+
+@Suppress("DEPRECATION")
+fun getDeviceMaxWidth(context: Context): Int {
+    val mWinMgr = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    return mWinMgr.defaultDisplay.width
 }
