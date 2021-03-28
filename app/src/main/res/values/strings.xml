@@ -166,6 +166,7 @@
     <string name="moment_of_truth">Момент истины</string>
     <string name="only_with_you">За последние 7 дней пользователь Имя активно общался только с вами!</string>
     <string name="with_other_people">За последние 7 дней пользователь Имя активно общался с %1$d людьми!</string>
+    <string name="remaining_x">Осталось: %1$d</string>
 
     <string-array name="education_level">
         <item>Степень</item>
