@@ -44,7 +44,7 @@ object Constants {
 
 object ApiConstants {
     const val BASE_URL = "http://behetem.ru/"
-    const val WEB_SOCKET_URL = "ws://37.143.14.155/ws/websocket"
+    const val WEB_SOCKET_URL = "ws://behetem.ru/ws/websocket"
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
     const val CHANGE_INFO = "info"

@@ -7,15 +7,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_chat.*
+import okhttp3.*
 import ru.behetem.R
 import ru.behetem.adapters.ChatMessagesAdapter
 import ru.behetem.databinding.ActivityChatBinding
 import ru.behetem.models.ChatRoomModel
 import ru.behetem.models.UserModel
-import ru.behetem.utils.Constants
-import ru.behetem.utils.getLoggedInUserFromShared
-import ru.behetem.utils.showInfoAlertDialog
-import ru.behetem.utils.validateResponse
+import ru.behetem.utils.*
 import ru.behetem.viewmodels.ChatViewModel
 import ru.behetem.viewmodels.ChooseLookingForViewModel
 
@@ -34,6 +32,7 @@ class ChatActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         initViewModel()
         addListeners()
+        connectWS()
     }
 
     private fun initViewModel() {
@@ -118,5 +117,36 @@ class ChatActivity : AppCompatActivity() {
                 shouldMoveToBottom = !recyclerView.canScrollVertically(1)
             }
         })
+    }
+
+    private fun connectWS() {
+        val request: Request = Request.Builder().url(ApiConstants.WEB_SOCKET_URL).build()
+        val client: OkHttpClient = OkHttpClient()
+        val ws: WebSocket = client.newWebSocket(request, object: WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                super.onOpen(webSocket, response)
+                printLog("Socket onOpen")
+                webSocket.send("JSON String here")
+                webSocket.close(1000, "Goodbye !")
+            }
+
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                super.onMessage(webSocket, text)
+                printLog("Socket onMessage "+text)
+            }
+
+            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+                super.onClosing(webSocket, code, reason)
+                printLog("Socket onClosing")
+            }
+
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                super.onFailure(webSocket, t, response)
+                printLog("Socket onFailure")
+            }
+        })
+        client.dispatcher.executorService.shutdown()
+
+        ws.close(1000, "Bye")
     }
 }
