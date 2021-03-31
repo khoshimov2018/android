@@ -2,6 +2,7 @@ package ru.behetem.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -115,6 +116,7 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
         receivedReactionDetailViewModel.getMoveToMessage().observe(this, {
             if (it) {
                 receivedReactionDetailViewModel.setMoveToMessage(false)
+                moveToMessage()
             }
         })
 
@@ -250,5 +252,20 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
         }
 
         dialog.show()
+    }
+
+    private fun moveToMessage() {
+        receivedReactionDetailViewModel.getReceivedReaction()?.let {
+            val chatRoomItem = ChatRoomModel()
+            chatRoomItem.senderId = it.receiverId.toString()
+            chatRoomItem.recipientId = it.senderId.toString()
+            chatRoomItem.receiverName = it.senderName
+            chatRoomItem.receiverImage = it.image
+
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra(Constants.CHAT_ROOM, chatRoomItem)
+            startActivity(intent)
+            finish()
+        }
     }
 }

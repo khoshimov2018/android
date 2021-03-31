@@ -210,6 +210,10 @@ class ReceivedReactionDetailViewModel(application: Application) : BaseAndroidVie
         receivedReaction = reaction
     }
 
+    fun getReceivedReaction(): ReactionModel? {
+        return receivedReaction
+    }
+
     fun setChatRoom(chatRoom: ChatRoomModel) {
         this.chatRoom = chatRoom
     }
