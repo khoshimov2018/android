@@ -152,6 +152,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
     fun onSendMessage(view: View, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             chatMessageModel.recipientId = chatRoomLiveData.value?.recipientId
+            chatMessageModel.messageType = MessageTypes.TEXT
             if(messageToBeSent.value != null && messageToBeSent.value!!.isNotEmpty()) {
                 chatMessageModel.content = messageToBeSent.value
                 sendMessage()
