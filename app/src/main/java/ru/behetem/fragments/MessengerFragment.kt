@@ -139,6 +139,7 @@ class MessengerFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+        chatRoomsAdapter = null
         receivedReactionAdapter = null
     }
 

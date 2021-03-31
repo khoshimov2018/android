@@ -1,5 +1,7 @@
 package ru.behetem.models
 
+import ru.behetem.utils.ApiConstants
+import ru.behetem.utils.MessageTypes
 import ru.behetem.utils.getOnlyTimeFromUtcDateTime
 
 data class ChatMessageModel(
@@ -20,5 +22,17 @@ data class ChatMessageModel(
         } else {
             getOnlyTimeFromUtcDateTime(timestamp!!)
         }
+    }
+
+    fun isTextMessage(): Boolean {
+        return messageType == null || messageType == MessageTypes.TEXT
+    }
+
+    fun isImageMessage(): Boolean {
+        return messageType == MessageTypes.IMAGE
+    }
+
+    fun getImageUrl(): String {
+        return content?.let { "${ApiConstants.BASE_URL}${it}" } ?: ""
     }
 }

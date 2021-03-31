@@ -266,6 +266,7 @@
     <string name="sure_skip_user">Are you sure you want to skip this user?</string>
     <string name="sure_delete_chat_room">Are you sure you want to delete chat room?</string>
     <string name="no_users_found">No users found</string>
+    <string name="image">Image</string>
 
     <!-- Image Picker -->
     <string name="title_choose_image_provider">выберите</string>

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.behetem.R
 import ru.behetem.activities.ChatActivity
 import ru.behetem.activities.ReceivedReactionDetailActivity
 import ru.behetem.interfaces.IReactionClick
@@ -19,10 +20,7 @@ import ru.behetem.repositories.ChatsRepository
 import ru.behetem.repositories.InterestsRepository
 import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.responses.BaseResponse
-import ru.behetem.utils.ApiConstants
-import ru.behetem.utils.Constants
-import ru.behetem.utils.isInternetAvailable
-import ru.behetem.utils.validateResponseWithoutPopup
+import ru.behetem.utils.*
 
 class MessengerViewModel(application: Application) : BaseAndroidViewModel(application), IReactionClick {
 
@@ -151,6 +149,20 @@ class MessengerViewModel(application: Application) : BaseAndroidViewModel(applic
         val intent = Intent(view.context, ChatActivity::class.java)
         intent.putExtra(Constants.CHAT_ROOM, chatRoomItem)
         view.context.startActivity(intent)
+    }
+
+    fun getLastMessageContent(chatRoomItem: ChatRoomModel): String {
+        return when {
+            chatRoomItem.lastMessage == null -> {
+                ""
+            }
+            chatRoomItem.lastMessage!!.messageType == MessageTypes.IMAGE -> {
+                context.getString(R.string.image)
+            }
+            else -> {
+                chatRoomItem.lastMessage!!.content?.let { it } ?: ""
+            }
+        }
     }
 
     override fun onCleared() {

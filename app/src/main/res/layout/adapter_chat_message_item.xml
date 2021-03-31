@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="android.view.Gravity" />
 
         <variable
@@ -28,7 +30,24 @@
             android:layout_height="wrap_content"
             android:background="@{viewModel.isMessageSent(item.senderId) ? @drawable/sent_message_background : @drawable/received_message_background}"
             android:text="@{item.content}"
-            android:textColor="@color/textColor" />
+            android:textColor="@color/textColor"
+            android:visibility="@{item.isTextMessage() ? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normalPadding"
+            android:visibility="@{item.isImageMessage() ? View.VISIBLE : View.GONE}"
+            android:background="@{viewModel.isMessageSent(item.senderId) ? @drawable/sent_message_background : @drawable/received_message_background}">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/chatPhoto"
+                android:layout_height="@dimen/chatPhoto"
+                android:scaleType="centerInside"
+                app:error="@{@drawable/heart}"
+                app:imageUrl='@{item.getImageUrl()}'
+                app:placeholder="@{@drawable/heart}" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

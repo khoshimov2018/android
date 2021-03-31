@@ -36,6 +36,7 @@
     <dimen name="photo">120dp</dimen>
     <dimen name="profilePhoto">150dp</dimen>
     <dimen name="photoRadius">20dp</dimen>
+    <dimen name="chatPhoto">180dp</dimen>
 
     <dimen name="errorTextSize">12sp</dimen>
 </resources>
