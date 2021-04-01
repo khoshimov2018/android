@@ -51,7 +51,7 @@ class ChatActivity : AppCompatActivity() {
         val chatRoom = intent.getParcelableExtra<ChatRoomModel>(Constants.CHAT_ROOM)
         chatRoom?.let {
             chatViewModel.setChatRoomLiveData(it)
-            chatViewModel.getLatestMessages()
+            chatViewModel.startTimer()
         }
 
         initObservers()
@@ -145,7 +145,7 @@ class ChatActivity : AppCompatActivity() {
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
-                printLog("Socket onMessage " + text)
+                printLog("Socket onMessage $text")
             }
 
             override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {

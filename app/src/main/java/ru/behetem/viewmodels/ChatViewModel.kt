@@ -2,6 +2,8 @@ package ru.behetem.viewmodels
 
 import android.app.Application
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -18,12 +20,12 @@ import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.repositories.UserRepository
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.*
+import java.util.*
 
 class ChatViewModel(application: Application) : BaseAndroidViewModel(application) {
 
     private val chatRoomLiveData: MutableLiveData<ChatRoomModel> = MutableLiveData()
-    private val chatsListingLiveData: MutableLiveData<MutableList<ChatMessageModel>> =
-        MutableLiveData()
+    private val chatsListingLiveData: MutableLiveData<MutableList<ChatMessageModel>> = MutableLiveData(ArrayList())
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
@@ -44,13 +46,27 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
     private lateinit var view: View
     private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
 
+    private lateinit var timer: Timer
+    private var shouldHitTimer = true
+
+    fun startTimer() {
+        if (!this::timer.isInitialized) {
+            timer = Timer()
+        }
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                getLatestMessages()
+            }
+        }, 0L, Constants.MESSENGER_TIME_OUT)
+    }
+
     fun getLatestMessages() {
         if (isInternetAvailable(context)) {
-            showNoInternet.value = false
-            loaderVisible.value = true // show loader
+            showNoInternet.postValue(false)
+//            loaderVisible.value = true // show loader
 
             observeResponse = Observer<BaseResponse> {
-                loaderVisible.value = false
+//                loaderVisible.value = false
 
                 if (validateResponseWithoutPopup(it)) {
                     if (it.data is MutableList<*>) {
@@ -61,8 +77,12 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                             gson.fromJson<MutableList<ChatMessageModel>>(strResponse, myType)
 
                         chatsList.reverse()
-                        chatsListingLiveData.value = chatsList
-                        shouldMoveToBottom.value = true
+                        val newMessagesToAdd = getNewMessagesToAdd(chatsList)
+                        if(newMessagesToAdd.size > 0) {
+                            chatsListingLiveData.value?.addAll(newMessagesToAdd)
+                            chatsListingLiveData.postValue(chatsListingLiveData.value)
+                            shouldMoveToBottom.postValue(true)
+                        }
 
                         if (chatsList.size < Constants.PAGE_SIZE) {
                             shouldHitPagination = false
@@ -73,7 +93,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                         }
                     }
                 } else {
-                    baseResponse.value = it
+                    baseResponse.postValue(it)
                 }
             }
 
@@ -82,10 +102,35 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                 apiResponse =
                     ChatsRepository.getMessages(strToken, it.recipientId!!, 0, it.pageSize)
             }
-            apiResponse.observeForever(observeResponse)
+            Handler(Looper.getMainLooper()).post {
+                apiResponse.observeForever(observeResponse)
+            }
         } else {
-            showNoInternet.value = true
+            showNoInternet.postValue(true)
         }
+    }
+
+    private fun getNewMessagesToAdd(receivedMessages: MutableList<ChatMessageModel>): MutableList<ChatMessageModel> {
+        if(chatsListingLiveData.value == null) {
+            chatsListingLiveData.value = ArrayList()
+        }
+        if(chatsListingLiveData.value!!.isEmpty()) {
+            return receivedMessages
+        }
+        val newList: MutableList<ChatMessageModel> = ArrayList<ChatMessageModel>()
+        for(receivedMessage in receivedMessages) {
+            var alreadyExists = false
+            for(existingMessage in chatsListingLiveData.value!!) {
+                if(receivedMessage.id == existingMessage.id) {
+                    alreadyExists = true
+                    break
+                }
+            }
+            if(!alreadyExists) {
+                newList.add(receivedMessage)
+            }
+        }
+        return newList
     }
 
     fun onPullToRefresh() {
@@ -219,6 +264,7 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     override fun onCleared() {
         super.onCleared()
+        timer.cancel()
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
         }
