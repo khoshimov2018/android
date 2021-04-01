@@ -8,8 +8,8 @@ import ru.behetem.utils.Constants
 data class ChatRoomModel(
     var id: Int? = null,
     var chatId: String? = null,
-    var senderId: String? = null,
-    var recipientId: String? = null,
+    var senderId: Int? = null,
+    var recipientId: Int? = null,
     var receiverName: String? = null,
     var receiverImage: String? = null,
     var lastMessage: MessageModel? = null,

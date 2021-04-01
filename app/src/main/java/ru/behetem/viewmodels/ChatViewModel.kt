@@ -198,8 +198,8 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
         }
     }
 
-    fun isMessageSent(senderId: String): Boolean {
-        return chatRoomLiveData.value?.senderId.equals(senderId)
+    fun isMessageSent(senderId: Int): Boolean {
+        return chatRoomLiveData.value?.senderId == senderId
     }
 
     fun getMaxWidth(): Int {

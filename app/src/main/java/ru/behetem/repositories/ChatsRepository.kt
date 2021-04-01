@@ -61,7 +61,7 @@ object ChatsRepository {
         return data
     }
 
-    fun getMessages(strToken: String, otherUserId: String, page: Int, pageSize: Int): LiveData<BaseResponse> {
+    fun getMessages(strToken: String, otherUserId: Int, page: Int, pageSize: Int): LiveData<BaseResponse> {
         val data = MutableLiveData<BaseResponse>()
         retrofitService.getMessages(strToken, otherUserId, page, pageSize)
             .enqueue(object : Callback<BaseResponse> {

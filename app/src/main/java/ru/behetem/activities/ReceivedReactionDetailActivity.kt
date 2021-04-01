@@ -257,8 +257,8 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
     private fun moveToMessage() {
         receivedReactionDetailViewModel.getReceivedReaction()?.let {
             val chatRoomItem = ChatRoomModel()
-            chatRoomItem.senderId = it.receiverId.toString()
-            chatRoomItem.recipientId = it.senderId.toString()
+            chatRoomItem.senderId = it.receiverId
+            chatRoomItem.recipientId = it.senderId
             chatRoomItem.receiverName = it.senderName
             chatRoomItem.receiverImage = it.image
 

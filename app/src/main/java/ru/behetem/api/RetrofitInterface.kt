@@ -89,7 +89,7 @@ interface RetrofitInterface {
     fun activityCheck(@Header("Authorization") token: String, @Query("userId") userId: Int): Call<BaseResponse>
 
     @GET(ApiConstants.GET_MESSAGES + "/{otherUserId}")
-    fun getMessages(@Header("Authorization") token: String, @Path("otherUserId") otherUserId: String, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Call<BaseResponse>
+    fun getMessages(@Header("Authorization") token: String, @Path("otherUserId") otherUserId: Int, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Call<BaseResponse>
 
     @POST(ApiConstants.SEND_MESSAGE)
     fun sendMessage(@Header("Authorization") token: String, @Body chatMessageModel: ChatMessageModel): Call<BaseResponse>
