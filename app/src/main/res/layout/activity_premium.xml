@@ -70,15 +70,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/xLargeMargin"
+                android:layout_marginHorizontal="@dimen/largeMargin"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@{viewModel.currentChosenPlan == 0 ? @drawable/premium_background : null}"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/largePadding">
+                    android:onClick="@{(view) -> viewModel.changePlan(view, 0)}"
+                    app:verticalPadding="@{viewModel.currentChosenPlan == 0 ? 20 : 20}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -113,10 +116,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/premium_background"
+                    android:background="@{viewModel.currentChosenPlan == 1 ? @drawable/premium_background : null}"
                     android:gravity="center_horizontal"
+                    android:onClick="@{(view) -> viewModel.changePlan(view, 1)}"
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/largePadding">
+                    app:verticalPadding="@{viewModel.currentChosenPlan == 1 ? 20 : 20}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -151,9 +155,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@{viewModel.currentChosenPlan == 2 ? @drawable/premium_background : null}"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/largePadding">
+                    android:onClick="@{(view) -> viewModel.changePlan(view, 2)}"
+                    app:verticalPadding="@{viewModel.currentChosenPlan == 2 ? 20 : 20}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"

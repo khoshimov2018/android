@@ -18,6 +18,7 @@ class PremiumActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPremiumBinding
     private lateinit var premiumViewModel: PremiumViewModel
     private lateinit var billingClient: BillingClient
+    private var skuDetailsList: MutableList<SkuDetails>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +77,13 @@ class PremiumActivity : AppCompatActivity() {
         params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS)
         billingClient.querySkuDetailsAsync(params.build()) { billingResult, skuDetailsList ->
             // Process the result.
+            this.skuDetailsList = skuDetailsList
             printLog("details $skuDetailsList")
-            printLog("billingResult ${billingResult.responseCode} ${billingResult.debugMessage}")
+            /*if (skuDetailsList != null) {
+                for(skuDetail in skuDetailsList) {
+                    printLog("sku detail $skuDetail")
+                }
+            }*/
         }
     }
 }
