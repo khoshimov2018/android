@@ -219,6 +219,7 @@
 
     <string name="could_not_parse">Oh, could not parse response. Please try again later.</string>
     <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
+    <string name="something_went_wrong">Something went wrong. Please try again later.</string>
     <string name="enter_email">Please enter Email</string>
     <string name="enter_valid_email">Please enter a valid Email</string>
     <string name="enter_password">Please enter Password</string>

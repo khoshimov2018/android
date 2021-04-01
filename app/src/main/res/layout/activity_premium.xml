@@ -198,6 +198,7 @@
                 android:layout_marginHorizontal="@dimen/xLargeMargin"
                 android:layout_marginTop="@dimen/xLargeMargin"
                 android:background="@drawable/round_button_unselected"
+                android:onClick="@{viewModel::onContinue}"
                 android:text="@string/str_continue"
                 android:textColor="@color/textColor" />
 

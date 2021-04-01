@@ -11,6 +11,7 @@ import kotlinx.coroutines.withContext
 import ru.behetem.R
 import ru.behetem.databinding.ActivityPremiumBinding
 import ru.behetem.utils.printLog
+import ru.behetem.utils.showInfoAlertDialog
 import ru.behetem.viewmodels.PremiumViewModel
 
 class PremiumActivity : AppCompatActivity() {
@@ -36,7 +37,14 @@ class PremiumActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        premiumViewModel.getBackButtonClicked().observe(this, Observer { isPressed: Boolean ->
+        premiumViewModel.getContinueClicked().observe(this, {
+            if(it) {
+                premiumViewModel.setContinueClicked(false)
+                initiatePurchaseFlow(premiumViewModel.getCurrentPlan())
+            }
+        })
+
+        premiumViewModel.getBackButtonClicked().observe(this, { isPressed: Boolean ->
             if (isPressed) {
                 this.onBackPressed()
             }
@@ -84,6 +92,33 @@ class PremiumActivity : AppCompatActivity() {
                     printLog("sku detail $skuDetail")
                 }
             }*/
+        }
+    }
+
+    private fun initiatePurchaseFlow(plan: Int) {
+        when(plan) {
+            0 -> {
+                startFlow(1)
+            }
+            1 -> {
+                startFlow(0)
+            }
+            2 -> {
+                startFlow(2)
+            }
+            else -> {
+                showInfoAlertDialog(this, getString(R.string.something_went_wrong))
+            }
+        }
+    }
+
+    private fun startFlow(index: Int) {
+        val skuDetails = skuDetailsList?.get(index)
+        if (skuDetails != null) {
+            val flowParams = BillingFlowParams.newBuilder()
+                .setSkuDetails(skuDetails)
+                .build()
+            val responseCode = billingClient.launchBillingFlow(this, flowParams).responseCode
         }
     }
 }
