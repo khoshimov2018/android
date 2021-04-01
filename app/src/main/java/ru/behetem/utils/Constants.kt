@@ -71,6 +71,7 @@ object ApiConstants {
     const val ACTIVITY_CHECK = "activitycheck"
     const val GET_MESSAGES = "messages"
     const val SEND_MESSAGE = "chat/"
+    const val UPLOAD_IMAGE_CHAT = "messages/upload/image"
 }
 
 object LoginFormErrorConstants {

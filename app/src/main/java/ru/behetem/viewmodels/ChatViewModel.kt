@@ -1,6 +1,7 @@
 package ru.behetem.viewmodels
 
 import android.app.Application
+import android.net.Uri
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -14,6 +15,7 @@ import ru.behetem.models.ChatRoomModel
 import ru.behetem.models.ReactionModel
 import ru.behetem.repositories.ChatsRepository
 import ru.behetem.repositories.ReactionsRepository
+import ru.behetem.repositories.UserRepository
 import ru.behetem.responses.BaseResponse
 import ru.behetem.utils.*
 
@@ -29,12 +31,18 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
     private lateinit var sendMessageApiResponse: LiveData<BaseResponse>
     private lateinit var sendMessageObserveResponse: Observer<BaseResponse>
 
+    private lateinit var uploadImageApiResponse: LiveData<BaseResponse>
+    private lateinit var uploadImageObserveResponse: Observer<BaseResponse>
+
     private val chatMessageModel = ChatMessageModel()
 
     private val isPullToRefreshLoading: MutableLiveData<Boolean> = MutableLiveData()
     private var shouldHitPagination = true
     val messageToBeSent: MutableLiveData<String> = MutableLiveData()
     private val shouldMoveToBottom: MutableLiveData<Boolean> = MutableLiveData()
+
+    private lateinit var view: View
+    private val openImagePicker: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getLatestMessages() {
         if (isInternetAvailable(context)) {
@@ -51,10 +59,6 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                         val myType = object : TypeToken<MutableList<ChatMessageModel>>() {}.type
                         val chatsList: MutableList<ChatMessageModel> =
                             gson.fromJson<MutableList<ChatMessageModel>>(strResponse, myType)
-
-                        /*for (reaction in reactionsList) {
-                            reaction.image = "${ApiConstants.BASE_URL}${reaction.image}"
-                        }*/
 
                         chatsList.reverse()
                         chatsListingLiveData.value = chatsList
@@ -101,10 +105,6 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
                             val myType = object : TypeToken<MutableList<ChatMessageModel>>() {}.type
                             val chatsList: MutableList<ChatMessageModel> =
                                 gson.fromJson<MutableList<ChatMessageModel>>(strResponse, myType)
-
-                            /*for (reaction in reactionsList) {
-                                reaction.image = "${ApiConstants.BASE_URL}${reaction.image}"
-                            }*/
 
                             chatsList.reverse()
                             chatsListingLiveData.value?.addAll(0, chatsList)
@@ -188,6 +188,35 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
         }
     }
 
+    fun imagePickerClicked(view: View) {
+        this.view = view
+        openImagePicker.value = true
+    }
+
+    fun setImageUri(uri: Uri) {
+        uploadImage(uri)
+    }
+
+    private fun uploadImage(uri: Uri) {
+        if(validateInternet(view.context)) {
+            hideKeyboard(view)
+            loaderVisible.value = true // show loader
+            uploadImageObserveResponse = Observer<BaseResponse> {
+                loaderVisible.value = false
+                if(validateResponse(view.context, it)){
+
+                }
+            }
+
+            // token
+            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+
+            val inputStream = view.context.contentResolver.openInputStream(uri)!!
+            uploadImageApiResponse = ChatsRepository.uploadImage(inputStream, strToken)
+            uploadImageApiResponse.observeForever(uploadImageObserveResponse)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (this::apiResponse.isInitialized) {
@@ -195,6 +224,9 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
         }
         if (this::sendMessageApiResponse.isInitialized) {
             sendMessageApiResponse.removeObserver(sendMessageObserveResponse)
+        }
+        if (this::uploadImageApiResponse.isInitialized) {
+            uploadImageApiResponse.removeObserver(uploadImageObserveResponse)
         }
     }
 
@@ -233,5 +265,13 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
 
     fun setShouldMoveToBottom(shouldMove: Boolean) {
         shouldMoveToBottom.value = shouldMove
+    }
+
+    fun getOpenImagePicker(): LiveData<Boolean> {
+        return openImagePicker
+    }
+
+    fun setOpenImagePicker(open: Boolean) {
+        openImagePicker.value = open
     }
 }

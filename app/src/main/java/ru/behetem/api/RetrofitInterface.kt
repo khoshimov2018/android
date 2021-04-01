@@ -93,4 +93,9 @@ interface RetrofitInterface {
 
     @POST(ApiConstants.SEND_MESSAGE)
     fun sendMessage(@Header("Authorization") token: String, @Body chatMessageModel: ChatMessageModel): Call<BaseResponse>
+
+    @Multipart
+    @POST(ApiConstants.UPLOAD_IMAGE_CHAT)
+    fun uploadImageChat(@Part filePart: MultipartBody.Part, @PartMap partMap: @JvmSuppressWildcards Map<String, RequestBody?>,
+                    @Header("Authorization") token: String): Call<BaseResponse>
 }
