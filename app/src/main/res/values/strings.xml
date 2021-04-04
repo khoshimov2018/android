@@ -167,6 +167,8 @@
     <string name="only_with_you">За последние 7 дней пользователь Имя активно общался только с вами!</string>
     <string name="with_other_people">За последние 7 дней пользователь Имя активно общался с %1$d людьми!</string>
     <string name="remaining_x">Осталось: %1$d</string>
+    <string name="you_have_reviewed">Вы просмотрели все подходящие анкеты. Попробуйте изменить фильтры или зайдите позже.</string>
+    <string name="change_filters">Сменить фильтры</string>
 
     <string-array name="education_level">
         <item>Степень</item>

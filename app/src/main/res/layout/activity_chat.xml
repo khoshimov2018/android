@@ -42,6 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:onClick="@{viewModel::userProfilePicClicked}"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -101,7 +102,8 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/normalPadding"
-                    android:paddingEnd="@dimen/largeMargin">
+                    android:paddingEnd="@dimen/largeMargin"
+                    android:paddingVertical="@dimen/largeMargin">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"

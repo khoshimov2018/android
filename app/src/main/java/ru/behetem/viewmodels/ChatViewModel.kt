@@ -1,6 +1,7 @@
 package ru.behetem.viewmodels
 
 import android.app.Application
+import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import ru.behetem.activities.ReceivedReactionDetailActivity
 import ru.behetem.models.ChatMessageModel
 import ru.behetem.models.ChatRoomModel
 import ru.behetem.models.ReactionModel
@@ -259,6 +261,15 @@ class ChatViewModel(application: Application) : BaseAndroidViewModel(application
             val inputStream = view.context.contentResolver.openInputStream(uri)!!
             uploadImageApiResponse = ChatsRepository.uploadImage(inputStream, strToken)
             uploadImageApiResponse.observeForever(uploadImageObserveResponse)
+        }
+    }
+
+    fun userProfilePicClicked(view: View) {
+        chatRoomLiveData.value?.let {
+            val intent = Intent(view.context, ReceivedReactionDetailActivity::class.java)
+            intent.putExtra(Constants.CHAT_ROOM, it)
+            intent.putExtra(Constants.COMING_FROM, Constants.CHAT_ROOM)
+            view.context.startActivity(intent)
         }
     }
 

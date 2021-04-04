@@ -438,7 +438,7 @@
                             android:layout_marginTop="@dimen/normalMargin"
                             android:background="@drawable/round_button_unselected"
                             android:gravity="top"
-                            android:hint="@string/location"
+                            android:hint="@string/tell_us_about_yourself"
                             android:maxLines="10"
                             android:minLines="8"
                             android:onTextChanged="@{(text, start, before, count) -> viewModel.onAboutMeTextChanged(text)}"

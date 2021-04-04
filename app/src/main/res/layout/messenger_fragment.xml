@@ -64,6 +64,7 @@
                     android:padding="@dimen/smallMargin"
                     android:layout_marginEnd="@dimen/normalMargin"
                     android:onClick="@{viewModel::onAllClicked}"
+                    android:visibility="@{(viewModel.receivedReactionsList != null &amp;&amp; viewModel.receivedReactionsList.size() > 0) ? View.VISIBLE : View.GONE}"
                     android:text="@string/all"
                     android:textColor="@color/textColor" />
             </RelativeLayout>

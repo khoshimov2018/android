@@ -43,6 +43,12 @@ class ChangePasswordViewModel: BaseViewModel() {
                     updateEmailObserveResponse = Observer<BaseResponse> {
                         loaderVisible.value = false
                         if (validateResponse(view.context, it)) {
+
+                            getLoggedInUser()?.let {savedUser ->
+                                savedUser.email = userModel.email
+                                saveLoggedInUserToShared(view.context, savedUser)
+                            }
+
                             showAlertDialog(view.context,
                                 null,
                                 view.context.getString(R.string.email_changed_successfully),
@@ -105,6 +111,10 @@ class ChangePasswordViewModel: BaseViewModel() {
                 }
             }
         }
+    }
+
+    fun getCurrentEmail(): String {
+        return getLoggedInUser()?.email ?: ""
     }
 
     override fun onCleared() {

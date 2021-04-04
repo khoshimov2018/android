@@ -134,8 +134,8 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
             filterModelLiveData.value?.let {
                 saveFilterApiResponse = FiltersRepository.saveFilters(it, strToken)
+                saveFilterApiResponse.observeForever(saveFilterObserveResponse)
             }
-            saveFilterApiResponse.observeForever(saveFilterObserveResponse)
         }
     }
 
