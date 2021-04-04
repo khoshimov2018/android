@@ -85,7 +85,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
                         android:text="@string/growth"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -94,7 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:text='@{viewModel.growthValue != null ? @string/growth_value(viewModel.growthValue) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -102,7 +102,7 @@
                     <androidx.appcompat.widget.AppCompatSeekBar
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onGrowthChanged}"
                         android:progress="0" />
@@ -111,11 +111,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/largeMargin"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:gravity="center"
                         android:text='@{viewModel.growthErrorResId != null ? context.getString(viewModel.growthErrorResId) : ""}'
                         android:textAppearance="@style/ErrorTextAppearance"
-                        android:visibility="@{viewModel.growthErrorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                        android:visibility="@{viewModel.growthErrorResId != null ? View.VISIBLE : View.GONE, default=invisible}" />
 
                     <View
                         android:layout_width="match_parent"
@@ -126,7 +126,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/xLargeMargin"
+                        android:layout_marginTop="@dimen/largeMargin"
                         android:text="@string/weight"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -135,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:text='@{viewModel.weightValue != null ? @string/weight_value(viewModel.weightValue) : ""}'
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -143,8 +143,8 @@
                     <androidx.appcompat.widget.AppCompatSeekBar
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/largeMargin"
-                        android:layout_marginBottom="@dimen/largeMargin"
+                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginBottom="@dimen/normalMargin"
                         android:max="250"
                         android:onProgressChanged="@{viewModel::onWeightChanged}"
                         android:progress="0" />
@@ -153,11 +153,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/largeMargin"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:gravity="center"
                         android:text='@{viewModel.weightErrorResId != null ? context.getString(viewModel.weightErrorResId) : ""}'
                         android:textAppearance="@style/ErrorTextAppearance"
-                        android:visibility="@{viewModel.weightErrorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                        android:visibility="@{viewModel.weightErrorResId != null ? View.VISIBLE : View.GONE, default=invisible}" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -187,7 +187,7 @@
                     android:gravity="center"
                     android:text='@{viewModel.bodyTypeErrorResId != null ? context.getString(viewModel.bodyTypeErrorResId) : ""}'
                     android:textAppearance="@style/ErrorTextAppearance"
-                    android:visibility="@{viewModel.bodyTypeErrorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                    android:visibility="@{viewModel.bodyTypeErrorResId != null ? View.VISIBLE : View.GONE, default=invisible}" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -207,7 +207,7 @@
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isSlenderSelected() : false}"
                         android:onClick="@{viewModel::onSlenderClicked}"
                         android:text="@string/slender"
@@ -216,7 +216,7 @@
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isSportsSelected() : false}"
                         android:onClick="@{viewModel::onSportsClicked}"
                         android:text="@string/sports"
@@ -225,7 +225,7 @@
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isDenseSelected() : false}"
                         android:onClick="@{viewModel::onDenseClicked}"
                         android:text="@string/dense"
@@ -234,7 +234,7 @@
                     <androidx.appcompat.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isCompleteSelected() : false}"
                         android:onClick="@{viewModel::onCompleteClicked}"
                         android:text="@string/complete"

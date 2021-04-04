@@ -20,4 +20,6 @@
     <color name="sentMessageBackground">#10001AFF</color>
     <color name="gradientDark">#130031</color>
     <color name="gradientLight">#4306A8</color>
+    <color name="lineUnselected">#65FFFFFF</color>
+    <color name="lineSelected">#FFFFFF</color>
 </resources>

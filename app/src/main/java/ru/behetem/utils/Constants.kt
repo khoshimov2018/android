@@ -17,7 +17,7 @@ object Constants {
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
     const val DOB_ONLY_YEAR_FORMAT = "yyyy"
-    const val MINIMUM_AGE = 18
+    const val MINIMUM_AGE = 24
     const val MINIMUM_PHOTOS = 3
     const val TRIM_TEXT_LENGTH = 15
     const val SHORT_DESCRIPTION_TRIM_LENGTH = 40

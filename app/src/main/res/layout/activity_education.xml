@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:background="@drawable/round_button_unselected"
+                        android:background="@drawable/round_spinner"
                         android:entries="@array/education_level"
                         android:onItemSelected="@{viewModel::onItemSelected}"
                         android:padding="@dimen/normalPadding" />

@@ -178,7 +178,7 @@ class UserProfileFragment : Fragment() {
                     0
                 )
                 view.layoutParams = layoutParams
-                view.setBackgroundResource(R.color.lightGreyColor)
+                view.setBackgroundResource(R.color.lineUnselected)
 
                 countLinear?.addView(view)
                 listOfCountViews.add(view)
@@ -196,9 +196,9 @@ class UserProfileFragment : Fragment() {
 //        imageView.setBackgroundResource(listOfImages[index])
         Glide.with(this)
             .load(listOfImages[index])
-            .placeholder(R.drawable.logo)
+            .placeholder(R.drawable.grey_bg)
             .into(imageView);
-        listOfCountViews[index].setBackgroundResource(R.color.red)
+        listOfCountViews[index].setBackgroundResource(R.color.lineSelected)
 
         // Connect to WebSocket
 //        connectWS()
@@ -206,7 +206,7 @@ class UserProfileFragment : Fragment() {
 
     private fun resetCountViews() {
         for (view in listOfCountViews) {
-            view.setBackgroundResource(R.color.lightGreyColor)
+            view.setBackgroundResource(R.color.lineUnselected)
         }
     }
 

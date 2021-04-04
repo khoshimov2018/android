@@ -19,7 +19,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/normalMargin"
         android:onClick="@{(view) -> viewModel.reactionItemClicked(view, item)}"
-        app:error="@{@drawable/logo}"
-        app:placeholder="@{@drawable/logo}"
+        app:error="@{@drawable/grey_bg}"
+        app:placeholder="@{@drawable/grey_bg}"
         app:roundImageUrl='@{item.image != null ? item.image : "" }' />
 </layout>

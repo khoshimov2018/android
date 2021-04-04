@@ -49,8 +49,8 @@
                         android:layout_width="@dimen/reactionPhoto"
                         android:layout_height="@dimen/reactionPhoto"
                         android:layout_marginVertical="@dimen/smallMargin"
-                        app:error="@{@drawable/logo}"
-                        app:placeholder="@{@drawable/logo}"
+                        app:error="@{@drawable/grey_bg}"
+                        app:placeholder="@{@drawable/grey_bg}"
                         app:roundImageUrl='@{viewModel.chatRoomLiveData.receiverImage != null ? viewModel.chatRoomLiveData.receiverImage : "" }' />
 
                     <androidx.appcompat.widget.AppCompatTextView

@@ -113,7 +113,7 @@ class MyProfileDetailActivity : AppCompatActivity() {
                     LinearLayout.LayoutParams(0, dpToPx(this, 2F).toInt(), 1F)
                 layoutParams.setMargins(dpToPx(this, 5F).toInt(), 0, dpToPx(this, 5F).toInt(), 0)
                 view.layoutParams = layoutParams
-                view.setBackgroundResource(R.color.lightGreyColor)
+                view.setBackgroundResource(R.color.lineUnselected)
 
                 countLinear.addView(view)
                 listOfCountViews.add(view)
@@ -129,15 +129,15 @@ class MyProfileDetailActivity : AppCompatActivity() {
 //        imageView.setBackgroundResource(listOfImages[index])
             Glide.with(this)
                 .load(listOfImages[index])
-                .placeholder(R.drawable.logo)
+                .placeholder(R.drawable.grey_bg)
                 .into(imageView);
-            listOfCountViews[index].setBackgroundResource(R.color.red)
+            listOfCountViews[index].setBackgroundResource(R.color.lineSelected)
         }
     }
 
     private fun resetCountViews() {
         for (view in listOfCountViews) {
-            view.setBackgroundResource(R.color.lightGreyColor)
+            view.setBackgroundResource(R.color.lineUnselected)
         }
     }
 

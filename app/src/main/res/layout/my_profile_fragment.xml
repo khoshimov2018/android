@@ -43,8 +43,8 @@
                         android:layout_height="@dimen/profilePhoto"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/normalMargin"
-                        app:error="@{@drawable/logo}"
-                        app:placeholder="@{@drawable/logo}"
+                        app:error="@{@drawable/grey_bg}"
+                        app:placeholder="@{@drawable/grey_bg}"
                         app:roundImageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : "" }' />
 
                     <androidx.appcompat.widget.AppCompatTextView

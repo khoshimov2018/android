@@ -30,8 +30,8 @@
                 android:layout_width="@dimen/reactionPhoto"
                 android:layout_height="@dimen/reactionPhoto"
                 android:onClick="@{(view) -> viewModel.userProfilePicClicked(view, item)}"
-                app:error="@{@drawable/logo}"
-                app:placeholder="@{@drawable/logo}"
+                app:error="@{@drawable/grey_bg}"
+                app:placeholder="@{@drawable/grey_bg}"
                 app:roundImageUrl='@{item.receiverImage != null ? item.receiverImage : "" }' />
 
             <LinearLayout

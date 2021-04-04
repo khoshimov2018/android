@@ -24,8 +24,8 @@
             android:layout_width="@dimen/photo"
             android:layout_height="@dimen/photo"
             android:layout_gravity="center"
-            app:error="@{@drawable/logo}"
-            app:placeholder="@{@drawable/logo}"
+            app:error="@{@drawable/grey_bg}"
+            app:placeholder="@{@drawable/grey_bg}"
             app:roundImageUrl='@{item.image != null ? item.image : "" }' />
 
         <androidx.appcompat.widget.AppCompatTextView
