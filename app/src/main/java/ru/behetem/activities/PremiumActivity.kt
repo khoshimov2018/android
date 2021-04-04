@@ -38,7 +38,7 @@ class PremiumActivity : AppCompatActivity() {
 
     private fun initObservers() {
         premiumViewModel.getContinueClicked().observe(this, {
-            if(it) {
+            if (it) {
                 premiumViewModel.setContinueClicked(false)
                 initiatePurchaseFlow(premiumViewModel.getCurrentPlan())
             }
@@ -54,6 +54,15 @@ class PremiumActivity : AppCompatActivity() {
     private fun initBilling() {
         val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
             // To be implemented in a later section.
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+                for (purchase in purchases) {
+                    handlePurchase(purchase)
+                }
+            } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+                // Handle an error caused by a user cancelling the purchase flow.
+            } else {
+                // Handle any other error codes.
+            }
         }
 
         billingClient = BillingClient.newBuilder(this)
@@ -96,7 +105,7 @@ class PremiumActivity : AppCompatActivity() {
     }
 
     private fun initiatePurchaseFlow(plan: Int) {
-        when(plan) {
+        when (plan) {
             0 -> {
                 startFlow(1)
             }
@@ -119,6 +128,18 @@ class PremiumActivity : AppCompatActivity() {
                 .setSkuDetails(skuDetails)
                 .build()
             val responseCode = billingClient.launchBillingFlow(this, flowParams).responseCode
+        }
+    }
+
+    private fun handlePurchase(purchase: Purchase) {
+        if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+            if (!purchase.isAcknowledged) {
+                val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
+                    .setPurchaseToken(purchase.purchaseToken)
+                /*val ackPurchaseResult = withContext(Dispatchers.IO) {
+                    billingClient.acknowledgePurchase(acknowledgePurchaseParams.build())
+                }*/
+            }
         }
     }
 }
