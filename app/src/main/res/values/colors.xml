@@ -18,4 +18,6 @@
     <color name="chatBackground">#FFFFFF</color>
     <color name="receivedMessageBackground">#EBEBEC</color>
     <color name="sentMessageBackground">#10001AFF</color>
+    <color name="gradientDark">#130031</color>
+    <color name="gradientLight">#4306A8</color>
 </resources>
