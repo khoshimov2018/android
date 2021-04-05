@@ -24,7 +24,7 @@
     <string name="choose_from_3_to_6_photo">Выберите от 3 до 6 фотографий</string>
     <string name="coins">Монеты</string>
     <string name="premium">Премиум</string>
-    <string name="belimite_reactions">Белимитные реакции</string>
+    <string name="belimite_reactions">Безлимитные реакции</string>
     <string name="send_unlimited_reactions">Отправляй безграничное количество реакций</string>
     <string name="months">месяцев</string>
     <string name="month">месяц</string>
@@ -60,7 +60,7 @@
     <string name="divorced">Разведен(а)</string>
     <string name="widower">Вдовец(ва)</string>
     <string name="children">Дети</string>
-    <string name="indicate_presence_absence_of_children">Укажите наличие\отсутсвие детей</string>
+    <string name="indicate_presence_absence_of_children">Укажите наличие/отсутсвие детей</string>
     <string name="not">Нет</string>
     <string name="yes_we_live_together">Есть, живем вместе</string>
     <string name="yes_we_live_separately">Есть, живем порознь</string>
@@ -82,7 +82,7 @@
     <string name="actively_looking">В активном поиске</string>
     <string name="its_complicated">Всё сложно</string>
     <string name="married">Женат(а)</string>
-    <string name="at_least_18">Вам должно быть больше 24-ти лет</string>
+    <string name="at_least_18">Вам должно быть больше 18-ти лет</string>
     <string name="my_interests">Мои интересы</string>
     <string name="skip">Пропустить</string>
     <string name="choose_from_1_to_9_items">Выберите от 1 до 9 пунктов</string>
@@ -97,7 +97,7 @@
     <string name="i_am_looking_for">Я ищу</string>
     <string name="age">Возраст</string>
     <string name="distance_from_me">Растояние от меня, км</string>
-    <string name="max_distance_from_me">Максимальное растояние от меня, км</string>
+    <string name="max_distance_from_me">Расстояние от меня, км</string>
     <string name="password_recovery">Восстановление пароля</string>
     <string name="confirm">Подтвердить</string>
     <string name="new_password">Новый пароль</string>
@@ -125,13 +125,13 @@
     <string name="nationality_title">Националитет</string>
     <string name="indicate_your_nationality">Укажите вашу национальность</string>
     <string name="attitude_to_national_traditions">Отношение к национальным традициям</string>
-    <string name="i_dont_know">Не заню</string>
+    <string name="i_dont_know">Не знаю</string>
     <string name="i_know_but_i_dont">Знаю, но не соблюдаю</string>
     <string name="i_know_i_want_to_preserve">Знаю, хочу сохранить их и привить своим детям</string>
     <string name="career">Карьера</string>
     <string name="more_options">Больше параметров</string>
     <string name="having_children">Наличие детей</string>
-    <string name="children_desire">Желание детей</string>
+    <string name="children_desire">Желание иметь детей</string>
     <string name="attitude_towards_traditions">Отношение к традициям</string>
     <string name="edit_2">Изменить</string>
     <string name="work_education">Работа, образование</string>
@@ -139,16 +139,16 @@
     <string name="growth_from_to_value_comma">%1$d-%2$d см,</string>
     <string name="knowledge_of_national_language">Знание национального языка</string>
     <string name="indicate_your_level_of_language_proficiency">Укажите ваш уровень знания языка</string>
-    <string name="i_do_not_know">Не заню</string>
+    <string name="i_do_not_know">Не знаю</string>
     <string name="i_know_some_words">Знаю некоторые слова</string>
     <string name="i_understand_but_cannot_maintain_dialogue">Понимаю, но не могу поддержать диалог</string>
     <string name="i_understand_i_can_maintain_dialogue">Понимаю, могу поддержать диалог</string>
     <string name="i_know_well">Знаю хорошо</string>
     <string name="relation_to_religion">Отношение к религии</string>
-    <string name="indicate_your_attitude_to_religion">Укажите ваше отнршение к религии</string>
+    <string name="indicate_your_attitude_to_religion">Укажите ваше отношение к религии</string>
     <string name="non_believer">Не верующий(ая)</string>
     <string name="believer">Верующий(ая)</string>
-    <string name="believer_and_observer_of_canons">Верующий(ая) и соблядающий(ая) каноны</string>
+    <string name="believer_and_observer_of_canons">Верующий(ая) и соблюдающий(ая) каноны</string>
     <string name="more_filters">Больше фильтров</string>
     <string name="general">Общее</string>
     <string name="average">Среднее</string>
@@ -197,13 +197,13 @@
     </string-array>
 
     <string-array name="attitude_array">
-        <item>Не заню</item> <!--i_dont_know-->
+        <item>Не знаю</item> <!--i_dont_know-->
         <item>Знаю, но не соблюдаю</item> <!--i_know_but_i_dont-->
         <item>Знаю, хочу сохранить их и привить своим детям</item> <!--i_know_i_want_to_preserve-->
     </string-array>
 
     <string-array name="body_type_array">
-        <item>Choose</item>
+        <item>Телосложение</item>
         <item>Худощавое</item> <!--skinny-->
         <item>Стройное</item> <!--slender-->
         <item>Спортивное</item> <!--sports-->
@@ -212,88 +212,88 @@
     </string-array>
 
     <string-array name="distance_level">
-        <item>Within 10 км</item>
-        <item>Within 30 км</item>
-        <item>Within 80 км</item>
-        <item>Within 150 км</item>
-        <item>More than 150 км</item>
+        <item>Меньше 10 км</item>
+        <item>Меньше 30 км</item>
+        <item>Меньше 80 км</item>
+        <item>Меньше 150 км</item>
+        <item>Больше 150 км</item>
     </string-array>
 
-    <string name="could_not_parse">Oh, could not parse response. Please try again later.</string>
-    <string name="no_internet">No internet connection. Please check your network settings and try again.</string>
-    <string name="something_went_wrong">Something went wrong. Please try again later.</string>
-    <string name="enter_email">Please enter Email</string>
-    <string name="enter_valid_email">Please enter a valid Email</string>
-    <string name="enter_password">Please enter Password</string>
-    <string name="choose_gender">Please choose Gender</string>
-    <string name="enter_name">Please enter your name</string>
-    <string name="choose_dob">Please choose your Date of Birth</string>
-    <string name="choose_looking_for">Please choose Looking For</string>
-    <string name="sure_logout">Are you sure you want to logout?</string>
-    <string name="no">No</string>
-    <string name="no_interests">No interests available</string>
-    <string name="choose_interests">Please choose your interests</string>
-    <string name="no_nationalities">No nationalities available</string>
-    <string name="choose_nationality">Please choose your nationality</string>
-    <string name="enter_institute_name">Please enter institute name</string>
-    <string name="enter_level">Please enter level</string>
-    <string name="enter_graduation_year">Please enter graduation year</string>
-    <string name="invalid_graduation_year">Please enter a valid year</string>
-    <string name="enter_position">Please enter your position</string>
-    <string name="enter_company_name">Please enter company name</string>
-    <string name="enter_growth">Please enter your growth</string>
-    <string name="enter_weight">Please enter your weight</string>
-    <string name="enter_about_me">Please enter About you</string>
-    <string name="need_location_permission">This app needs to access your Location. Please allow location permission from the Settings.</string>
-    <string name="could_not_get_location">Could not get your location. Please check your GPS settings and try again.</string>
-    <string name="sure_delete_image">Are you sure you want to delete this image?</string>
-    <string name="old_password">Old Password</string>
-    <string name="update_email">Update Email</string>
-    <string name="update_password">Update Password</string>
-    <string name="enter_old_password">Please enter your old password</string>
-    <string name="enter_new_password">Please enter your new password</string>
-    <string name="enter_confirm_password">Please confirm your password</string>
-    <string name="passwords_do_not_match">New Password and Confirm Password do not match</string>
-    <string name="email_changed_successfully">Email changed successfully</string>
-    <string name="passwords_changed_successfully">Password changed successfully</string>
-    <string name="choose_family_status">Please choose your family status</string>
-    <string name="choose_children_presence">Please choose your children presence</string>
-    <string name="indicate_desire_of_children">Indicate your desire to have children</string>
-    <string name="choose_children_desire">Please choose your children desire</string>
-    <string name="indicate_attitude_to_national_tradition">Indicate your attitude to national tradition</string>
-    <string name="choose_tradition_respect">Please choose Tradition Respect</string>
-    <string name="choose_body_type">Choose Body Type</string>
-    <string name="choose_language_proficiency">Choose Language Proficiency</string>
-    <string name="choose_religion_respect">Choose Religion Respect</string>
-    <string name="sure_delete_account">Are you sure you want to delete your account?</string>
-    <string name="sure_skip_user">Are you sure you want to skip this user?</string>
-    <string name="sure_delete_chat_room">Are you sure you want to delete chat room?</string>
-    <string name="no_users_found">No users found</string>
-    <string name="image">Image</string>
+    <string name="could_not_parse">Не могу распознать ответ. Повторите попытку позже.</string>
+    <string name="no_internet">Нет интернет-соединения. Повторите попытку позже.</string>
+    <string name="something_went_wrong">Что-то пошло не так. Повторите попытку позже.</string>
+    <string name="enter_email">Укажите Email</string>
+    <string name="enter_valid_email">Укажите корректный Email</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="choose_gender">Укажите пол</string>
+    <string name="enter_name">Укажите имя</string>
+    <string name="choose_dob">Укажите дату рождения</string>
+    <string name="choose_looking_for">Укажите, кого вы ищете</string>
+    <string name="sure_logout">Точно хотите выйти?</string>
+    <string name="no">Нет</string>
+    <string name="no_interests">Нет доступных интересов</string>
+    <string name="choose_interests">Укажите интересы</string>
+    <string name="no_nationalities">Нет доступных национальностей</string>
+    <string name="choose_nationality">Укажите национальность</string>
+    <string name="enter_institute_name">Укажите название института</string>
+    <string name="enter_level">Укажите уровень образования</string>
+    <string name="enter_graduation_year">Укажите год выпуска</string>
+    <string name="invalid_graduation_year">Укажите корректный год</string>
+    <string name="enter_position">Укажите должность</string>
+    <string name="enter_company_name">Укажите название компании</string>
+    <string name="enter_growth">Укажите рост</string>
+    <string name="enter_weight">Укажите вес</string>
+    <string name="enter_about_me">Укажите информацию о себе</string>
+    <string name="need_location_permission">Приложению необходим доступ к вашему местоположению. Разрешите доступ в настройках.</string>
+    <string name="could_not_get_location">Приложение не может определить ваше местоположение. Проверьте настройки GPS и повторите попытку.</string>
+    <string name="sure_delete_image">Вы точно хотите удалить изображение?</string>
+    <string name="old_password">Старый пароль</string>
+    <string name="update_email">Обновить Email</string>
+    <string name="update_password">Обновить пароль</string>
+    <string name="enter_old_password">Введите старый пароль</string>
+    <string name="enter_new_password">Введите новый пароль</string>
+    <string name="enter_confirm_password">Подтвердите пароль</string>
+    <string name="passwords_do_not_match">Пароли не совпадают</string>
+    <string name="email_changed_successfully">Email успешно изменен</string>
+    <string name="passwords_changed_successfully">Пароль успешно изменен</string>
+    <string name="choose_family_status">Укажите семейное положение</string>
+    <string name="choose_children_presence">Укажите наличие детей</string>
+    <string name="indicate_desire_of_children">Укажите желание иметь детей</string>
+    <string name="choose_children_desire">Укажите желание иметь детей</string>
+    <string name="indicate_attitude_to_national_tradition">Укажите отношение к национальным традициям</string>
+    <string name="choose_tradition_respect">Укажите отношение к национальным традициям</string>
+    <string name="choose_body_type">Укажите телосложение</string>
+    <string name="choose_language_proficiency">Укажите знание национального языка</string>
+    <string name="choose_religion_respect">Укажите отношение к религии</string>
+    <string name="sure_delete_account">Вы точно хотите удалить аккаунт?</string>
+    <string name="sure_skip_user">Вы точно хотите игнорировать пользователя?</string>
+    <string name="sure_delete_chat_room">Вы точно хотите удалить диалог?</string>
+    <string name="no_users_found">Пользователи не найдены</string>
+    <string name="image">Изображение</string>
 
     <!-- Image Picker -->
-    <string name="title_choose_image_provider">выберите</string>
-    <string name="action_cancel">Cancel</string>
+    <string name="title_choose_image_provider">Выберите</string>
+    <string name="action_cancel">Отмена</string>
     <string name="title_gallery">Галерея</string>
     <string name="title_camera">Камера</string>
-    <string name="message_gallery_permission_denied">Read External Storage permission is needed to select Image. Please turn on the requested permission from Settings > Permissions.</string>
-    <string name="message_camera_permission_denied">Camera and External Storage permissions are needed to capture the image. Turning off any permission won\'t allow the application to run smoothly. Please turn on all requested permissions from Settings > Permissions.</string>
+    <string name="message_gallery_permission_denied">Доступ к фото и мультимедиа необходим для выбора изображения. Разрешите доступ приложению в Настройки > Разрешения.</string>
+    <string name="message_camera_permission_denied">Доступ к фото и мультимедиа необходим для выбора изображения. Запрет доступа не позволит вам пользоваться всеми функциями приложения. Разрешите доступ приложению в Настройки > Разрешения.</string>
     <string name="permission_gallery_denied">
         <![CDATA[Storage permission is needed to pick gallery image. Please allow storage permission from Settings > Permissions.]]></string>
     <string name="permission_camera_extended_denied">
         <![CDATA[Camera and Storage permissions are needed to take a picture. Please allow both the requested permissions from Settings > Permissions.]]></string>
     <string name="permission_camera_denied">
         <![CDATA[Storage permission is needed to take a picture. Please allow storage permission from Settings > Permissions.]]></string>
-    <string name="error_failed_to_create_camera_image_file">Failed to create Camera image file</string>
-    <string name="error_failed_pick_gallery_image">Failed to pick Gallery image</string>
-    <string name="error_failed_to_crop_image">Failed to crop image</string>
-    <string name="error_failed_to_compress_image">Failed to compress image</string>
-    <string name="error_task_cancelled">Task Cancelled</string>
-    <string name="error_camera_app_not_found">Camera app not found</string>
+    <string name="error_failed_to_create_camera_image_file">Ошибка фото</string>
+    <string name="error_failed_pick_gallery_image">Ошибка выбора изображения</string>
+    <string name="error_failed_to_crop_image">Ошибка обрезки изображения</string>
+    <string name="error_failed_to_compress_image">Ошибка сжатия изображения</string>
+    <string name="error_task_cancelled">Задача отменена</string>
+    <string name="error_camera_app_not_found">Приложение камеры не найдено</string>
     <!--Image Picker Ends-->
 
     <!--Intro Slider-->
-    <string name="next">Next</string>
+    <string name="next">Далее</string>
     <string name="get_started">Get Started</string>
     <string name="text_intro1">Title One</string>
     <string name="text_intro2">Title Two</string>

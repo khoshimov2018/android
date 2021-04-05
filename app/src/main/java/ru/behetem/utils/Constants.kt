@@ -22,7 +22,7 @@ object Constants {
     const val TRIM_TEXT_LENGTH = 15
     const val SHORT_DESCRIPTION_TRIM_LENGTH = 40
     const val PAGE_SIZE = 10
-    const val MIN_AGE_FOR_CAL = 18
+    const val MIN_AGE_FOR_CAL = 24
     const val MAX_GROWTH_WEIGHT = 250
     const val MAX_WIDTH_FOR_CHAT_PERCENTAGE = 0.7
     const val MESSENGER_TIME_OUT = 3000L

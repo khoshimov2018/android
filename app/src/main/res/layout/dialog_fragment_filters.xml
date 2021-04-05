@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/normalMargin"
                         android:layout_marginTop="@dimen/normalMargin"
-                        android:max="82"
+                        android:max="76"
                         app:range_progress_startEnd_minDiff="1"
                         app:setMaxProgress="@{viewModel.filterModelLiveData.getAgeTo()}"
                         app:setMinProgress="@{viewModel.filterModelLiveData.getAgeFrom()}" />

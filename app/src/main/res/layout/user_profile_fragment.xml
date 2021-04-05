@@ -50,7 +50,18 @@
                     android:layout_marginBottom="@dimen/smallMargin"
                     android:orientation="horizontal" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/bottomLinear"
+                    android:layout_marginTop="@dimen/xxLargeMargin"
+                    android:adapter="@{interestsAdapter}"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/normalPadding"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
                 <LinearLayout
+                    android:id="@+id/bottomLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
