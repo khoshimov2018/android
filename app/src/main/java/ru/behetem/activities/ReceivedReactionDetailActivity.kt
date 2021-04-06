@@ -72,6 +72,27 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
             }
             return@OnTouchListener true
         })
+
+        whiteRecycler.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            val halfOfScreen = mainLayout.width / 2
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    val position = motionEvent.x
+                    if (position < halfOfScreen) {
+                        // go to previous
+                        if (currentSelectedIndex > 0) {
+                            showIndex(--currentSelectedIndex)
+                        }
+                    } else {
+                        // go to next
+                        if (currentSelectedIndex < listOfImages.size - 1) {
+                            showIndex(++currentSelectedIndex)
+                        }
+                    }
+                }
+            }
+            return@OnTouchListener true
+        })
     }
 
     private fun initViewModel() {

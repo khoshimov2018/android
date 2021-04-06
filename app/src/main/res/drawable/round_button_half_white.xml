@@ -2,10 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/halfWhite" />
 
-    <stroke
-        android:width="@dimen/thickLineHeight"
-        android:color="@color/halfWhite" />
-
     <corners android:radius="@dimen/buttonRadius" />
 
     <padding

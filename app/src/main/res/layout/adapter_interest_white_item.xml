@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/largeMargin"
-        android:gravity="center_horizontal"
         android:layout_marginBottom="@dimen/normalMargin"
         android:orientation="horizontal">
 
@@ -30,12 +29,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/normalMargin"
+                android:layout_marginVertical="@dimen/smallMargin"
+                android:layout_marginHorizontal="@dimen/normalMargin"
                 android:onClick="@{(view) -> iInterestClick.interestItemClicked(view, item)}"
                 android:gravity="center"
                 android:text="@{item.label}"
                 android:textColor="@{item.isSelected ? @color/textColor : @color/textColor}"
-                android:textSize="@dimen/largeTextSize" />
+                android:textSize="@dimen/normalTextSize" />
         </LinearLayout>
     </LinearLayout>
 </layout>

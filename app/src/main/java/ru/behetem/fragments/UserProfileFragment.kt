@@ -124,6 +124,35 @@ class UserProfileFragment : Fragment() {
             }
             return@OnTouchListener true
         })
+
+        whiteRecycler.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            val halfOfScreen = mainLayout.width / 2
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    downYValue = motionEvent.y
+                }
+                MotionEvent.ACTION_UP -> {
+                    val yPosition = motionEvent.y
+                    if (downYValue - yPosition > threshold) {
+                        toggleBottomSheet()
+                    } else {
+                        val position = motionEvent.x
+                        if (position < halfOfScreen) {
+                            // go to previous
+                            if (currentSelectedIndex > 0) {
+                                showIndex(--currentSelectedIndex)
+                            }
+                        } else {
+                            // go to next
+                            if (currentSelectedIndex < listOfImages.size - 1) {
+                                showIndex(++currentSelectedIndex)
+                            }
+                        }
+                    }
+                }
+            }
+            return@OnTouchListener true
+        })
         initView()
     }
 
@@ -137,14 +166,14 @@ class UserProfileFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.getMoveToNextProfile().observe(viewLifecycleOwner, {
-            if(it) {
+            if (it) {
                 viewModel.setMoveToNextProfile(false)
                 reactionCallback?.onReactionSent()
             }
         })
 
         viewModel.getShowOutOfReactionsPopup().observe(viewLifecycleOwner, {
-            if(it) {
+            if (it) {
                 viewModel.setShowOutOfReactionsPopup(false)
                 showOutOfReactionsPopup()
             }
@@ -161,7 +190,7 @@ class UserProfileFragment : Fragment() {
         interestsWhiteAdapter?.notifyDataSetChanged()
     }
 
-    private fun setReactions(){
+    private fun setReactions() {
         val reactionsList = viewModel.getReactionsList()
         reactionsList?.let {
             val reactionsAdapter = ReactionsAdapter(it, viewModel)
@@ -171,7 +200,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun initView() {
-        if(this::listOfImages.isInitialized) {
+        if (this::listOfImages.isInitialized) {
             for (index in 0 until listOfImages.size) {
                 val view = View(requireActivity())
                 val layoutParams: LinearLayout.LayoutParams =
@@ -189,7 +218,7 @@ class UserProfileFragment : Fragment() {
                 listOfCountViews.add(view)
             }
 
-            if(listOfImages.size > 0) {
+            if (listOfImages.size > 0) {
                 currentSelectedIndex = 0
                 showIndex(currentSelectedIndex)
             }
