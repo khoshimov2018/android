@@ -22,9 +22,9 @@ import kotlinx.android.synthetic.main.user_profile_fragment.countLinear
 import kotlinx.android.synthetic.main.user_profile_fragment.imageView
 import kotlinx.android.synthetic.main.user_profile_fragment.mainLayout
 import okhttp3.*
-import okio.ByteString
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
+import ru.behetem.adapters.InterestsWhiteAdapter
 import ru.behetem.adapters.ReactionsAdapter
 import ru.behetem.databinding.UserProfileFragmentBinding
 import ru.behetem.interfaces.IReactionCallback
@@ -57,6 +57,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     private var interestsAdapter: InterestsAdapter? = null
+    private var interestsWhiteAdapter: InterestsWhiteAdapter? = null
     private var reactionCallback: IReactionCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -154,6 +155,10 @@ class UserProfileFragment : Fragment() {
         interestsAdapter = InterestsAdapter(viewModel.getInterestsList(), viewModel)
         binding.interestsAdapter = interestsAdapter
         interestsAdapter?.notifyDataSetChanged()
+
+        interestsWhiteAdapter = InterestsWhiteAdapter(viewModel.getInterestsList(), viewModel)
+        binding.interestsWhiteAdapter = interestsWhiteAdapter
+        interestsWhiteAdapter?.notifyDataSetChanged()
     }
 
     private fun setReactions(){

@@ -25,12 +25,11 @@ import kotlinx.android.synthetic.main.activity_received_reaction_detail.imageVie
 import kotlinx.android.synthetic.main.activity_received_reaction_detail.mainLayout
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
+import ru.behetem.adapters.InterestsWhiteAdapter
 import ru.behetem.databinding.ActivityReceivedReactionDetailBinding
 import ru.behetem.models.ChatRoomModel
 import ru.behetem.models.ReactionModel
-import ru.behetem.models.UserModel
 import ru.behetem.utils.*
-import ru.behetem.viewmodels.JobViewModel
 import ru.behetem.viewmodels.ReceivedReactionDetailViewModel
 
 class ReceivedReactionDetailActivity : AppCompatActivity() {
@@ -39,6 +38,7 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
     private lateinit var receivedReactionDetailViewModel: ReceivedReactionDetailViewModel
 
     private var interestsAdapter: InterestsAdapter? = null
+    private var interestsWhiteAdapter: InterestsWhiteAdapter? = null
 
     private val listOfCountViews: MutableList<View> = ArrayList()
     private lateinit var listOfImages: MutableList<String>
@@ -171,6 +171,14 @@ class ReceivedReactionDetailActivity : AppCompatActivity() {
             )
         binding.interestsAdapter = interestsAdapter
         interestsAdapter?.notifyDataSetChanged()
+
+        interestsWhiteAdapter =
+            InterestsWhiteAdapter(
+                receivedReactionDetailViewModel.getInterestsList(),
+                receivedReactionDetailViewModel
+            )
+        binding.interestsWhiteAdapter = interestsWhiteAdapter
+        interestsWhiteAdapter?.notifyDataSetChanged()
     }
 
     private fun initView() {

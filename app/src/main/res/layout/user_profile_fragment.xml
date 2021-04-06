@@ -17,6 +17,10 @@
             type="ru.behetem.adapters.InterestsAdapter" />
 
         <variable
+            name="interestsWhiteAdapter"
+            type="ru.behetem.adapters.InterestsWhiteAdapter" />
+
+        <variable
             name="reactionsAdapter"
             type="ru.behetem.adapters.ReactionsAdapter" />
     </data>
@@ -51,13 +55,12 @@
                     android:orientation="horizontal" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/bottomLinear"
+                    android:layout_marginStart="@dimen/normalMargin"
                     android:layout_marginTop="@dimen/xxLargeMargin"
-                    android:adapter="@{interestsAdapter}"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/normalPadding"
+                    android:adapter="@{interestsWhiteAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <LinearLayout

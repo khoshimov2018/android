@@ -15,6 +15,10 @@
         <variable
             name="interestsAdapter"
             type="ru.behetem.adapters.InterestsAdapter" />
+
+        <variable
+            name="interestsWhiteAdapter"
+            type="ru.behetem.adapters.InterestsWhiteAdapter" />
     </data>
 
     <RelativeLayout
@@ -47,13 +51,12 @@
                     android:orientation="horizontal" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/bottomLinear"
+                    android:layout_marginStart="@dimen/normalMargin"
                     android:layout_marginTop="@dimen/registrationMargin"
-                    android:adapter="@{interestsAdapter}"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/normalPadding"
+                    android:adapter="@{interestsWhiteAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <LinearLayout
@@ -89,8 +92,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:visibility="@{viewModel.isReceivedReaction() ? View.VISIBLE : View.GONE}"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.isReceivedReaction() ? View.VISIBLE : View.GONE}">
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:layout_width="match_parent"
@@ -120,10 +123,10 @@
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_white"
-                        android:visibility="@{viewModel.isChatUser() ? View.VISIBLE : View.GONE}"
                         android:onClick="@{viewModel::onCheckActivityClicked}"
                         android:text="@string/check_activity"
-                        android:textColor="@color/textColor" />
+                        android:textColor="@color/textColor"
+                        android:visibility="@{viewModel.isChatUser() ? View.VISIBLE : View.GONE}" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView

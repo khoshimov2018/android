@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="iInterestClick"
+            type="ru.behetem.interfaces.IInterestClick" />
+
+        <variable
+            name="item"
+            type="ru.behetem.models.InterestModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/largeMargin"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/normalMargin"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{item.isSelected ? @drawable/round_button_half_white : @drawable/round_button_unselected}"
+            android:layout_gravity="center">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/normalMargin"
+                android:onClick="@{(view) -> iInterestClick.interestItemClicked(view, item)}"
+                android:gravity="center"
+                android:text="@{item.label}"
+                android:textColor="@{item.isSelected ? @color/textColor : @color/textColor}"
+                android:textSize="@dimen/largeTextSize" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
