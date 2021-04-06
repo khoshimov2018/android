@@ -105,17 +105,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/largeMargin"
                         android:layout_marginTop="@dimen/smallMargin"
-                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:layout_marginBottom="@dimen/smallMargin"
                         android:gravity="center"
                         android:text='@{viewModel.errorResId != null ? context.getString(viewModel.errorResId) : ""}'
                         android:textAppearance="@style/ErrorTextAppearance"
-                        android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                        android:visibility="@{viewModel.errorResId != null ? View.VISIBLE : View.GONE, default=invisible}" />
 
                     <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/xLargeMargin"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatRadioButton
@@ -129,7 +129,7 @@
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/normalMargin"
+                            android:layout_marginTop="@dimen/smallMargin"
                             android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isDivorced() : false}"
                             android:onClick="@{viewModel::onDivorcedClicked}"
                             android:text="@string/divorced"
@@ -138,7 +138,7 @@
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/normalMargin"
+                            android:layout_marginTop="@dimen/smallMargin"
                             android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isWidowed() : false}"
                             android:onClick="@{viewModel::onWidowedClicked}"
                             android:text="@string/widower"
@@ -169,17 +169,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/largeMargin"
                         android:layout_marginTop="@dimen/smallMargin"
-                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:layout_marginBottom="@dimen/smallMargin"
                         android:gravity="center"
                         android:text='@{viewModel.errorChildrenPresenceResId != null ? context.getString(viewModel.errorChildrenPresenceResId) : ""}'
                         android:textAppearance="@style/ErrorTextAppearance"
-                        android:visibility="@{viewModel.errorChildrenPresenceResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                        android:visibility="@{viewModel.errorChildrenPresenceResId != null ? View.VISIBLE : View.GONE, default=invisible}" />
 
                     <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/xLargeMargin"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatRadioButton
@@ -193,7 +193,7 @@
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/normalMargin"
+                            android:layout_marginTop="@dimen/smallMargin"
                             android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isLiveTogether() : false}"
                             android:onClick="@{viewModel::onLiveTogetherClicked}"
                             android:text="@string/yes_we_live_together"
@@ -202,7 +202,7 @@
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/normalMargin"
+                            android:layout_marginTop="@dimen/smallMargin"
                             android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isLiveSeparately() : false}"
                             android:onClick="@{viewModel::onLiveSeparatelyClicked}"
                             android:text="@string/yes_we_live_separately"
@@ -233,17 +233,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/largeMargin"
                         android:layout_marginTop="@dimen/smallMargin"
-                        android:layout_marginBottom="@dimen/normalMargin"
+                        android:layout_marginBottom="@dimen/smallMargin"
                         android:gravity="center"
                         android:text='@{viewModel.errorChildrenDesireResId != null ? context.getString(viewModel.errorChildrenDesireResId) : ""}'
                         android:textAppearance="@style/ErrorTextAppearance"
-                        android:visibility="@{viewModel.errorChildrenDesireResId != null ? View.VISIBLE : View.INVISIBLE, default=invisible}" />
+                        android:visibility="@{viewModel.errorChildrenDesireResId != null ? View.VISIBLE : View.GONE, default=invisible}" />
 
                     <RadioGroup
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/xLargeMargin"
-                        android:layout_marginTop="@dimen/normalMargin"
+                        android:layout_marginTop="@dimen/smallMargin"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatRadioButton
@@ -257,7 +257,7 @@
                         <androidx.appcompat.widget.AppCompatRadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/normalMargin"
+                            android:layout_marginTop="@dimen/smallMargin"
                             android:checked="@{viewModel.userModelLiveData != null ? viewModel.userModelLiveData.isNoDesire() : false}"
                             android:onClick="@{viewModel::onNoDesireClicked}"
                             android:text="@string/not"

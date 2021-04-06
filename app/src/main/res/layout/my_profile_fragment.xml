@@ -43,8 +43,8 @@
                         android:layout_height="@dimen/profilePhoto"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/normalMargin"
-                        app:error="@{@drawable/logo}"
-                        app:placeholder="@{@drawable/logo}"
+                        app:error="@{@drawable/grey_bg}"
+                        app:placeholder="@{@drawable/grey_bg}"
                         app:roundImageUrl='@{(viewModel.imagesListLiveData != null &amp;&amp; viewModel.imagesListLiveData.size() > 0) ? viewModel.imagesListLiveData.get(0) : "" }' />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -71,55 +71,75 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
                     android:layout_marginTop="@dimen/xLargeMargin"
-                    android:layout_marginBottom="@dimen/registrationMargin"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="@dimen/normalMargin"
+                    android:background="@drawable/round_button_white"
+                    android:elevation="@dimen/elevation"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/largeMargin">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="@{viewModel::coinsClicked}"
-                        android:orientation="vertical">
+                        android:drawableStart="@drawable/small_heart"
+                        android:drawablePadding="@dimen/normalPadding"
+                        android:text="@string/reactions"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/largeTextSize" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@color/colorPrimary" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/coins"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/xLargeTextSize" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="@{viewModel::premiumClicked}"
-                        android:orientation="vertical">
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/remaining_x"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/largeTextSize" />
+                </RelativeLayout>
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@color/colorPrimary" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:layout_marginVertical="@dimen/normalMargin"
+                    android:background="@drawable/round_button_blue"
+                    android:elevation="@dimen/elevation"
+                    android:padding="@dimen/largeMargin">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/premium"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/xLargeTextSize" />
-                    </LinearLayout>
-                </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableStart="@drawable/flash"
+                        android:drawablePadding="@dimen/normalPadding"
+                        android:text="@string/super_reactions"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/largeTextSize" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:layout_marginVertical="@dimen/normalMargin"
+                    android:background="@drawable/round_button_blue"
+                    android:elevation="@dimen/elevation"
+                    android:padding="@dimen/largeMargin"
+                    android:onClick="@{viewModel::premiumClicked}">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawableStart="@drawable/crown"
+                        android:drawablePadding="@dimen/normalPadding"
+                        android:text="@string/premium"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/largeTextSize" />
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 

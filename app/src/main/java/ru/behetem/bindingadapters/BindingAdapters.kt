@@ -1,11 +1,14 @@
 package ru.behetem.bindingadapters
 
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import it.sephiroth.android.library.rangeseekbar.RangeSeekBar
+
 
 class BindingAdapters {
 
@@ -52,6 +55,12 @@ class BindingAdapters {
         @JvmStatic
         fun setMinProgress(rangeSeekBar: RangeSeekBar, min: Int) {
             rangeSeekBar.setProgress(min, rangeSeekBar.progressEnd)
+        }
+
+        @BindingAdapter("verticalPadding")
+        @JvmStatic
+        fun setPadding(View: View, padding: Int) {
+            View.setPadding(0, padding, 0, padding)
         }
     }
 }

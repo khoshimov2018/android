@@ -5,6 +5,7 @@
     tools:context=".fragments.ProfilesFragment">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -20,6 +21,63 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/darkBackground"
+            android:visibility="@{(viewModel.usersListLiveData != null &amp;&amp; viewModel.usersListLiveData.size() == 0) ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/reaction_bg"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/speak_no_evil_monkey" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:gravity="center"
+                    android:text="@string/oh_no"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xxLargeTextSize" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/largeMargin"
+                    android:layout_marginTop="@dimen/normalMargin"
+                    android:gravity="center"
+                    android:text="@string/you_have_reviewed"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/xLargeTextSize" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/xLargeMargin"
+                    android:layout_marginTop="@dimen/largeMargin"
+                    android:layout_marginBottom="@dimen/normalMargin"
+                    android:background="@drawable/round_button_transparent"
+                    android:onClick="@{viewModel::onFilterClick}"
+                    android:text="@string/change_filters"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"

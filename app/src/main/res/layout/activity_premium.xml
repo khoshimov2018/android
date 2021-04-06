@@ -34,9 +34,9 @@
                 app:tint="@android:color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@android:color/white" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/crown_big" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/xLargeMargin"
+                android:layout_marginHorizontal="@dimen/xxLargeMargin"
                 android:layout_marginTop="@dimen/normalMargin"
                 android:gravity="center"
                 android:text="@string/send_unlimited_reactions"
@@ -70,20 +70,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/xLargeMargin"
+                android:layout_marginHorizontal="@dimen/largeMargin"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@{viewModel.currentChosenPlan == 0 ? @drawable/premium_background : null}"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/largePadding">
+                    android:onClick="@{(view) -> viewModel.changePlan(view, 0)}"
+                    app:verticalPadding="@{viewModel.currentChosenPlan == 0 ? 20 : 20}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12"
+                        android:text="3"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/xxLargeTextSize" />
 
@@ -113,47 +116,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/premium_background"
+                    android:background="@{viewModel.currentChosenPlan == 1 ? @drawable/premium_background : null}"
                     android:gravity="center_horizontal"
+                    android:onClick="@{(view) -> viewModel.changePlan(view, 1)}"
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/largePadding">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="6"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/xxLargeTextSize" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/months"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/xxLargeTextSize" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/p_per_month_strike"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/normalTextSize" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/p_per_month"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/normalTextSize" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingVertical="@dimen/largePadding">
+                    app:verticalPadding="@{viewModel.currentChosenPlan == 1 ? 20 : 20}">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -184,6 +151,45 @@
                         android:textSize="@dimen/normalTextSize" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@{viewModel.currentChosenPlan == 2 ? @drawable/premium_background : null}"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:onClick="@{(view) -> viewModel.changePlan(view, 2)}"
+                    app:verticalPadding="@{viewModel.currentChosenPlan == 2 ? 20 : 20}">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/months"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/xxLargeTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month_strike"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/p_per_month"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/normalTextSize" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -192,6 +198,7 @@
                 android:layout_marginHorizontal="@dimen/xLargeMargin"
                 android:layout_marginTop="@dimen/xLargeMargin"
                 android:background="@drawable/round_button_unselected"
+                android:onClick="@{viewModel::onContinue}"
                 android:text="@string/str_continue"
                 android:textColor="@color/textColor" />
 
@@ -202,7 +209,8 @@
                 android:layout_marginTop="@dimen/normalMargin"
                 android:layout_marginBottom="@dimen/largeMargin"
                 android:background="@null"
-                android:text="@string/str_continue"
+                android:onClick="@{viewModel::onCancelled}"
+                android:text="@string/cancel"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>

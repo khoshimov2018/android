@@ -11,6 +11,10 @@
         <variable
             name="viewModel"
             type="ru.behetem.viewmodels.ChatViewModel" />
+
+        <variable
+            name="chatMessagesAdapter"
+            type="ru.behetem.adapters.ChatMessagesAdapter" />
     </data>
 
     <RelativeLayout
@@ -38,6 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:onClick="@{viewModel::userProfilePicClicked}"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -45,13 +50,14 @@
                         android:layout_width="@dimen/reactionPhoto"
                         android:layout_height="@dimen/reactionPhoto"
                         android:layout_marginVertical="@dimen/smallMargin"
-                        app:error="@{@drawable/logo}"
-                        app:placeholder="@{@drawable/logo}"
+                        app:error="@{@drawable/grey_bg}"
+                        app:placeholder="@{@drawable/grey_bg}"
                         app:roundImageUrl='@{viewModel.chatRoomLiveData.receiverImage != null ? viewModel.chatRoomLiveData.receiverImage : "" }' />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/smallMargin"
                         android:text="@{viewModel.chatRoomLiveData.receiverName}"
                         android:textColor="@color/textColor"
                         android:textSize="@dimen/largeTextSize" />
@@ -68,15 +74,23 @@
                 android:layout_height="match_parent"
                 android:background="@color/chatBackground">
 
-                <androidx.recyclerview.widget.RecyclerView
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/bottomLinear"
-                    android:clipToPadding="false"
-                    android:paddingHorizontal="@dimen/normalPadding"
-                    android:paddingVertical="@dimen/normalPadding"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                <!--android:adapter="@{receivedReactionsAdapter}"-->
+                    app:onRefreshListener="@{() -> viewModel.onPullToRefresh()}"
+                    app:refreshing="@{viewModel.isPullToRefreshLoading}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adapter="@{chatMessagesAdapter}"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="@dimen/normalPadding"
+                        android:paddingVertical="@dimen/normalPadding"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <LinearLayout
                     android:id="@+id/bottomLinear"
@@ -86,18 +100,33 @@
                     android:background="@drawable/bottom_tabs_background"
                     android:elevation="@dimen/elevation"
                     android:orientation="horizontal"
-                    android:padding="@dimen/largeMargin">
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/normalPadding"
+                    android:paddingEnd="@dimen/largeMargin"
+                    android:paddingVertical="@dimen/largeMargin">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/normalPadding"
+                        android:onClick="@{viewModel::imagePickerClicked}"
+                        android:layout_marginEnd="@dimen/normalMargin"
+                        android:src="@drawable/plus" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/round_button_unselected"
                         android:hint="@string/write_something"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.onMessageTextChanged(text)}"
+                        android:imeOptions="actionSend"
+                        android:onEditorAction="@{(view, actionId, event) -> viewModel.onSendMessage(view, actionId, event)}"
                         android:padding="@dimen/normalPadding"
                         android:paddingHorizontal="@dimen/largeMargin"
                         android:singleLine="true"
+                        android:text="@={viewModel.messageToBeSent}"
                         android:textColor="@color/textColor" />
+
+                    <!--android:onTextChanged="@{(text, start, before, count) -> viewModel.onMessageTextChanged(text)}"-->
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>

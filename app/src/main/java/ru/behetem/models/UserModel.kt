@@ -52,6 +52,14 @@ data class UserModel(
         }
     }
 
+    fun validateEmail(): Int {
+        return when {
+            isEmailEmpty() -> LoginFormErrorConstants.USERNAME_EMPTY
+            !isEmailValid() -> LoginFormErrorConstants.USERNAME_NOT_VALID
+            else -> 0
+        }
+    }
+
     fun validateEditProfile(): Int {
         return when {
             isNameEmpty() -> EditProfileErrorConstants.NAME_EMPTY
@@ -204,11 +212,11 @@ data class UserModel(
     }
 
     fun isYesDesire(): Boolean {
-        return if(familyInfo?.childrenDesire == null) false else familyInfo?.childrenDesire!!
+        return if (familyInfo?.childrenDesire == null) false else familyInfo?.childrenDesire!!
     }
 
     fun isNoDesire(): Boolean {
-        return if(familyInfo?.childrenDesire == null) false else !(familyInfo?.childrenDesire!!)
+        return if (familyInfo?.childrenDesire == null) false else !(familyInfo?.childrenDesire!!)
     }
 
     fun isDontRespect(): Boolean {

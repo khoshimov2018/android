@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.view.Gravity" />
+
+        <variable
+            name="item"
+            type="ru.behetem.models.ChatMessageModel" />
+
+        <variable
+            name="viewModel"
+            type="ru.behetem.viewmodels.ChatViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/normalMargin"
+        android:gravity='@{viewModel.isMessageSent(item.senderId) ? Gravity.END : Gravity.START}'
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@{viewModel.isMessageSent(item.senderId) ? @drawable/sent_message_background : @drawable/received_message_background}"
+            android:text="@{item.content}"
+            android:textColor="@color/textColor"
+            android:visibility="@{item.isTextMessage() ? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normalPadding"
+            android:visibility="@{item.isImageMessage() ? View.VISIBLE : View.GONE}"
+            android:background="@{viewModel.isMessageSent(item.senderId) ? @drawable/sent_message_background : @drawable/received_message_background}">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/chatPhoto"
+                android:layout_height="@dimen/chatPhoto"
+                android:scaleType="centerInside"
+                app:error="@{@drawable/heart}"
+                app:imageUrl='@{item.getImageUrl()}'
+                app:placeholder="@{@drawable/heart}" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/smallMargin"
+            android:layout_marginEnd="@dimen/smallMargin"
+            android:text="@{item.getTime()}"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/mediumTextSize" />
+    </LinearLayout>
+</layout>

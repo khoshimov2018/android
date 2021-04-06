@@ -5,6 +5,7 @@
     tools:context=".activities.ReceivedReactionDetailActivity">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -14,6 +15,10 @@
         <variable
             name="interestsAdapter"
             type="ru.behetem.adapters.InterestsAdapter" />
+
+        <variable
+            name="interestsWhiteAdapter"
+            type="ru.behetem.adapters.InterestsWhiteAdapter" />
     </data>
 
     <RelativeLayout
@@ -45,7 +50,18 @@
                     android:layout_marginBottom="@dimen/smallMargin"
                     android:orientation="horizontal" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/whiteRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/bottomLinear"
+                    android:layout_marginStart="@dimen/normalMargin"
+                    android:layout_marginTop="@dimen/registrationMargin"
+                    android:adapter="@{interestsWhiteAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
                 <LinearLayout
+                    android:id="@+id/bottomLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -73,36 +89,55 @@
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/largeTextSize" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.isReceivedReaction() ? View.VISIBLE : View.GONE}">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/xLargeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:background="@drawable/round_button_white"
+                            android:onClick="@{viewModel::onWriteMessageClicked}"
+                            android:text="@string/to_write_message"
+                            android:textColor="@color/textColor" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/largeMargin"
+                            android:layout_marginTop="@dimen/normalMargin"
+                            android:gravity="center_horizontal"
+                            android:onClick="@{viewModel::onSkipClicked}"
+                            android:text="@string/skip_underline"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/largeTextSize" />
+                    </LinearLayout>
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/xLargeMargin"
                         android:layout_marginTop="@dimen/normalMargin"
                         android:background="@drawable/round_button_white"
-                        android:onClick="@{viewModel::onWriteMessageClicked}"
-                        android:text="@string/to_write_message"
-                        android:textColor="@color/textColor" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/largeMargin"
-                        android:layout_marginTop="@dimen/normalMargin"
-                        android:gravity="center_horizontal"
-                        android:onClick="@{viewModel::onSkipClicked}"
-                        android:text="@string/skip_underline"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/largeTextSize" />
+                        android:onClick="@{viewModel::onCheckActivityClicked}"
+                        android:text="@string/check_activity"
+                        android:textColor="@color/textColor"
+                        android:visibility="@{viewModel.isChatUser() ? View.VISIBLE : View.GONE}" />
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/countLinear"
-                    android:padding="@dimen/largePadding"
                     android:onClick="@{viewModel::backPressed}"
-                    app:tint="@android:color/white"
-                    android:src="@drawable/back" />
+                    android:padding="@dimen/largePadding"
+                    android:src="@drawable/back"
+                    app:tint="@android:color/white" />
             </RelativeLayout>
 
             <LinearLayout

@@ -331,6 +331,28 @@ object UserRepository {
         return data
     }
 
+    fun changeEmail(strToken: String, userModel: UserModel): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.changeEmail(userModel, strToken)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
     fun changePassword(
         strToken: String,
         changePasswordModel: ChangePasswordModel
@@ -382,6 +404,28 @@ object UserRepository {
         val data = MutableLiveData<BaseResponse>()
         val lang = "RU"
         retrofitService.getUserDetail(strToken, lang, userId)
+            .enqueue(object : Callback<BaseResponse> {
+                override fun onResponse(
+                    call: Call<BaseResponse>,
+                    response: Response<BaseResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        data.value = response.body()
+                    } else {
+                        data.value = getApiElseBaseResponse(response)
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                    data.value = getFailureBaseResponse(t)
+                }
+            })
+        return data
+    }
+
+    fun activityCheck(strToken: String, userId: Int): LiveData<BaseResponse> {
+        val data = MutableLiveData<BaseResponse>()
+        retrofitService.activityCheck(strToken, userId)
             .enqueue(object : Callback<BaseResponse> {
                 override fun onResponse(
                     call: Call<BaseResponse>,

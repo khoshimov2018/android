@@ -17,11 +17,58 @@ import ru.behetem.utils.*
 
 class ChangePasswordViewModel: BaseViewModel() {
 
+    private val userModel = UserModel()
     private val passwordModel = PasswordModel()
+    private val emailErrorResId: MutableLiveData<Int> = MutableLiveData()
     private val errorResId: MutableLiveData<Int> = MutableLiveData()
+
+    private lateinit var updateEmailApiResponse: LiveData<BaseResponse>
+    private lateinit var updateEmailObserveResponse: Observer<BaseResponse>
 
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
+
+    fun updateEmailClicked(view: View) {
+        when (userModel.validateEmail()) {
+            LoginFormErrorConstants.USERNAME_EMPTY -> {
+                emailErrorResId.value = R.string.enter_email
+            }
+            LoginFormErrorConstants.USERNAME_NOT_VALID -> {
+                emailErrorResId.value = R.string.enter_valid_email
+            }
+            else -> {
+                if (validateInternet(view.context)) {
+                    hideKeyboard(view)
+                    loaderVisible.value = true // show loader
+                    updateEmailObserveResponse = Observer<BaseResponse> {
+                        loaderVisible.value = false
+                        if (validateResponse(view.context, it)) {
+
+                            getLoggedInUser()?.let {savedUser ->
+                                savedUser.email = userModel.email
+                                saveLoggedInUserToShared(view.context, savedUser)
+                            }
+
+                            showAlertDialog(view.context,
+                                null,
+                                view.context.getString(R.string.email_changed_successfully),
+                                view.context.getString(R.string.ok),
+                                DialogInterface.OnClickListener { dialogInterface, _ ->
+                                    dialogInterface.cancel()
+                                    backPressed(view)
+                                },
+                                null,
+                                null
+                            )
+                        }
+                    }
+                    val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+                    updateEmailApiResponse = UserRepository.changeEmail(strToken, userModel)
+                    updateEmailApiResponse.observeForever(updateEmailObserveResponse)
+                }
+            }
+        }
+    }
 
     fun updatePasswordClicked(view: View) {
         when (passwordModel.validateChangePassword()) {
@@ -66,11 +113,23 @@ class ChangePasswordViewModel: BaseViewModel() {
         }
     }
 
+    fun getCurrentEmail(): String {
+        return getLoggedInUser()?.email ?: ""
+    }
+
     override fun onCleared() {
         super.onCleared()
         if (this::apiResponse.isInitialized) {
             apiResponse.removeObserver(observeResponse)
         }
+        if (this::updateEmailApiResponse.isInitialized) {
+            updateEmailApiResponse.removeObserver(updateEmailObserveResponse)
+        }
+    }
+
+    fun onEmailTextChanged(charSequence: CharSequence) {
+        userModel.email = charSequence.toString()
+        emailErrorResId.value = null
     }
 
     fun onOldPasswordTextChanged(charSequence: CharSequence) {
@@ -90,5 +149,9 @@ class ChangePasswordViewModel: BaseViewModel() {
 
     fun getErrorResId(): LiveData<Int> {
         return errorResId
+    }
+
+    fun getEmailErrorResId(): LiveData<Int> {
+        return emailErrorResId
     }
 }

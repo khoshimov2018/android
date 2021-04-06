@@ -12,10 +12,7 @@ import ru.behetem.repositories.FiltersRepository
 import ru.behetem.repositories.ReactionsRepository
 import ru.behetem.repositories.UserRepository
 import ru.behetem.responses.BaseResponse
-import ru.behetem.utils.Constants
-import ru.behetem.utils.SharedPreferenceHelper
-import ru.behetem.utils.validateInternet
-import ru.behetem.utils.validateResponse
+import ru.behetem.utils.*
 
 class UserProfileViewModel : BaseViewModel(), IInterestClick {
 
@@ -23,6 +20,7 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
     private lateinit var apiResponse: LiveData<BaseResponse>
     private lateinit var observeResponse: Observer<BaseResponse>
     private val moveToNextProfile: MutableLiveData<Boolean> = MutableLiveData()
+    private val showOutOfReactionsPopup: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getInterestsList(): MutableList<InterestModel> {
         val list = ArrayList<InterestModel>()
@@ -38,22 +36,54 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
     }
 
     fun onReactionClicked(view: View, reactionItem: ReactionModel) {
-        if (validateInternet(view.context)) {
-            loaderVisible.value = true // show loader
-            observeResponse = Observer<BaseResponse> { response ->
-                loaderVisible.value = false
-                if (validateResponse(view.context, response)) {
-                    moveToNextProfile.value = true
-                }
+        val commercialModel = getCommercialFromShared(view.context)
+        var allow = false
+        var left: Int? = null
+        if(reactionItem.type == ReactionType.SUPER) {
+            left = commercialModel?.actionsLeft?.SUPER_REACTION
+            if(left != null && left > 0) {
+                allow = true
             }
-            // token
-            val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+        } else {
+            left = commercialModel?.actionsLeft?.STANDARD_REACTION
+            if(left != null && left > 0) {
+                allow = true
+            }
+        }
+        if(allow) {
+            if (validateInternet(view.context)) {
+                loaderVisible.value = true // show loader
+                observeResponse = Observer<BaseResponse> { response ->
+                    loaderVisible.value = false
+                    if (validateResponse(view.context, response)) {
+                        if(left != null) {
+                            left -= 1
+                        }
 
-            val reactionModel = ReactionModel()
-            reactionModel.reaction = reactionItem.id
-            reactionModel.receiverId = userProfileLiveData.value?.id
-            apiResponse = ReactionsRepository.sendReaction(reactionModel, strToken)
-            apiResponse.observeForever(observeResponse)
+                        if(reactionItem.type == ReactionType.SUPER) {
+                            commercialModel?.actionsLeft?.SUPER_REACTION = left
+                        } else {
+                            commercialModel?.actionsLeft?.STANDARD_REACTION = left
+                        }
+
+                        commercialModel?.let {
+                            saveCommercialToShared(view.context, it)
+                        }
+
+                        moveToNextProfile.value = true
+                    }
+                }
+                // token
+                val strToken = "${getLoggedInUser()?.tokenType} ${getLoggedInUser()?.jwt}"
+
+                val reactionModel = ReactionModel()
+                reactionModel.reaction = reactionItem.id
+                reactionModel.receiverId = userProfileLiveData.value?.id
+                apiResponse = ReactionsRepository.sendReaction(reactionModel, strToken)
+                apiResponse.observeForever(observeResponse)
+            }
+        } else {
+            showOutOfReactionsPopup.value = true
         }
     }
 
@@ -90,5 +120,13 @@ class UserProfileViewModel : BaseViewModel(), IInterestClick {
 
     fun setMoveToNextProfile(move: Boolean) {
         moveToNextProfile.value = move
+    }
+
+    fun getShowOutOfReactionsPopup(): LiveData<Boolean> {
+        return showOutOfReactionsPopup
+    }
+
+    fun setShowOutOfReactionsPopup(show: Boolean) {
+        showOutOfReactionsPopup.value = show
     }
 }

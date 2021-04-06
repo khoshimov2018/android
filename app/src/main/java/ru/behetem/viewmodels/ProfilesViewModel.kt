@@ -134,8 +134,8 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
 
             filterModelLiveData.value?.let {
                 saveFilterApiResponse = FiltersRepository.saveFilters(it, strToken)
+                saveFilterApiResponse.observeForever(saveFilterObserveResponse)
             }
-            saveFilterApiResponse.observeForever(saveFilterObserveResponse)
         }
     }
 
@@ -234,8 +234,17 @@ class ProfilesViewModel(application: Application) : BaseAndroidViewModel(applica
             loaderVisible.value = true // show loader
             getCommercialObserveResponse = Observer<BaseResponse> { response ->
                 loaderVisible.value = false
-                if (validateResponse(context, response)) {
+                if (validateResponseWithoutPopup(response)) {
+                    val gson = Gson()
+                    val strResponse = gson.toJson(response.data)
+                    val myType = object : TypeToken<CommercialModel>() {}.type
+                    val commercialModel: CommercialModel = gson.fromJson<CommercialModel>(strResponse, myType)
+
+                    saveCommercialToShared(context, commercialModel)
+
                     getFilters()
+                } else {
+                    baseResponse.value = response
                 }
             }
             // token

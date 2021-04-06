@@ -26,6 +26,10 @@ open class BaseViewModel : ViewModel() {
         return backButtonClicked
     }
 
+    fun setBackButtonClicked(clicked: Boolean) {
+        backButtonClicked.value = clicked
+    }
+
     fun getMoveFurther(): LiveData<Boolean> {
         return moveFurther
     }

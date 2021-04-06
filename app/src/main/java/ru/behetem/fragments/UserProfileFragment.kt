@@ -1,14 +1,17 @@
 package ru.behetem.fragments
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
+import android.widget.Button
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -19,9 +22,9 @@ import kotlinx.android.synthetic.main.user_profile_fragment.countLinear
 import kotlinx.android.synthetic.main.user_profile_fragment.imageView
 import kotlinx.android.synthetic.main.user_profile_fragment.mainLayout
 import okhttp3.*
-import okio.ByteString
 import ru.behetem.R
 import ru.behetem.adapters.InterestsAdapter
+import ru.behetem.adapters.InterestsWhiteAdapter
 import ru.behetem.adapters.ReactionsAdapter
 import ru.behetem.databinding.UserProfileFragmentBinding
 import ru.behetem.interfaces.IReactionCallback
@@ -54,6 +57,7 @@ class UserProfileFragment : Fragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     private var interestsAdapter: InterestsAdapter? = null
+    private var interestsWhiteAdapter: InterestsWhiteAdapter? = null
     private var reactionCallback: IReactionCallback? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,6 +124,35 @@ class UserProfileFragment : Fragment() {
             }
             return@OnTouchListener true
         })
+
+        whiteRecycler.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
+            val halfOfScreen = mainLayout.width / 2
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    downYValue = motionEvent.y
+                }
+                MotionEvent.ACTION_UP -> {
+                    val yPosition = motionEvent.y
+                    if (downYValue - yPosition > threshold) {
+                        toggleBottomSheet()
+                    } else {
+                        val position = motionEvent.x
+                        if (position < halfOfScreen) {
+                            // go to previous
+                            if (currentSelectedIndex > 0) {
+                                showIndex(--currentSelectedIndex)
+                            }
+                        } else {
+                            // go to next
+                            if (currentSelectedIndex < listOfImages.size - 1) {
+                                showIndex(++currentSelectedIndex)
+                            }
+                        }
+                    }
+                }
+            }
+            return@OnTouchListener true
+        })
         initView()
     }
 
@@ -133,9 +166,16 @@ class UserProfileFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.getMoveToNextProfile().observe(viewLifecycleOwner, {
-            if(it) {
+            if (it) {
                 viewModel.setMoveToNextProfile(false)
                 reactionCallback?.onReactionSent()
+            }
+        })
+
+        viewModel.getShowOutOfReactionsPopup().observe(viewLifecycleOwner, {
+            if (it) {
+                viewModel.setShowOutOfReactionsPopup(false)
+                showOutOfReactionsPopup()
             }
         })
     }
@@ -144,9 +184,13 @@ class UserProfileFragment : Fragment() {
         interestsAdapter = InterestsAdapter(viewModel.getInterestsList(), viewModel)
         binding.interestsAdapter = interestsAdapter
         interestsAdapter?.notifyDataSetChanged()
+
+        interestsWhiteAdapter = InterestsWhiteAdapter(viewModel.getInterestsList(), viewModel)
+        binding.interestsWhiteAdapter = interestsWhiteAdapter
+        interestsWhiteAdapter?.notifyDataSetChanged()
     }
 
-    private fun setReactions(){
+    private fun setReactions() {
         val reactionsList = viewModel.getReactionsList()
         reactionsList?.let {
             val reactionsAdapter = ReactionsAdapter(it, viewModel)
@@ -156,7 +200,7 @@ class UserProfileFragment : Fragment() {
     }
 
     private fun initView() {
-        if(this::listOfImages.isInitialized) {
+        if (this::listOfImages.isInitialized) {
             for (index in 0 until listOfImages.size) {
                 val view = View(requireActivity())
                 val layoutParams: LinearLayout.LayoutParams =
@@ -168,13 +212,13 @@ class UserProfileFragment : Fragment() {
                     0
                 )
                 view.layoutParams = layoutParams
-                view.setBackgroundResource(R.color.lightGreyColor)
+                view.setBackgroundResource(R.color.lineUnselected)
 
                 countLinear?.addView(view)
                 listOfCountViews.add(view)
             }
 
-            if(listOfImages.size > 0) {
+            if (listOfImages.size > 0) {
                 currentSelectedIndex = 0
                 showIndex(currentSelectedIndex)
             }
@@ -186,9 +230,9 @@ class UserProfileFragment : Fragment() {
 //        imageView.setBackgroundResource(listOfImages[index])
         Glide.with(this)
             .load(listOfImages[index])
-            .placeholder(R.drawable.logo)
+            .placeholder(R.drawable.grey_bg)
             .into(imageView);
-        listOfCountViews[index].setBackgroundResource(R.color.red)
+        listOfCountViews[index].setBackgroundResource(R.color.lineSelected)
 
         // Connect to WebSocket
 //        connectWS()
@@ -196,7 +240,7 @@ class UserProfileFragment : Fragment() {
 
     private fun resetCountViews() {
         for (view in listOfCountViews) {
-            view.setBackgroundResource(R.color.lightGreyColor)
+            view.setBackgroundResource(R.color.lineUnselected)
         }
     }
 
@@ -207,6 +251,27 @@ class UserProfileFragment : Fragment() {
             else
                 BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.state = state
+    }
+
+    private fun showOutOfReactionsPopup() {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setContentView(R.layout.dialog_out_of_reactions)
+
+        val close = dialog.findViewById<ImageView>(R.id.close)
+        val buyMore = dialog.findViewById<Button>(R.id.buyMore)
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buyMore.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     /*private fun connectWS() {

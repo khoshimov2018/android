@@ -11,17 +11,25 @@ object Constants {
     const val USER_FILTERS = "USER_FILTERS"
     const val RECEIVED_REACTION = "RECEIVED_REACTION"
     const val CHAT_ROOM = "CHAT_ROOM"
+    const val COMMERCIAL_MODEL = "COMMERCIAL_MODEL"
+    const val COMING_FROM = "COMING_FROM"
     const val DOB_DATE_FORMAT = "yyyy-MM-dd"
     const val DOB_ONLY_DATE_FORMAT = "dd"
     const val DOB_ONLY_MONTH_FORMAT = "MMM"
     const val DOB_ONLY_YEAR_FORMAT = "yyyy"
-    const val MINIMUM_AGE = 18
+    const val MINIMUM_AGE = 24
     const val MINIMUM_PHOTOS = 3
     const val TRIM_TEXT_LENGTH = 15
     const val SHORT_DESCRIPTION_TRIM_LENGTH = 40
     const val PAGE_SIZE = 10
-    const val MIN_AGE_FOR_CAL = 18
+    const val MIN_AGE_FOR_CAL = 24
     const val MAX_GROWTH_WEIGHT = 250
+    const val MAX_WIDTH_FOR_CHAT_PERCENTAGE = 0.7
+    const val MESSENGER_TIME_OUT = 3000L
+
+    const val UTC = "UTC"
+    const val DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    const val SHOW_TIME_FORMAT = "hh:mm a"
 
     const val ERROR = "Error"
     const val SOMETHING_WENT_WRONG = "Something went wrong. Please try again later."
@@ -37,7 +45,7 @@ object Constants {
 
 object ApiConstants {
     const val BASE_URL = "http://behetem.ru/"
-    const val WEB_SOCKET_URL = "ws://37.143.14.155/ws/websocket"
+    const val WEB_SOCKET_URL = "ws://behetem.ru/ws/websocket"
     const val LOGIN = "auth/signin"
     const val REGISTRATION = "registration"
     const val CHANGE_INFO = "info"
@@ -53,6 +61,7 @@ object ApiConstants {
     const val DELETE_IMAGE = "images/delete"
     const val SEND_REACTION = "react"
     const val GET_REACTIONS = "reaction/newReactions"
+    const val CHANGE_EMAIL = "email/change"
     const val CHANGE_PASSWORD = "password/change"
     const val DELETE_ACCOUNT = "delete-account"
     const val GET_USER_DETAIL = "user"
@@ -60,6 +69,10 @@ object ApiConstants {
     const val GET_CHAT_ROOM = "messages/chatroom"
     const val DELETE_CHAT_ROOM = "messages/deletechatroom"
     const val GET_COMMERCIAL = "commercial"
+    const val ACTIVITY_CHECK = "activitycheck"
+    const val GET_MESSAGES = "messages"
+    const val SEND_MESSAGE = "chat/"
+    const val UPLOAD_IMAGE_CHAT = "messages/upload/image"
 }
 
 object LoginFormErrorConstants {
@@ -203,4 +216,9 @@ object MessageTypes {
 object ReactionType {
     const val STANDARD = "STANDARD"
     const val SUPER = "SUPER"
+}
+
+object CommercialStatus {
+    const val STANDARD = "STANDARD"
+    const val PREMIUM = "PREMIUM"
 }

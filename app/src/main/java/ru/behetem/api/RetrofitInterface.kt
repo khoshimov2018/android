@@ -58,6 +58,9 @@ interface RetrofitInterface {
     @GET(ApiConstants.GET_REACTIONS)
     fun getReactions(@Header("Authorization") token: String): Call<BaseResponse>
 
+    @POST(ApiConstants.CHANGE_EMAIL)
+    fun changeEmail(@Body userModel: UserModel, @Header("Authorization") token: String): Call<BaseResponse>
+
     @POST(ApiConstants.CHANGE_PASSWORD)
     fun changePassword(@Body changePasswordModel: ChangePasswordModel, @Header("Authorization") token: String): Call<BaseResponse>
 
@@ -81,4 +84,18 @@ interface RetrofitInterface {
 
     @GET(ApiConstants.GET_COMMERCIAL)
     fun getCommercial(@Header("Authorization") token: String): Call<BaseResponse>
+
+    @GET(ApiConstants.ACTIVITY_CHECK)
+    fun activityCheck(@Header("Authorization") token: String, @Query("userId") userId: Int): Call<BaseResponse>
+
+    @GET(ApiConstants.GET_MESSAGES + "/{otherUserId}")
+    fun getMessages(@Header("Authorization") token: String, @Path("otherUserId") otherUserId: Int, @Query("page") page: Int, @Query("pageSize") pageSize: Int): Call<BaseResponse>
+
+    @POST(ApiConstants.SEND_MESSAGE)
+    fun sendMessage(@Header("Authorization") token: String, @Body chatMessageModel: ChatMessageModel): Call<BaseResponse>
+
+    @Multipart
+    @POST(ApiConstants.UPLOAD_IMAGE_CHAT)
+    fun uploadImageChat(@Part filePart: MultipartBody.Part, @PartMap partMap: @JvmSuppressWildcards Map<String, RequestBody?>,
+                    @Header("Authorization") token: String): Call<BaseResponse>
 }

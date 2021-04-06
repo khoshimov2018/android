@@ -29,8 +29,9 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="@dimen/reactionPhoto"
                 android:layout_height="@dimen/reactionPhoto"
-                app:error="@{@drawable/logo}"
-                app:placeholder="@{@drawable/logo}"
+                android:onClick="@{(view) -> viewModel.userProfilePicClicked(view, item)}"
+                app:error="@{@drawable/grey_bg}"
+                app:placeholder="@{@drawable/grey_bg}"
                 app:roundImageUrl='@{item.receiverImage != null ? item.receiverImage : "" }' />
 
             <LinearLayout
@@ -50,7 +51,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{item.lastMessage.content}"
+                    android:text="@{viewModel.getLastMessageContent(item)}"
                     android:textColor="@color/textColor" />
             </LinearLayout>
         </LinearLayout>
